@@ -14,6 +14,7 @@ import uts.isd.model.PaymentInformation;
  */
 
 public class Customer extends User implements Serializable {
+    private String contactNumber;
     private String addressLine1;
     private String addressLine2;
     private String suburb;
@@ -22,14 +23,15 @@ public class Customer extends User implements Serializable {
     private PaymentInformation customerPaymentInfo;
 
     // Constructor
-    public Customer(String firstName, String lastName, String password, String dob, String email, String contactNumber, String addressLine1, String addressLine2, String suburb, String postCode, String state, String cardNumber, String cvc, String expiryMonth, String expiryYear) {
-        super(firstName, lastName, password, dob, email, contactNumber);
+    public Customer(String firstName, String lastName, String password, String email, String contactNumber, String addressLine1, String addressLine2, String suburb, String postCode, String state, String cardNumber, String cvv, String expiryMonth, String expiryYear) {
+        super(firstName, lastName, password, email, "Customer");
+        this.contactNumber = contactNumber;
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
         this.suburb = suburb;
         this.postCode = postCode;
         this.state = state;
-        this.customerPaymentInfo = new PaymentInformation(cardNumber, cvc, expiryMonth, expiryYear);
+        this.customerPaymentInfo = new PaymentInformation(cardNumber, cvv, expiryMonth, expiryYear);
     }
     
     // Getters and Setters
@@ -81,4 +83,13 @@ public class Customer extends User implements Serializable {
         this.customerPaymentInfo = customerPaymentInfo;
     }
     
+    public void printCustomer() {
+        printNames();
+        System.out.println("Contact Number: " + contactNumber);
+        System.out.println("Address Line 1: " + addressLine1);
+        System.out.println("Suburb: " + suburb);
+        System.out.println("State: " + state);
+        System.out.println("Post Code: " + postCode);
+        customerPaymentInfo.printPaymentInfo();
+    }
 }
