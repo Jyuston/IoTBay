@@ -1,19 +1,19 @@
-INSERT INTO ACCOUNTS (USER_ID, USER_EMAIL, USER_F_NAME, USER_L_NAME, ACCOUNT_TYPE)
+INSERT INTO ACCOUNTS (USER_ID, USER_EMAIL, USER_F_NAME, USER_L_NAME, ACCOUNT_TYPE, PASSWORD)
 VALUES
-    ('U-00000001', 'john.smith@gmail.com', 'John', 'Smith', 'C'),
-    ('U-00000002', 'odio@sed.ca','Nehru','Rivers', 'C'),
-    ('U-00000003', 'Sed@iderat.edu','Craig','Estrada', 'C'),
-    ('U-00000004', 'risus.quis@tortorat.org','Judah','Erickson', 'C'),
-    ('U-00000005', 'Nullam@augue.org','Hakeem','Townsend', 'C'),
-    ('U-00000006', 'consectetuer.adipiscing@Donecnibh.org','Leroy','Hoffman', 'C'),
-    ('U-00000007', 'ante.Nunc@vestibulum.com','Zachery','Acosta', 'C'),
-    ('U-00000008', 'dis.parturient.montes@malesuadafames.edu','Upton','Phelps', 'C'),
-    ('U-00000009', 'elementum.sem@utnullaCras.net','Barrett','Lewis', 'C'),
-    ('U-00000010','vulputate.velit@quisaccumsanconvallis.com','Stuart','Kramer', 'C'),
-    ('U-00000011', 'egestas.Duis.ac@Morbinon.edu','Tyler','Owens', 'C'),
-    ('U-00000012', 'nicholsonK@iotbay.com', 'Kirby','Nicholson', 'S'),
-    ('U-00000013', 'farleyS@iotbay.com', 'Lenore','Farley', 'S'),
-    ('U-00000014', 'talleyS@iotbay.com', 'Stephanie','Talley', 'S')
+    ('U-00000001', 'john.smith@gmail.com', 'John', 'Smith', 'C', 'password123'),
+    ('U-00000002', 'odio@sed.ca','Nehru','Rivers', 'C', 'password123'),
+    ('U-00000003', 'Sed@iderat.edu','Craig','Estrada', 'C', 'password123'),
+    ('U-00000004', 'risus.quis@tortorat.org','Judah','Erickson', 'C', 'password123'),
+    ('U-00000005', 'Nullam@augue.org','Hakeem','Townsend', 'C', 'password123'),
+    ('U-00000006', 'consectetuer.adipiscing@Donecnibh.org','Leroy','Hoffman', 'C', 'password123'),
+    ('U-00000007', 'ante.Nunc@vestibulum.com','Zachery','Acosta', 'C', 'password123'),
+    ('U-00000008', 'dis.parturient.montes@malesuadafames.edu','Upton','Phelps', 'C', 'password123'),
+    ('U-00000009', 'elementum.sem@utnullaCras.net','Barrett','Lewis', 'C', 'password123'),
+    ('U-00000010','vulputate.velit@quisaccumsanconvallis.com','Stuart','Kramer', 'C', 'password123'),
+    ('U-00000011', 'egestas.Duis.ac@Morbinon.edu','Tyler','Owens', 'C', 'password123'),
+    ('U-00000012', 'nicholsonK@iotbay.com', 'Kirby','Nicholson', 'S', 'jSev*UkN1DJr'),
+    ('U-00000013', 'farleyS@iotbay.com', 'Lenore','Farley', 'S', 'ilOh%@hQ&$LZ'),
+    ('U-00000014', 'talleyS@iotbay.com', 'Stephanie','Talley', 'S', 'jAupTO!0DnHt')
 ;
 
 INSERT INTO CUSTOMERS (USER_ID, ADDRESS_LINE_1, ADDRESS_LINE_2, SUBURB, POSTCODE, STATE, ANNONYMOUS)
@@ -31,9 +31,9 @@ VALUES
     ('U-00000011', '3/46', 'Wonder St', 'Maroubra', '2035', 'NSW', 'false')
 ;
 
-INSERT INTO STAFF (USER_ID, PASSWORD, IS_ADMIN)
+INSERT INTO STAFF (USER_ID, IS_ADMIN)
 VALUES
-    ('U-00000012' , 'jSev*UkN1DJr', 'false'),
-    ('U-00000013' , 'ilOh%@hQ&$LZ', 'false'),
-    ('U-00000014' , 'jAupTO!0DnHt', 'false')
+    ('U-00000012', 'false'),
+    ('U-00000013', 'false'),
+    ('U-00000014', 'false')
 ;
