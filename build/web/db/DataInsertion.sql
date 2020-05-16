@@ -52,3 +52,22 @@ VALUES
     ('U-00000010', '5477537779451487','817', '02', '20'),
     ('U-00000011','523 09152 33392 109','908', '04', '21')
 ;
+
+/* Insert Dashboard Data */
+
+INSERT INTO DASHBOARD_ITEMS (ITEM_ID, ITEM_NAME, ITEM_DESCRIPTION)
+VALUES
+    ('DI-0001', 'Total Revenue', 'Total revenue for the selected period'),
+    ('DI-0002', 'Total Sales Count', 'Total sales count for the selected period')
+;
+
+INSERT INTO DASHBOARDS (DASHBOARD_ID, DASHBOARD_NAME, DASHBOARD_DESCRIPTION)
+VALUES
+    ('D-0001', 'Dashboard 1', 'Test dashboard')
+;
+
+INSERT INTO DASHBOARD_LINE_ITEMS (DASHBOARD_ID, ITEM_ID)
+VALUES
+    ('D-0001', 'DI-0001'),
+    ('D-0001', 'DI-0002')
+;
