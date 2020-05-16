@@ -13,14 +13,14 @@ import java.io.Serializable;
  */
 public class PaymentInformation implements Serializable {
     private String cardNumber;
-    private String cvc;
+    private String cvv;
     private String expiryMonth;
     private String expiryYear;
 
     // Constructor
-    public PaymentInformation(String cardNumber, String cvc, String expiryMonth, String expiryYear) {
+    public PaymentInformation(String cardNumber, String cvv, String expiryMonth, String expiryYear) {
         this.cardNumber = cardNumber;
-        this.cvc = cvc;
+        this.cvv = cvv;
         this.expiryMonth = expiryMonth;
         this.expiryYear = expiryYear;
     }
@@ -34,12 +34,12 @@ public class PaymentInformation implements Serializable {
         this.cardNumber = cardNumber;
     }
 
-    public String getCvc() {
-        return cvc;
+    public String getCvv() {
+        return cvv;
     }
 
     public void setCvc(String cvc) {
-        this.cvc = cvc;
+        this.cvv = cvc;
     }
 
     public String getExpiryMonth() {
@@ -56,5 +56,12 @@ public class PaymentInformation implements Serializable {
 
     public void setExpiryYear(String expiryYear) {
         this.expiryYear = expiryYear;
+    }
+    
+    public void printPaymentInfo() {
+        System.out.println("Card Number: " + cardNumber);
+        System.out.println("CVC: " + cvv);
+        System.out.println("Expiry Month: " + expiryMonth);
+        System.out.println("Expiry Year: " + expiryYear);
     }
 }
