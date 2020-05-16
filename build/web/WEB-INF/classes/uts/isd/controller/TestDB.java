@@ -27,23 +27,63 @@ public class TestDB {
 
             DBManager db = new DBManager(conn);
 
-            System.out.print("User email: ");
+            System.out.print("fn: ");
 
-            String email = in.nextLine();
+            String firstName = in.nextLine();
 
-            System.out.print("User password: ");
+            System.out.print("ln: ");
+
+            String lastName = in.nextLine();
+
+            System.out.print("pw: ");
 
             String password = in.nextLine();
 
-            Customer customer = db.findUser(email, password);
+            System.out.print("em: ");
 
-            if (customer != null) {
-                customer.printCustomer();
-            }
+            String email = in.nextLine();
 
-            else {
-                System.out.println("User not found");
-            }
+            System.out.print("cn: ");
+
+            String contactNumber = in.nextLine();
+
+            System.out.print("a1: ");
+
+            String addressLine1 = in.nextLine();
+
+            System.out.print("a2: ");
+
+            String addressLine2 = in.nextLine();
+
+            System.out.print("sb: ");
+
+            String suburb = in.nextLine();
+
+            System.out.print("pc: ");
+
+            String postCode = in.nextLine();
+
+            System.out.print("st: ");
+
+            String state = in.nextLine();
+
+            System.out.print("cardn: ");
+
+            String cardNumber = in.nextLine();
+
+            System.out.print("cvv: ");
+
+            String cvv = in.nextLine();
+
+            System.out.print("em: ");
+
+            String expiryMonth = in.nextLine();
+
+            System.out.print("ey: ");
+
+            String expiryYear = in.nextLine();
+
+            db.addCustomer(firstName, lastName, password, email, contactNumber, addressLine1, addressLine2, suburb, postCode, state, cardNumber, cvv, expiryMonth, expiryYear);
 
             connector.closeConnection();
 

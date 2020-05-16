@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="uts.isd.model.Customer"%>
+<%@page import="uts.isd.controller.*"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -29,11 +30,47 @@
                 <div class="col">
                     
                 </div>
+
+                <% 
+                    String registrationSubmitted = request.getParameter("registrationFormSubmitted");
+                        
+                    if (registrationSubmitted != null && registrationSubmitted.equals("yes")) {
+                        String firstName = request.getParameter("firstName");
+                        String lastName = request.getParameter("lastName");
+                        String password = request.getParameter("password");
+                        String email = request.getParameter("email");              
+                        String contactNumber = request.getParameter("contactNumber");
+                        String streetAddressLine1 = request.getParameter("streetAddressLine1");
+                        String streetAddressLine2 = request.getParameter("streetAddressLine2");
+                        String suburb = request.getParameter("suburb");
+                        String postcode = request.getParameter("postCode");
+                        String state = request.getParameter("state");
+                        String cardNumber = request.getParameter("cardNumber");
+                        String cardCVV = request.getParameter("cardCVV");
+                        String expiryMonth = request.getParameter("expiryMonth");
+                        String expiryYear = request.getParameter("expiryYear");
+                        
+                        RegistrationController regController = new RegistrationController(firstName, lastName, password, email, contactNumber, streetAddressLine1, streetAddressLine2,  suburb, postcode, state, cardNumber, cardCVV, expiryMonth, expiryYear);
+
+                        Customer customer = regController.RegisterCustomer();
+                        
+                        if (customer != null) {
+                            session.setAttribute("customer", customer);
+                %>
+
+                            <div class="col-auto">
+                                <div class="alert alert-success" role="alert">
+                                <h4 class="alert-heading"> Registration Successful!</h4>
+                                <a class="btn btn-primary btn-lg btn-block" href="mainPage.jsp"> Enter Site </a>                        
+                                </div>                        
+                            </div>
+                
+                        <% } } else { %>
                 
                 <div class="col--md-auto">
                     <h1 id="registrationHeader"> New Customer? </h1>
                     <p id="pageDescription"> We're always excited to welcome new customers. To register an account, we need to know a little about you! </p>
-                    <form method="post" action="Welcome.jsp">
+                    <form method="post" action="Register.jsp">
                         <h2> Your Personal Info </h2> 
                         <div class="form-row">                                                                         
                             <div class="form-group col-md-6">                                           
@@ -56,10 +93,6 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label>Date of Birth</label> 
-                                <input class="form-control" type="date" name="dob" required>
-                            </div>
                             <div class="form-group col-md-6">
                                 <label>Password</label>
                                 <input class="form-control" type="password" name="password" required>
@@ -115,7 +148,7 @@
                             </div>
                             <div class="form-group col-md-2">
                                 <label>CVC</label>
-                                <input class="form-control" type="password" name="cardCVC" size="3" required>                                         
+                                <input class="form-control" type="password" name="cardCVV" size="3" required>                                         
                             </div>
                         </div>
                         <div class="form-row">
@@ -156,9 +189,10 @@
                             </div>
                         </div>
                         <input class="form-control" type="hidden" name="registrationFormSubmitted" value="yes">
-                        <a href="Welcome.jsp"><input type="submit" class="btn btn-primary btn-lg btn-block" value="Register"></a>
+                        <a href="Register.jsp"><input type="submit" class="btn btn-primary btn-lg btn-block" value="Register"></a>
                     </form>
                 </div>
+                <% } %>
                 
                 <div class="col">
                 </div>
