@@ -91,5 +91,5 @@ public class Customer extends User implements Serializable {
         System.out.println("State: " + state);
         System.out.println("Post Code: " + postCode);
         customerPaymentInfo.printPaymentInfo();
-    }
+    }    
 }

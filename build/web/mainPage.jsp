@@ -63,11 +63,6 @@
                                 </tr>
                                 <tr class="table-light">
                                     <th scope="row"></th>
-                                    <td>Date of Birth</td>
-                                    <td>//</td>
-                                </tr>
-                                <tr class="table-light">
-                                    <th scope="row"></th>
                                     <td>Address Line 1</td>
                                     <td>${customer.addressLine1}</td>
                                 </tr>
