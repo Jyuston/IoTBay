@@ -1,73 +1,69 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uts.isd.model;
 
 import java.io.Serializable;
 
-/**
- *
- * @author denni
- */
-
 public class Product implements Serializable {
-    private int productID;
-    private String productName;
-    private double productPrice;
-    private String productCategory;
-    private String productDescription;
+    private String ID;
+    private String name;
+    private  String category;
+    private int stock;
+    private double price;
+    private boolean archived;
 
-    // Constructor
-    public Product(int productID, String productName, double productPrice, String productCategory, String productDescription) {
-        this.productID = productID;
-        this.productName = productName;
-        this.productPrice = productPrice;
-        this.productCategory = productCategory;
-        this.productDescription = productDescription;
+    public Product(String name, String category, int stock, double price, boolean archived) {
+        this.ID = "123abc"; // Hard coded for prototype
+        this.name = name;
+        this.category = category;
+        this.stock = stock;
+        this.price = price;
+        this.archived = archived;
     }
 
-    // Getters and Setters
-    public int getProductID() {
-        return productID;
+    public String getID() {
+        return ID;
     }
 
-    public void setProductID(int productID) {
-        this.productID = productID;
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getName() {
+        return name;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public double getProductPrice() {
-        return productPrice;
+    public String getCategory() {
+        return category;
     }
 
-    public void setProductPrice(double productPrice) {
-        this.productPrice = productPrice;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public String getProductCategory() {
-        return productCategory;
+    public int getStock() {
+        return stock;
     }
 
-    public void setProductCategory(String productCategory) {
-        this.productCategory = productCategory;
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
-    public String getProductDescription() {
-        return productDescription;
+    public double getPrice() {
+        return price;
     }
 
-    public void setProductDescription(String productDescription) {
-        this.productDescription = productDescription;
+    public void setPrice(double price) {
+        this.price = price;
     }
-    
-    
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
+    }
 }

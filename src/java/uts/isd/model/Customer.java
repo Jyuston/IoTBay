@@ -1,95 +1,60 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uts.isd.model;
 
-import java.io.Serializable;
-import uts.isd.model.PaymentInformation;
+import java.util.LinkedList;
 
-/**
- *
- * @author denni
- */
-
-public class Customer extends User implements Serializable {
+public class Customer extends Account {
     private String contactNumber;
-    private String addressLine1;
-    private String addressLine2;
-    private String suburb;
-    private String postCode;
-    private String state;
-    private PaymentInformation customerPaymentInfo;
+    private Address address;
+    private PaymentInformation paymentInfo;
+    private LinkedList<Order> orders;
+    private boolean isAnonymous;
 
-    // Constructor
-    public Customer(String firstName, String lastName, String password, String email, String contactNumber, String addressLine1, String addressLine2, String suburb, String postCode, String state, String cardNumber, String cvv, String expiryMonth, String expiryYear) {
-        super(firstName, lastName, password, email, "Customer");
+    public Customer(String firstName, String lastName, String email, String password, String contactNumber, Address address, PaymentInformation paymentInfo, LinkedList<Order> orders, boolean isAnonymous) {
+        super(firstName, lastName, email, password);
         this.contactNumber = contactNumber;
-        this.addressLine1 = addressLine1;
-        this.addressLine2 = addressLine2;
-        this.suburb = suburb;
-        this.postCode = postCode;
-        this.state = state;
-        this.customerPaymentInfo = new PaymentInformation(cardNumber, cvv, expiryMonth, expiryYear);
-    }
-    
-    // Getters and Setters
-    public String getAddressLine1() {
-        return addressLine1;
+        this.address = address;
+        this.paymentInfo = paymentInfo;
+        this.orders = orders;
+        this.isAnonymous = isAnonymous;
     }
 
-    public void setAddressLine1(String addressLine1) {
-        this.addressLine1 = addressLine1;
+    public String getContactNumber() {
+        return contactNumber;
     }
 
-    public String getAddressLine2() {
-        return addressLine2;
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 
-    public void setAddressLine2(String addressLine2) {
-        this.addressLine2 = addressLine2;
+    public Address getAddress() {
+        return address;
     }
 
-    public String getSuburb() {
-        return suburb;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
-    public void setSuburb(String suburb) {
-        this.suburb = suburb;
+    public PaymentInformation getPaymentInfo() {
+        return paymentInfo;
     }
 
-    public String getPostCode() {
-        return postCode;
+    public void setPaymentInfo(PaymentInformation paymentInfo) {
+        this.paymentInfo = paymentInfo;
     }
 
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
+    public LinkedList<Order> getOrders() {
+        return orders;
     }
 
-    public String getState() {
-        return state;
+    public void setOrders(LinkedList<Order> orders) {
+        this.orders = orders;
     }
 
-    public void setState(String state) {
-        this.state = state;
-    }
-    
-    public PaymentInformation getCustomerPaymentInfo() {
-        return customerPaymentInfo;
+    public boolean isAnonymous() {
+        return isAnonymous;
     }
 
-    public void setCustomerPaymentInfo(PaymentInformation customerPaymentInfo) {
-        this.customerPaymentInfo = customerPaymentInfo;
+    public void setAnonymous(boolean anonymous) {
+        isAnonymous = anonymous;
     }
-    
-    public void printCustomer() {
-        printNames();
-        System.out.println("Contact Number: " + contactNumber);
-        System.out.println("Address Line 1: " + addressLine1);
-        System.out.println("Suburb: " + suburb);
-        System.out.println("State: " + state);
-        System.out.println("Post Code: " + postCode);
-        customerPaymentInfo.printPaymentInfo();
-    }    
 }

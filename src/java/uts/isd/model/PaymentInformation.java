@@ -1,31 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uts.isd.model;
 
 import java.io.Serializable;
 
-/**
- *
- * @author denni
- */
 public class PaymentInformation implements Serializable {
     private String cardNumber;
-    private String cvv;
+    private String cvvNumber;
     private String expiryMonth;
     private String expiryYear;
 
-    // Constructor
-    public PaymentInformation(String cardNumber, String cvv, String expiryMonth, String expiryYear) {
+    public PaymentInformation(String cardNumber, String cvvNumber, String expiryMonth, String expiryYear) {
         this.cardNumber = cardNumber;
-        this.cvv = cvv;
+        this.cvvNumber = cvvNumber;
         this.expiryMonth = expiryMonth;
         this.expiryYear = expiryYear;
     }
 
-    // Getters and Setters
     public String getCardNumber() {
         return cardNumber;
     }
@@ -34,12 +23,12 @@ public class PaymentInformation implements Serializable {
         this.cardNumber = cardNumber;
     }
 
-    public String getCvv() {
-        return cvv;
+    public String getCvvNumber() {
+        return cvvNumber;
     }
 
-    public void setCvc(String cvc) {
-        this.cvv = cvc;
+    public void setCvvNumber(String cvvNumber) {
+        this.cvvNumber = cvvNumber;
     }
 
     public String getExpiryMonth() {
@@ -56,12 +45,5 @@ public class PaymentInformation implements Serializable {
 
     public void setExpiryYear(String expiryYear) {
         this.expiryYear = expiryYear;
-    }
-    
-    public void printPaymentInfo() {
-        System.out.println("Card Number: " + cardNumber);
-        System.out.println("CVC: " + cvv);
-        System.out.println("Expiry Month: " + expiryMonth);
-        System.out.println("Expiry Year: " + expiryYear);
     }
 }
