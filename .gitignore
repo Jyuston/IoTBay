@@ -1,1 +1,7 @@
-/dist/
+# NetBeans #
+build
+dist
+nbproject/private
+
+# OSX Specific #
+DS_Store
