@@ -4,4 +4,4 @@ dist
 nbproject/private
 
 # OSX Specific #
-DS_Store
+.DS_Store
