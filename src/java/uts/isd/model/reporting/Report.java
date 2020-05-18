@@ -1,4 +1,4 @@
-package uts.isd.model;
+package uts.isd.model.reporting;
 
 import java.io.Serializable;
 import java.util.ArrayList;
