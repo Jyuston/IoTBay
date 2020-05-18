@@ -4,18 +4,18 @@
  * and open the template in the editor.
  */
 package uts.isd.controller;
+
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.logging.*;
 import uts.isd.model.Customer;
 import uts.isd.model.dao.*;
-
-/**
- *
- * @author denni
- */
+import uts.isd.model.reporting.TotalSales;
+import uts.isd.model.reporting.TotalSalesRecord;
 
 public class TestDB {
+    // This is a test controller. Used for CLI debugging
     private static Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -25,65 +25,28 @@ public class TestDB {
 
             Connection conn = connector.openConnection();
 
-            DBManager db = new DBManager(conn);
+            DaoReporting db = new DaoReporting(conn);
 
-            System.out.print("fn: ");
+            ArrayList<TotalSalesRecord> records = db.totalSales("2019-01-01 00:00:00", "2020-05-01 00:00:00");
+            
+            for (TotalSalesRecord totalSalesRecord : records) {
+                System.out.println(totalSalesRecord.toString());
+                System.out.println("State: " + totalSalesRecord.getState());
+            }
 
-            String firstName = in.nextLine();
+            TotalSales salesObjReporter = new TotalSales("tst", "tst");
 
-            System.out.print("ln: ");
+            System.out.println("The total sales value was: $" + salesObjReporter.getTotalSalesValue(records));
 
-            String lastName = in.nextLine();
+            System.out.println("Sales breakdown by state:");
 
-            System.out.print("pw: ");
+            Hashtable<String, Double> tst = salesObjReporter.getTotalSalesByState(records);
 
-            String password = in.nextLine();
-
-            System.out.print("em: ");
-
-            String email = in.nextLine();
-
-            System.out.print("cn: ");
-
-            String contactNumber = in.nextLine();
-
-            System.out.print("a1: ");
-
-            String addressLine1 = in.nextLine();
-
-            System.out.print("a2: ");
-
-            String addressLine2 = in.nextLine();
-
-            System.out.print("sb: ");
-
-            String suburb = in.nextLine();
-
-            System.out.print("pc: ");
-
-            String postCode = in.nextLine();
-
-            System.out.print("st: ");
-
-            String state = in.nextLine();
-
-            System.out.print("cardn: ");
-
-            String cardNumber = in.nextLine();
-
-            System.out.print("cvv: ");
-
-            String cvv = in.nextLine();
-
-            System.out.print("em: ");
-
-            String expiryMonth = in.nextLine();
-
-            System.out.print("ey: ");
-
-            String expiryYear = in.nextLine();
-
-            db.addCustomer(firstName, lastName, password, email, contactNumber, addressLine1, addressLine2, suburb, postCode, state, cardNumber, cvv, expiryMonth, expiryYear);
+            Set<String> dictionaryKeys = tst.keySet();
+            DecimalFormat df = new DecimalFormat("####0.00");
+            for (String key : dictionaryKeys) {
+                System.out.println("State: " + key + "; Total Sales = $" + df.format(tst.get(key)));
+            }
 
             connector.closeConnection();
 
