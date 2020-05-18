@@ -1,5 +1,4 @@
 package uts.isd.model.dao;
-import uts.isd.model.User;
 import uts.isd.model.reporting.TotalSales;
 import uts.isd.model.reporting.TotalSalesRecord;
 import uts.isd.model.Customer;

@@ -41,7 +41,16 @@ public class TotalSalesRecord implements Serializable {
         return s[s.length - 1];
     }
 
+    public String getProductName() {
+        return productName;
+    }
+
+    public String getProductCategory() {
+        return productCategory;
+    }    
+
     @Override public String toString() {
         return "Product ID: " + productID + "; Product Name: " + productName + "; Product Category: " + productCategory + "; Quanitiy: " + quantityOrdered + "; Price: " + productPrice + "; Address: " + deliveryAddress;
     }
+
 }

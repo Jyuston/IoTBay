@@ -2,7 +2,8 @@ package uts.isd.controller.reporting;
 
 import java.io.Serializable;
 import java.sql.*;
-import java.util.ArrayList;
+import java.text.DecimalFormat;
+import java.util.*;
 import java.util.logging.*;
 
 import uts.isd.model.dao.DBConnector;
@@ -24,19 +25,23 @@ public class TotalSalesController implements Serializable {
             DaoReporting db = new DaoReporting(conn);
 
             ArrayList<TotalSalesRecord> records = db.totalSales("2019-01-01 00:00:00", "2020-05-01 00:00:00");
-
-            TotalSales totalSales = new TotalSales("Total Sales", "Some description");
-
-            totalSales.use(records);
             
+
+            TotalSales salesObjReporter = new TotalSales("tst", "tst");
+
+            Hashtable<String, Double> tst = salesObjReporter.getTotalSalesByState(records);
+
+            Set<String> dictionaryKeys = tst.keySet();
+            
+            DecimalFormat df = new DecimalFormat("####0.00");
+
             connector.closeConnection();
-            
 
         } 
 
         catch (ClassNotFoundException | SQLException ex) {
 
-            Logger.getLogger(TotalSalesController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TestDB.class.getName()).log(Level.SEVERE, null, ex);
 
         }
 

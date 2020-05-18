@@ -28,8 +28,28 @@ public class TotalSales extends ReportElement implements Serializable {
         return total;
     }
 
-    public void getTotalSalesByProductCategory() {
-        //do stuff
+    // Returns a hashtable object with a breakdown of sales by product category
+    // Takes an ArrayList input of TotalSalesRecord objects
+    public Hashtable<String, Double> getTotalSalesByProductCategory(ArrayList<TotalSalesRecord> records) {
+        //Instantiate a hashtable with String keys, and Double values
+        Hashtable<String, Double> dictionary = new Hashtable<String, Double>();
+
+        // Iterate over each object in the ArrayList
+        for (TotalSalesRecord record : records) {
+            // If the dictionary does not contain the key (i.e. State), insert a new Key-Value pair
+            if (!dictionary.containsKey(record.getProductCategory())) {
+                dictionary.put(record.getProductCategory(), record.getProductPrice() * record.getQuantityOrdered());
+            }
+
+            else {
+                // The new value for the key is calculated (i.e. existingValue += productPrice x quanitity)
+                double newValue = dictionary.get(record.getProductCategory()) + (record.getProductPrice() * record.getQuantityOrdered());
+                dictionary.replace(record.getProductCategory(), dictionary.get(record.getProductCategory()), newValue);
+            }
+        }
+
+        // Returns the hash table to the caller
+        return dictionary;
     }
 
     // Returns a hashtable object with a breakdown of sales by state
@@ -55,7 +75,6 @@ public class TotalSales extends ReportElement implements Serializable {
         // Returns the hash table to the caller
         return dictionary;
     }
-
 
     
 }

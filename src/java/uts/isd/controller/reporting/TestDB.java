@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package uts.isd.controller;
-
+package uts.isd.controller.reporting;
 import java.sql.*;
 import java.text.DecimalFormat;
 import java.util.*;
@@ -47,6 +41,16 @@ public class TestDB {
             for (String key : dictionaryKeys) {
                 System.out.println("State: " + key + "; Total Sales = $" + df.format(tst.get(key)));
             }
+
+            
+            Hashtable<String, Double> tst1 = salesObjReporter.getTotalSalesByProductCategory(records);
+
+            Set<String> dictionaryKeys1 = tst1.keySet();
+            DecimalFormat df1 = new DecimalFormat("####0.00");
+            for (String key : dictionaryKeys1) {
+                System.out.println("Product Category: " + key + "; Total Sales = $" + df1.format(tst1.get(key)));
+            }
+            
 
             connector.closeConnection();
 
