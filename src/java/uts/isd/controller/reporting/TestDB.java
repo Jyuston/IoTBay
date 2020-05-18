@@ -3,7 +3,6 @@ import java.sql.*;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.logging.*;
-import uts.isd.model.Customer;
 import uts.isd.model.dao.*;
 import uts.isd.model.reporting.TotalSales;
 import uts.isd.model.reporting.TotalSalesRecord;
@@ -50,7 +49,6 @@ public class TestDB {
             for (String key : dictionaryKeys1) {
                 System.out.println("Product Category: " + key + "; Total Sales = $" + df1.format(tst1.get(key)));
             }
-            
 
             connector.closeConnection();
 
