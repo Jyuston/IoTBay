@@ -5,10 +5,10 @@ import uts.isd.model.Customer;
 import java.sql.*;
 import java.util.*;
 
-public class DaoReporting {
+public class ReportingDAO {
     private Statement st;
 
-    public DaoReporting(Connection conn) throws SQLException {
+    public ReportingDAO(Connection conn) throws SQLException {
         st = conn.createStatement();
     }
 

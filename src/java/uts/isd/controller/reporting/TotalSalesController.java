@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.logging.*;
 
 import uts.isd.model.dao.DBConnector;
-import uts.isd.model.dao.DaoReporting;
+import uts.isd.model.dao.ReportingDAO;
 import uts.isd.model.reporting.TotalSales;
 import uts.isd.model.reporting.TotalSalesRecord;
 
@@ -22,7 +22,7 @@ public class TotalSalesController implements Serializable {
 
             Connection conn = connector.openConnection();
 
-            DaoReporting db = new DaoReporting(conn);
+            ReportingDAO db = new ReportingDAO(conn);
 
             ArrayList<TotalSalesRecord> records = db.totalSales("2019-01-01 00:00:00", "2020-05-01 00:00:00");
             

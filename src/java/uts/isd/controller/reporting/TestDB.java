@@ -18,7 +18,7 @@ public class TestDB {
 
             Connection conn = connector.openConnection();
 
-            DaoReporting db = new DaoReporting(conn);
+            ReportingDAO db = new ReportingDAO(conn);
 
             ArrayList<TotalSalesRecord> records = db.totalSales("2019-01-01 00:00:00", "2020-05-01 00:00:00");
             
