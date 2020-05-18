@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uts.isd.model.dao;
 
 import uts.isd.model.Customer;
@@ -41,7 +36,7 @@ public class DBManager {
         ResultSet customerDetails = st.executeQuery(getCustomerDetailsQuery);
         
         // Move SQL cursor to the found users row
-        System.out.println(customerDetails.next());
+        customerDetails.next();
 
         // This while isn't doing anything since it always returns but im not 100% sure
         // while (customerDetails.next()) {

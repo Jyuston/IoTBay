@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uts.isd.controller;
+
 import java.sql.*;
 import java.util.logging.*;
 import uts.isd.model.Customer;
 import uts.isd.model.dao.*;
-
-/**
- *
- * @author denni
- */
 
 public class LoginController {
     public static Customer login(String email, String password) {
