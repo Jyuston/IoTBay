@@ -1,43 +1,22 @@
-<%-- 
-    Document    index
-    Created on  8 Apr 2020, 21907 pm
-    Author      denni
---%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="uts.isd.model.Customer"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
-        <link rel="stylesheet" href="css/bootstrap.css">
-        <link rel="stylesheet" href="css/workshop.css">
-        <title>IoT Bay</title>
-    </head>
+<head>
+    <title>Home</title>
+</head>
+<jsp:include page="templates/header.jsp"/>
 
-    <body>
-        <div class="container">        
-            <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light" style="background-color: #e3f2fd;">
-                <span class="navbar-brand mb-0 h1">IoTBay</span>
-                <div class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <a class="nav-item nav-link border-top active" href="#">Home</a>
-                </div>
-            </nav>
-            
-            <div class="row">
-                <div class="col">
-                    
-                </div>
-                
-                <div class="col--md-auto">
-                    <a class="btn btn-primary" href="Login.jsp">Login</a>
-                    <a class="btn btn-primary" href="Register.jsp">Register</a>
-                </div>
-                
-                <div class="col">
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+<div class="text-center text-white max-w-sm">
+    <em>Welcome to...</em>
+    <h1 class="display-1 font-weight-bold">IoT Bay!</h1>
+    <hr class="my-3 w-25 mx-auto">
+    <h5 class="font-weight-normal">An online store for every<em>thing</em> "Internet of <em>Things</em>".</h5>
+
+    <p class="mt-4 mb-1">
+        To continue, please Login or Register below.
+        <br />
+        <a href="login.jsp">Login</a> |
+        <a href="register.jsp">Register</a>
+    </p>
+</div>
+
+<jsp:include page="templates/footer.jsp"/>

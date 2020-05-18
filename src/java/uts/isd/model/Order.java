@@ -1,121 +1,98 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uts.isd.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.sql.Date;
+import java.util.LinkedList;
 
-/**
- *
- * @author denni
- */
 public class Order implements Serializable {
-    private int orderID;
-    private int customerID;
-    private String customerEmail;
-    private String deliveryAddress;
-    private String trackingNumber;
-    private double orderTotal;
-    private String orderStatus;
-    private LocalDateTime orderDateTime;
-    private String cardNumber;    
-    private ArrayList<ProductSnapshot> orderedProducts = new ArrayList<>();
+    private String ID;
+    private Customer customer;
+    private LinkedList<ProductSnapshot> orderedProducts;
+    private Date orderedOn;
+    private int orderTotal;
+    private String trackingID;
+    private String status;
+    private String shippingAddress;
+    private PaymentInformation paymentInfo;
 
-    //Constructor
-    public Order(int orderID, int customerID, String customerEmail, String deliveryAddress, String trackingNumber, double orderTotal, String orderStatus, LocalDateTime orderDateTime, String cardNumber) {
-        this.orderID = orderID;
-        this.customerID = customerID;
-        this.customerEmail = customerEmail;
-        this.deliveryAddress = deliveryAddress;
-        this.trackingNumber = trackingNumber;
+    public Order(Customer customer, LinkedList<ProductSnapshot> orderedProducts, int orderTotal, String shippingAddress, PaymentInformation paymentInfo) {
+        this.ID = "123abc"; // Hard coded for prototype
+        this.customer = customer;
+        this.orderedProducts = orderedProducts;
         this.orderTotal = orderTotal;
-        this.orderStatus = orderStatus;
-        this.orderDateTime = orderDateTime;
-        this.cardNumber = cardNumber;
+        this.shippingAddress = shippingAddress;
+        this.paymentInfo = paymentInfo;
     }
 
-    // Getters and Setters
-    public int getOrderID() {
-        return orderID;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setOrderID(int orderID) {
-        this.orderID = orderID;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    public int getCustomerID() {
-        return customerID;
-    }
-
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
-    }
-
-    public String getCustomerEmail() {
-        return customerEmail;
-    }
-
-    public void setCustomerEmail(String customerEmail) {
-        this.customerEmail = customerEmail;
-    }
-
-    public String getDeliveryAddress() {
-        return deliveryAddress;
-    }
-
-    public void setDeliveryAddress(String deliveryAddress) {
-        this.deliveryAddress = deliveryAddress;
-    }
-
-    public String getTrackingNumber() {
-        return trackingNumber;
-    }
-
-    public void setTrackingNumber(String trackingNumber) {
-        this.trackingNumber = trackingNumber;
-    }
-
-    public double getOrderTotal() {
-        return orderTotal;
-    }
-
-    public void setOrderTotal(double orderTotal) {
-        this.orderTotal = orderTotal;
-    }
-
-    public String getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
-    public LocalDateTime getOrderDateTime() {
-        return orderDateTime;
-    }
-
-    public void setOrderDateTime(LocalDateTime orderDateTime) {
-        this.orderDateTime = orderDateTime;
-    }
-
-    public String getCardNumber() {
-        return cardNumber;
-    }
-
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
-    public ArrayList<ProductSnapshot> getOrderedProducts() {
+    public LinkedList<ProductSnapshot> getOrderedProducts() {
         return orderedProducts;
     }
 
-    public void setOrderedProducts(ArrayList<ProductSnapshot> orderedProducts) {
+    public void setOrderedProducts(LinkedList<ProductSnapshot> orderedProducts) {
         this.orderedProducts = orderedProducts;
+    }
+
+    public PaymentInformation getPaymentInfo() {
+        return paymentInfo;
+    }
+
+    public void setPaymentInfo(PaymentInformation paymentInfo) {
+        this.paymentInfo = paymentInfo;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public Date getOrderedOn() {
+        return orderedOn;
+    }
+
+    public void setOrderedOn(Date orderedOn) {
+        this.orderedOn = orderedOn;
+    }
+
+    public int getOrderTotal() {
+        return orderTotal;
+    }
+
+    public void setOrderTotal(int orderTotal) {
+        this.orderTotal = orderTotal;
+    }
+
+    public String getTrackingID() {
+        return trackingID;
+    }
+
+    public void setTrackingID(String trackingID) {
+        this.trackingID = trackingID;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(String shippingAddress) {
+        this.shippingAddress = shippingAddress;
     }
 }
