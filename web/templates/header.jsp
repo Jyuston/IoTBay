@@ -26,7 +26,7 @@
             crossorigin="anonymous"
             defer></script>
 
-    <script src="${pageContext.request.contextPath}/script/app.js" defer>
+    <script src="${pageContext.request.contextPath}/scripts/app.js" defer>
     </script>
 </head>
 <body class="d-flex flex-column">
