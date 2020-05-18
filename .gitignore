@@ -5,3 +5,7 @@ nbproject/private
 
 # OSX Specific #
 .DS_Store
+
+# Other IDE ;) #
+out
+.idea
