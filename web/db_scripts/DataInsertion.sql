@@ -53,21 +53,60 @@ VALUES
     ('U-00000011','523 09152 33392 109','908', '04', '21')
 ;
 
+/* Inserting Tst Product and Order data */
+
+INSERT INTO PRODUCT_CATEGORIES (PRODUCT_CATEGORY, ARCHIVED)
+VALUES
+    ('Resistors', false),
+    ('Capacitors', false)
+;
+
+INSERT INTO PRODUCTS (PRODUCT_ID, PRODUCT_NAME, STOCK, PRODUCT_PRICE, PRODUCT_CATEGORY, PRODUCT_DESCRIPTION, ARCHIVED)
+VALUES
+    ('P-0000001', '0.5 Ohm Resistor', 10, 0.20, 'Resistors', 'This is a 0.5 ohn resistor', false),
+    ('P-0000002', '0.5 micro farahs capacitor', 20, 0.50, 'Capacitors', 'This is a micro farahs capacitor', false)
+;
+
+INSERT INTO ORDERS (ORDER_ID, ORDER_DATE_TIME, ORDER_SHIPPING_ADDRESS, ORDER_TOTAL, USER_ID, TRACKING_ID, CARD_NUMBER)
+VALUES
+    ('O-0000001', '2020-01-01 00:00:05', '21 Shipping Ave--Waterloo-2017-NSW', 23.99, 'U-00000002', '00000000000', '5244 8746 5799 2270')
+;
+
+INSERT INTO ORDER_LINE (ORDER_ID, PRODUCT_ID, QUANTITY_ORDERED, PRODUCT_PRICE)
+VALUES
+    ('O-0000001', 'P-0000001', 5, 0.30),
+    ('O-0000001', 'P-0000002', 5, 0.80)
+;
+
 /* Insert Dashboard Data */
 
 INSERT INTO DASHBOARD_ITEMS (ITEM_ID, ITEM_NAME, ITEM_DESCRIPTION)
 VALUES
     ('DI-0001', 'Total Revenue', 'Total revenue for the selected period'),
-    ('DI-0002', 'Total Sales Count', 'Total sales count for the selected period')
+    ('DI-0002', 'Total Sales Count', 'Total sales count for the selected period'),
+    ('DI-0003', 'Average Transaction Size', 'The average revenue from each transaction for the selected period'),
+    ('DI-0004', 'Sales per Category', 'A break down of sales per category'),
+    ('DI-0005', 'Sales per States', 'Total sales by state break down'),
+    ('DI-0006', 'Sales per States', 'Total sales by state break down'),
+    ('DI-0007', 'Stock per Category', 'Breakdown of stock per category'),
+    ('DI-0008', 'Low stock', 'Displays products with a stock level of less than 10'),
+    ('DI-0009', 'High stock', 'Displays products with a stock level of greather than 100')
 ;
 
 INSERT INTO DASHBOARDS (DASHBOARD_ID, DASHBOARD_NAME, DASHBOARD_DESCRIPTION)
 VALUES
-    ('D-0001', 'Dashboard 1', 'Test dashboard')
+    ('D-0001', 'Sales Dashboard', 'Sales breakdown report / dashboard'),
+    ('D-0002', 'Stock Dashboard', 'Stock breakdown report / dashboard')
 ;
 
 INSERT INTO DASHBOARD_LINE_ITEMS (DASHBOARD_ID, ITEM_ID)
 VALUES
     ('D-0001', 'DI-0001'),
-    ('D-0001', 'DI-0002')
+    ('D-0001', 'DI-0002'),
+    ('D-0001', 'DI-0003'),
+    ('D-0001', 'DI-0004'),
+    ('D-0001', 'DI-0005'),
+    ('D-0002', 'DI-0006'),
+    ('D-0001', 'DI-0007'),
+    ('D-0001', 'DI-0008')
 ;
