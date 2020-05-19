@@ -2,7 +2,9 @@ package uts.isd.model.reporting;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Set;
 
 public class TotalSales extends ReportElement implements Serializable {
 
@@ -31,7 +33,7 @@ public class TotalSales extends ReportElement implements Serializable {
 
     // Returns a hashtable object with a breakdown of sales by product category
     // Takes an ArrayList input of TotalSalesRecord objects
-    public Hashtable<String, Double> getTotalSalesByProductCategory(ArrayList<TotalSalesRecord> records) {
+    public Hashtable<String, Double> getTotalSalesByProductCategorySummary(ArrayList<TotalSalesRecord> records) {
         //Instantiate a hashtable with String keys, and Double values
         Hashtable<String, Double> dictionary = new Hashtable<String, Double>();
 
@@ -51,6 +53,73 @@ public class TotalSales extends ReportElement implements Serializable {
 
         // Returns the hash table to the caller
         return dictionary;
+    }
+
+    // Returns a HashMap of key-value pairs. Key - product category. Value - all products sold in that category.
+    public HashMap<String, ArrayList<OrderLineSnapshot>> getTotalSalesByProductCategory(ArrayList<OrderLineSnapshot> snapshots, ArrayList<String> categories) {
+        // Instatiate the HashMap
+        HashMap<String, ArrayList<OrderLineSnapshot>> dictionary = new HashMap<>();
+
+        // Generate keys
+        for (String string : categories) {
+            if (!dictionary.containsKey(string)) {
+                //add the key
+                //G
+                dictionary.put(string, new ArrayList<OrderLineSnapshot>());
+            }
+
+            else {
+                //add to its list
+                continue;
+            }
+        }
+
+        // Add to each key's value
+        for (OrderLineSnapshot snapshot : snapshots) {
+            // The key in the dictionary
+            String key = snapshot.getProductCategory();
+
+            // The productID of the snapshot
+            String productID = snapshot.getProductID();
+
+            // Retrieve the list at that key in the dictionary
+            ArrayList<OrderLineSnapshot> list = dictionary.get(key);
+            
+            // Check if the list is empty
+            int index = determineIndex(list, productID);
+            // If the index is 0 --> that product is not yet in the list.
+            if (index != -1) {
+                // The product is already in the list
+                OrderLineSnapshot lineItem = list.get(index);
+
+                // Increment that products quantity sold, and add to the revenue
+                lineItem.addUnitsSold(snapshot.getUnitsSold());
+                lineItem.addProductRevenue(snapshot.getProductRevenue());
+            }
+
+            // As the product is not in the list, we need to add it
+            else {
+                // add the snapshot directly to the list
+                list.add(snapshot);
+            }
+            
+            // Save the updates to the dictionary
+            dictionary.put(key, list);
+        }
+
+        return dictionary;
+    }
+
+    private int determineIndex(ArrayList<OrderLineSnapshot> items, String productID) {
+        // Returns the index of a certain product in the list
+        // Returns 0 if the product is not yet in the list
+        for (OrderLineSnapshot orderLineSnapshot : items) {
+            if (orderLineSnapshot.getProductID().equals(productID)) {
+                return items.indexOf(orderLineSnapshot);
+            }
+        }
+
+        return -1;
     }
 
     // Returns a hashtable object with a breakdown of sales by state

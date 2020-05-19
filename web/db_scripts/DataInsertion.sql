@@ -64,7 +64,9 @@ VALUES
 INSERT INTO PRODUCTS (PRODUCT_ID, PRODUCT_NAME, STOCK, PRODUCT_PRICE, PRODUCT_CATEGORY, PRODUCT_DESCRIPTION, ARCHIVED)
 VALUES
     ('P-0000001', '0.5 Ohm Resistor', 10, 0.20, 'Resistors', 'This is a 0.5 ohn resistor', false),
-    ('P-0000002', '0.5 micro farahs capacitor', 20, 0.50, 'Capacitors', 'This is a micro farahs capacitor', false)
+    ('P-0000002', '0.5 micro farahs capacitor', 20, 0.50, 'Capacitors', 'This is a micro farahs capacitor', false),
+    ('P-0000003', '0.7 Ohm Resistor', 10, 0.70, 'Resistors', 'This is a 0.7 ohm resistor', false),
+    ('P-0000004', '2.5 micro farahs capacitor', 20, 1.50, 'Capacitors', 'This is a micro farahs capacitor', false)
 ;
 
 INSERT INTO ORDERS (ORDER_ID, ORDER_DATE_TIME, ORDER_SHIPPING_ADDRESS, ORDER_TOTAL, USER_ID, TRACKING_ID, CARD_NUMBER)
@@ -75,10 +77,14 @@ VALUES
 
 INSERT INTO ORDER_LINE (ORDER_ID, PRODUCT_ID, QUANTITY_ORDERED, PRODUCT_PRICE)
 VALUES
-    ('O-0000001', 'P-0000001', 5, 0.30),
-    ('O-0000001', 'P-0000002', 8, 0.80),
-    ('O-0000002', 'P-0000001', 1, 0.30),
-    ('O-0000002', 'P-0000002', 2, 0.80)
+    ('O-0000001', 'P-0000001', 5, 0.20),
+    ('O-0000001', 'P-0000002', 8, 0.50),
+    ('O-0000001', 'P-0000003', 10, 0.70),
+    ('O-0000001', 'P-0000004', 2, 1.50),
+    ('O-0000002', 'P-0000001', 1, 0.20),
+    ('O-0000002', 'P-0000002', 2, 0.50),
+    ('O-0000002', 'P-0000003', 5, 0.70),
+    ('O-0000002', 'P-0000004', 2, 1.50)
 ;
 
 /* Insert Dashboard Data */
