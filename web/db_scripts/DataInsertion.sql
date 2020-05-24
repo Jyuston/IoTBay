@@ -64,7 +64,9 @@ VALUES
 INSERT INTO PRODUCTS (PRODUCT_ID, PRODUCT_NAME, STOCK, PRODUCT_PRICE, PRODUCT_CATEGORY, PRODUCT_DESCRIPTION, ARCHIVED)
 VALUES
     ('P-0000001', '0.5 Ohm Resistor', 10, 0.20, 'Resistors', 'This is a 0.5 ohn resistor', false),
-    ('P-0000002', '0.5 micro farahs capacitor', 20, 0.50, 'Capacitors', 'This is a micro farahs capacitor', false)
+    ('P-0000002', '0.5 micro farahs capacitor', 20, 0.50, 'Capacitors', 'This is a micro farahs capacitor', false),
+    ('P-0000003', '0.7 Ohm Resistor', 10, 0.70, 'Resistors', 'This is a 0.7 ohm resistor', false),
+    ('P-0000004', '2.5 micro farahs capacitor', 20, 1.50, 'Capacitors', 'This is a micro farahs capacitor', false)
 ;
 
 INSERT INTO ORDERS (ORDER_ID, ORDER_DATE_TIME, ORDER_SHIPPING_ADDRESS, ORDER_TOTAL, USER_ID, TRACKING_ID, CARD_NUMBER)
@@ -75,41 +77,20 @@ VALUES
 
 INSERT INTO ORDER_LINE (ORDER_ID, PRODUCT_ID, QUANTITY_ORDERED, PRODUCT_PRICE)
 VALUES
-    ('O-0000001', 'P-0000001', 5, 0.30),
-    ('O-0000001', 'P-0000002', 8, 0.80),
-    ('O-0000002', 'P-0000001', 1, 0.30),
-    ('O-0000002', 'P-0000002', 2, 0.80)
+    ('O-0000001', 'P-0000001', 5, 0.20),
+    ('O-0000001', 'P-0000002', 8, 0.50),
+    ('O-0000001', 'P-0000003', 10, 0.70),
+    ('O-0000001', 'P-0000004', 2, 1.50),
+    ('O-0000002', 'P-0000001', 1, 0.20),
+    ('O-0000002', 'P-0000002', 2, 0.50),
+    ('O-0000002', 'P-0000003', 5, 0.70),
+    ('O-0000002', 'P-0000004', 2, 1.50)
 ;
 
 /* Insert Dashboard Data */
 
-INSERT INTO DASHBOARD_ITEMS (ITEM_ID, ITEM_NAME, ITEM_DESCRIPTION)
+INSERT INTO REPORTS (REPORT_ID, REPORT_NAME, REPORT_DESCRIPTION, REPORT_START_DATE, REPORT_END_DATE)
 VALUES
-    ('DI-0001', 'Total Revenue', 'Total revenue for the selected period'),
-    ('DI-0002', 'Total Sales Count', 'Total sales count for the selected period'),
-    ('DI-0003', 'Average Transaction Size', 'The average revenue from each transaction for the selected period'),
-    ('DI-0004', 'Sales per Category', 'A break down of sales per category'),
-    ('DI-0005', 'Sales per States', 'Total sales by state break down'),
-    ('DI-0006', 'Sales per States', 'Total sales by state break down'),
-    ('DI-0007', 'Stock per Category', 'Breakdown of stock per category'),
-    ('DI-0008', 'Low stock', 'Displays products with a stock level of less than 10'),
-    ('DI-0009', 'High stock', 'Displays products with a stock level of greather than 100')
-;
-
-INSERT INTO DASHBOARDS (DASHBOARD_ID, DASHBOARD_NAME, DASHBOARD_DESCRIPTION)
-VALUES
-    ('D-0001', 'Sales Dashboard', 'Sales breakdown report / dashboard'),
-    ('D-0002', 'Stock Dashboard', 'Stock breakdown report / dashboard')
-;
-
-INSERT INTO DASHBOARD_LINE_ITEMS (DASHBOARD_ID, ITEM_ID)
-VALUES
-    ('D-0001', 'DI-0001'),
-    ('D-0001', 'DI-0002'),
-    ('D-0001', 'DI-0003'),
-    ('D-0001', 'DI-0004'),
-    ('D-0001', 'DI-0005'),
-    ('D-0002', 'DI-0006'),
-    ('D-0001', 'DI-0007'),
-    ('D-0001', 'DI-0008')
+    ('R-0000001', 'January 2020 Sales Report', 'Total sales for January', '2020-01-01 00:00:00', '2020-01-31 23:59:59'),
+    ('R-0000002', '02 2020 Sales Report', 'Feb Sales report', '2020-02-01 00:00:00', '2020-02-29 23:59:59')
 ;

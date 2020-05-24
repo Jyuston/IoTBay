@@ -13,4 +13,36 @@ public class ProductSnapshot implements Serializable {
         this.unitPrice = unitPrice;
         this.quantityOrdered = quantityOrdered;
     }
+
+    public Product getCurrentProduct() {
+        return currentProduct;
+    }
+
+    public void setCurrentProduct(Product currentProduct) {
+        this.currentProduct = currentProduct;
+    }
+
+    public double getPurchasedPrice() {
+        return purchasedPrice;
+    }
+
+    public void setPurchasedPrice(double purchasedPrice) {
+        this.purchasedPrice = purchasedPrice;
+    }
+
+    public double getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+    public int getQuantityOrdered() {
+        return quantityOrdered;
+    }
+
+    public void setQuantityOrdered(int quantityOrdered) {
+        this.quantityOrdered = quantityOrdered;
+    }
 }
