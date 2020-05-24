@@ -89,33 +89,8 @@ VALUES
 
 /* Insert Dashboard Data */
 
-INSERT INTO DASHBOARD_ITEMS (ITEM_ID, ITEM_NAME, ITEM_DESCRIPTION)
+INSERT INTO REPORTS (REPORT_ID, REPORT_NAME, REPORT_DESCRIPTION, REPORT_START_DATE, REPORT_END_DATE)
 VALUES
-    ('DI-0001', 'Total Revenue', 'Total revenue for the selected period'),
-    ('DI-0002', 'Total Sales Count', 'Total sales count for the selected period'),
-    ('DI-0003', 'Average Transaction Size', 'The average revenue from each transaction for the selected period'),
-    ('DI-0004', 'Sales per Category', 'A break down of sales per category'),
-    ('DI-0005', 'Sales per States', 'Total sales by state break down'),
-    ('DI-0006', 'Sales per States', 'Total sales by state break down'),
-    ('DI-0007', 'Stock per Category', 'Breakdown of stock per category'),
-    ('DI-0008', 'Low stock', 'Displays products with a stock level of less than 10'),
-    ('DI-0009', 'High stock', 'Displays products with a stock level of greather than 100')
-;
-
-INSERT INTO DASHBOARDS (DASHBOARD_ID, DASHBOARD_NAME, DASHBOARD_DESCRIPTION)
-VALUES
-    ('D-0001', 'Sales Dashboard', 'Sales breakdown report / dashboard'),
-    ('D-0002', 'Stock Dashboard', 'Stock breakdown report / dashboard')
-;
-
-INSERT INTO DASHBOARD_LINE_ITEMS (DASHBOARD_ID, ITEM_ID)
-VALUES
-    ('D-0001', 'DI-0001'),
-    ('D-0001', 'DI-0002'),
-    ('D-0001', 'DI-0003'),
-    ('D-0001', 'DI-0004'),
-    ('D-0001', 'DI-0005'),
-    ('D-0002', 'DI-0006'),
-    ('D-0001', 'DI-0007'),
-    ('D-0001', 'DI-0008')
+    ('R-0000001', 'January 2020 Sales Report', 'Total sales for January', '2020-01-01 00:00:00', '2020-01-31 23:59:59'),
+    ('R-0000002', '02 2020 Sales Report', 'Feb Sales report', '2020-02-01 00:00:00', '2020-02-29 23:59:59')
 ;

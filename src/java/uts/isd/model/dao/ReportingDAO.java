@@ -57,7 +57,8 @@ public class ReportingDAO {
         String query = ("select o.PRODUCT_ID as id, PRODUCT_NAME, PRODUCT_CATEGORY as category, QUANTITY_ORDERED, (o.PRODUCT_PRICE * QUANTITY_ORDERED) as PRICE " +
             "from ORDER_LINE o inner join PRODUCTS on o.PRODUCT_ID = products.PRODUCT_ID " +
             "inner join ORDERS on o.ORDER_ID = ORDERS.ORDER_ID " +
-            "where ORDER_DATE_TIME > '" + beginTimeStamp + "' AND ORDERS.ORDER_DATE_TIME < '" + endTimeStamp + "'");
+            "where ORDER_DATE_TIME > '" + beginTimeStamp + "' AND ORDERS.ORDER_DATE_TIME < '" + endTimeStamp + "'" + 
+            "order by category, id");
         
         // Execute the query and store the results in the result set
         ResultSet queryResult = st.executeQuery(query);
