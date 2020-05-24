@@ -59,6 +59,7 @@ public class DBManager {
         LinkedList<Order> customerOrders = new LinkedList<>();
 
         return new Customer(
+                "TE",
                 customerDetails.getString("USER_F_NAME"),
                 customerDetails.getString("USER_L_NAME"),
                 customerDetails.getString("USER_EMAIL"),
@@ -100,6 +101,7 @@ public class DBManager {
 
         // Return the built Customer object
         return new Customer(
+                "TE",
                 firstName,
                 lastName,
                 email,
