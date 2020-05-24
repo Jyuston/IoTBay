@@ -19,6 +19,7 @@
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/main.jsp">Main</a>
                 <% if (user != null) { %>
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/edit.jsp">Edit Profile</a>
+                <a class="nav-item nav-link" href="${pageContext.request.contextPath}/reporting.jsp">Reporting</a>
                 <% } else { %>
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/register.jsp">Register</a>
                 <% } %>

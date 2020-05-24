@@ -6,13 +6,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Set;
 
-public class TotalSales extends ReportElement implements Serializable {
-
-    public TotalSales(String elementName, String elementDescription) {
-        super(elementName, elementDescription);
-        // TODO Auto-generated constructor stub
-        // INIT Commit
-    }
+public class SalesAnalyser implements Serializable {
 
     public void use(ArrayList<TotalSalesRecord> records) {
         //might be used
@@ -22,13 +16,39 @@ public class TotalSales extends ReportElement implements Serializable {
     // Takes an ArrayList input of TotalSalesRecord objects
     public double getTotalSalesValue(ArrayList<TotalSalesRecord> records) {
         double total = 0.00;
-
+    
         // Calculate the sum by iterating through the list
         for (TotalSalesRecord record : records) {
             total += record.getProductPrice() * record.getQuantityOrdered();
         }
 
         return total;
+    }
+
+    public String getTopCategory(ArrayList<TotalSalesRecord> records) {
+        Hashtable<String, Double> dictionary = getTotalSalesByProductCategorySummary(records);
+
+        String topCategory = "";
+        Double salesRevenue = 0.00;
+
+        Set<String> dictionaryKeys = dictionary.keySet();
+            
+        for (String key : dictionaryKeys) {
+            if (dictionary.get(key) > salesRevenue) {
+                topCategory = key;
+                salesRevenue = dictionary.get(key);
+            }
+            
+        }  
+
+        return topCategory;
+    }
+
+    public Double getTopCategoryRevenue(String category, ArrayList<TotalSalesRecord> records) {
+
+        Hashtable<String, Double> dictionary = getTotalSalesByProductCategorySummary(records);
+
+        return dictionary.get(category);
     }
 
     // Returns a hashtable object with a breakdown of sales by product category

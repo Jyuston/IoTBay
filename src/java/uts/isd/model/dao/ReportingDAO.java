@@ -1,6 +1,8 @@
 package uts.isd.model.dao;
+
 import uts.isd.model.reporting.OrderLineSnapshot;
-import uts.isd.model.reporting.TotalSales;
+import uts.isd.model.reporting.Report;
+import uts.isd.model.reporting.SalesAnalyser;
 import uts.isd.model.reporting.TotalSalesRecord;
 import uts.isd.model.Customer;
 import uts.isd.model.ProductSnapshot;
@@ -71,5 +73,93 @@ public class ReportingDAO {
         }
 
         return snapshots;
+    }
+
+    public ArrayList<Report> reports() throws SQLException {
+        String query = "select * from reports";
+        
+        // Execute the query and store the results in a result set
+        ResultSet queryResult = st.executeQuery(query);
+
+        ArrayList<Report> reports = new ArrayList<>();
+
+        while (queryResult.next()) {
+            Report report = new Report(queryResult.getString(2), queryResult.getString(3), queryResult.getString(4), queryResult.getString(5));
+            reports.add(report);
+        }
+
+        return reports;
+    }
+
+    public ArrayList<String> getReportNames() throws SQLException {
+        String query = "select REPORT_NAME from REPORTS";
+
+        ResultSet queryResult = st.executeQuery(query);
+
+        ArrayList<String> reportNames = new ArrayList<>();
+
+        while (queryResult.next()) {
+            reportNames.add(queryResult.getString(1));
+        }
+
+        return reportNames;
+    }
+
+    public void createReport(String name, String description, String startDate, String endDate) throws SQLException {
+        String reportID = generateID();
+
+        String query = ("insert into REPORTS (REPORT_ID, REPORT_NAME, REPORT_DESCRIPTION, REPORT_START_DATE, REPORT_END_DATE) values " +
+            "('" + reportID + "', '" + name + "', '" + description + "', '" + startDate + " 00:00:00', '" + endDate + " 23:59:59')");
+
+        st.executeUpdate(query);
+    }
+
+    private String generateID() throws SQLException {
+        // Build the select query that will retrieve all USER_IDs from the database
+        String getIDs = "select REPORT_ID from REPORTS";
+
+        // Execute the query against the database
+        ResultSet reportIDResult = st.executeQuery(getIDs);
+
+        // Instiate a list to store the IDs (for easy iteration)
+        ArrayList<String> reportIDs = new ArrayList<String>();
+
+        // Add the IDs to the list
+        while (reportIDResult.next()) {
+            reportIDs.add(reportIDResult.getString(1));
+        }
+
+        // Instantiate a new random number generator object
+        Random rand = new Random();
+
+        // Set the upper bound of the object
+        int upperbound = 99999999;
+
+        // Generate the random number
+        int random = rand.nextInt(upperbound);
+
+        // Check that the ID is in fact unique (using a helper method)
+        while (!checkUnique(Integer.toString(random), reportIDs)) {
+            random = rand.nextInt(upperbound);
+        }
+
+        // Return the final Report for the new record
+        return "R-" + random;
+    }
+
+    private boolean checkUnique(String value, ArrayList<String> collection) {
+        // Checking to see if the supplied value already exists
+        return !collection.contains(value);
+    }
+
+    public Report getReport(String name) throws SQLException {
+        String query = "select REPORT_NAME, REPORT_DESCRIPTION, REPORT_START_DATE, REPORT_END_DATE from REPORTS where REPORT_NAME = '" + name + "'";
+
+        ResultSet queryResult = st.executeQuery(query);
+
+        queryResult.next();
+
+        Report r = new Report(queryResult.getString(1), queryResult.getString(2), queryResult.getString(3), queryResult.getString(4));
+        return r;
     }
 }

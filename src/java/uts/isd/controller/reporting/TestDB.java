@@ -6,7 +6,8 @@ import java.util.*;
 import java.util.logging.*;
 import uts.isd.model.dao.*;
 import uts.isd.model.reporting.OrderLineSnapshot;
-import uts.isd.model.reporting.TotalSales;
+import uts.isd.model.reporting.Report;
+import uts.isd.model.reporting.SalesAnalyser;
 import uts.isd.model.reporting.TotalSalesRecord;
 
 public class TestDB {
@@ -34,9 +35,15 @@ public class TestDB {
 
             // DEBUG - Checking Total Revenue calculation function
 
-            TotalSales salesObjReporter = new TotalSales("tst", "tst");
+            SalesAnalyser salesObjReporter = new SalesAnalyser();
             System.out.println("============ Printing out total revenue for the period ============");
             System.out.println("The total sales value was: $" + salesObjReporter.getTotalSalesValue(records));
+
+            // DEBUG - Checking Top Category
+
+            System.out.println("============ Printing out top selling category ============");
+            System.out.println("Top selling category: " + salesObjReporter.getTopCategory(records));
+            System.out.println("Revenue = " + salesObjReporter.getTopCategoryRevenue(salesObjReporter.getTopCategory(records), records));
 
             // DEBUG - Checking Sales Breakdown by State functionality
             System.out.println("============ Printing out sales by state ============");
@@ -72,6 +79,13 @@ public class TestDB {
                 }
             }
 
+            // DEBUG - Get Reports
+            System.out.println("============ Printing out existing reports ============");
+            ArrayList<Report> reports = db.reports();
+            for (Report report : reports) {
+                report.printReportInfo();
+            }
+            
             connector.closeConnection();
 
         } 
