@@ -2,6 +2,8 @@ package uts.isd.model.reporting;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 
 import uts.isd.model.dao.ReportingDAO;
 
@@ -76,5 +78,17 @@ public class Report implements Serializable {
 
     public ProductSummary getTopSellingItem(ArrayList<ProductSummary> summaryArray) {
         return salesAnalyser.getTopProduct(summaryArray);
+    }
+
+    public Hashtable<String, Double> getSalesByState() {
+        return salesAnalyser.getSalesBySate(saleRecords);
+    }
+
+    public Hashtable<String, Double> getSalesbyCategory() {
+        return salesAnalyser.getSalesByCategory(saleRecords);
+    }
+
+    public HashMap<String, ArrayList<ProductSummary>> getSalesByCategoryByProduct(ArrayList<ProductSummary> summaryArray, ArrayList<String> categories) {
+        return salesAnalyser.getSalesByCategoryByProduct(summaryArray, categories);
     }
 }

@@ -35,4 +35,5 @@ hr {
 
 .table {
     color: var(--text);
+    table-layout: fixed;
 }

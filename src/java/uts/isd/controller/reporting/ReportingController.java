@@ -3,13 +3,20 @@ package uts.isd.controller.reporting;
 import java.sql.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.logging.*;
 import uts.isd.model.dao.*;
 import uts.isd.model.reporting.ProductSummary;
 import uts.isd.model.reporting.Report;
 import uts.isd.model.reporting.SalesAnalyser;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class ReportingController {
+public class ReportingController extends HttpServlet {
     private static final ReportingDAO DAO = new ReportingDAO();
     
     public ArrayList<Report> getReports() throws SQLException {
@@ -66,5 +73,17 @@ public class ReportingController {
 
     public String topSellingProductID(Report r) throws SQLException {
         return topSellingItem(r).getProductID();
+    }
+
+    public Hashtable<String, Double> salesByState(Report r) throws SQLException {
+        return r.getSalesByState();
+    }
+
+    public Hashtable<String, Double> salesByCategory(Report r) throws SQLException {
+        return r.getSalesbyCategory();
+    }
+
+    public HashMap<String, ArrayList<ProductSummary>> salesByCategorybyProduct(Report r) throws SQLException {
+        return r.getSalesByCategoryByProduct(DAO.productSnapshots(r.getStartDate(), r.getEndDate()), DAO.categories(r.getStartDate(), r.getEndDate()));
     }
 }

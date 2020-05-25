@@ -7,7 +7,8 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ page import="uts.isd.model.reporting.*" %>
 <%@ page import="uts.isd.controller.reporting.*" %>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.text.*" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -107,7 +108,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Total Selling Category</h5>
+                    <h5 class="card-title">Top Selling Category</h5>
                     <p class="card-text">Name: ${topCategory} </p>
                     <p class="card-text">Revenue: $ ${topCategoryRevenue} </p>
                 </div>
@@ -117,14 +118,116 @@
         <br>
         <br>
 
-        <h2> Sales Distribution Overiview</h2>
+        <h2> Sales Distribution Overview</h2>
+        <h3> Sales by State</h3>
+        <table class="table table-bordered table-sm">
+            <thead class="thead-light">
+                <th scope="col">State</th>
+                <th scope="col">Revenue</th>
+            </thead>
+            <tbody>
+                <%
+                    Hashtable<String, Double> salesByState = rc.salesByState(report);
+                    Set<String> dictionaryKeys = salesByState.keySet();
+                    DecimalFormat formatter = new DecimalFormat("####0.00");
+
+                    for (String key : dictionaryKeys) {
+                        String state = key;
+                        String revenue = formatter.format(salesByState.get(key));
+                        session.setAttribute("state", state);
+                        session.setAttribute("revenue", revenue);
+                %>
+                    <tr>
+                        <td>${state}</td>
+                        <td>$ ${revenue}</td>
+                    </tr>
+                <%     
+                    }
+                %>
+            </tbody>
+        </table>
+
+        <br>
+
         <h3> Sales by Category</h3>
-            
-        <h3> Sales by Sate</h3>
+        <table class="table table-bordered table-sm">
+            <thead class="thead-light">
+                <th scope="col">Category</th>
+                <th scope="col">Revenue</th>
+            </thead>
+            <tbody>
+                <%
+                    Hashtable<String, Double> salesByCategory = rc.salesByCategory(report);
+                    Set<String> dictionaryKeys2 = salesByCategory.keySet();
+                    DecimalFormat formatter2 = new DecimalFormat("####0.00");
+
+                    for (String key : dictionaryKeys2) {
+                        String category = key;
+                        String revenue = formatter2.format(salesByCategory.get(key));
+                        session.setAttribute("category", category);
+                        session.setAttribute("revenue", revenue);
+                %>
+                    <tr>
+                        <td>${category}</td>
+                        <td>$ ${revenue}</td>
+                    </tr>
+                <%     
+                    }
+                %>
+            </tbody>
+        </table>
         <br>
         <br>
 
         <h2> Sales by Category by Product</h2>
+        <%
+            HashMap<String, ArrayList<ProductSummary>> salesByCategorybyProduct = rc.salesByCategorybyProduct(report);
+            Set<String> dictionaryKeys3 = salesByCategorybyProduct.keySet();
+            DecimalFormat formatter3 = new DecimalFormat("####0.00");
+
+            for (String key : dictionaryKeys3) {
+                String category = key;
+                session.setAttribute("category", category);
+        %>
+            <h4> ${category}</h4>
+            <div class="table-responsive-sm">
+            <table class="table table-bordered table-sm">
+                <thead class="thead-light">
+                    <th scope="col">Product ID</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Units Sold</th>
+                    <th scope="col">Total Revenue</th>
+                </thead>
+                <tbody>
+            <%
+                ArrayList<ProductSummary> list = salesByCategorybyProduct.get(category);
+                for (ProductSummary p : list) {
+                    String productID = p.getProductID();
+                    String productName = p.getProductName();
+                    String units = Integer.toString(p.getUnitsSold());
+                    String revenue = formatter3.format(p.getProductRevenue());
+
+                    session.setAttribute("productID", productID);
+                    session.setAttribute("productName", productName);
+                    session.setAttribute("units", units);
+                    session.setAttribute("revenue", revenue);
+                
+            %>
+                <tr>
+                    <td>${productID}</td>
+                    <td>${productName}</td>
+                    <td>${units}</td>
+                    <td>$ ${revenue}</td>
+                </tr>
+            <%
+                }
+            %>
+            </tbody>
+            </table>
+            </div>
+        <%
+            }
+        %>
     </body>
         
 
