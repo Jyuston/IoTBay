@@ -1,12 +1,9 @@
 package uts.isd.model;
 
-import uts.isd.controller.LoginController;
 import uts.isd.model.dao.CustomerDAO;
 
 import java.sql.SQLException;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Customer extends Account {
     private String contactNumber;
@@ -42,13 +39,15 @@ public class Customer extends Account {
     public void setAnonymous(boolean anonymous) { isAnonymous = anonymous; }
 
     public static Customer create(String firstName, String lastName, String email, String password, String contactNumber, Address address, PaymentInformation paymentInfo) {
-        String ID;
-        try {
-            ID = DAO.getNextAvailableID();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+//        String ID;
+//        try {
+//            ID = DAO.getNextAvailableID();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+
+        String ID = "123";
 
         Customer createdCustomer = new Customer(
                 ID,
@@ -73,7 +72,7 @@ public class Customer extends Account {
         return createdCustomer;
     }
 
-    public static Customer findUserByEmailPass(String email, String password) {
+    public static Customer findByEmailPass(String email, String password) {
         try {
             return DAO.get(email, password);
         } catch (SQLException err) {

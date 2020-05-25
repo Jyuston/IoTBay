@@ -6,7 +6,6 @@ public class LoginController {
     public static Customer login(String email, String password) {
         // Can do validation here in the controllers
 
-        return Customer.findUserByEmailPass(email, password);
+        return Customer.findByEmailPass(email, password);
     }
-
 }
