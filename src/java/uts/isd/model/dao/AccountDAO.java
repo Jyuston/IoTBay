@@ -26,16 +26,17 @@ public class AccountDAO {
     
     public static String getAccountType(String email, String password) throws SQLException{
         Statement st = dbConnection.createStatement();
-        String getAccTypeQuery =
+        String accountTypeQuery =
             "SELECT ACCOUNT_TYPE FROM ACCOUNTS " +
             "WHERE USER_EMAIL LIKE '" + email + "' " +
             "AND PASSWORD LIKE '" + password + "'"; 
         
-        ResultSet accountType = st.executeQuery(getAccTypeQuery);
-        if (!accountType.next())
+        ResultSet accountTypeRs = st.executeQuery(accountTypeQuery);
+
+        if (!accountTypeRs.next())
            return null;
         
-        return accountType.getString("ACCOUNT_TYPE");
+        return accountTypeRs.getString("ACCOUNT_TYPE");
     } 
     
 }
