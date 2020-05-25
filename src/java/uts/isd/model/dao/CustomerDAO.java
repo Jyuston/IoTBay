@@ -13,11 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CustomerDAO implements DAO<Customer> {
-    private final Connection dbConnection;
-
-    public CustomerDAO() {
-        dbConnection = DBConnector.getConnection();
-    }
+    private static final Connection dbConnection = DBConnector.getConnection();
 
     public Customer get(String email, String password) throws SQLException {
         // Setting up the initial SQL query to find the customer by email and password
@@ -125,21 +121,6 @@ public class CustomerDAO implements DAO<Customer> {
     @Override
     public void delete(Customer customer) throws SQLException {
     }
-
-//    // Will probably change this later. Very basic rn.
-//    public  String getNextAvailableID() throws SQLException {
-//        Statement st = dbConnection.createStatement();
-//
-//        String accountIDsQuery = "SELECT USER_ID FROM ACCOUNTS";
-//        ResultSet accountIDsRs = st.executeQuery(accountIDsQuery);
-//
-//        if (!accountIDsRs.last())
-//            return "U-1";
-//
-//        String lastID = accountIDsRs.getString("USER_ID");
-//        int lastNumber = Integer.parseInt(lastID.substring(2));
-//        return "U-" + (lastNumber + 1);
-//    }
 
     // Helpers
     private Customer createCustomerObject(ResultSet customerRs) throws SQLException {

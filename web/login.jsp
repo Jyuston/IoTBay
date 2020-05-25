@@ -13,11 +13,10 @@
     if (submitted != null) {
         String enteredEmail = request.getParameter("email");
         String enteredPassword = request.getParameter("password");
-        
-        Customer customer = LoginController.login(enteredEmail, enteredPassword);
+        Account account = LoginController.login(enteredEmail,enteredPassword);
         
         if (customer != null) {
-            session.setAttribute("user", customer);
+            session.setAttribute("user", account);
 %>
 
 <div class="row">
@@ -31,7 +30,7 @@
     <div class="col"></div>
 </div>
 
-<% } else { %>
+        <% } else { %>
 
 <div class="row">
     <div class="col"></div>

@@ -1,6 +1,9 @@
 package uts.isd.model;
 
 import java.io.Serializable;
+import java.sql.SQLException;
+import uts.isd.model.dao.AccountDAO;
+
 
 public abstract class Account implements Serializable {
     private String ID;
@@ -16,7 +19,12 @@ public abstract class Account implements Serializable {
         this.email = email;
         this.password = password;
     }
-
+    
+    public static String getAccountType(String email, String password) throws SQLException{
+        String accType = AccountDAO.getAccountType(email, password);
+        return accType;
+    }
+    
     public String getID() {
         return ID;
     }

@@ -1,6 +1,6 @@
 package uts.isd.model.dao;
 
-import uts.isd.model.*;
+import uts.isd.model.Staff;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,11 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class StaffDAO implements DAO<Staff> {
-    private final Connection dbConnection;
-
-    public StaffDAO() {
-        dbConnection = DBConnector.getConnection();
-    }
+    private static final Connection dbConnection = DBConnector.getConnection();
 
     public Staff get(String email, String password) throws SQLException {
         // Setting up the initial SQL query to find the customer by email and password
