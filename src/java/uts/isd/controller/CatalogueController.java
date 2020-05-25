@@ -1,17 +1,35 @@
 
 package uts.isd.controller;
 
+import java.sql.SQLException;
 import uts.isd.model.Product;
+import uts.isd.model.dao.DAO;
+import uts.isd.model.dao.ProductDAO;
 
 public class CatalogueController {
-    public static Product registerProduct(String name, int stock, double price, String category, boolean archived) {
-        // validateInfo() // Example
+   public static Product create(String name, int stock, double price, String category, boolean archived) {
+        String ID;
+        try {
+            ID = ProductDAO.getNextAvailableID();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
 
-        Product createdProduct = Product.create(name, stock, price, category, archived);
+        Product createdProduct = new Product(
+                name,
+                stock,
+                price,
+                category,
+                archived
+        );
 
-        // redundant but shows that u can do checks in the controller
-        if (createdProduct == null)
-            System.err.println("Create product failed");
+        try {
+            DAO.save(createdProduct);
+        } catch (SQLException err) {
+            err.printStackTrace();
+            return null;
+        }
 
         return createdProduct;
     }
