@@ -5,10 +5,10 @@ import java.text.DecimalFormat;
 import java.util.*;
 import java.util.logging.*;
 import uts.isd.model.dao.*;
-import uts.isd.model.reporting.OrderLineSnapshot;
+import uts.isd.model.reporting.ProductSummary;
 import uts.isd.model.reporting.Report;
 import uts.isd.model.reporting.SalesAnalyser;
-import uts.isd.model.reporting.TotalSalesRecord;
+import uts.isd.model.reporting.OrderLineItem;
 
 public class TestDB {
     // This is a test controller. Used for CLI debugging
@@ -25,10 +25,10 @@ public class TestDB {
 
             // DEBUG - Checking that sale records are being retrieved from the db
 
-            ArrayList<TotalSalesRecord> records = db.totalSales("2019-01-01 00:00:00", "2020-05-01 00:00:00");
+            ArrayList<OrderLineItem> records = db.totalSales("2019-01-01 00:00:00", "2020-05-01 00:00:00");
             
             System.out.println("============ Printing out order information + order_line information ============");
-            for (TotalSalesRecord totalSalesRecord : records) {
+            for (OrderLineItem totalSalesRecord : records) {
                 System.out.println(totalSalesRecord.toString());
                 System.out.println("State: " + totalSalesRecord.getState());
             }
@@ -48,7 +48,7 @@ public class TestDB {
             // DEBUG - Checking Sales Breakdown by State functionality
             System.out.println("============ Printing out sales by state ============");
 
-            Hashtable<String, Double> tst = salesObjReporter.getTotalSalesByState(records);
+            Hashtable<String, Double> tst = salesObjReporter.getSalesBySate(records);
 
             Set<String> dictionaryKeys = tst.keySet();
             DecimalFormat df = new DecimalFormat("####0.00");
@@ -58,7 +58,7 @@ public class TestDB {
 
             // DEBUG - Checking Sales Summary by Category functionality
             System.out.println("============ Printing out sales by category summary ============");
-            Hashtable<String, Double> tst1 = salesObjReporter.getTotalSalesByProductCategorySummary(records);
+            Hashtable<String, Double> tst1 = salesObjReporter.getSalesByCategory(records);
 
             Set<String> dictionaryKeys1 = tst1.keySet();
             DecimalFormat df1 = new DecimalFormat("####0.00");
@@ -68,16 +68,25 @@ public class TestDB {
 
             // DEBUG - Checking Sales by Category by Product functionality
             System.out.println("============ Printing out sales by category by product ============");
-            HashMap<String, ArrayList<OrderLineSnapshot>> tst2 = salesObjReporter.getTotalSalesByProductCategory(db.productSnapshots("2019-01-01 00:00:00", "2020-05-01 00:00:00"), db.categories("2019-01-01 00:00:00", "2020-05-01 00:00:00"));
+            HashMap<String, ArrayList<ProductSummary>> tst2 = salesObjReporter.getSalesByCategoryByProduct(db.productSnapshots("2019-01-01 00:00:00", "2020-05-01 00:00:00"), db.categories("2019-01-01 00:00:00", "2020-05-01 00:00:00"));
             //Print out the values
             Set<String> dictionaryKeys2 = tst2.keySet();
             for (String string : dictionaryKeys2) {
-                ArrayList<OrderLineSnapshot> list = tst2.get(string);
+                ArrayList<ProductSummary> list = tst2.get(string);
 
-                for (OrderLineSnapshot s : list) {
+                for (ProductSummary s : list) {
                     s.printObj();
                 }
             }
+
+            // DEBUG - Checking Top Product
+            System.out.println("============ Printing out top product ============");
+            ProductSummary topProduct = salesObjReporter.getTopProduct(db.productSnapshots("2019-01-01 00:00:00", "2020-05-01 00:00:00"));
+
+            DecimalFormat df2 = new DecimalFormat("####0.00");
+            System.out.println("Top Product: " + topProduct.getProductName());
+            System.out.println("Quantity Sold: " + topProduct.getUnitsSold());
+            System.out.println("Revenue: $" + df2.format(topProduct.getProductRevenue()));
 
             // DEBUG - Get Reports
             System.out.println("============ Printing out existing reports ============");

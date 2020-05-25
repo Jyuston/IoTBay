@@ -9,7 +9,7 @@ import java.util.logging.*;
 import uts.isd.model.dao.DBConnector;
 import uts.isd.model.dao.ReportingDAO;
 import uts.isd.model.reporting.SalesAnalyser;
-import uts.isd.model.reporting.TotalSalesRecord;
+import uts.isd.model.reporting.OrderLineItem;
 
 public class TotalSalesController implements Serializable {
     // Controller for Total Sales
@@ -24,12 +24,12 @@ public class TotalSalesController implements Serializable {
 
             ReportingDAO db = new ReportingDAO(conn);
 
-            ArrayList<TotalSalesRecord> records = db.totalSales("2019-01-01 00:00:00", "2020-05-01 00:00:00");
+            ArrayList<OrderLineItem> records = db.totalSales("2019-01-01 00:00:00", "2020-05-01 00:00:00");
             
 
             SalesAnalyser salesObjReporter = new SalesAnalyser();
 
-            Hashtable<String, Double> tst = salesObjReporter.getTotalSalesByState(records);
+            Hashtable<String, Double> tst = salesObjReporter.getSalesBySate(records);
 
             Set<String> dictionaryKeys = tst.keySet();
             

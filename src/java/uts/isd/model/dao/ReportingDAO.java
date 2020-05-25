@@ -1,9 +1,9 @@
 package uts.isd.model.dao;
 
-import uts.isd.model.reporting.OrderLineSnapshot;
+import uts.isd.model.reporting.ProductSummary;
 import uts.isd.model.reporting.Report;
 import uts.isd.model.reporting.SalesAnalyser;
-import uts.isd.model.reporting.TotalSalesRecord;
+import uts.isd.model.reporting.OrderLineItem;
 import uts.isd.model.Customer;
 import uts.isd.model.ProductSnapshot;
 
@@ -17,7 +17,7 @@ public class ReportingDAO {
         st = conn.createStatement();
     }
 
-    public ArrayList<TotalSalesRecord> totalSales(String beginTimeStamp, String endTimeStamp) throws SQLException {
+    public ArrayList<OrderLineItem> totalSales(String beginTimeStamp, String endTimeStamp) throws SQLException {
         // Set up the inital SQL query hre
         String query = ("select ORDER_LINE.PRODUCT_ID, PRODUCT_NAME, PRODUCT_CATEGORY, QUANTITY_ORDERED, ORDER_LINE.PRODUCT_PRICE, ORDER_SHIPPING_ADDRESS " +
             "from ORDERS inner join ORDER_LINE on ORDERS.ORDER_ID = ORDER_LINE.ORDER_ID " +
@@ -27,10 +27,10 @@ public class ReportingDAO {
         // Execute the query and store the results in the result set
         ResultSet queryResult = st.executeQuery(query);
 
-        ArrayList<TotalSalesRecord> queryResultsStructured = new ArrayList<TotalSalesRecord>();
+        ArrayList<OrderLineItem> queryResultsStructured = new ArrayList<OrderLineItem>();
         
         while (queryResult.next()) {
-            TotalSalesRecord record = new TotalSalesRecord(queryResult.getString(1), queryResult.getString(2), queryResult.getString(3), queryResult.getInt(4), queryResult.getDouble(5), queryResult.getString(6));            
+            OrderLineItem record = new OrderLineItem(queryResult.getString(1), queryResult.getString(2), queryResult.getString(3), queryResult.getInt(4), queryResult.getDouble(5), queryResult.getString(6));            
             queryResultsStructured.add(record);
         }
 
@@ -55,7 +55,7 @@ public class ReportingDAO {
         return categories;
     }
 
-    public ArrayList<OrderLineSnapshot> productSnapshots(String beginTimeStamp, String endTimeStamp) throws SQLException {
+    public ArrayList<ProductSummary> productSnapshots(String beginTimeStamp, String endTimeStamp) throws SQLException {
         String query = ("select o.PRODUCT_ID as id, PRODUCT_NAME, PRODUCT_CATEGORY as category, QUANTITY_ORDERED, (o.PRODUCT_PRICE * QUANTITY_ORDERED) as PRICE " +
             "from ORDER_LINE o inner join PRODUCTS on o.PRODUCT_ID = products.PRODUCT_ID " +
             "inner join ORDERS on o.ORDER_ID = ORDERS.ORDER_ID " +
@@ -65,10 +65,10 @@ public class ReportingDAO {
         // Execute the query and store the results in the result set
         ResultSet queryResult = st.executeQuery(query);
 
-        ArrayList<OrderLineSnapshot> snapshots = new ArrayList<>();
+        ArrayList<ProductSummary> snapshots = new ArrayList<>();
 
         while (queryResult.next()) {
-            OrderLineSnapshot snapshot = new OrderLineSnapshot(queryResult.getString(1), queryResult.getString(2), queryResult.getString(3), queryResult.getInt(4), queryResult.getDouble(5));
+            ProductSummary snapshot = new ProductSummary(queryResult.getString(1), queryResult.getString(2), queryResult.getString(3), queryResult.getInt(4), queryResult.getDouble(5));
             snapshots.add(snapshot);
         }
 

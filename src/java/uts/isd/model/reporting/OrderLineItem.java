@@ -2,7 +2,7 @@ package uts.isd.model.reporting;
 
 import java.io.Serializable;
 
-public class TotalSalesRecord implements Serializable {
+public class OrderLineItem implements Serializable {
     private final String productID;
     private final String productName;
     private final String productCategory;
@@ -10,7 +10,7 @@ public class TotalSalesRecord implements Serializable {
     private final double productPrice;
     private final String deliveryAddress;
 
-    public TotalSalesRecord (String productID, String productName, String productCategory, int quantityOrdered, double productPrice, String deliveryAddress) {
+    public OrderLineItem (String productID, String productName, String productCategory, int quantityOrdered, double productPrice, String deliveryAddress) {
         this.productID = productID;
         this.productName = productName;
         this.productCategory = productCategory;
