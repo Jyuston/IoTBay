@@ -10,7 +10,8 @@ public class DBConnector {
     private static Connection dbConnection = null;
 
     /**
-     * Get the database connection
+     * Returns the singleton database connection to be used throughout the app.
+     * Will create an initial connection if no connection had been made previously.
      *
      * @return Connection object
      */
