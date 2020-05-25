@@ -3,17 +3,23 @@ package uts.isd.model.reporting;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import uts.isd.model.dao.ReportingDAO;
+
 public class Report implements Serializable {
     private String name;
     private String description;
     private String startDate;
     private String endDate;
+    private ArrayList<OrderLineItem> saleRecords;
+    private SalesAnalyser salesAnalyser = new SalesAnalyser();
+    
 
-    public Report (String reportName, String reportDescription, String startDate, String endDate) {
+    public Report (String reportName, String reportDescription, String startDate, String endDate, ArrayList<OrderLineItem> saleRecords) {
         this.name = reportName;
         this.description = reportDescription;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.saleRecords = saleRecords;
     }
 
     public String getName() {
@@ -54,5 +60,21 @@ public class Report implements Serializable {
         System.out.println("Report Start Date: " + startDate);
         System.out.println("Report End Date: " + endDate);
         System.out.println("-----------");
+    }
+
+    public Double getTotalRevenue() {
+        return salesAnalyser.getTotalSalesValue(saleRecords);
+    }
+
+    public String getTopCategory() {
+        return salesAnalyser.getTopCategory(saleRecords);
+    }
+
+    public Double getTopCategoryRevenue() {
+        return salesAnalyser.getTopCategoryRevenue(getTopCategory(), saleRecords);
+    }
+
+    public ProductSummary getTopSellingItem(ArrayList<ProductSummary> summaryArray) {
+        return salesAnalyser.getTopProduct(summaryArray);
     }
 }

@@ -10,15 +10,16 @@ import uts.isd.model.ProductSnapshot;
 import java.sql.*;
 import java.util.*;
 
-public class ReportingDAO {
-    private Statement st;
+public class ReportingDAO implements DAO<Report> {
+    private final Connection dbConnection;
 
-    public ReportingDAO(Connection conn) throws SQLException {
-        st = conn.createStatement();
+    public ReportingDAO() {
+        dbConnection = DBConnector.getConnection();
     }
 
     public ArrayList<OrderLineItem> totalSales(String beginTimeStamp, String endTimeStamp) throws SQLException {
         // Set up the inital SQL query hre
+        Statement st = dbConnection.createStatement();
         String query = ("select ORDER_LINE.PRODUCT_ID, PRODUCT_NAME, PRODUCT_CATEGORY, QUANTITY_ORDERED, ORDER_LINE.PRODUCT_PRICE, ORDER_SHIPPING_ADDRESS " +
             "from ORDERS inner join ORDER_LINE on ORDERS.ORDER_ID = ORDER_LINE.ORDER_ID " +
             "inner join PRODUCTS on ORDER_LINE.PRODUCT_ID = PRODUCTS.PRODUCT_ID " +
@@ -38,7 +39,8 @@ public class ReportingDAO {
     }
 
     public ArrayList<String> categories(String beginTimeStamp, String endTimeStamp) throws SQLException {
-        // Set up the inital SQL query hre
+        // Set up the inital SQL query here
+        Statement st = dbConnection.createStatement();
         String query = ("select distinct(PRODUCT_CATEGORY) from PRODUCTS, ORDERS O " +
             "where (PRODUCT_ID in (select PRODUCT_ID from ORDER_LINE)) " +
             "AND (O.ORDER_DATE_TIME > '" + beginTimeStamp + "' AND O.ORDER_DATE_TIME < '" + endTimeStamp + "')");
@@ -56,6 +58,8 @@ public class ReportingDAO {
     }
 
     public ArrayList<ProductSummary> productSnapshots(String beginTimeStamp, String endTimeStamp) throws SQLException {
+        Statement st = dbConnection.createStatement();
+
         String query = ("select o.PRODUCT_ID as id, PRODUCT_NAME, PRODUCT_CATEGORY as category, QUANTITY_ORDERED, (o.PRODUCT_PRICE * QUANTITY_ORDERED) as PRICE " +
             "from ORDER_LINE o inner join PRODUCTS on o.PRODUCT_ID = products.PRODUCT_ID " +
             "inner join ORDERS on o.ORDER_ID = ORDERS.ORDER_ID " +
@@ -75,23 +79,9 @@ public class ReportingDAO {
         return snapshots;
     }
 
-    public ArrayList<Report> reports() throws SQLException {
-        String query = "select * from reports";
-        
-        // Execute the query and store the results in a result set
-        ResultSet queryResult = st.executeQuery(query);
-
-        ArrayList<Report> reports = new ArrayList<>();
-
-        while (queryResult.next()) {
-            Report report = new Report(queryResult.getString(2), queryResult.getString(3), queryResult.getString(4), queryResult.getString(5));
-            reports.add(report);
-        }
-
-        return reports;
-    }
-
     public ArrayList<String> getReportNames() throws SQLException {
+        Statement st = dbConnection.createStatement();
+
         String query = "select REPORT_NAME from REPORTS";
 
         ResultSet queryResult = st.executeQuery(query);
@@ -105,16 +95,65 @@ public class ReportingDAO {
         return reportNames;
     }
 
-    public void createReport(String name, String description, String startDate, String endDate) throws SQLException {
+    // Create
+    public void save(Report r) throws SQLException {
+        Statement st = dbConnection.createStatement();
+        
         String reportID = generateID();
 
         String query = ("insert into REPORTS (REPORT_ID, REPORT_NAME, REPORT_DESCRIPTION, REPORT_START_DATE, REPORT_END_DATE) values " +
-            "('" + reportID + "', '" + name + "', '" + description + "', '" + startDate + " 00:00:00', '" + endDate + " 23:59:59')");
+            "('" + reportID + "', '" + r.getName() + "', '" + r.getDescription() + "', '" + r.getStartDate() + " 00:00:00', '" + r.getEndDate() + " 23:59:59')");
 
         st.executeUpdate(query);
     }
 
+     // Read
+    public Report get(String name) throws SQLException {
+        Statement st = dbConnection.createStatement();
+        
+        String query = "select REPORT_NAME, REPORT_DESCRIPTION, REPORT_START_DATE, REPORT_END_DATE from REPORTS where REPORT_NAME = '" + name + "'";
+
+        ResultSet queryResult = st.executeQuery(query);
+
+        queryResult.next();
+
+        Report r = new Report(queryResult.getString(1), queryResult.getString(2), queryResult.getString(3), queryResult.getString(4), totalSales(queryResult.getString(3), queryResult.getString(4)));
+        return r;
+    }
+
+    // Read
+    public ArrayList<Report> getAll() throws SQLException {
+        Statement st = dbConnection.createStatement();
+        
+        String query = "select * from reports";
+        
+        // Execute the query and store the results in a result set
+        ResultSet queryResult = st.executeQuery(query);
+
+        ArrayList<Report> reports = new ArrayList<>();
+
+        while (queryResult.next()) {
+            Report report = new Report(queryResult.getString(2), queryResult.getString(3), queryResult.getString(4), queryResult.getString(5), totalSales(queryResult.getString(4), queryResult.getString(5)));
+            reports.add(report);
+        }
+
+        return reports;
+    }
+
+    // Update
+    public void update(Report r, String[] parameters) throws SQLException {
+
+    }
+
+    // Delete
+    public void delete(Report r) throws SQLException {
+
+    }
+
+    // Helper Methods
     private String generateID() throws SQLException {
+        Statement st = dbConnection.createStatement();
+        
         // Build the select query that will retrieve all USER_IDs from the database
         String getIDs = "select REPORT_ID from REPORTS";
 
@@ -152,14 +191,4 @@ public class ReportingDAO {
         return !collection.contains(value);
     }
 
-    public Report getReport(String name) throws SQLException {
-        String query = "select REPORT_NAME, REPORT_DESCRIPTION, REPORT_START_DATE, REPORT_END_DATE from REPORTS where REPORT_NAME = '" + name + "'";
-
-        ResultSet queryResult = st.executeQuery(query);
-
-        queryResult.next();
-
-        Report r = new Report(queryResult.getString(1), queryResult.getString(2), queryResult.getString(3), queryResult.getString(4));
-        return r;
-    }
 }

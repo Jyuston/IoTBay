@@ -2,18 +2,29 @@ package uts.isd.model.dao;
 
 import java.sql.*;
 
-// Do we need an abstract? Can't we just put the properties in this class?
-public class DBConnector extends DB {
-    public DBConnector() throws ClassNotFoundException, SQLException {
-        Class.forName(driver);
-        conn = DriverManager.getConnection(URL, dbuser, dbpass);
-    }
+public class DBConnector {
+    private static final String URL = "jdbc:derby://localhost:1527/testdb";
+    private static final String USER = "tst";
+    private static final String PASS = "admin";
+    private static final String driver = "org.apache.derby.jdbc.ClientDriver";
+    private static Connection dbConnection = null;
 
-    public Connection openConnection() {
-        return this.conn;
-    }
+    /**
+     * Returns the singleton database connection to be used throughout the app.
+     * Will create an initial connection if no connection had been made previously.
+     *
+     * @return Connection object
+     */
+    public static Connection getConnection() {
+        if (dbConnection == null) {
+            try {
+                Class.forName(driver);
+                dbConnection = DriverManager.getConnection(URL, USER, PASS);
+            } catch (SQLException | ClassNotFoundException ex) {
+                throw new RuntimeException("Error connecting to the database", ex);
+            }
+        }
 
-    public void closeConnection() throws SQLException {
-        this.conn.close();
+        return dbConnection;
     }
 }

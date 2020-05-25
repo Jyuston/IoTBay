@@ -5,129 +5,66 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.logging.*;
 import uts.isd.model.dao.*;
+import uts.isd.model.reporting.ProductSummary;
 import uts.isd.model.reporting.Report;
 import uts.isd.model.reporting.SalesAnalyser;
 
 public class ReportingController {
-    private SalesAnalyser s = new SalesAnalyser();
+    private static final ReportingDAO DAO = new ReportingDAO();
+    
+    public ArrayList<Report> getReports() throws SQLException {
+        return DAO.getAll();
+    }
 
-    public ArrayList<Report> getReports() {
-        try {
-            DBConnector connector = new DBConnector();
-            Connection conn = connector.openConnection();
-            ReportingDAO db = new ReportingDAO(conn);
+    public Report createReport(String name, String description, String startDate, String endDate) throws SQLException {
+        Report r = new Report(name, description, startDate, endDate, DAO.totalSales(startDate, endDate));
+        DAO.save(r);
+        return r;
+    }
 
-            ArrayList<Report> reports = db.reports();
+    public Report getReport(String reportName) throws SQLException {
+        return DAO.get(reportName);
+    }
 
-            connector.closeConnection();
-            
-            return reports;
-        } 
-
-        catch (Exception ex) {
-            Logger.getLogger(ReportingController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public String totalRevenue(Report r) {
+        DecimalFormat formatter = new DecimalFormat("####0.00");
         
-        return null;
+        Double revenue = r.getTotalRevenue();
+        return formatter.format(revenue);
     }
 
-    public void createReport(String name, String description, String startDate, String endDate) {
-        try {
-            DBConnector connector = new DBConnector();
-            Connection conn = connector.openConnection();
-            ReportingDAO db = new ReportingDAO(conn);
-
-            db.createReport(name, description, startDate, endDate);
-
-            connector.closeConnection();
-            // Note, will need to put validation in to make sure start date is before end date
-        } 
-
-        catch (Exception ex) {
-            Logger.getLogger(ReportingController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public String topCategory(Report r) {
+        return r.getTopCategory();
     }
 
-    public Report getReport(String reportName) {
+    public String topCategoryRevenue(Report r) {
+        DecimalFormat formatter = new DecimalFormat("####0.00");
 
-        try {
-            DBConnector connector = new DBConnector();
-            Connection conn = connector.openConnection();
-            ReportingDAO db = new ReportingDAO(conn);
+        Double revenue =  r.getTopCategoryRevenue();
 
-            Report r = db.getReport(reportName);
-
-            connector.closeConnection();
-            
-            return r;
-        } 
-
-        catch (Exception ex) {
-            Logger.getLogger(ReportingController.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
+        return formatter.format(revenue);
     }
 
-    public String totalRevenue(String start, String end) {
-        try {
-            DBConnector connector = new DBConnector();
-            Connection conn = connector.openConnection();
-            ReportingDAO db = new ReportingDAO(conn);
-
-            Double revenue = s.getTotalSalesValue(db.totalSales(start, end));
-            DecimalFormat df1 = new DecimalFormat("####0.00");
-
-            connector.closeConnection();
-            
-            return df1.format(revenue);
-        } 
-
-        catch (Exception ex) {
-            Logger.getLogger(ReportingController.class.getName()).log(Level.SEVERE, null, ex);
-            return "";
-        }
+    public ProductSummary topSellingItem(Report r) throws SQLException {
+        ArrayList<ProductSummary> summaries = DAO.productSnapshots(r.getStartDate(), r.getEndDate());
+        return r.getTopSellingItem(summaries);
     }
 
-    public String highestSellingCategory(String start, String end) {
-
-        try {
-            DBConnector connector = new DBConnector();
-            Connection conn = connector.openConnection();
-            ReportingDAO db = new ReportingDAO(conn);
-
-            String category = s.getTopCategory(db.totalSales(start, end));
-
-            connector.closeConnection();
-            
-            return category;
-        } 
-
-        catch (Exception ex) {
-            Logger.getLogger(ReportingController.class.getName()).log(Level.SEVERE, null, ex);
-            return "";
-        }
+    public String topSellingItemName(Report r) throws SQLException {
+        return topSellingItem(r).getProductName();
     }
 
-    public String topCategoryRevenue(String start, String end) {
-        try {
-            DBConnector connector = new DBConnector();
-            Connection conn = connector.openConnection();
-            ReportingDAO db = new ReportingDAO(conn);
-
-            Double categoryRevenue = s.getTopCategoryRevenue(highestSellingCategory(start, end), db.totalSales(start, end));
-            DecimalFormat df1 = new DecimalFormat("####0.00");
-
-            connector.closeConnection();
-            
-            return df1.format(categoryRevenue);
-        } 
-
-        catch (Exception ex) {
-            Logger.getLogger(ReportingController.class.getName()).log(Level.SEVERE, null, ex);
-            return "";
-        }
+    public String topSellingItemQuantity(Report r) throws SQLException {
+        return Integer.toString(topSellingItem(r).getUnitsSold());
     }
 
-    public 
- 
+    public String topSellingItemRevenue(Report r) throws SQLException {
+        DecimalFormat formatter = new DecimalFormat("####0.00");
+
+        return formatter.format(topSellingItem(r).getProductRevenue());
+    }
+
+    public String topSellingProductID(Report r) throws SQLException {
+        return topSellingItem(r).getProductID();
+    }
 }

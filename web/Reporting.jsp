@@ -26,8 +26,6 @@
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
 
-        Report r = new Report(reportName, reportDescription, startDate, endDate);
-
         if (newReportCreated != null && newReportCreated.equals("yes")) {
             ReportingController rc = new ReportingController();
             rc.createReport(reportName, reportDescription, startDate, endDate);

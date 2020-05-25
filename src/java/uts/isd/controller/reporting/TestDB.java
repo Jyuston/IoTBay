@@ -12,14 +12,11 @@ import uts.isd.model.reporting.OrderLineItem;
 
 public class TestDB {
     // This is a test controller. Used for CLI debugging
-    private static Scanner in = new Scanner(System.in);
-
+    
     public static void main(String[] args) {
+        /*
         try {
-
-            DBConnector connector = new DBConnector();
-
-            Connection conn = connector.openConnection();
+            Connection conn = DBConnector.getConnection();
 
             ReportingDAO db = new ReportingDAO(conn);
 
@@ -78,6 +75,7 @@ public class TestDB {
                     s.printObj();
                 }
             }
+        
 
             // DEBUG - Checking Top Product
             System.out.println("============ Printing out top product ============");
@@ -95,15 +93,16 @@ public class TestDB {
                 report.printReportInfo();
             }
             
-            connector.closeConnection();
+            conn.close();
 
         } 
 
-        catch (ClassNotFoundException | SQLException ex) {
+        catch (SQLException ex) {
 
             Logger.getLogger(TestDB.class.getName()).log(Level.SEVERE, null, ex);
 
         }
+        */
     }
     
 }

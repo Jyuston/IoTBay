@@ -25,14 +25,27 @@
         ReportingController rc = new ReportingController();
         Report report = rc.getReport(reportName);
         session.setAttribute("report", report);
-        String totalSalesRevenue = rc.totalRevenue(report.getStartDate(), report.getEndDate());
+        String totalSalesRevenue = rc.totalRevenue(report);
+
         session.setAttribute("totalSalesRevenue", totalSalesRevenue);
 
-        String topCategory = rc.highestSellingCategory(report.getStartDate(), report.getEndDate());
+        String topCategory = rc.topCategory(report);
         session.setAttribute("topCategory", topCategory);
 
-        String topCategoryRevenue = rc.topCategoryRevenue(report.getStartDate(), report.getEndDate());
+        String topCategoryRevenue = rc.topCategoryRevenue(report);
         session.setAttribute("topCategoryRevenue", topCategoryRevenue);
+
+        String topProductName = rc.topSellingItemName(report);
+        session.setAttribute("topProductName", topProductName);
+
+        String topProductQuantity = rc.topSellingItemQuantity(report);
+        session.setAttribute("topProductQuantity", topProductQuantity);
+
+        String topProductRevenue = rc.topSellingItemRevenue(report);
+        session.setAttribute("topProductRevenue", topProductRevenue);
+
+        String topProductID = rc.topSellingProductID(report);
+        session.setAttribute("topProductID", topProductID);
     %>
     
     <body>
@@ -85,20 +98,33 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Top Selling Item</h5>
-                    <p class="card-text">Name: 0.25 Ohm Resistor</p>
-                    <p class="card-text">Qty: 2561</p>
-                    <p class="card-text">Revenue: $3461</p>
+                    <p class="card-text">Name: ${topProductName}</p>
+                    <p class="card-text">Product ID: ${topProductID}</p>
+                    <p class="card-text">Quantity Sold: ${topProductQuantity}</p>
+                    <p class="card-text">Revenue: $ ${topProductRevenue}</p>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Total Selling Category</h5>
-                    <p class="card-text">Name: ${topCategory}</p>
-                    <p class="card-text">Revenue: $ ${topCategoryRevenue}</p>
+                    <p class="card-text">Name: ${topCategory} </p>
+                    <p class="card-text">Revenue: $ ${topCategoryRevenue} </p>
                 </div>
             </div>
         </div>
+
+        <br>
+        <br>
+
+        <h2> Sales Distribution Overiview</h2>
+        <h3> Sales by Category</h3>
+            
+        <h3> Sales by Sate</h3>
+        <br>
+        <br>
+
+        <h2> Sales by Category by Product</h2>
     </body>
         
 
