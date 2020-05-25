@@ -46,7 +46,7 @@ public class Staff extends Account {
         return createdCustomer;
     }
 
-    public static Staff findUserByEmailPass(String email, String password) {
+    public static Staff findByEmailPass(String email, String password) {
         try {
             return DAO.get(email, password);
         } catch (SQLException err) {
