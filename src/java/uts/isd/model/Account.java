@@ -2,15 +2,15 @@ package uts.isd.model;
 
 import java.io.Serializable;
 
-abstract class Account implements Serializable {
+public abstract class Account implements Serializable {
     private String ID;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
 
-    Account(String firstName, String lastName, String email, String password) {
-        this.ID = "123abc"; // Hardcoded for prototype
+    Account(String ID, String firstName, String lastName, String email, String password) {
+        this.ID = ID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
