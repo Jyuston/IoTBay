@@ -24,7 +24,7 @@ public class AccountDAO {
         return "U-" + (lastNumber + 1);
     }
     
-    public static String getAccountType(String email, String password) throws SQLException{
+    public static Character getAccountType(String email, String password) throws SQLException{
         Statement st = dbConnection.createStatement();
         String accountTypeQuery =
             "SELECT ACCOUNT_TYPE FROM ACCOUNTS " +
@@ -36,7 +36,7 @@ public class AccountDAO {
         if (!accountTypeRs.next())
            return null;
         
-        return accountTypeRs.getString("ACCOUNT_TYPE");
+        return accountTypeRs.getString("ACCOUNT_TYPE").charAt(0);
     } 
     
 }

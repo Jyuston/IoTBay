@@ -1,5 +1,6 @@
 <%@ page import="uts.isd.controller.LoginController" %>
 <%@ page import="uts.isd.model.Customer" %>
+<%@ page import="java.sql.SQLException" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <head>
@@ -13,10 +14,10 @@
     if (submitted != null) {
         String enteredEmail = request.getParameter("email");
         String enteredPassword = request.getParameter("password");
-        Account account = LoginController.login(enteredEmail,enteredPassword);
-        
-        if (customer != null) {
-            session.setAttribute("user", account);
+
+        boolean loginSuccessful = LoginController.login(enteredEmail, enteredPassword, session);
+
+        if (loginSuccessful) {
 %>
 
 <div class="row">

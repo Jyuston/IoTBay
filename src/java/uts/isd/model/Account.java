@@ -21,7 +21,7 @@ public abstract class Account implements Serializable {
         this.password = password;
     }
 
-    public static String getAccountType(String email, String password) throws SQLException {
+    public static Character getAccountType(String email, String password) throws SQLException {
         return AccountDAO.getAccountType(email, password);
     }
 

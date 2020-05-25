@@ -5,16 +5,36 @@ import uts.isd.model.Account;
 import uts.isd.model.Customer;
 import uts.isd.model.Staff;
 
-public class LoginController {
-    public static Account login(String email, String password) throws SQLException {
-        // Can do validation here in the controllers
-         String accountType = Account.getAccountType(email, password);
+import javax.servlet.http.HttpSession;
 
-        if (accountType.equals("C")){
-            return Customer.findByEmailPass(email, password);
-        } else if (accountType.equals("S")){
-            return Staff.findByEmailPass(email, password);
+public class LoginController {
+    /**
+     * Log in either a Customer or Staff and sets the `user` session attribute
+     *
+     * @param email Account email address
+     * @param password Account password
+     * @param session The session to log the user into
+     * @return Whether or not the login was successful
+     */
+    public static boolean login(String email, String password, HttpSession session) {
+        // Can do validation here in the controllers
+        Character accountType = null;
+        try {
+            accountType = Account.getAccountType(email, password);
+        } catch (SQLException err) {
+            err.printStackTrace();
         }
-       return null;
+
+        if (accountType == null) {
+            System.err.println("No account found when logging in: " + email);
+            return false;
+        }
+
+        Account account = (accountType == 'C') ?
+                Customer.findByEmailPass(email, password) :
+                Staff.findByEmailPass(email, password);
+
+        session.setAttribute("user", account);
+        return true;
     }
 }
