@@ -13,24 +13,19 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CustomerDAO implements DAO<Customer> {
-    public static Connection dbConnection;
+    private final Connection dbConnection;
 
-    static {
-        try {
-            dbConnection = new DBConnector().openConnection();
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
+    public CustomerDAO() {
+        dbConnection = DBConnector.getConnection();
     }
-
 
     public Customer get(String email, String password) throws SQLException {
         // Setting up the initial SQL query to find the customer by email and password
         Statement st = dbConnection.createStatement();
         String getUserIdQuery =
                 "SELECT USER_ID FROM ACCOUNTS " +
-                        "WHERE USER_EMAIL LIKE '" + email + "' " +
-                        "AND PASSWORD LIKE '" + password + "'";
+                "WHERE USER_EMAIL LIKE '" + email + "' " +
+                "AND PASSWORD LIKE '" + password + "'";
 
         ResultSet userIDRs = st.executeQuery(getUserIdQuery);
 
@@ -38,20 +33,7 @@ public class CustomerDAO implements DAO<Customer> {
         if (!userIDRs.next())
             return null;
 
-        String userID = userIDRs.getString("USER_ID");
-        String getCustomerDetailsQuery =
-                "SELECT * FROM ACCOUNTS A " +
-                "INNER JOIN CUSTOMERS C on A.USER_ID = C.USER_ID " +
-                "INNER JOIN PAYMENT_INFORMATION PI on A.USER_ID = PI.USER_ID " +
-                "WHERE A.USER_ID = '" + userID + "'";
-
-        ResultSet customerData = st.executeQuery(getCustomerDetailsQuery);
-
-        // Move SQL cursor to the found users row
-        // Don't have to check for empty result since we already found an ID
-        customerData.next();
-
-        return createCustomerObject(customerData);
+        return get(userIDRs.getString("USER_ID"));
     }
 
     @Override
@@ -142,6 +124,21 @@ public class CustomerDAO implements DAO<Customer> {
 
     @Override
     public void delete(Customer customer) throws SQLException {
+    }
+
+    // Will probably change this later. Very basic rn.
+    public  String getNextAvailableID() throws SQLException {
+        Statement st = dbConnection.createStatement();
+
+        String accountIDsQuery = "SELECT USER_ID FROM ACCOUNTS";
+        ResultSet accountIDsRs = st.executeQuery(accountIDsQuery);
+
+        if (!accountIDsRs.last())
+            return "U-1";
+
+        String lastID = accountIDsRs.getString("USER_ID");
+        int lastNumber = Integer.parseInt(lastID.substring(2));
+        return "U-" + (lastNumber + 1);
     }
 
     // Helpers

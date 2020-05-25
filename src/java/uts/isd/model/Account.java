@@ -2,7 +2,7 @@ package uts.isd.model;
 
 import java.io.Serializable;
 
-abstract class Account implements Serializable {
+public abstract class Account implements Serializable {
     private String ID;
     private String firstName;
     private String lastName;

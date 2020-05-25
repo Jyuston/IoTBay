@@ -1,13 +1,12 @@
 package uts.isd.model;
 
+import uts.isd.controller.LoginController;
 import uts.isd.model.dao.CustomerDAO;
-import uts.isd.model.dao.DBConnector;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Customer extends Account {
     private String contactNumber;
@@ -15,6 +14,8 @@ public class Customer extends Account {
     private PaymentInformation paymentInfo;
     private LinkedList<Order> orders;
     private boolean isAnonymous;
+
+    private static final CustomerDAO DAO = new CustomerDAO();
 
     public Customer(String ID, String firstName, String lastName, String email, String password, String contactNumber, Address address, PaymentInformation paymentInfo, LinkedList<Order> orders, boolean isAnonymous) {
         super(ID, firstName, lastName, email, password);
@@ -43,13 +44,13 @@ public class Customer extends Account {
     public static Customer create(String firstName, String lastName, String email, String password, String contactNumber, Address address, PaymentInformation paymentInfo) {
         String ID;
         try {
-            ID = generateID();
-        } catch (SQLException | ClassNotFoundException e) {
+            ID = DAO.getNextAvailableID();
+        } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
 
-        return new Customer(
+        Customer createdCustomer = new Customer(
                 ID,
                 firstName,
                 lastName,
@@ -61,20 +62,23 @@ public class Customer extends Account {
                 new LinkedList<>(),
                 false
         );
+
+        try {
+            DAO.save(createdCustomer);
+        } catch (SQLException err) {
+            err.printStackTrace();
+            return null;
+        }
+
+        return createdCustomer;
     }
 
-    private static String generateID() throws SQLException, ClassNotFoundException {
-        Connection connection = new DBConnector().openConnection();
-        Statement st = connection.createStatement();
-
-        String accountIDsQuery = "SELECT USER_ID FROM ACCOUNTS";
-        ResultSet accountIDsRs = st.executeQuery(accountIDsQuery);
-
-        if (!accountIDsRs.last())
-            return "U-1";
-
-        String lastID = accountIDsRs.getString("USER_ID");
-        int lastNumber = Integer.parseInt(lastID.substring(2));
-        return "U-" + (lastNumber + 1);
+    public static Customer findUserByEmailPass(String email, String password) {
+        try {
+            return DAO.get(email, password);
+        } catch (SQLException err) {
+            err.printStackTrace();
+            return null;
+        }
     }
 }

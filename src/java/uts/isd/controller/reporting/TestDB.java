@@ -15,10 +15,7 @@ public class TestDB {
 
     public static void main(String[] args) {
         try {
-
-            DBConnector connector = new DBConnector();
-
-            Connection conn = connector.openConnection();
+            Connection conn = DBConnector.getConnection();
 
             ReportingDAO db = new ReportingDAO(conn);
 
@@ -71,12 +68,9 @@ public class TestDB {
                     s.printObj();
                 }
             }
+        }
 
-            connector.closeConnection();
-
-        } 
-
-        catch (ClassNotFoundException | SQLException ex) {
+        catch (SQLException ex) {
 
             Logger.getLogger(TestDB.class.getName()).log(Level.SEVERE, null, ex);
 
