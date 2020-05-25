@@ -1,5 +1,6 @@
 package uts.isd.model;
 
+import uts.isd.model.dao.AccountDAO;
 import uts.isd.model.dao.CustomerDAO;
 
 import java.sql.SQLException;
@@ -39,15 +40,13 @@ public class Customer extends Account {
     public void setAnonymous(boolean anonymous) { isAnonymous = anonymous; }
 
     public static Customer create(String firstName, String lastName, String email, String password, String contactNumber, Address address, PaymentInformation paymentInfo) {
-//        String ID;
-//        try {
-//            ID = DAO.getNextAvailableID();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-
-        String ID = "123";
+        String ID;
+        try {
+            ID = AccountDAO.getNextAvailableID();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
 
         Customer createdCustomer = new Customer(
                 ID,

@@ -1,29 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package uts.isd.model.dao;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import uts.isd.model.Account;
 
-/**
- *
- * @author justinhyuen
- */
+// Does not implement the DAO interface as no CRUD operations are to be done directly on the Account.
+public class AccountDAO {
+    private static final Connection dbConnection = DBConnector.getConnection();
 
-//Does not implement the DAO interface as no CRUD operations are to be done directly on the Account.
-public class AccountDAO{
-    private final Connection dbConnection;
-    
-    public AccountDAO() {
-        dbConnection = DBConnector.getConnection();
-    }
-// Will probably change this later. Very basic rn.
-    public  String getNextAvailableID() throws SQLException {
+    // Will probably change this later. Very basic rn.
+    public static String getNextAvailableID() throws SQLException {
         Statement st = dbConnection.createStatement();
 
         String accountIDsQuery = "SELECT USER_ID FROM ACCOUNTS";
@@ -37,7 +24,7 @@ public class AccountDAO{
         return "U-" + (lastNumber + 1);
     }
     
-    public String getAccountType(String email, String password) throws SQLException{
+    public static String getAccountType(String email, String password) throws SQLException{
         Statement st = dbConnection.createStatement();
         String getAccTypeQuery =
             "SELECT ACCOUNT_TYPE FROM ACCOUNTS " +

@@ -1,5 +1,6 @@
 package uts.isd.model;
 
+import uts.isd.model.dao.AccountDAO;
 import uts.isd.model.dao.StaffDAO;
 
 import java.sql.SQLException;
@@ -18,15 +19,13 @@ public class Staff extends Account {
     public void setAdmin(boolean admin) { isAdmin = admin; }
 
     public static Staff create(String firstName, String lastName, String email, String password, boolean isAdmin) {
-//        String ID;
-//        try {
-//            ID = DAO.getNextAvailableID();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-
-        String ID = "123";
+        String ID;
+        try {
+            ID = AccountDAO.getNextAvailableID();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
 
         Staff createdCustomer = new Staff(
                 ID,
