@@ -14,7 +14,6 @@ public class Product implements Serializable {
     private boolean archived;
 
     public Product(String name, int stock, double price, String category, boolean archived) {
-        this.ID = "123abc"; // Hard coded for prototype
         this.name = name;
         this.stock = stock;
         this.price = price;
