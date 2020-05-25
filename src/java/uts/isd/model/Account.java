@@ -2,6 +2,7 @@ package uts.isd.model;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+
 import uts.isd.model.dao.AccountDAO;
 
 
@@ -19,49 +20,25 @@ public abstract class Account implements Serializable {
         this.email = email;
         this.password = password;
     }
-    
-    public static String getAccountType(String email, String password) throws SQLException{
-        String accType = AccountDAO.getAccountType(email, password);
-        return accType;
-    }
-    
-    public String getID() {
-        return ID;
+
+    public static String getAccountType(String email, String password) throws SQLException {
+        return AccountDAO.getAccountType(email, password);
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
-    }
+    public char getAccountType() { return this.getClass().getSimpleName().charAt(0); }
 
-    public String getFirstName() {
-        return firstName;
-    }
+    public String getID() { return ID; }
+    public void setID(String ID) { this.ID = ID; }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+    public String getFirstName() { return firstName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
 
-    public String getLastName() {
-        return lastName;
-    }
+    public String getLastName() { return lastName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 }
