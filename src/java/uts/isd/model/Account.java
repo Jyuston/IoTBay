@@ -16,7 +16,7 @@ public abstract class Account implements Serializable {
         this.email = email;
         this.password = password;
     }
-
+    
     public String getID() {
         return ID;
     }
