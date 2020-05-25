@@ -1,6 +1,9 @@
 package uts.isd.model;
 
 import java.io.Serializable;
+import java.sql.SQLException;
+import uts.isd.model.dao.DAO;
+import uts.isd.model.dao.ProductDAO;
 
 public class Product implements Serializable {
     private String ID;
@@ -10,14 +13,18 @@ public class Product implements Serializable {
     private double price;
     private boolean archived;
 
-    public Product(String name, String category, int stock, double price, boolean archived) {
+    public Product(String name, int stock, double price, String category, boolean archived) {
         this.ID = "123abc"; // Hard coded for prototype
         this.name = name;
-        this.category = category;
         this.stock = stock;
         this.price = price;
+        this.category = category;
         this.archived = archived;
     }
+
+   
+
+
 
     public String getID() {
         return ID;
@@ -66,4 +73,41 @@ public class Product implements Serializable {
     public void setArchived(boolean archived) {
         this.archived = archived;
     }
+    
+    public static Product create(String name, int stock, double price, String category, boolean archived) {
+        String ID;
+        try {
+            ID = ProductDAO.getNextAvailableID();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        Product createdProduct = new Product(
+                name,
+                stock,
+                price,
+                category,
+                archived
+        );
+
+        try {
+            DAO.save(createdProduct);
+        } catch (SQLException err) {
+            err.printStackTrace();
+            return null;
+        }
+
+        return createdProduct;
+    }
+    
+    
+    
 }
+
+
+
+
+
+
+
