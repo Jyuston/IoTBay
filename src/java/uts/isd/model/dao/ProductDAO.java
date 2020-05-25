@@ -26,20 +26,7 @@ public class ProductDAO implements DAO<Product> {
         return "P-" + (lastNumber + 1);
     }
     
-        public static Character getAccountType(String email, String password) throws SQLException{
-        Statement st = dbConnection.createStatement();
-        String accountTypeQuery =
-            "SELECT ACCOUNT_TYPE FROM ACCOUNTS " +
-            "WHERE USER_EMAIL LIKE '" + email + "' " +
-            "AND PASSWORD LIKE '" + password + "'"; 
-        
-        ResultSet accountTypeRs = st.executeQuery(accountTypeQuery);
-
-        if (!accountTypeRs.next())
-           return null;
-        
-        return accountTypeRs.getString("ACCOUNT_TYPE").charAt(0);
-    } 
+    
     
     public Product get(String productName, String productCategory) throws SQLException {
         // Setting up the initial SQL query to find the product by its name and type (category)
@@ -124,7 +111,7 @@ public class ProductDAO implements DAO<Product> {
                 productRs.getString("PRODUCT_NAME"),
                 productRs.getInt("STOCK"),
                 productRs.getDouble("PRODUCT_PRICE"),
-                productRs.getString("PRODUCT_CATEGORY"), // Lol
+                productRs.getString("PRODUCT_CATEGORY"), 
                 productRs.getBoolean("ARCHIVED")
                 
         );
