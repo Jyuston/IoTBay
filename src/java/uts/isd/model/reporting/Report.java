@@ -12,10 +12,12 @@ public class Report implements Serializable {
     private String description;
     private String startDate;
     private String endDate;
-    private ArrayList<OrderLineItem> saleRecords;
-    private ArrayList<ProductSummary> productSummaries;
-    private ArrayList<String> categories;
-    private SalesAnalyser salesAnalyser = new SalesAnalyser();
+    private final ArrayList<OrderLineItem> saleRecords = new ArrayList<>();
+    private final ArrayList<ProductSummary> productSummaries = new ArrayList<>();
+    private final ArrayList<String> categories = new ArrayList<>();
+    private final SalesAnalyser salesAnalyser = new SalesAnalyser();
+    private ProductSummary topProduct;
+    
 
     /*
     private double totalRevenue;
@@ -31,9 +33,17 @@ public class Report implements Serializable {
         this.description = reportDescription;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.saleRecords = saleRecords;
-        this.productSummaries = summaries;
-        this.categories = categories;
+        
+        if (saleRecords.size() > 0 && saleRecords != null) {
+            this.saleRecords.addAll(saleRecords);
+            this.productSummaries.addAll(summaries);
+            this.categories.addAll(categories);
+            this.topProduct = salesAnalyser.getTopProduct(this.productSummaries);
+        }
+
+        
+
+        
         /*
         this.totalRevenue = salesAnalyser.getTotalSalesValue(saleRecords);
         this.topCategory = salesAnalyser.getTopCategory(saleRecords);
@@ -74,35 +84,28 @@ public class Report implements Serializable {
         this.endDate = reportEndDate;
     }
 
-    public void printReportInfo() {
-        System.out.println("Report Name: " + name);
-        System.out.println("Report Description: " + description);
-        System.out.println("Report Start Date: " + startDate);
-        System.out.println("Report End Date: " + endDate);
-        System.out.println("-----------");
-    }
-
-    public Double getTotalRevenue() {
+    public final Double getTotalRevenue() {
         return salesAnalyser.getTotalSalesValue(saleRecords);
     }
 
-    public String getTopCategory() {
+    public final String getTopCategory() {
         return salesAnalyser.getTopCategory(saleRecords);
     }
 
-    public Double getTopCategoryRevenue() {
+    public final Double getTopCategoryRevenue() {
         return salesAnalyser.getTopCategoryRevenue(getTopCategory(), saleRecords);
     }
 
-    public ProductSummary getTopSellingItem() {
-        return salesAnalyser.getTopProduct(productSummaries);
+    public final ProductSummary getTopSellingItem() {
+        return topProduct;
+        //return salesAnalyser.getTopProduct(productSummaries);
     }
 
-    public Hashtable<String, Double> getSalesByState() {
+    public final Hashtable<String, Double> getSalesByState() {
         return salesAnalyser.getSalesBySate(saleRecords);
     }
 
-    public Hashtable<String, Double> getSalesByCategory() {
+    public final Hashtable<String, Double> getSalesByCategory() {
         return salesAnalyser.getSalesByCategory(saleRecords);
     }
 

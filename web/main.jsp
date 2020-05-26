@@ -37,7 +37,7 @@
 
     <p class="text-center">
         <a href="index.jsp">Home</a>
-        <a href="reporting.jsp">reporting</a>
+        <a href="ReportingServlet">reporting</a>
     </p>
 </div>
 

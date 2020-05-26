@@ -64,10 +64,9 @@
                                     <!-- will need to put in verification logic later if placeholder is desired -->
                                     <option>Stock Report</option>
                                     <% 
-                                        ReportingController controller = new ReportingController();
-                                        ArrayList<Report> reports = controller.getReports();
-                                        for (Report report : reports) {
-                                            String currentReportName = report.getName();
+                                        ArrayList<String> reportNames = (ArrayList<String>)session.getAttribute("reportNames");
+                                        for (String name : reportNames) {
+                                            String currentReportName = name;
                                             session.setAttribute("currentReportName", currentReportName);
                                     %>        
                                         

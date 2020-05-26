@@ -10,18 +10,19 @@ import uts.isd.model.dao.ReportingDAO;
 import uts.isd.model.reporting.Report;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ReportingServlet extends HttpServlet {
     private static final ReportingDAO DAO = new ReportingDAO();
     
+    
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
         try {
-            Report r = DAO.get(request.getParameter("selectedReport"));
+            ArrayList<String> reportNames = DAO.getReportNames();
             HttpSession session = request.getSession(true);
-            session.setAttribute("report", r);
-            response.sendRedirect("reporting/reportView1.jsp");
-            
+            session.setAttribute("reportNames", reportNames);
+            response.sendRedirect("reporting.jsp");
         } 
         
         catch (Throwable exception) {
@@ -36,8 +37,7 @@ public class ReportingServlet extends HttpServlet {
             Report r = DAO.get(request.getParameter("selectedReport"));
             HttpSession session = request.getSession(true);
             session.setAttribute("report", r);
-            response.sendRedirect("reporting/reportView1.jsp");
-            
+            response.sendRedirect("reporting/reportView1.jsp");          
         } 
         
         catch (Throwable exception) {
