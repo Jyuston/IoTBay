@@ -17,7 +17,7 @@ public class Report implements Serializable {
     private final ArrayList<String> categories = new ArrayList<>();
     private final SalesAnalyser salesAnalyser = new SalesAnalyser();
     private ProductSummary topProduct;
-    
+
 
     /*
     private double totalRevenue;
@@ -38,7 +38,7 @@ public class Report implements Serializable {
             this.saleRecords.addAll(saleRecords);
             this.productSummaries.addAll(summaries);
             this.categories.addAll(categories);
-            this.topProduct = salesAnalyser.getTopProduct(this.productSummaries);
+            this.topProduct = salesAnalyser.getTopProduct(summaries);
         }
 
         

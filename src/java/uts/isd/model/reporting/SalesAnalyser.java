@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Set;
 
+import uts.isd.model.Product;
+
 public class SalesAnalyser implements Serializable {
 
     public void use(ArrayList<OrderLineItem> records) {
@@ -52,7 +54,8 @@ public class SalesAnalyser implements Serializable {
     }
 
     public ProductSummary getTopProduct(ArrayList<ProductSummary> snapshots) {
-        ArrayList<ProductSummary> productSummaries = getSalesByProduct(snapshots);
+        ArrayList<ProductSummary> productSummaries = new ArrayList<>();
+        productSummaries.addAll(getSalesByProduct(snapshots));
 
         ProductSummary topProduct = productSummaries.get(0);
 
@@ -108,7 +111,8 @@ public class SalesAnalyser implements Serializable {
             }
         }
 
-        ArrayList<ProductSummary> products = getSalesByProduct(snapshots);
+        ArrayList<ProductSummary> products = new ArrayList<>();
+        products.addAll(getSalesByProduct(snapshots));
 
         for (ProductSummary product : products) {
             // The key in the dictionary
@@ -138,20 +142,29 @@ public class SalesAnalyser implements Serializable {
             // If the index is 0 --> that product is not yet in the list.
             if (index != -1) {
                 // The product is already in the list
+                // Get the reference to the object within the list (objects in list are mutable)
                 ProductSummary lineItem = products.get(index);
-
+               
                 // Increment that products quantity sold, and add to the revenue
                 lineItem.addUnitsSold(snapshot.getUnitsSold());
                 lineItem.addProductRevenue(snapshot.getProductRevenue());
+
+                // No need to re-add to the list as we are working with references
             }
 
             // As the product is not in the list, we need to add it
             else {
-                // add the snapshot directly to the list
-                products.add(snapshot);
+                // Insantiate a new object and add to the list
+                // Necessary as we should not be adding references to the new lists (as it would result in over-writing data we need)
+                ProductSummary lineItem = new ProductSummary(productID, snapshot.getProductName(), snapshot.getProductCategory(), 
+                snapshot.getUnitsSold(), snapshot.getProductRevenue());
+                
+                // Add the new object to the list
+                products.add(lineItem);
             }
         }
 
+        // Return the new list
         return products;
     }
 
