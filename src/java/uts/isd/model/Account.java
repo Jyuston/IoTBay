@@ -1,10 +1,6 @@
 package uts.isd.model;
 
 import java.io.Serializable;
-import java.sql.SQLException;
-
-import uts.isd.model.dao.AccountDAO;
-
 
 public abstract class Account implements Serializable {
     private String ID;
@@ -21,12 +17,6 @@ public abstract class Account implements Serializable {
         this.password = password;
     }
 
-    public static Character getAccountType(String email, String password) throws SQLException {
-        return AccountDAO.getAccountType(email, password);
-    }
-
-    public char getAccountType() { return this.getClass().getSimpleName().charAt(0); }
-
     public String getID() { return ID; }
     public void setID(String ID) { this.ID = ID; }
 
@@ -41,4 +31,13 @@ public abstract class Account implements Serializable {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+
+    // Used in sub classes
+    public boolean isStaff() {
+        return this.getClass().getSimpleName().charAt(0) == 'S';
+    }
+
+    public boolean isCustomer() {
+        return this.getClass().getSimpleName().charAt(0) == 'C';
+    }
 }

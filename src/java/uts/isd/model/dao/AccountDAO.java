@@ -7,16 +7,20 @@ import java.sql.Statement;
 
 // Does not implement the DAO interface as no CRUD operations are to be done directly on the Account.
 public class AccountDAO {
-    private static final Connection dbConnection = DBConnector.getConnection();
+    Connection dbConnection;
+
+    public AccountDAO(Connection dbConnection) {
+        this.dbConnection = dbConnection;
+    }
 
     // Will probably change this later. Very basic rn.
-    public static String getNextAvailableID() throws SQLException {
+    public String getNextAvailableID() throws SQLException {
         Statement st = dbConnection.createStatement();
 
         String accountIDsQuery = "SELECT USER_ID FROM ACCOUNTS";
         ResultSet accountIDsRs = st.executeQuery(accountIDsQuery);
 
-        if (!accountIDsRs.last())
+        if (!accountIDsRs.next())
             return "U-1";
 
         String lastID = accountIDsRs.getString("USER_ID");
@@ -24,7 +28,7 @@ public class AccountDAO {
         return "U-" + (lastNumber + 1);
     }
     
-    public static Character getAccountType(String email, String password) throws SQLException{
+    public Character getAccountType(String email, String password) throws SQLException {
         Statement st = dbConnection.createStatement();
         String accountTypeQuery =
             "SELECT ACCOUNT_TYPE FROM ACCOUNTS " +

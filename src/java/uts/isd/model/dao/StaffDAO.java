@@ -10,7 +10,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class StaffDAO implements DAO<Staff> {
-    private static final Connection dbConnection = DBConnector.getConnection();
+    Connection dbConnection;
+
+    public StaffDAO(Connection dbConnection) {
+        this.dbConnection = dbConnection;
+    }
 
     public Staff get(String email, String password) throws SQLException {
         // Setting up the initial SQL query to find the customer by email and password

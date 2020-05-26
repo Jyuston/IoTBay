@@ -13,7 +13,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CustomerDAO implements DAO<Customer> {
-    private static final Connection dbConnection = DBConnector.getConnection();
+    private final Connection dbConnection;
+
+    public CustomerDAO(Connection dbConnection) {
+        this.dbConnection = dbConnection;
+    }
 
     public Customer get(String email, String password) throws SQLException {
         // Setting up the initial SQL query to find the customer by email and password
