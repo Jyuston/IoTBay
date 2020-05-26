@@ -71,7 +71,7 @@ VALUES
     ('P-0000006', '1/4W resistor kit', 30, 12.00, 'Resistors', 'Resistor kit comes with 25 each of 20 different resistor values ', false),
     ('P-0000007', 'ceramic capacitor', 22, 3.50, 'Capacitors', 'This is a ceramic capacitor', false),
     ('P-0000008', 'tantalum capacitor', 20, 4.00 'Capacitors', 'This is a tantalum capacitor', false),
-    ('P-0000010', 'plastic film capacitor', 20, 1.50, 'Capacitors', 'This is a plastic film capacitor', false),
+    ('P-0000009', 'plastic film capacitor', 20, 1.50, 'Capacitors', 'This is a plastic film capacitor', false),
     ('P-0000010', 'aluminium capacitor', 30, 5.50, 'Capacitors', 'This is a aluminium capacitor', false),
     ('P-0000011', 'electrolytic capacitor', 40, 6.00, 'Capacitors', 'This is a electrolytic capacitor', false),
     ('P-0000012', 'carbon film resistor', 20, 0.50, 'Resistors', 'This is a carbon film resistor', false),
@@ -89,8 +89,14 @@ VALUES
 INSERT INTO ORDERS (ORDER_ID, ORDER_DATE_TIME, ORDER_SHIPPING_ADDRESS, ORDER_TOTAL, USER_ID, TRACKING_ID, CARD_NUMBER)
 VALUES
     ('O-0000001', '2020-01-01 00:00:05', '21 Shipping Ave--Waterloo-2017-NSW', 23.99, 'U-00000002', '00000000000', '5244 8746 5799 2270'),
-    ('O-0000002', '2020-01-02 00:00:05', '30 Shipping Ave--Waterloo-3105-QLD', 28.00, 'U-00000002', '00000000000', '5244 8746 5799 2271'),
-    
+    ('O-0000002', '2020-03-04 00:01:05', '30 Shipping Ave--Waterloo-3105-QLD', 28.00, 'U-00000002', '00000000001', '5244 8746 5799 2271'),
+    ('O-0000003', '2020-06-05 00:04:05', '21 Madison Ave--Wetherill-2164-NSW', 24.00, 'U-00000003', '00000000002', '5244 8746 5799 2270'),
+    ('O-0000004', '2020-09-10 00:06:05', '54 Lexington St--Gregory-2570-NSW', 23.99, 'U-00000005', '00000000003', '5588298188999519'),
+    ('O-0000005', '2020-01-12 00:03:05', '66 Dakota Ave--Emerald-2174-NSW', 29.00, 'U-00000006', '00000000004', '547 25471 14513 607'),
+    ('O-0000006', '2020-02-01 00:06:05', '78 Renwick St--Gledswood-2570-NSW', 30.00, 'U-00000009', '00000000005', '549151 905253 2532'),
+    ('O-0000007', '2020-06-01 00:07:05', '29 Belmont Ave--Edmondson-2174-NSW', 25.99, 'U-00000008', '00000000006', '550 84054 11825 588'),
+    ('O-0000008', '2020-08-01 00:04:05', '28 Lincoln Ave--Willowdale-2174-NSW', 29.99, 'U-00000007', '00000000008', '5483 5394 8183 4028'),
+    ('O-0000009', '2020-02-01 00:04:05', '30 Easton St--Catherine-2570-NSW', 33.99, 'U-00000004', '00000000009', '5301127140287588')
 ;
 
 INSERT INTO ORDER_LINE (ORDER_ID, PRODUCT_ID, QUANTITY_ORDERED, PRODUCT_PRICE)
@@ -100,9 +106,20 @@ VALUES
     ('O-0000001', 'P-0000003', 10, 0.70),
     ('O-0000001', 'P-0000004', 2, 1.50),
     ('O-0000002', 'P-0000001', 1, 0.20),
-    ('O-0000002', 'P-0000002', 2, 0.50),
-    ('O-0000002', 'P-0000003', 5, 0.70),
-    ('O-0000002', 'P-0000004', 2, 1.50)
+    ('O-0000002', 'P-0000002', 1, 0.50),
+    ('O-0000002', 'P-0000003', 4, 0.70),
+    ('O-0000003', 'P-0000006', 6, 12.00)
+    ('O-0000003', 'P-0000007', 3, 3.50)
+    ('O-0000004', 'P-0000003', 4, 0.70)
+    ('O-0000005', 'P-0000003', 2, 0.70)
+    ('O-0000006', 'P-0000005', 5, 1.50)
+    ('O-0000006', 'P-0000006', 1, 12.00)
+    ('O-0000007', 'P-0000007', 5, 3.50)
+    ('O-0000008', 'P-0000009', 6, 1.50)
+    ('O-0000008', 'P-0000007', 2, 3.50)
+    ('O-0000009', 'P-0000003', 2, 0.70)
+    ('O-0000009', 'P-0000004', 5, 1.50)
+    
 ;
 
 /* Insert Dashboard Data */
