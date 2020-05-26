@@ -20,6 +20,7 @@ public class AccountDAO {
         String accountIDsQuery = "SELECT USER_ID FROM ACCOUNTS";
         ResultSet accountIDsRs = st.executeQuery(accountIDsQuery);
 
+        // BROKEN RN
         if (!accountIDsRs.next())
             return "U-1";
 
