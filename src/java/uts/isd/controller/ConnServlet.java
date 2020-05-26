@@ -13,7 +13,6 @@ public class ConnServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("connecting");
         try {
             Connection dbConnection = connector.getConnection();
             request.getSession().setAttribute("dbConnection", dbConnection);

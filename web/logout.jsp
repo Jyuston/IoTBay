@@ -2,9 +2,6 @@
 
 <% session.invalidate(); %>
 
-<%--Re-add database connection to the new session--%>
-<jsp:include page="/ConnServlet" flush="true"/>
-
 <head>
     <title>Log out</title>
 </head>
