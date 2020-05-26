@@ -3,7 +3,6 @@
     Created on : 26/05/2020, 2:31:04 PM
     Author     : justinhyuen
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <jsp:include page="templates/header.jsp"/>
