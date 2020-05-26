@@ -12,6 +12,12 @@
 </head>
 <h1 class="mb-4">User Management</h1>
 
+<h2> Add a new User Account </h2>
+<div>
+    <button type="button" class="btn btn-success btn-sm mt-2 mb-4"> + Add New Account</button>
+
+</div>
+
 <h2> Search a User </h2>
 <div class="container-fluid">
     <div class="row"> 
