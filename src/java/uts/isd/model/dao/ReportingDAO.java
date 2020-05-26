@@ -117,7 +117,10 @@ public class ReportingDAO implements DAO<Report> {
 
         queryResult.next();
 
-        Report r = new Report(queryResult.getString(1), queryResult.getString(2), queryResult.getString(3), queryResult.getString(4), totalSales(queryResult.getString(3), queryResult.getString(4)));
+        Report r = new Report(queryResult.getString(1), queryResult.getString(2), queryResult.getString(3), queryResult.getString(4), 
+            totalSales(queryResult.getString(3), queryResult.getString(4)), 
+            productSnapshots(queryResult.getString(3), queryResult.getString(4)), 
+            categories(queryResult.getString(3), queryResult.getString(4)));
         return r;
     }
 
@@ -133,8 +136,12 @@ public class ReportingDAO implements DAO<Report> {
         ArrayList<Report> reports = new ArrayList<>();
 
         while (queryResult.next()) {
-            Report report = new Report(queryResult.getString(2), queryResult.getString(3), queryResult.getString(4), queryResult.getString(5), totalSales(queryResult.getString(4), queryResult.getString(5)));
-            reports.add(report);
+            Report r = new Report(queryResult.getString(2), queryResult.getString(3), queryResult.getString(4), queryResult.getString(5), 
+            totalSales(queryResult.getString(4), queryResult.getString(5)), 
+            productSnapshots(queryResult.getString(4), queryResult.getString(5)), 
+            categories(queryResult.getString(4), queryResult.getString(5)));
+            
+            reports.add(r);
         }
 
         return reports;

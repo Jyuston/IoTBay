@@ -13,15 +13,33 @@ public class Report implements Serializable {
     private String startDate;
     private String endDate;
     private ArrayList<OrderLineItem> saleRecords;
+    private ArrayList<ProductSummary> productSummaries;
+    private ArrayList<String> categories;
     private SalesAnalyser salesAnalyser = new SalesAnalyser();
+
+    /*
+    private double totalRevenue;
+    private String topCategory;
+    private double topCategoryRevenue;
+    private ProductSummary topItem;
+    */
     
 
-    public Report (String reportName, String reportDescription, String startDate, String endDate, ArrayList<OrderLineItem> saleRecords) {
+    public Report (String reportName, String reportDescription, String startDate, String endDate, 
+        ArrayList<OrderLineItem> saleRecords, ArrayList<ProductSummary> summaries, ArrayList<String> categories) {
         this.name = reportName;
         this.description = reportDescription;
         this.startDate = startDate;
         this.endDate = endDate;
         this.saleRecords = saleRecords;
+        this.productSummaries = summaries;
+        this.categories = categories;
+        /*
+        this.totalRevenue = salesAnalyser.getTotalSalesValue(saleRecords);
+        this.topCategory = salesAnalyser.getTopCategory(saleRecords);
+        this.topCategoryRevenue = salesAnalyser.getTopCategoryRevenue(topCategory, saleRecords);
+        this.topItem = salesAnalyser.getTopProduct(summaries);
+        */
     }
 
     public String getName() {
@@ -76,19 +94,20 @@ public class Report implements Serializable {
         return salesAnalyser.getTopCategoryRevenue(getTopCategory(), saleRecords);
     }
 
-    public ProductSummary getTopSellingItem(ArrayList<ProductSummary> summaryArray) {
-        return salesAnalyser.getTopProduct(summaryArray);
+    public ProductSummary getTopSellingItem() {
+        return salesAnalyser.getTopProduct(productSummaries);
     }
 
     public Hashtable<String, Double> getSalesByState() {
         return salesAnalyser.getSalesBySate(saleRecords);
     }
 
-    public Hashtable<String, Double> getSalesbyCategory() {
+    public Hashtable<String, Double> getSalesByCategory() {
         return salesAnalyser.getSalesByCategory(saleRecords);
     }
 
-    public HashMap<String, ArrayList<ProductSummary>> getSalesByCategoryByProduct(ArrayList<ProductSummary> summaryArray, ArrayList<String> categories) {
-        return salesAnalyser.getSalesByCategoryByProduct(summaryArray, categories);
+    public HashMap<String, ArrayList<ProductSummary>> getSalesBreakdown() {
+        return salesAnalyser.getSalesByCategoryByProduct(productSummaries, categories);
     }
+
 }

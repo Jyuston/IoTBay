@@ -23,6 +23,7 @@ public class ReportingController extends HttpServlet {
         return DAO.getAll();
     }
 
+    /*
     public Report createReport(String name, String description, String startDate, String endDate) throws SQLException {
         Report r = new Report(name, description, startDate, endDate, DAO.totalSales(startDate, endDate));
         DAO.save(r);
@@ -86,4 +87,5 @@ public class ReportingController extends HttpServlet {
     public HashMap<String, ArrayList<ProductSummary>> salesByCategorybyProduct(Report r) throws SQLException {
         return r.getSalesByCategoryByProduct(DAO.productSnapshots(r.getStartDate(), r.getEndDate()), DAO.categories(r.getStartDate(), r.getEndDate()));
     }
+    */
 }

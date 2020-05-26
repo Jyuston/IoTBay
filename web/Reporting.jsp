@@ -3,7 +3,6 @@
     Created on  8 Apr 2020, 21907 pm
     Author      denni
 --%>
-
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ page import="uts.isd.model.reporting.*" %>
 <%@ page import="uts.isd.controller.reporting.*" %>
@@ -27,8 +26,8 @@
         String endDate = request.getParameter("endDate");
 
         if (newReportCreated != null && newReportCreated.equals("yes")) {
-            ReportingController rc = new ReportingController();
-            rc.createReport(reportName, reportDescription, startDate, endDate);
+            //ReportingController rc = new ReportingController();
+            //rc.createReport(reportName, reportDescription, startDate, endDate);
         
     %>
     <body>
@@ -56,7 +55,7 @@
                     <h1>Reporting</h1>
                     <p>Select an existing report to view, or create a new report. </p>
                     <h2> View Existing Reporting</h2>
-                    <form method="post" action="reporting/reportView.jsp">
+                    <form method="post" action="ReportingServlet">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label>Report Name</label>
@@ -77,7 +76,7 @@
                                         }                 
                                     %>
                                 </select>
-                                <a href="reporting/reportView.jsp"><input type="submit" class="btn btn-primary" value="View Report"></a>
+                                <input type="submit" class="btn btn-primary" value="View Report"></a>
                             </div>
                             
                             <div class="form-group col-md-6">
