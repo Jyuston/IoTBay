@@ -41,6 +41,7 @@
                 <tr>
                     <td><button class="btn btn-primary btn-sm my-2 mr-2">Activate</button></td>
                     <td><button class="btn btn-warning btn-sm my-2 mr-2">Deactivate</button></td>
+                    <td><button class="btn btn-info btn-sm my-2 mr-2">Edit</button></td>
                     <td><button class="btn btn-danger btn-sm my-2 float-right">Delete</button></td>
                 </tr>  
                 <tr>
