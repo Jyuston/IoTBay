@@ -66,7 +66,20 @@ VALUES
     ('P-0000001', '0.5 Ohm Resistor', 10, 0.20, 'Resistors', 'This is a 0.5 ohn resistor', false),
     ('P-0000002', '0.5 micro farahs capacitor', 20, 0.50, 'Capacitors', 'This is a micro farahs capacitor', false),
     ('P-0000003', '0.7 Ohm Resistor', 10, 0.70, 'Resistors', 'This is a 0.7 ohm resistor', false),
-    ('P-0000004', '2.5 micro farahs capacitor', 20, 1.50, 'Capacitors', 'This is a micro farahs capacitor', false)
+    ('P-0000004', '0.5 force sensitive resistor sensor', 25, 8.50, 'Resistor', 'This is a force sensitive resistor with a round, 0.5" diameter, sensing area.', false),
+    ('P-0000005', '2.5 micro farahs capacitor', 20, 1.50, 'Capacitors', 'This is a micro farahs capacitor', false),
+    ('P-0000006', '1/4W resistor kit', 30, 12.00, 'Resistors', 'Resistor kit comes with 25 each of 20 different resistor values ', false),
+    ('P-0000007', 'cermaic capacitor', 22, 3.50, 'Capacitors', 'This is a micro farahs capacitor', false),
+    ('P-0000008', 'tantalum capacitor', 20, 4.00 'Capacitors', 'This is a micro farahs capacitor', false),
+    ('P-0000010', 'aluminium capacitor', 20, 1.50, 'Capacitors', 'This is a micro farahs capacitor', false),
+    ('P-0000010', 'aluminium capacitor', 20, 1.50, 'Capacitors', 'This is a micro farahs capacitor', false),
+    ('P-0000011', '2.5 micro farahs capacitor', 20, 1.50, 'Capacitors', 'This is a micro farahs capacitor', false),
+    ('P-0000012', '2.5 micro farahs capacitor', 20, 1.50, 'Capacitors', 'This is a micro farahs capacitor', false),
+    ('P-0000013', '2.5 micro farahs capacitor', 20, 1.50, 'Capacitors', 'This is a micro farahs capacitor', false),
+    ('P-0000014', '2.5 micro farahs capacitor', 20, 1.50, 'Capacitors', 'This is a micro farahs capacitor', false),
+    ('P-0000015', '2.5 micro farahs capacitor', 20, 1.50, 'Capacitors', 'This is a micro farahs capacitor', false),
+    ('P-0000016', '2.5 micro farahs capacitor', 20, 1.50, 'Capacitors', 'This is a micro farahs capacitor', false),
+    ('P-0000017', '2.5 micro farahs capacitor', 20, 1.50, 'Capacitors', 'This is a micro farahs capacitor', false),
 ;
 
 INSERT INTO ORDERS (ORDER_ID, ORDER_DATE_TIME, ORDER_SHIPPING_ADDRESS, ORDER_TOTAL, USER_ID, TRACKING_ID, CARD_NUMBER)
