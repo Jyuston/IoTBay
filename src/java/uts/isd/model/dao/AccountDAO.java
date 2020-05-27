@@ -5,16 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-// Does not implement the DAO interface as no CRUD operations are to be done directly on the Account.
 public class AccountDAO {
-    Connection dbConnection;
+    private static final Connection dbConnection = DBConnector.getConnection();
 
-    public AccountDAO(Connection dbConnection) {
-        this.dbConnection = dbConnection;
-    }
-
-    // Will probably change this later. Very basic rn.
-    public String getNextAvailableID() throws SQLException {
+    // THIS SHOULD GET THE LAST USER USING SQL QUERY
+    public static String getNextAvailableID() throws SQLException {
         Statement st = dbConnection.createStatement();
 
         String accountIDsQuery = "SELECT USER_ID FROM ACCOUNTS";
@@ -29,7 +24,7 @@ public class AccountDAO {
         return "U-" + (lastNumber + 1);
     }
     
-    public Character getAccountType(String email, String password) throws SQLException {
+    public static Character getAccountType(String email, String password) throws SQLException {
         Statement st = dbConnection.createStatement();
         String accountTypeQuery =
             "SELECT ACCOUNT_TYPE FROM ACCOUNTS " +

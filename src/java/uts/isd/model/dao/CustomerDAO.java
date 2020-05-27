@@ -12,15 +12,10 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CustomerDAO implements DAO<Customer> {
-    private final Connection dbConnection;
+public class CustomerDAO {
+    public static final Connection dbConnection = DBConnector.getConnection();
 
-    public CustomerDAO(Connection dbConnection) {
-        this.dbConnection = dbConnection;
-    }
-
-    public Customer get(String email, String password) throws SQLException {
-        // Setting up the initial SQL query to find the customer by email and password
+    public static Customer get(String email, String password) throws SQLException {
         Statement st = dbConnection.createStatement();
         String getUserIdQuery =
                 "SELECT USER_ID FROM ACCOUNTS " +
@@ -29,15 +24,14 @@ public class CustomerDAO implements DAO<Customer> {
 
         ResultSet userIDRs = st.executeQuery(getUserIdQuery);
 
-        // If no user, return null
+        // If no table rows, return null
         if (!userIDRs.next())
             return null;
 
         return get(userIDRs.getString("USER_ID"));
     }
 
-    @Override
-    public Customer get(String accountID) throws SQLException {
+    public static Customer get(String accountID) throws SQLException {
         Statement st = dbConnection.createStatement();
         String getCustomerDataQuery =
                 "SELECT * FROM ACCOUNTS A " +
@@ -47,15 +41,14 @@ public class CustomerDAO implements DAO<Customer> {
 
         ResultSet customerRs = st.executeQuery(getCustomerDataQuery);
 
-        // If no data, return null Customer
+        // If no table rows, return null
         if (!customerRs.next())
             return null;
 
         return createCustomerObject(customerRs);
     }
 
-    @Override
-    public List<Customer> getAll() throws SQLException {
+    public static List<Customer> getAll() throws SQLException {
         LinkedList<Customer> customers = new LinkedList<>();
 
         Statement st = dbConnection.createStatement();
@@ -73,8 +66,7 @@ public class CustomerDAO implements DAO<Customer> {
         return customers;
     }
 
-    @Override
-    public void save(Customer customer) throws SQLException {
+    public static void save(Customer customer) throws SQLException {
         Statement st = dbConnection.createStatement();
 
         String accountInsertQuery = String.format(
@@ -117,17 +109,15 @@ public class CustomerDAO implements DAO<Customer> {
         st.executeUpdate(paymentInfoInsertQuery);
     }
 
-    @Override
-    public void update(Customer customer, String[] params) {
+    public static void update(Customer customer, String[] params) {
 
     }
 
-    @Override
-    public void delete(Customer customer) throws SQLException {
+    public static void delete(Customer customer) throws SQLException {
     }
 
     // Helpers
-    private Customer createCustomerObject(ResultSet customerRs) throws SQLException {
+    private static Customer createCustomerObject(ResultSet customerRs) throws SQLException {
         Address customerAddress = new Address(
                 customerRs.getString("ADDRESS_LINE_1"),
                 customerRs.getString("ADDRESS_LINE_2"),

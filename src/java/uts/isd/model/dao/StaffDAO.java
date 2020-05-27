@@ -9,15 +9,10 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-public class StaffDAO implements DAO<Staff> {
-    Connection dbConnection;
+public class StaffDAO {
+    public static final Connection dbConnection = DBConnector.getConnection();
 
-    public StaffDAO(Connection dbConnection) {
-        this.dbConnection = dbConnection;
-    }
-
-    public Staff get(String email, String password) throws SQLException {
-        // Setting up the initial SQL query to find the customer by email and password
+    public static Staff get(String email, String password) throws SQLException {
         Statement st = dbConnection.createStatement();
         String getUserIdQuery =
                 "SELECT USER_ID FROM ACCOUNTS " +
@@ -26,15 +21,14 @@ public class StaffDAO implements DAO<Staff> {
 
         ResultSet userIDRs = st.executeQuery(getUserIdQuery);
 
-        // If no user, return null
+        // If no table rows, return null
         if (!userIDRs.next())
             return null;
 
         return get(userIDRs.getString("USER_ID"));
     }
 
-    @Override
-    public Staff get(String accountID) throws SQLException {
+    public static Staff get(String accountID) throws SQLException {
         Statement st = dbConnection.createStatement();
         String getStaffDataQuery =
                 "SELECT * FROM ACCOUNTS A " +
@@ -43,15 +37,14 @@ public class StaffDAO implements DAO<Staff> {
 
         ResultSet staffRs = st.executeQuery(getStaffDataQuery);
 
-        // If no data, return null Customer
+        // If no table rows, return null
         if (!staffRs.next())
             return null;
 
         return createStaffObject(staffRs);
     }
 
-    @Override
-    public List<Staff> getAll() throws SQLException {
+    public static List<Staff> getAll() throws SQLException {
         LinkedList<Staff> customers = new LinkedList<>();
 
         Statement st = dbConnection.createStatement();
@@ -68,8 +61,7 @@ public class StaffDAO implements DAO<Staff> {
         return customers;
     }
 
-    @Override
-    public void save(Staff staff) throws SQLException {
+    public static void save(Staff staff) throws SQLException {
         Statement st = dbConnection.createStatement();
 
         String accountInsertQuery = String.format(
@@ -93,16 +85,14 @@ public class StaffDAO implements DAO<Staff> {
         st.executeQuery(paymentInfoInsertQuery);
     }
 
-    @Override
-    public void update(Staff customer, String[] params) {
+    public static void update(Staff customer, String[] params) {
     }
 
-    @Override
-    public void delete(Staff customer) throws SQLException {
+    public static void delete(Staff customer) throws SQLException {
     }
 
     // Helpers
-    private Staff createStaffObject(ResultSet customerRs) throws SQLException {
+    private static Staff createStaffObject(ResultSet customerRs) throws SQLException {
         return new Staff(
                 customerRs.getString("USER_ID"),
                 customerRs.getString("USER_F_NAME"),
