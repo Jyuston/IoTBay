@@ -17,16 +17,11 @@ public class UserManagement extends HttpServlet {
     private static final AccountDAO AccDAO = new AccountDAO();
     private static final CustomerDAO CustDAO = new CustomerDAO();
     private static final StaffDAO StffDAO = new StaffDAO(); 
-    
-    @Override 
-    public void init(){
-        //load the Accounts from the Database
-        
-    }
             
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response){
         //search the database 
+        //res render 
     }
     
     @Override
