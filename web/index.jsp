@@ -5,9 +5,6 @@
 </head>
 <jsp:include page="templates/header.jsp"/>
 
-<%--Save the database connection to the session--%>
-<jsp:include page="/ConnServlet" flush="true"/>
-
 <div class="text-center text-white max-w-sm">
     <em>Welcome to...</em>
     <h1 class="display-1 font-weight-bold">IoT Bay!</h1>
@@ -21,5 +18,7 @@
         <a href="register.jsp">Register</a>
     </p>
 </div>
+
+<%--We dont jsp:include the ConnServlet here because we access the single db connection directly in the DAOs--%>
 
 <jsp:include page="templates/footer.jsp"/>

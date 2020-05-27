@@ -10,14 +10,10 @@ import uts.isd.model.ProductSnapshot;
 import java.sql.*;
 import java.util.*;
 
-public class ReportingDAO implements DAO<Report> {
-    Connection dbConnection;
+public class ReportingDAO {
+    public static final Connection dbConnection = DBConnector.getConnection();
 
-    public ReportingDAO(Connection dbConnection) {
-        this.dbConnection = dbConnection;
-    }
-
-    public ArrayList<OrderLineItem> totalSales(String beginTimeStamp, String endTimeStamp) throws SQLException {
+    public static ArrayList<OrderLineItem> totalSales(String beginTimeStamp, String endTimeStamp) throws SQLException {
         // Set up the inital SQL query hre
         Statement st = dbConnection.createStatement();
         String query = ("select ORDER_LINE.PRODUCT_ID, PRODUCT_NAME, PRODUCT_CATEGORY, QUANTITY_ORDERED, ORDER_LINE.PRODUCT_PRICE, ORDER_SHIPPING_ADDRESS " +
@@ -38,7 +34,7 @@ public class ReportingDAO implements DAO<Report> {
         return queryResultsStructured;
     }
 
-    public ArrayList<String> categories(String beginTimeStamp, String endTimeStamp) throws SQLException {
+    public static ArrayList<String> categories(String beginTimeStamp, String endTimeStamp) throws SQLException {
         // Set up the inital SQL query here
         Statement st = dbConnection.createStatement();
         String query = ("select distinct(PRODUCT_CATEGORY) from PRODUCTS, ORDERS O " +
@@ -57,7 +53,7 @@ public class ReportingDAO implements DAO<Report> {
         return categories;
     }
 
-    public ArrayList<ProductSummary> productSnapshots(String beginTimeStamp, String endTimeStamp) throws SQLException {
+    public static ArrayList<ProductSummary> productSnapshots(String beginTimeStamp, String endTimeStamp) throws SQLException {
         Statement st = dbConnection.createStatement();
 
         String query = ("select o.PRODUCT_ID as id, PRODUCT_NAME, PRODUCT_CATEGORY as category, QUANTITY_ORDERED, (o.PRODUCT_PRICE * QUANTITY_ORDERED) as PRICE " +
@@ -79,7 +75,7 @@ public class ReportingDAO implements DAO<Report> {
         return snapshots;
     }
 
-    public ArrayList<String> getReportNames() throws SQLException {
+    public static ArrayList<String> getReportNames() throws SQLException {
         Statement st = dbConnection.createStatement();
 
         String query = "select REPORT_NAME from REPORTS";
@@ -96,7 +92,7 @@ public class ReportingDAO implements DAO<Report> {
     }
 
     // Create
-    public void save(Report r) throws SQLException {
+    public static void save(Report r) throws SQLException {
         Statement st = dbConnection.createStatement();
         
         String reportID = generateID();
@@ -108,7 +104,7 @@ public class ReportingDAO implements DAO<Report> {
     }
 
      // Read
-    public Report get(String name) throws SQLException {
+    public static Report get(String name) throws SQLException {
         Statement st = dbConnection.createStatement();
         
         String query = "select REPORT_NAME, REPORT_DESCRIPTION, REPORT_START_DATE, REPORT_END_DATE from REPORTS where REPORT_NAME = '" + name + "'";
@@ -125,7 +121,7 @@ public class ReportingDAO implements DAO<Report> {
     }
 
     // Read
-    public ArrayList<Report> getAll() throws SQLException {
+    public static ArrayList<Report> getAll() throws SQLException {
         Statement st = dbConnection.createStatement();
         
         String query = "select * from reports";
@@ -148,17 +144,17 @@ public class ReportingDAO implements DAO<Report> {
     }
 
     // Update
-    public void update(Report r, String[] parameters) throws SQLException {
+    public static void update(Report r, String[] parameters) throws SQLException {
 
     }
 
     // Delete
-    public void delete(Report r) throws SQLException {
+    public static void delete(Report r) throws SQLException {
 
     }
 
     // Helper Methods
-    private String generateID() throws SQLException {
+    private static String generateID() throws SQLException {
         Statement st = dbConnection.createStatement();
         
         // Build the select query that will retrieve all USER_IDs from the database
@@ -193,7 +189,7 @@ public class ReportingDAO implements DAO<Report> {
         return "R-" + random;
     }
 
-    private boolean checkUnique(String value, ArrayList<String> collection) {
+    private static boolean checkUnique(String value, ArrayList<String> collection) {
         // Checking to see if the supplied value already exists
         return !collection.contains(value);
     }
