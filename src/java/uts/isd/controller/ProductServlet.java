@@ -34,7 +34,10 @@ public class ProductServlet extends HttpServlet {
         catch (Throwable exception) {
             //TODO: handle exception
             System.out.println(exception);
-        }
+        } finally {
+             request.getRequestDispatcher("/catalogue.jsp").include(request, response);
+
+            }
     }
 
     @Override
@@ -49,18 +52,19 @@ public class ProductServlet extends HttpServlet {
              
              request.setAttribute("allproducts", product);
         
-              RequestDispatcher dispatcher = request.getRequestDispatcher("Catalogue.jsp");
-       
-              dispatcher.forward(request, response);
+              
               
             }
 
             catch (Throwable exception) {
                 System.out.println(exception);
+            } finally {
+             request.getRequestDispatcher("/catalogue.jsp").include(request, response);
+
             }
             
         }
-}
+    }
 
        
     
