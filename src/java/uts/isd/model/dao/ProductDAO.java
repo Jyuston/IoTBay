@@ -3,22 +3,27 @@ package uts.isd.model.dao;
 import uts.isd.model.Product;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ProductDAO implements DAO<Product> {
-    private static final Connection dbConnection = DBConnector.getConnection();
+public class ProductDAO{
+    Connection dbConnection;
 
-        public static String getNextAvailableID() throws SQLException {
+    public ProductDAO(Connection dbConnection) throws SQLException  {
+        this.dbConnection = dbConnection;
+    }
+        
+    public static String getNextAvailableID() throws SQLException {
         Statement st = dbConnection.createStatement();
 
         String productIDs = "SELECT PRODUCT_ID FROM PRODUCTS";
         ResultSet productIDsRs = st.executeQuery(productIDs);
 
-        if (!productIDsRs.last())
+        if (!productIDsRs.next())
             return "P-1";
 
         String lastID = productIDsRs.getString("USER_ID");
@@ -29,7 +34,7 @@ public class ProductDAO implements DAO<Product> {
     
     
     public Product get(String productName, String productCategory) throws SQLException {
-        // Setting up the initial SQL query to find the product by its name and type (category)
+// Setting up the initial SQL query to find the product by its name and type (category)
         Statement st = dbConnection.createStatement();
         String getProductID =
                 "SELECT PRODUCT_ID FROM PRODUCTS " +
@@ -101,8 +106,14 @@ public class ProductDAO implements DAO<Product> {
     public void update(Product product, String[] params) {
     }
 
-    @Override
-    public void delete(Product product) throws SQLException {
+    public void delete(int productID) throws SQLException {
+            String deletePQuery = "DELETE FROM movie WHERE ID = '" + productID + "'";
+
+        Statement st = dbConnection.createStatement();
+                  st.executeQuery(deletePQuery);
+  
+     
+    
     }
 
     // Helpers
@@ -115,5 +126,10 @@ public class ProductDAO implements DAO<Product> {
                 productRs.getBoolean("ARCHIVED")
                 
         );
+    }
+
+    @Override
+    public void delete(Product t) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
