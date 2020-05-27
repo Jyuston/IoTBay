@@ -50,6 +50,7 @@ public class RegistrationServlet extends HttpServlet {
                     email,
                     password,
                     contactNumber,
+                    true,
                     address,
                     paymentInfo,
                     newOrderList,

@@ -9,14 +9,16 @@ public abstract class Account implements Serializable {
     private String email;
     private String password;
     private String contactNumber;
+    private boolean active;
 
-    Account(String ID, String firstName, String lastName, String email, String password, String contactNumber) {
+    Account(String ID, String firstName, String lastName, String email, String password, String contactNumber, boolean active) {
         this.ID = ID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.contactNumber = contactNumber;
+        this.active = active;
     }
 
     public String getID() { return ID; }
@@ -34,8 +36,11 @@ public abstract class Account implements Serializable {
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
     
-    public String getContactNumber() {return contactNumber;}
-    public void setContactNumber(String contactNumber) {this.contactNumber = contactNumber;}
+    public String getContactNumber() { return contactNumber; }
+    public void setContactNumber(String contactNumber) { this.contactNumber = contactNumber; }
+
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 
     // Used in sub classes
     public boolean isStaff() {

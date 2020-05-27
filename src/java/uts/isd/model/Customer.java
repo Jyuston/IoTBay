@@ -6,14 +6,14 @@ public class Customer extends Account {
     private Address address;
     private PaymentInformation paymentInfo;
     private LinkedList<Order> orders;
-    private boolean isAnonymous;
+    private boolean anonymous;
 
-    public Customer(String ID, String firstName, String lastName, String email, String password, String contactNumber, Address address, PaymentInformation paymentInfo, LinkedList<Order> orders, boolean isAnonymous) {
-        super(ID, firstName, lastName, email, password, contactNumber);
+    public Customer(String ID, String firstName, String lastName, String email, String password, String contactNumber, boolean active, Address address, PaymentInformation paymentInfo, LinkedList<Order> orders, boolean anonymous) {
+        super(ID, firstName, lastName, email, password, contactNumber, active);
         this.address = address;
         this.paymentInfo = paymentInfo;
         this.orders = orders;
-        this.isAnonymous = isAnonymous;
+        this.anonymous = anonymous;
     }
 
     public Address getAddress() { return address; }
@@ -25,8 +25,8 @@ public class Customer extends Account {
     public LinkedList<Order> getOrders() { return orders; }
     public void setOrders(LinkedList<Order> orders) { this.orders = orders; }
 
-    public boolean isAnonymous() { return isAnonymous; }
-    public void setAnonymous(boolean anonymous) { isAnonymous = anonymous; }
+    public boolean isAnonymous() { return anonymous; }
+    public void setAnonymous(boolean anonymous) { this.anonymous = anonymous; }
 
 //    public static Customer create(String firstName, String lastName, String email, String password, String contactNumber, Address address, PaymentInformation paymentInfo) {
 //        String ID;

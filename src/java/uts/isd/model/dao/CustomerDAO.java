@@ -70,14 +70,15 @@ public class CustomerDAO {
         Statement st = dbConnection.createStatement();
 
         String accountInsertQuery = String.format(
-                "INSERT INTO ACCOUNTS (USER_ID, USER_EMAIL, USER_F_NAME, USER_L_NAME, PASSWORD, CONTACT_NUMBER, ACCOUNT_TYPE) " +
-                "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+                "INSERT INTO ACCOUNTS (USER_ID, USER_EMAIL, USER_F_NAME, USER_L_NAME, PASSWORD, CONTACT_NUMBER, IS_ACTIVE, ACCOUNT_TYPE) " +
+                "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s)",
                 customer.getID(),
                 customer.getEmail(),
                 customer.getFirstName(),
                 customer.getLastName(),
-                customer.getContactNumber(),
                 customer.getPassword(),
+                customer.getContactNumber(),
+                customer.isActive(),
                 "C"
         );
         st.executeUpdate(accountInsertQuery);
@@ -143,6 +144,7 @@ public class CustomerDAO {
                 customerRs.getString("USER_EMAIL"),
                 customerRs.getString("PASSWORD"), // Lol
                 customerRs.getString("CONTACT_NUMBER"),
+                customerRs.getBoolean("IS_ACTIVE"),
                 customerAddress,
                 customerPaymentInfo,
                 customerOrders, // empty orders for now
