@@ -2,7 +2,7 @@ INSERT INTO ACCOUNTS (USER_ID, USER_EMAIL, USER_F_NAME, USER_L_NAME, CONTACT_NUM
 VALUES
     ('1', 'john.smith@gmail.com', 'John', 'Smith', '0438278971', 'C', 'password123'),
     ('2', 'odio@sed.ca','Nehru','Rivers', '0438278972', 'C', 'password123'),
-    ('3', 'Sed@iderat.edu','Craig','Estrada', '0438278973', '0438278974', 'C', 'password123'),
+    ('3', 'Sed@iderat.edu','Craig','Estrada', '0438278973', 'C', 'password123'),
     ('4', 'risus.quis@tortorat.org','Judah','Erickson', '0438278975', 'C', 'password123'),
     ('5', 'Nullam@augue.org','Hakeem','Townsend', '0493750271', 'C', 'password123'),
     ('6', 'consectetuer.adipiscing@Donecnibh.org','Leroy','Hoffman', '0438278976', 'C', 'password123'),
@@ -10,7 +10,7 @@ VALUES
     ('8', 'dis.parturient.montes@malesuadafames.edu','Upton','Phelps', '0438278978', 'C', 'password123'),
     ('9', 'elementum.sem@utnullaCras.net','Barrett','Lewis', '0438278979', 'C', 'password123'),
     ('10','vulputate.velit@quisaccumsanconvallis.com','Stuart','Kramer', '0438278980', 'C', 'password123'),
-    ('11', 'egestas.Duis.ac@Morbinon.edu','Tyler','Owens', '0438278981', '0438289530', 'C', 'password123'),
+    ('11', 'egestas.Duis.ac@Morbinon.edu','Tyler','Owens', '0438278981', 'C', 'password123'),
     ('12', 'nicholsonK@iotbay.com', 'Kirby','Nicholson', '0404285927', 'S', 'jSev*UkN1DJr'),
     ('13', 'farleyS@iotbay.com', 'Lenore','Farley', '04030385162', 'S', 'ilOh%@hQ&$LZ'),
     ('14', 'talleyS@iotbay.com', 'Stephanie','Talley', '0404477143', 'S', 'jAupTO!0DnHt')
@@ -66,11 +66,11 @@ VALUES
     ('1', '0.5 Ohm Resistor', 10, 0.20, 'Resistors', 'This is a 0.5 ohn resistor', false),
     ('2', '0.5 micro farahs capacitor', 20, 0.50, 'Capacitors', 'This is a micro farahs capacitor', false),
     ('3', '0.7 Ohm Resistor', 10, 0.70, 'Resistors', 'This is a 0.7 ohm resistor', false),
-    ('4', '0.5 force sensitive resistor sensor', 25, 8.50, 'Resistor', 'This is a force sensitive resistor with a round, 0.5" diameter, sensing area.', false),
+    ('4', '0.5 force sensitive resistor sensor', 25, 8.50, 'Resistors', 'This is a force sensitive resistor with a round, 0.5" diameter, sensing area.', false),
     ('5', '2.5 micro farahs capacitor', 20, 1.50, 'Capacitors', 'This is a micro farahs capacitor', false),
     ('6', '1/4W resistor kit', 30, 12.00, 'Resistors', 'Resistor kit comes with 25 each of 20 different resistor values ', false),
     ('7', 'ceramic capacitor', 22, 3.50, 'Capacitors', 'This is a ceramic capacitor', false),
-    ('8', 'tantalum capacitor', 20, 4.00 'Capacitors', 'This is a tantalum capacitor', false),
+    ('8', 'tantalum capacitor', 20, 4.00, 'Capacitors', 'This is a tantalum capacitor', false),
     ('9', 'plastic film capacitor', 20, 1.50, 'Capacitors', 'This is a plastic film capacitor', false),
     ('10', 'aluminium capacitor', 30, 5.50, 'Capacitors', 'This is a aluminium capacitor', false),
     ('11', 'electrolytic capacitor', 40, 6.00, 'Capacitors', 'This is a electrolytic capacitor', false),
@@ -108,18 +108,17 @@ VALUES
     ('2', '1', 1, 0.20),
     ('2', '2', 1, 0.50),
     ('2', '3', 4, 0.70),
-    ('3', '6', 6, 12.00)
-    ('3', '7', 3, 3.50)
-    ('4', '3', 4, 0.70)
-    ('5', '3', 2, 0.70)
-    ('6', '5', 5, 1.50)
-    ('6', '6', 1, 12.00)
-    ('7', '7', 5, 3.50)
-    ('8', '9', 6, 1.50)
-    ('8', '7', 2, 3.50)
-    ('9', '3', 2, 0.70)
+    ('3', '6', 6, 12.00),
+    ('3', '7', 3, 3.50),
+    ('4', '3', 4, 0.70),
+    ('5', '3', 2, 0.70),
+    ('6', '5', 5, 1.50),
+    ('6', '6', 1, 12.00),
+    ('7', '7', 5, 3.50),
+    ('8', '9', 6, 1.50),
+    ('8', '7', 2, 3.50),
+    ('9', '3', 2, 0.70),
     ('9', '4', 5, 1.50)
-    
 ;
 
 /* Insert Dashboard Data */
