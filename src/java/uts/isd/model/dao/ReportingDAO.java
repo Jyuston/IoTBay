@@ -11,10 +11,10 @@ import java.sql.*;
 import java.util.*;
 
 public class ReportingDAO implements DAO<Report> {
-    private final Connection dbConnection;
+    Connection dbConnection;
 
-    public ReportingDAO() {
-        dbConnection = DBConnector.getConnection();
+    public ReportingDAO(Connection dbConnection) {
+        this.dbConnection = dbConnection;
     }
 
     public ArrayList<OrderLineItem> totalSales(String beginTimeStamp, String endTimeStamp) throws SQLException {

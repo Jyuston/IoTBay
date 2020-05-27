@@ -10,17 +10,18 @@ import uts.isd.model.dao.ReportingDAO;
 import uts.isd.model.reporting.Report;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 
-public class ReportingServlet extends HttpServlet {
-    private static final ReportingDAO DAO = new ReportingDAO();
-    
+public class ReportingServlet extends HttpServlet {   
     
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
         try {
+            HttpSession session = request.getSession();
+            Connection dbConnection = (Connection) session.getAttribute("dbConnection");
+            ReportingDAO DAO = new ReportingDAO(dbConnection);
             ArrayList<String> reportNames = DAO.getReportNames();
-            HttpSession session = request.getSession(true);
             session.setAttribute("reportNames", reportNames);
             response.sendRedirect("reporting.jsp");
         } 
@@ -33,6 +34,10 @@ public class ReportingServlet extends HttpServlet {
     
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
+        HttpSession session = request.getSession();
+        Connection dbConnection = (Connection) session.getAttribute("dbConnection");
+        ReportingDAO DAO = new ReportingDAO(dbConnection);
+
         if (request.getParameter("newReportCreated") != null && request.getParameter("newReportCreated").equals("yes")) {
             // validate (check the dates)
             // create new report
@@ -49,7 +54,6 @@ public class ReportingServlet extends HttpServlet {
                 // Retrieve the report from the database and instantiate the full report object
                 Report r = DAO.get(reportName);
                 // Save the report to the session and redirect to the report view page
-                HttpSession session = request.getSession(true);
                 session.setAttribute("report", r);
                 response.sendRedirect("reporting/reportView.jsp");
             }
@@ -64,7 +68,6 @@ public class ReportingServlet extends HttpServlet {
         else {
             try {
                 Report r = DAO.get(request.getParameter("selectedReport"));
-                HttpSession session = request.getSession(true);
                 session.setAttribute("report", r);
                 response.sendRedirect("reporting/reportView.jsp");          
             } 
