@@ -1,5 +1,4 @@
-<%@ page import="uts.isd.controller.LoginController" %>
-<%@ page import="uts.isd.model.Customer" %>
+<%@ page import="uts.isd.model.Account" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <head>
@@ -8,17 +7,11 @@
 <jsp:include page="templates/header.jsp"/>
 
 <%
-    String submitted = request.getParameter("submitted");
-
-    if (submitted != null) {
-        String enteredEmail = request.getParameter("email");
-        String enteredPassword = request.getParameter("password");
-        Account account = LoginController.login(enteredEmail,enteredPassword);
-        
-        if (customer != null) {
-            session.setAttribute("user", account);
+    Account user = (Account) session.getAttribute("user");
+    String errorMsg = (String) request.getAttribute("errorLogin");
+    // If user logged in
+    if (user != null) {
 %>
-
 <div class="row">
     <div class="col"></div>
     <div class="col-md-auto">
@@ -29,26 +22,17 @@
     </div>
     <div class="col"></div>
 </div>
-
-        <% } else { %>
-
-<div class="row">
-    <div class="col"></div>
-    <div class="col-md-auto">
-        <div class="alert alert-danger" role="alert">
-            <h4 class="alert-heading">Login Unsuccessful!</h4>
-            <p id="successAlertText">Incorrect email or password</p>
-            <a class="btn btn-primary btn-lg btn-block" href="login.jsp"> Try Again </a>
-        </div>
-    </div>
-    <div class="col"></div>
-</div>
-
-<% }
-} else { %>
-
-<form action="login.jsp" method="post" class="max-w-sm">
+<% } else { %>
+<form action="LoginServlet" method="post" class="max-w-sm">
     <h1>Login</h1>
+
+    <%-- If error message --%>
+    <% if (errorMsg != null) { %>
+    <div class="alert alert-danger my-4" role="alert">
+        <%= errorMsg %>
+    </div>
+    <% } %>
+
     <div class="form-group">
         <label for="email">Email address</label>
         <input type="email" class="form-control" name="email" id="email" placeholder="email@example.com"
@@ -71,8 +55,6 @@
 
     <a href="index.jsp" class="text-center d-block text-danger">Cancel</a>
 </form>
-
 <% } %>
-
 
 <jsp:include page="templates/footer.jsp"/>

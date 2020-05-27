@@ -11,14 +11,24 @@ public class Product implements Serializable {
     private  String category;
     private int stock;
     private double price;
+    private String description;
     private boolean archived;
 
-    public Product(String name, int stock, double price, String category, boolean archived) {
+    public Product(String ID, String name, int stock, double price, String category, String description, boolean archived) {
+        this.ID = ID; 
         this.name = name;
         this.stock = stock;
         this.price = price;
         this.category = category;
         this.archived = archived;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
    

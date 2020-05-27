@@ -4,9 +4,17 @@
         <servlet-name>CatalogueServlet</servlet-name>
         <servlet-class>uts.isd.controller.CatalogueServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ProductServlet</servlet-name>
+        <servlet-class>uts.isd.controller.ProductServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CatalogueServlet</servlet-name>
         <url-pattern>/CatalogueServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductServlet</servlet-name>
+        <url-pattern>/ProductServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
