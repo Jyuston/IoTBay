@@ -15,8 +15,8 @@ import java.util.List;
 public class CustomerDAO implements DAO<Customer> {
     private final Connection dbConnection;
 
-    public CustomerDAO() {
-        dbConnection = DBConnector.getConnection();
+    public CustomerDAO(Connection dbConnection) {
+        this.dbConnection = dbConnection;
     }
 
     public Customer get(String email, String password) throws SQLException {
@@ -87,7 +87,7 @@ public class CustomerDAO implements DAO<Customer> {
                 customer.getPassword(),
                 "C"
         );
-        st.executeQuery(accountInsertQuery);
+        st.executeUpdate(accountInsertQuery);
 
         Address customerAddress = customer.getAddress();
         String customerInsertQuery = String.format(
@@ -102,19 +102,19 @@ public class CustomerDAO implements DAO<Customer> {
                 customerAddress.getState(),
                 "false"
         );
-        st.executeQuery(customerInsertQuery);
+        st.executeUpdate(customerInsertQuery);
 
         PaymentInformation customerPaymentInfo = customer.getPaymentInfo();
         String paymentInfoInsertQuery = String.format(
                 "INSERT INTO PAYMENT_INFORMATION (USER_ID, CARD_NUMBER, CVV_NUMBER, EXPIRY_MONTH, EXPIRY_YEAR) " +
-                "VALUES ('%s', '%s', '%s', '%s', '%s', )",
+                "VALUES ('%s', '%s', '%s', '%s', '%s')",
                 customer.getID(),
                 customerPaymentInfo.getCardNumber(),
                 customerPaymentInfo.getCvvNumber(),
                 customerPaymentInfo.getExpiryMonth(),
                 customerPaymentInfo.getExpiryYear()
         );
-        st.executeQuery(paymentInfoInsertQuery);
+        st.executeUpdate(paymentInfoInsertQuery);
     }
 
     @Override
@@ -125,21 +125,6 @@ public class CustomerDAO implements DAO<Customer> {
     @Override
     public void delete(Customer customer) throws SQLException {
     }
-
-//    // Will probably change this later. Very basic rn.
-//    public  String getNextAvailableID() throws SQLException {
-//        Statement st = dbConnection.createStatement();
-//
-//        String accountIDsQuery = "SELECT USER_ID FROM ACCOUNTS";
-//        ResultSet accountIDsRs = st.executeQuery(accountIDsQuery);
-//
-//        if (!accountIDsRs.last())
-//            return "U-1";
-//
-//        String lastID = accountIDsRs.getString("USER_ID");
-//        int lastNumber = Integer.parseInt(lastID.substring(2));
-//        return "U-" + (lastNumber + 1);
-//    }
 
     // Helpers
     private Customer createCustomerObject(ResultSet customerRs) throws SQLException {

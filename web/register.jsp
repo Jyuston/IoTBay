@@ -1,7 +1,4 @@
-<%@ page import="uts.isd.controller.RegistrationController" %>
 <%@ page import="uts.isd.model.Customer" %>
-<%@ page import="uts.isd.model.Address" %>
-<%@ page import="uts.isd.model.PaymentInformation" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <head>
@@ -10,44 +7,12 @@
 <jsp:include page="templates/header.jsp"/>
 
 <%
-    String submitted = request.getParameter("submitted");
+    Customer user = (Customer) session.getAttribute("user");
+    String errorMsg = (String) request.getAttribute("errorRegister");
 
-    if (submitted != null) {
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String email = request.getParameter("email");
-        String contactNumber = request.getParameter("contactNumber");
-        String password = request.getParameter("password");
-
-        Address customerAddress = new Address(
-            request.getParameter("addressLine1"),
-            request.getParameter("addressLine2"),
-            request.getParameter("suburb"),
-            request.getParameter("postcode"),
-            request.getParameter("state")
-        );
-
-        PaymentInformation customerPaymentInfo = new PaymentInformation(
-            request.getParameter("cardNumber"),
-            request.getParameter("cvvNumber"),
-            request.getParameter("expiryMonth"),
-            request.getParameter("expiryYear")
-        );
-
-        Customer customer = RegistrationController.registerCustomer(
-            firstName,
-            lastName,
-            email,
-            password,
-            contactNumber,
-            customerAddress,
-            customerPaymentInfo
-        );
-
-        if (customer != null)
-            session.setAttribute("user", customer);
+    // If user registration successful
+    if (user != null) {
 %>
-
 <div class="row">
     <div class="col"></div>
     <div class="col-md-auto">
@@ -58,15 +23,20 @@
     </div>
     <div class="col"></div>
 </div>
-
 <% } else { %>
 
 <div class="row">
     <div class="col"></div>
     <div class="col-lg-6 col-md-auto">
-
-        <form action="register.jsp" method="post">
+        <form action="RegistrationServlet" method="post">
             <h1>Register</h1>
+
+            <%-- If error message --%>
+            <% if (errorMsg != null) { %>
+            <div class="alert alert-danger my-4" role="alert">
+                <%= errorMsg %>
+            </div>
+            <% } %>
 
             <%--Details--%>
             <h4>Details</h4>
@@ -174,11 +144,8 @@
             <a href="index.jsp" class="text-center d-block text-danger">Cancel</a>
         </form>
     </div>
-
     <div class="col"></div>
 </div>
-
 <% } %>
-
 
 <jsp:include page="templates/footer.jsp"/>

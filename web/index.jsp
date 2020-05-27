@@ -5,6 +5,9 @@
 </head>
 <jsp:include page="templates/header.jsp"/>
 
+<%--Save the database connection to the session--%>
+<jsp:include page="/ConnServlet" flush="true"/>
+
 <div class="text-center text-white max-w-sm">
     <em>Welcome to...</em>
     <h1 class="display-1 font-weight-bold">IoT Bay!</h1>

@@ -1,8 +1,5 @@
 package uts.isd.model;
 
-import uts.isd.model.dao.CustomerDAO;
-
-import java.sql.SQLException;
 import java.util.LinkedList;
 
 public class Customer extends Account {
@@ -11,8 +8,6 @@ public class Customer extends Account {
     private PaymentInformation paymentInfo;
     private LinkedList<Order> orders;
     private boolean isAnonymous;
-
-    private static final CustomerDAO DAO = new CustomerDAO();
 
     public Customer(String ID, String firstName, String lastName, String email, String password, String contactNumber, Address address, PaymentInformation paymentInfo, LinkedList<Order> orders, boolean isAnonymous) {
         super(ID, firstName, lastName, email, password);
@@ -38,46 +33,35 @@ public class Customer extends Account {
     public boolean isAnonymous() { return isAnonymous; }
     public void setAnonymous(boolean anonymous) { isAnonymous = anonymous; }
 
-    public static Customer create(String firstName, String lastName, String email, String password, String contactNumber, Address address, PaymentInformation paymentInfo) {
+//    public static Customer create(String firstName, String lastName, String email, String password, String contactNumber, Address address, PaymentInformation paymentInfo) {
 //        String ID;
 //        try {
-//            ID = DAO.getNextAvailableID();
+//            ID = AccountDAO.getNextAvailableID();
 //        } catch (SQLException e) {
 //            e.printStackTrace();
 //            return null;
 //        }
-
-        String ID = "123";
-
-        Customer createdCustomer = new Customer(
-                ID,
-                firstName,
-                lastName,
-                email,
-                password,
-                contactNumber,
-                address,
-                paymentInfo,
-                new LinkedList<>(),
-                false
-        );
-
-        try {
-            DAO.save(createdCustomer);
-        } catch (SQLException err) {
-            err.printStackTrace();
-            return null;
-        }
-
-        return createdCustomer;
-    }
-
-    public static Customer findByEmailPass(String email, String password) {
-        try {
-            return DAO.get(email, password);
-        } catch (SQLException err) {
-            err.printStackTrace();
-            return null;
-        }
-    }
+//
+//        Customer createdCustomer = new Customer(
+//                ID,
+//                firstName,
+//                lastName,
+//                email,
+//                password,
+//                contactNumber,
+//                address,
+//                paymentInfo,
+//                new LinkedList<>(),
+//                false
+//        );
+//
+//        try {
+//            DAO.save(createdCustomer);
+//        } catch (SQLException err) {
+//            err.printStackTrace();
+//            return null;
+//        }
+//
+//        return createdCustomer;
+//    }
 }
