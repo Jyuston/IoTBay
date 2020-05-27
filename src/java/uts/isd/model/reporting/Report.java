@@ -40,16 +40,13 @@ public class Report implements Serializable {
             this.categories.addAll(categories);
             this.topProduct = salesAnalyser.getTopProduct(summaries);
         }
+    }
 
-        
-
-        
-        /*
-        this.totalRevenue = salesAnalyser.getTotalSalesValue(saleRecords);
-        this.topCategory = salesAnalyser.getTopCategory(saleRecords);
-        this.topCategoryRevenue = salesAnalyser.getTopCategoryRevenue(topCategory, saleRecords);
-        this.topItem = salesAnalyser.getTopProduct(summaries);
-        */
+    public Report (String reportName, String reportDescription, String startDate, String endDate) {
+        this.name = reportName;
+        this.description = reportDescription;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public String getName() {

@@ -33,16 +33,46 @@ public class ReportingServlet extends HttpServlet {
     
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
-        try {
-            Report r = DAO.get(request.getParameter("selectedReport"));
-            HttpSession session = request.getSession(true);
-            session.setAttribute("report", r);
-            response.sendRedirect("reporting/reportView.jsp");          
-        } 
-        
-        catch (Throwable exception) {
-            //TODO: handle exception
-            System.out.println(exception);
+        if (request.getParameter("newReportCreated") != null && request.getParameter("newReportCreated").equals("yes")) {
+            // validate (check the dates)
+            // create new report
+            String reportName = (String)request.getParameter("reportName");
+            String description = (String)request.getParameter("reportDescription");
+            String startDate = (String)request.getParameter("startDate");
+            String endDate = (String)request.getParameter("endDate");
+            // save the report
+            try {
+                // Create a skeleton report (temp)
+                Report rInitial = new Report(reportName, description, startDate, endDate);
+                // Create the record in the database
+                DAO.save(rInitial);
+                // Retrieve the report from the database and instantiate the full report object
+                Report r = DAO.get(reportName);
+                // Save the report to the session and redirect to the report view page
+                HttpSession session = request.getSession(true);
+                session.setAttribute("report", r);
+                response.sendRedirect("reporting/reportView.jsp");
+            }
+
+            catch (Throwable exception) {
+                //TODO: handle exception
+                System.out.println(exception);
+            }
+            
+        }
+
+        else {
+            try {
+                Report r = DAO.get(request.getParameter("selectedReport"));
+                HttpSession session = request.getSession(true);
+                session.setAttribute("report", r);
+                response.sendRedirect("reporting/reportView.jsp");          
+            } 
+            
+            catch (Throwable exception) {
+                //TODO: handle exception
+                System.out.println(exception);
+            }
         }
     }
 }

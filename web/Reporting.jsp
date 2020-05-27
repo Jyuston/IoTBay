@@ -87,7 +87,7 @@
                     <br>
                     <br>
                     <h2>New Sales Report</h2>
-                    <form method="post" action="reporting.jsp">
+                    <form method="post" action="ReportingServlet">
                         <div class="form-row">                                                                         
                             <div class="form-group col-md-6">                                           
                                 <label>Report Name</label>
@@ -112,7 +112,7 @@
                             </div>
                         </div>
                         <input class="form-control" type="hidden" name="newReportCreated" value="yes">
-                        <a href=""><input type="submit" class="btn btn-primary btn-lg btn-block" value="Create Report"></a>
+                        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Create Report"></a>
                     </form>                    
                 </div>
             </div>
