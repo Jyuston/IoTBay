@@ -1,52 +1,128 @@
-<%@ page import="uts.isd.model.Product" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page import="java.util.List"%>
+<%@page import="uts.isd.model.Product"%>
+<%@ page import="uts.isd.controller.ProductServlet.*" %>
 
-<head>
-    <title>Search for a product</title>
-</head>
-<jsp:include page="templates/header.jsp"/>
-
-<%
-    Product product = (Product)request.getAttribute("product");
-    String result = (String)request.getAttribute("result");
-
-%>
-<div class="row">
-    <div class="col"></div>
-    <div class="col-md-auto">
-        <div class="alert alert-success" role="alert">
-            <h4 class="alert-heading"> Cannot find product</h4>
-            <a class="btn btn-primary btn-lg btn-block" href="main.jsp"> Enter Site </a>
-        </div>
-    </div>
-    <div class="col"></div>
-</div>
-
-<form action="ProductServlet" method="post" class="max-w-sm">
-    <h1>Search a product</h1>
-
-
-
-    <div class="form-group">
-        <label for="name">Product Name:</label>
-        <input type="text" class="form-control" name="name" id="email" placeholder="Enter name"
-              >
-    </div>
-    <div class="form-group">
-        <label for="cat">Product Category: </label>
-        <input type="text" class="form-control" id="cat" name="cat" placeholder="Cat" required>
-    </div>
-
-    <%--Used to tell if the form has been submitted within Scriplet tag above--%>
-    <input type="hidden" name="submitted" value="true">
-
-    <button type="submit" class="btn btn-primary btn-block mt-3 mb-2">Search</button>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Search products from category</title>
+    </head>
+    
+    <%
+        Product product = (Product)request.getAttribute("product");
+        
+        
+       
+    
+    %>
+    
+    <body>
+        <h1>Search Movies</h1>
+        <div name="search_part">
+            
+        
+         <div align = "center" style="border:1px solid orange">
+         <form action="search" method="post" >
+                
+                
+                <table cellpadding="10">
+                    <tr>
+                        <td>
+                            <label for="movieTitleInput">Title:</label>
+                        </td>
+                        <td>
+                         <input type="text" class="form-control" name="movieTitleInput" id="movieTitleInput" placeholder="Movie Name" required>
+                  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                             <label for="movieGenreInput">Genre:</label>
+                        </td>
+                        <td>
+                               <input type="text" class="form-control" name="movieGenreInput" id="movieGenreInput" placeholder="Genre" required>
+                
+                        </td>
+                    </tr>
+                </table>
+             
+              <button type="submit" class="btn btn-primary">Search Movie</button>
               <br>
-              <label hidden="true" id="resultLabel"> <%request.getAttribute("result");%></label>
-  
+              <label hidden="true" id="resultLabel"> <%request.getAttribute("product");%></label>
+    
+         </form>
+                
+     <!--           
+              <button class="btn btn-primary" type="submit" name = "backhome" onclick="location.href('category.jsp')">Back to Category </button>
+   -->
+         </div>
+        <br><br><br>
+        
+        <%
+         if(product !=null){
+            
+            request.setAttribute("result", "No Movie Found!");
+               // out.println("MovieSearchResult:" + movieSearchResult.size());
+               //response.sendRedirect("search.jsp");
 
-    <a href="index.jsp" class="text-center d-block text-danger">Cancel</a>
-</form>
-<% } %>
+               
+               
+               
+        
+        %>
+        <div align = "center" >
+            
+        <%--  searchResult is created in MovieServet: searching from title or genre --%>
+        <table style="border: 1px solid greenyellow" cellpadding="10">
+           
+                        <tr>
+                            <th scope ="col">ID</th>
+                            <th scope ="col">Title</th>
+                            <th scope ="col">Release Year</th>
+                            <th scope ="col">Genre</th>
+                            <th scope ="col">Price</th>
+                            <th scope ="col">Description</th>
+                            <th scope ="col">Action</th>
+                        </tr>
+                    
+ 
+                <tr>
+                                <td><%= product.getID()%></td>
+                                <td><%= product.getName()%> </td>
+                               <td> <%= product.getStock()%></td>
+                                <td><%= product.getCategory()%></td>
+                                <td><%= product.getDescription()%></td>
+                                <td><%= product.getPrice()%></td>
 
-<jsp:include page="templates/footer.jsp"/>
+<!-- for use to add to cart:  -->
+                                <td><a href="" >Add to Cart</a></td>
+
+                                
+                            </tr>
+                        <%
+            }
+        
+        
+                            
+                            %>
+                            
+             </table>                          
+                                       
+       </div>    
+        
+        <%
+        }
+        %>
+        
+        
+        
+        
+       </div>
+    </body>
+    
+    <%
+        
+    %>
+</html>
