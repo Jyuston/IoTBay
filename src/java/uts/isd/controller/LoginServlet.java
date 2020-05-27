@@ -13,36 +13,31 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        // Get db connection from session
-        HttpSession session = request.getSession();
-        Connection dbConnection = (Connection) session.getAttribute("dbConnection");
-
-        // Create DAOs to use in Controller
-        AccountDAO accountDAO = new AccountDAO(dbConnection);
-        CustomerDAO customerDAO = new CustomerDAO(dbConnection);
-        StaffDAO staffDAO = new StaffDAO(dbConnection);
-
         // Get form details
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
         // Try to log user in
-        // If any DAO method returns null, the NullPointerException catch will trigger
         try {
-            char accountType = accountDAO.getAccountType(email, password);
+            Character accountType = AccountDAO.getAccountType(email, password);
+
+            // If no account found, set error message on request
+            if (accountType == null) throw new NullPointerException("Incorrect Username or Password.");
 
             Account account = (accountType == 'C') ?
-                    customerDAO.get(email, password) :
-                    staffDAO.get(email, password);
+                    CustomerDAO.get(email, password) :
+                    StaffDAO.get(email, password);
 
-            session.setAttribute("user", account);
+            // Same as above
+            if (account == null) throw new NullPointerException("Incorrect Username or Password.");
+
+            request.getSession().setAttribute("user", account);
         } catch (NullPointerException err) {
-            request.setAttribute("errorLogin", "Incorrect Username/Password.");
+            request.setAttribute("errorLogin", err.getMessage());
         } catch (SQLException err) {
             request.setAttribute("errorLogin", "Error accessing database.");
             err.printStackTrace();
