@@ -70,12 +70,13 @@ public class CustomerDAO {
         Statement st = dbConnection.createStatement();
 
         String accountInsertQuery = String.format(
-                "INSERT INTO ACCOUNTS (USER_ID, USER_EMAIL, USER_F_NAME, USER_L_NAME, PASSWORD, ACCOUNT_TYPE) " +
-                "VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
+                "INSERT INTO ACCOUNTS (USER_ID, USER_EMAIL, USER_F_NAME, USER_L_NAME, PASSWORD, CONTACT_NUMBER, ACCOUNT_TYPE) " +
+                "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
                 customer.getID(),
                 customer.getEmail(),
                 customer.getFirstName(),
                 customer.getLastName(),
+                customer.getContactNumber(),
                 customer.getPassword(),
                 "C"
         );
@@ -83,10 +84,9 @@ public class CustomerDAO {
 
         Address customerAddress = customer.getAddress();
         String customerInsertQuery = String.format(
-                "INSERT INTO CUSTOMERS (USER_ID, CONTACT_NUMBER, ADDRESS_LINE_1, ADDRESS_LINE_2, SUBURB, POSTCODE, STATE, IS_ANONYMOUS) " +
-                "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+                "INSERT INTO CUSTOMERS (USER_ID, ADDRESS_LINE_1, ADDRESS_LINE_2, SUBURB, POSTCODE, STATE, IS_ANONYMOUS) " +
+                "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
                 customer.getID(),
-                customer.getContactNumber(),
                 customerAddress.getAddressLine1(),
                 customerAddress.getAddressLine2(),
                 customerAddress.getSuburb(),
@@ -133,6 +133,7 @@ public class CustomerDAO {
                 customerRs.getString("EXPIRY_YEAR")
         );
 
+        // THIS SHOULD GET THE CUSTOMERS ORDERS FROM RESULT SET, NOT MAKE A EMPTY LIST
         LinkedList<Order> customerOrders = new LinkedList<>();
 
         return new Customer(

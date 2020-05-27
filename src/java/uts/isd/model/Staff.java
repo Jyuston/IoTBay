@@ -3,8 +3,8 @@ package uts.isd.model;
 public class Staff extends Account {
     private boolean isAdmin;
 
-    public Staff(String ID, String firstName, String lastName, String email, String password, boolean isAdmin) {
-        super(ID, firstName, lastName, email, password);
+    public Staff(String ID, String firstName, String lastName, String email, String password, String contactNumber, boolean isAdmin) {
+        super(ID, firstName, lastName, email, password, contactNumber);
         this.isAdmin = isAdmin;
     }
 
