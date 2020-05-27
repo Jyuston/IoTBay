@@ -37,7 +37,7 @@ public class ReportingServlet extends HttpServlet {
             Report r = DAO.get(request.getParameter("selectedReport"));
             HttpSession session = request.getSession(true);
             session.setAttribute("report", r);
-            response.sendRedirect("reporting/reportView1.jsp");          
+            response.sendRedirect("reporting/reportView.jsp");          
         } 
         
         catch (Throwable exception) {

@@ -21,37 +21,13 @@
     <jsp:include page="../templates/header.jsp"/>
 
     <%
-        String reportName = request.getParameter("selectedReport");
-
-        ReportingController rc = new ReportingController();
-        Report report = rc.getReport(reportName);
-        session.setAttribute("report", report);
-        String totalSalesRevenue = rc.totalRevenue(report);
-
-        session.setAttribute("totalSalesRevenue", totalSalesRevenue);
-
-        String topCategory = rc.topCategory(report);
-        session.setAttribute("topCategory", topCategory);
-
-        String topCategoryRevenue = rc.topCategoryRevenue(report);
-        session.setAttribute("topCategoryRevenue", topCategoryRevenue);
-
-        String topProductName = rc.topSellingItemName(report);
-        session.setAttribute("topProductName", topProductName);
-
-        String topProductQuantity = rc.topSellingItemQuantity(report);
-        session.setAttribute("topProductQuantity", topProductQuantity);
-
-        String topProductRevenue = rc.topSellingItemRevenue(report);
-        session.setAttribute("topProductRevenue", topProductRevenue);
-
-        String topProductID = rc.topSellingProductID(report);
-        session.setAttribute("topProductID", topProductID);
+        Report report = (Report)session.getAttribute("report");
+        DecimalFormat revenueFormatter = new DecimalFormat("####0.00");
     %>
     
     <body>
         <h1> Report: ${report.name} </h1>
-        <p>${report.description}</p>
+        <p>${report.description} </p>
 
         <div>
             <div class="row">
@@ -92,25 +68,25 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Total Revenue</h5>
-                    <p class="card-text">$ ${totalSalesRevenue}</p>
+                    <p class="card-text">$ <% out.println(revenueFormatter.format(report.getTotalRevenue())); %></p>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Top Selling Item</h5>
-                    <p class="card-text">Name: ${topProductName}</p>
-                    <p class="card-text">Product ID: ${topProductID}</p>
-                    <p class="card-text">Quantity Sold: ${topProductQuantity}</p>
-                    <p class="card-text">Revenue: $ ${topProductRevenue}</p>
+                    <p class="card-text">Name: ${report.topSellingItem.productName}</p>
+                    <p class="card-text">Product ID: ${report.topSellingItem.productID}</p>
+                    <p class="card-text">Quantity Sold: ${report.topSellingItem.unitsSold}</p>
+                    <p class="card-text">Revenue: $ <% out.println(revenueFormatter.format(report.getTopSellingItem().getProductRevenue())); %></p>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Top Selling Category</h5>
-                    <p class="card-text">Name: ${topCategory} </p>
-                    <p class="card-text">Revenue: $ ${topCategoryRevenue} </p>
+                    <p class="card-text">Name: ${report.topCategory} </p>
+                    <p class="card-text">Revenue: $ <% out.println(revenueFormatter.format(report.getTopCategoryRevenue())); %> </p>
                 </div>
             </div>
         </div>
@@ -126,14 +102,13 @@
                 <th scope="col">Revenue</th>
             </thead>
             <tbody>
-                <%
-                    Hashtable<String, Double> salesByState = rc.salesByState(report);
+                <%  
+                    Hashtable<String, Double> salesByState = report.getSalesByState();
                     Set<String> dictionaryKeys = salesByState.keySet();
-                    DecimalFormat formatter = new DecimalFormat("####0.00");
 
                     for (String key : dictionaryKeys) {
                         String state = key;
-                        String revenue = formatter.format(salesByState.get(key));
+                        String revenue = revenueFormatter.format(salesByState.get(key));
                         session.setAttribute("state", state);
                         session.setAttribute("revenue", revenue);
                 %>
@@ -157,13 +132,12 @@
             </thead>
             <tbody>
                 <%
-                    Hashtable<String, Double> salesByCategory = rc.salesByCategory(report);
+                    Hashtable<String, Double> salesByCategory = report.getSalesByCategory();
                     Set<String> dictionaryKeys2 = salesByCategory.keySet();
-                    DecimalFormat formatter2 = new DecimalFormat("####0.00");
 
                     for (String key : dictionaryKeys2) {
                         String category = key;
-                        String revenue = formatter2.format(salesByCategory.get(key));
+                        String revenue = revenueFormatter.format(salesByCategory.get(key));
                         session.setAttribute("category", category);
                         session.setAttribute("revenue", revenue);
                 %>
@@ -173,6 +147,7 @@
                     </tr>
                 <%     
                     }
+                    
                 %>
             </tbody>
         </table>
@@ -181,9 +156,8 @@
 
         <h2> Sales by Category by Product</h2>
         <%
-            HashMap<String, ArrayList<ProductSummary>> salesByCategorybyProduct = rc.salesByCategorybyProduct(report);
+            HashMap<String, ArrayList<ProductSummary>> salesByCategorybyProduct = report.getSalesBreakdown();
             Set<String> dictionaryKeys3 = salesByCategorybyProduct.keySet();
-            DecimalFormat formatter3 = new DecimalFormat("####0.00");
 
             for (String key : dictionaryKeys3) {
                 String category = key;
@@ -205,7 +179,7 @@
                     String productID = p.getProductID();
                     String productName = p.getProductName();
                     String units = Integer.toString(p.getUnitsSold());
-                    String revenue = formatter3.format(p.getProductRevenue());
+                    String revenue = revenueFormatter.format(p.getProductRevenue());
 
                     session.setAttribute("productID", productID);
                     session.setAttribute("productName", productName);
@@ -230,6 +204,5 @@
         %>
     </body>
         
-
     <jsp:include page="../templates/footer.jsp"/>
 </html>
