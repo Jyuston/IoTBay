@@ -11,47 +11,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ProductDAO{
-    Connection dbConnection;
-
-    public ProductDAO(Connection dbConnection) throws SQLException  {
-        this.dbConnection = dbConnection;
-    }
+    
+    public static final Connection dbConnection = DBConnector.getConnection();
         
-    public static String getNextAvailableID() throws SQLException {
-        Statement st = dbConnection.createStatement();
-
-        String productIDs = "SELECT PRODUCT_ID FROM PRODUCTS";
-        ResultSet productIDsRs = st.executeQuery(productIDs);
-
-        if (!productIDsRs.next())
-            return "P-1";
-
-        String lastID = productIDsRs.getString("USER_ID");
-        int lastNumber = Integer.parseInt(lastID.substring(2));
-        return "P-" + (lastNumber + 1);
-    }
-    
-    
-    
-    public Product get(String productName, String productCategory) throws SQLException {
-// Setting up the initial SQL query to find the product by its name and type (category)
-        Statement st = dbConnection.createStatement();
-        String getProductID =
-                "SELECT PRODUCT_ID FROM PRODUCTS " +
-                "WHERE PRODUCT_NAME LIKE '" + productName + "' " +
-                "AND PRODUCT_CATEGORY LIKE '" + productCategory + "'";
-
-        ResultSet productIDRs = st.executeQuery(getProductID);
-
-        // If no user, return null
-        if (!productIDRs.next())
-            return null;
-
-        return get(productIDRs.getString("PRODUCT_ID"));
-    }
-
-    @Override
-    public Product get(String productID) throws SQLException {
+    //reads ID and enables to perform the update and delete functions in view
+    public static Product get(String productID) throws SQLException {
         Statement st = dbConnection.createStatement();
         String getProductData =
                 "SELECT * FROM PRODUCTS " +
@@ -65,9 +29,43 @@ public class ProductDAO{
 
         return createProductObject(productRs);
     }
+   
+    // only for the read function in where a user can search a product by typing name and cat
+    public static Product getRead(String productName, String productCategory) throws SQLException {
+// Setting up the initial SQL query to find the product by its name and type (category)
+        Statement st = dbConnection.createStatement();
+        String getProductID =
+                "SELECT PRODUCT_ID FROM PRODUCTS " +
+                "WHERE PRODUCT_NAME LIKE '" + productName + "' " +
+                "AND PRODUCT_CATEGORY LIKE '" + productCategory + "'";
 
-    @Override
-    public List<Product> getAll() throws SQLException {
+        ResultSet productIDRs = st.executeQuery(getProductID);
+
+        // If no user, return null
+        
+        while (productIDRs.next()) {
+            String pName = productIDRs.getString(1);
+            String pCat = productIDRs.getString(4);
+            if (pName.equals(productName) && pCat.equals(productCategory)) {
+                String pID = productIDRs.getString(0);
+                int stock = productIDRs.getInt(2);
+                double pPrice = productIDRs.getDouble(3);
+                String pDesc = productIDRs.getString(5);
+                boolean arch = productIDRs.getBoolean(6);
+                return new Product(pID, pName, stock, pPrice, pCat, pDesc, arch);
+                
+            }
+            
+        }
+        return null; 
+        
+    }    
+
+
+  
+     
+    //gets all the products to show all the product catalogue in the view 
+    public static List<Product> getAll() throws SQLException {
         LinkedList<Product> products = new LinkedList<>();
 
         Statement st = dbConnection.createStatement();
@@ -81,10 +79,11 @@ public class ProductDAO{
         }
 
         return products;
-    }
-
-    @Override
-    public void save(Product product) throws SQLException {
+    }       
+    
+    
+  
+    public static void save(Product product) throws SQLException {
         Statement st = dbConnection.createStatement();
 
         String productInsertQuery = String.format(
@@ -102,34 +101,61 @@ public class ProductDAO{
       
     }
 
-    @Override
-    public void update(Product product, String[] params) {
+    
+   
+    
+    public static boolean update(Product product, String[] params) throws SQLException {
+         String updatePInfo = "UPDATE PRODUCTS SET PRODUCT_NAME = ?,STOCK = ?,  "
+                + "PRODUCT_PRICE = ?, PRODUCT_CATEGORY = ?,PRODUCT_DESCRIPTION = ?, ARCHIVED = ? "
+                + "WHERE PRODUCT_ID = ?";
+        
+
+        boolean isUpdated = false;
+        
+        try (PreparedStatement statement = ProductDAO.dbConnection.prepareStatement(updatePInfo)) {
+            statement.setString(1, product.getName());
+            statement.setInt(2, product.getStock());
+            statement.setDouble(3,  product.getPrice());
+            statement.setString(4, product.getCategory());
+            statement.setString(5, product.getDescription());
+            statement.setBoolean(6, product.isArchived());
+            
+            isUpdated = statement.executeUpdate() > 0;
+
+            statement.close();
+        }
+        return isUpdated;
     }
 
-    public void delete(int productID) throws SQLException {
-            String deletePQuery = "DELETE FROM movie WHERE ID = '" + productID + "'";
+    public boolean deleteProduct(String productID) throws SQLException {
+        
+        String dProd = "DELETE FROM PRODUCTS WHERE PRODUCT_ID = ?";
 
-        Statement st = dbConnection.createStatement();
-                  st.executeQuery(deletePQuery);
-  
-     
-    
+        boolean isDeleted = false;
+        try (PreparedStatement statement = this.dbConnection.prepareStatement(dProd)) {
+            
+            statement.setString(0, productID);
+            
+            isDeleted = statement.executeUpdate() > 0;
+
+            statement.close();
+        }
+        return isDeleted;
     }
 
     // Helpers
-    private Product createProductObject(ResultSet productRs) throws SQLException {
+    private static Product createProductObject(ResultSet productRs) throws SQLException {
         return new Product(
+                productRs.getString("PRODUCT_ID"),
                 productRs.getString("PRODUCT_NAME"),
                 productRs.getInt("STOCK"),
                 productRs.getDouble("PRODUCT_PRICE"),
-                productRs.getString("PRODUCT_CATEGORY"), 
+                productRs.getString("PRODUCT_CATEGORY"),
+                productRs.getString("PRODUCT_DESCRIPTION"),                 
                 productRs.getBoolean("ARCHIVED")
                 
         );
     }
 
-    @Override
-    public void delete(Product t) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 }

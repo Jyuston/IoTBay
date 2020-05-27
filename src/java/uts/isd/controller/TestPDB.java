@@ -9,6 +9,6 @@ package uts.isd.controller;
  *
  * @author vishaalkumar
  */
-class HttpServlet {
+public class TestPDB {
     
 }
