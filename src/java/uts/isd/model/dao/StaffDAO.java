@@ -65,14 +65,15 @@ public class StaffDAO {
         Statement st = dbConnection.createStatement();
 
         String accountInsertQuery = String.format(
-                "INSERT INTO ACCOUNTS (USER_ID, USER_EMAIL, USER_F_NAME, USER_L_NAME, PASSWORD, ACCOUNT_TYPE, CONTACT_NUMBER) " +
-                "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+                "INSERT INTO ACCOUNTS (USER_ID, USER_EMAIL, USER_F_NAME, USER_L_NAME, PASSWORD, CONTACT_NUMBER, IS_ACTIVE, ACCOUNT_TYPE) " +
+                "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s)",
                 staff.getID(),
                 staff.getEmail(),
                 staff.getFirstName(),
                 staff.getLastName(),
                 staff.getPassword(),
                 staff.getContactNumber(),
+                staff.isActive(),
                 "S"
         );
         st.executeQuery(accountInsertQuery);
@@ -101,6 +102,7 @@ public class StaffDAO {
                 customerRs.getString("USER_EMAIL"),
                 customerRs.getString("PASSWORD"), // Lol
                 customerRs.getString("CONTACT_NUMBER"),
+                customerRs.getBoolean("IS_ACTIVE"),
                 customerRs.getBoolean("IS_ADMIN")
         );
     }
