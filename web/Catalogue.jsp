@@ -12,7 +12,7 @@
     </head>
     
     <%
-        List products = (List)request.getAttribute("productList");
+        List productList = (List)request.getAttribute("productList");
         Product productsNC = (Product)request.getAttribute("productsNC");
 
         
@@ -75,15 +75,18 @@
                 
             </tr>
         </thead>
+       
+        
+        
         <c:forEach items="${productList}" var="Products" varStatus="count">
                         <thead>
 
             <tr>
-                <td>${products.ID}</td>
-                <td>${products.name}</td>
-                <td>${products.stock}</td>
-                <td>${products.description}</td>
-                <td>${products.price}</td>
+                <td>${Product.ID}</td>
+                <td>${Product.name}</td>
+                <td>${Product.stock}</td>
+                <td>${Product.description}</td>
+                <td>${Product.price}</td>
   
             
             
