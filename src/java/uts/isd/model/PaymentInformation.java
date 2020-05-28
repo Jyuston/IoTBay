@@ -15,35 +15,15 @@ public class PaymentInformation implements Serializable {
         this.expiryYear = expiryYear;
     }
 
-    public String getCardNumber() {
-        return cardNumber;
-    }
+    public String getCardNumber() { return cardNumber; }
+    public void setCardNumber(String cardNumber) { this.cardNumber = cardNumber; }
 
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
+    public String getCvvNumber() { return cvvNumber; }
+    public void setCvvNumber(String cvvNumber) { this.cvvNumber = cvvNumber; }
 
-    public String getCvvNumber() {
-        return cvvNumber;
-    }
+    public String getExpiryMonth() { return expiryMonth; }
+    public void setExpiryMonth(String expiryMonth) { this.expiryMonth = expiryMonth; }
 
-    public void setCvvNumber(String cvvNumber) {
-        this.cvvNumber = cvvNumber;
-    }
-
-    public String getExpiryMonth() {
-        return expiryMonth;
-    }
-
-    public void setExpiryMonth(String expiryMonth) {
-        this.expiryMonth = expiryMonth;
-    }
-
-    public String getExpiryYear() {
-        return expiryYear;
-    }
-
-    public void setExpiryYear(String expiryYear) {
-        this.expiryYear = expiryYear;
-    }
+    public String getExpiryYear() { return expiryYear; }
+    public void setExpiryYear(String expiryYear) { this.expiryYear = expiryYear; }
 }
