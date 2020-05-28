@@ -49,7 +49,7 @@ public class AccountDAO {
     public static Account getAccount(String firstName, String lastName, String contactNumber) throws SQLException{
         Statement st = dbConnection.createStatement();
         String getAccountDataQuery = 
-                "SELECT USER_ID FROM ACCOUNTS " +
+                "SELECT USER_ID, ACCOUNT_TYPE FROM ACCOUNTS " +
                 "WHERE USER_F_NAME LIKE '" + firstName + "' " +
                 "AND USER_L_NAME LIKE '" + lastName + "' " + 
                 "AND CONTACT_NUMBER '" + contactNumber + "' ";
@@ -57,10 +57,13 @@ public class AccountDAO {
         ResultSet accountRs = st.executeQuery(getAccountDataQuery);
         if (!accountRs.next()) return null;
         
-        if (CustomerDAO.get(accountRs.getString("USER_ID")) != null){
+        if ((accountRs.getString("ACCOUNT_TYPE").charAt(0)) == 'C'){
             return CustomerDAO.get(accountRs.getString("USER_ID"));
+        } 
+        else if ((accountRs.getString("ACCOUNT_TYPE").charAt(0)) == 'S'){
+            return StaffDAO.get(accountRs.getString("USER_ID"));
         }
         
-        return StaffDAO.get(accountRs.getString("USER_ID"));
+        return null;
     }
 }

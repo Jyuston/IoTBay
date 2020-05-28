@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package uts.isd.controller.UserManagement;
+package uts.isd.controller.usermanagement;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import uts.isd.model.Account;
 import uts.isd.model.Customer;
@@ -23,7 +24,7 @@ public class UserManagementServlet extends HttpServlet {
 
             
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
         
         try {
             HttpSession session = request.getSession();
@@ -31,11 +32,9 @@ public class UserManagementServlet extends HttpServlet {
             List<Customer> customerList = CustomerDAO.getAll();
             List<Staff> staffList = StaffDAO.getAll();
             
-            session.setAttribute("customerList", customerList);
-            session.setAttribute("staffList", staffList);
-            
-            //redirects to User Management Page to Display
-            response.sendRedirect("user_management.jsp"); 
+            request.setAttribute("customerList", customerList);
+            request.setAttribute("staffList", staffList);
+            //request.getAttribute in jsp
         } 
         
         catch(SQLException err) {
@@ -45,24 +44,30 @@ public class UserManagementServlet extends HttpServlet {
         } 
         
         finally {
-            response.sendRedirect("user_management.jsp");
+            request.getRequestDispatcher("/user_management.jsp").include(request, response);
         }
     }
     
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response){
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         //form deets
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String contactNumber = request.getParameter("contactNumber");
   
        try {
-            Account selectedAccount = AccountDAO.getAccount(firstName, lastName, contactNumber);
+            Account resultAccount = AccountDAO.getAccount(firstName, lastName, contactNumber);
+            request.setAttribute("resultAccount", resultAccount);
         }
         
-        catch(SQLException err) {
+       catch(SQLException err) {
             request.setAttribute("errorUserManagement", "Error accessing database.");
         }
+       
+       finally {
+           request.getRequestDispatcher("/user_management.jsp").include(request, response);
+           
+       }
 
     }
     

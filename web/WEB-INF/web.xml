@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-         version="4.0">
+<web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
     <servlet>
         <servlet-name>ConnServlet</servlet-name>
         <servlet-class>uts.isd.controller.ConnServlet</servlet-class>
@@ -30,13 +27,12 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>UserManagementServlet</servlet-name>
-        <servlet-class>uts.isd.controller.UserManagement.UserManagementServlet</servlet-class>
+        <servlet-class>uts.isd.controller.usermanagement.UserManagementServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserManagementServlet</servlet-name>
         <url-pattern>/UserManagementServlet</url-pattern>
     </servlet-mapping>
-    
     <session-config>
         <session-timeout>
             30

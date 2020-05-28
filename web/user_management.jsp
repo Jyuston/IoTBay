@@ -3,13 +3,20 @@
     Created on : 26/05/2020, 10:14:16 AM
     Author     : justinhyuen
 --%>
-
+<%@page import="uts.isd.model.Account"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <jsp:include page="templates/header.jsp"/>
 <head>
     <title>User Management</title>
 </head>
+<%
+    List customerList = (List) request.getAttribute("customerList");
+    List staffList = (List) request.getAttribute("staffList");
+    Account searchedAccount = (Account) request.getAttribute("resultAccount");
+%>
 <h1 class="mb-4">User Management</h1>
 
 <h2> Search a User </h2>
@@ -64,9 +71,15 @@
                 <th scope="col">#</th>
                 <th scope="col">Email</th>
                 <th scope="col">Name</th>
-                <th scope="col">Account</th>
             </tr>
         </thead>
+        <c:forEach items="${customerList}" var="Customer" varStatus="count">
+            <tr>
+                <td>${Customer.ID}</td>
+                <td>${Customer.email}
+                <td>${Customer.firstName} ${Customer.lastName}</td>
+            </tr>
+        </c:forEach>
     </table>
 
     <table class="table">
@@ -79,6 +92,14 @@
                 <th scope="col">Account</th>
             </tr>
             </thead>
+        <c:forEach items="${staffList}" var="Staff" varStatus="count">
+            <tr>
+                <td>${Staff.ID}</td>
+                <td>${Staff.email}
+                <td>${Staff.firstName} ${Staff.lastName}</td>
+                <td>Meant to Return isAdmin :)</td>
+            </tr>
+        </c:forEach>
     </table>
 </div>
 
