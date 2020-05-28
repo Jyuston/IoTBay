@@ -91,6 +91,23 @@ public class ReportingDAO {
         return reportNames;
     }
 
+    public static ArrayList<ProductSummary> getProductStock() throws SQLException {
+        Statement st = dbConnection.createStatement();
+
+        String query = "select PRODUCT_ID, PRODUCT_NAME, PRODUCT_CATEOGORY, STOCK from PRODUCTS";
+
+        ResultSet queryResult = st.executeQuery(query);
+
+        ArrayList<ProductSummary> snapshots = new ArrayList<>();
+
+        while (queryResult.next()) {
+            ProductSummary snapshot = new ProductSummary(queryResult.getString(1), queryResult.getString(2), queryResult.getString(3), queryResult.getInt(4), 0.00);
+            snapshots.add(snapshot);
+        }
+
+        return snapshots;
+    }
+
     // Create
     public static void save(Report r) throws SQLException {
         Statement st = dbConnection.createStatement();

@@ -82,6 +82,8 @@
             %>
         </form>
         
+        <br>
+
         <% if (modifyingReport) { %>
             <form method="post" action="/IoTBay/ReportFormServlet">
                 <input class="form-control" type="hidden" name="deleteReport" value="yes">

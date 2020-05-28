@@ -17,6 +17,7 @@ public class ReportFormServlet extends HttpServlet {
     
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
+        // Implements redirection to the edit form logic
         try {
             HttpSession session = request.getSession();
             ArrayList<String> reportNames = ReportingDAO.getReportNames();
@@ -67,7 +68,7 @@ public class ReportFormServlet extends HttpServlet {
                 // Create a skeleton report (temp)
                 Report report = (Report)session.getAttribute("report");
                 String originalName = report.getName();
-                
+
                 // Create the record in the database
                 report.setReportName(reportName);
                 report.setDescription(description);

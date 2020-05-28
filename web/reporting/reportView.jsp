@@ -54,18 +54,20 @@
                 </div>
 
                 <div class="col">
-                    <a href="/IoTBay/ReportFormServlet">Manage Report</a>
-                    <form method="POST" action="/IoTBay/ReportingServlet">
-                        <input class="form-control" type="hidden" name="reportExit" value="yes">
-                        <input type="submit" class="btn btn-primary" value="Return"></a>
-                    </form>                    
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-primary" href="/IoTBay/ReportFormServlet">Modify Report</a>
+                        <form method="POST" action="/IoTBay/ReportingServlet">
+                            <input class="form-control" type="hidden" name="reportExit" value="yes">
+                            <input type="submit" class="btn btn-primary" value="Exit"></a>
+                        </form>                    
+                    </div>
                 </div>
             </div>
         </div>
         
         <br>
         <br>
-
+        <% if (report.salesExist()) { %>
         <h2> Key Sales Statisitics & KPIs</h2>
         <div class="card-deck">
             <div class="card">
@@ -204,7 +206,11 @@
             </div>
         <%
             }
+
+            } else {
         %>
+                <p>No sales occured during the selected period. Please select a different time period and try again.</p>
+        <% } %>
     </body>
         
     <jsp:include page="../templates/footer.jsp"/>

@@ -18,16 +18,7 @@ public class Report implements Serializable {
     private final SalesAnalyser salesAnalyser = new SalesAnalyser();
     private ProductSummary topProduct;
 
-
-    /*
-    private double totalRevenue;
-    private String topCategory;
-    private double topCategoryRevenue;
-    private ProductSummary topItem;
-    */
-    
-
-    public Report (String reportName, String reportDescription, String startDate, String endDate, 
+    public Report(String reportName, String reportDescription, String startDate, String endDate, 
         ArrayList<OrderLineItem> saleRecords, ArrayList<ProductSummary> summaries, ArrayList<String> categories) {
         this.name = reportName;
         this.description = reportDescription;
@@ -42,11 +33,20 @@ public class Report implements Serializable {
         }
     }
 
-    public Report (String reportName, String reportDescription, String startDate, String endDate) {
+    public Report(String reportName, String reportDescription, String startDate, String endDate) {
         this.name = reportName;
         this.description = reportDescription;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public Report(ArrayList<ProductSummary> summaries, ArrayList<String> categories) {
+        this.name = "Stock Report";
+        this.description = "Inventory Level Report";
+        this.startDate = "";
+        this.endDate = "";
+        this.productSummaries.addAll(summaries);
+        this.categories.addAll(categories);
     }
 
     public String getName() {
@@ -110,4 +110,7 @@ public class Report implements Serializable {
         return salesAnalyser.getSalesByCategoryByProduct(productSummaries, categories);
     }
 
+    public boolean salesExist() {
+        return saleRecords.size() > 0;
+    }
 }
