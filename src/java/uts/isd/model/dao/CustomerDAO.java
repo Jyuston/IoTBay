@@ -100,7 +100,7 @@ public class CustomerDAO {
 
     }
 
-    public static void delete(Customer customer) throws SQLException {
+    public static void delete(Customer customer) {
     }
 
     // Helpers
@@ -125,7 +125,7 @@ public class CustomerDAO {
         LinkedList<Order> customerOrders = new LinkedList<>();
 
         return new Customer(
-                customerRs.getInt("C.ID"),
+                customerRs.getInt("ID"),
                 customerRs.getString("F_NAME"),
                 customerRs.getString("L_NAME"),
                 customerRs.getString("EMAIL"),
