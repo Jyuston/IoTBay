@@ -54,8 +54,13 @@
                 </div>
 
                 <div class="col">
-                    <a href="reporting/reportView.jsp"><input type="submit" class="btn btn-primary" value="Edit Report Details"></a>
-                    <a href="reporting/reportView.jsp"><input type="submit" class="btn btn-primary" value="Delete Report"></a>            
+                    <a href="/IoTBay/ReportFormServlet">Edit Report</a>
+                    <a href="/IoTBay/ReportFormServlet">Delete Report</a>
+
+                    <form method="post" action="/IoTBay/ReportFormServlet">
+                        <input class="form-control" type="hidden" name="deleteReport" value="yes">
+                        <input type="submit" class="btn btn-primary" value="Delete Report"></a> 
+                    </form>
                 </div>
             </div>
         </div>

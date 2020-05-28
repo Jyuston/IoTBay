@@ -144,13 +144,22 @@ public class ReportingDAO {
     }
 
     // Update
-    public static void update(Report r, String[] parameters) throws SQLException {
+    public static void update(Report r, String originalName) throws SQLException {
+        Statement st = dbConnection.createStatement();
 
+        String query = "update REPORTS set REPORT_NAME = '" + r.getName() + "', REPORT_DESCRIPTION = '" + r.getDescription() + 
+        "', REPORT_START_DATE = '" + r.getStartDate() + " 00:00:00', REPORT_END_DATE = '" + r.getEndDate() + " 23:59:59' where REPORT_NAME = '" + originalName + "'";
+
+        st.executeUpdate(query);
     }
 
     // Delete
     public static void delete(Report r) throws SQLException {
+        Statement st = dbConnection.createStatement();
 
+        String query = "delete from REPORTS where REPORT_NAME = '" + r.getName() + "'";
+
+        st.executeUpdate(query);
     }
 
     // Helper Methods

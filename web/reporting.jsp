@@ -87,33 +87,23 @@
                     <br>
                     <br>
                     <h2>New Sales Report</h2>
-                    <form method="post" action="ReportingServlet">
-                        <div class="form-row">                                                                         
-                            <div class="form-group col-md-6">                                           
-                                <label>Report Name</label>
-                                <input class="form-control" type="text" name="reportName" required">
-                            </div>
+                    <jsp:include page="reportForm.jsp"/>
+                    
+                    <br>
+                    <br>
 
-                            <div class="form-group col-md-6">
-                                <label>Report Description</label> 
-                                <input class="form-control" type="text" name="reportDescription" required">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-6">                                           
-                                <label>Report Start Date</label>
-                                <input class="form-control" type="date" name="startDate" required">
-                            </div>
-
-                            <div class="form-group col-md-6">
-                                <label>Report End Date</label> 
-                                <input class="form-control" type="date" name="endDate" required">
-                            </div>
-                        </div>
-                        <input class="form-control" type="hidden" name="newReportCreated" value="yes">
-                        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Create Report"></a>
-                    </form>                    
+                    <h2>Manage Reports</h2>
+                    <p>Select a report to edit or delete.</p>
+                    <% 
+                        ArrayList<String> reportNames1 = (ArrayList<String>)session.getAttribute("reportNames");
+                        for (String name : reportNames) {
+                            String currentReportName1 = name;
+                            session.setAttribute("currentReportName1", currentReportName1);
+                    %>
+                        <a href="/IoTBay/ReportFormServlet">${currentReportName1}</a>
+                    <%
+                        }
+                    %>
                 </div>
             </div>
         </div>
