@@ -26,6 +26,7 @@ public class LoginServlet extends HttpServlet {
             Character accountType = AccountDAO.getAccountType(email, password);
 
             // If no account found, set error message on request
+            // TODO change to proper Exception. NullPointer is not used in this scenario
             if (accountType == null) throw new NullPointerException("Incorrect Username or Password.");
 
             Account account = (accountType == 'C') ?
