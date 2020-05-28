@@ -65,6 +65,13 @@ public class ReportingServlet extends HttpServlet {
             
         }
 
+        else if (request.getParameter("reportExit") != null && request.getParameter("reportExit").equals("yes")) {
+            session.setAttribute("report", "");
+            session.setAttribute("editReport", "null");
+            session.setAttribute("modifyingReport", "false");
+            response.sendRedirect("reporting.jsp");            
+        }
+
         else {
             try {
                 Report r = ReportingDAO.get(request.getParameter("selectedReport"));

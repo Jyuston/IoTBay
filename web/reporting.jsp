@@ -88,22 +88,6 @@
                     <br>
                     <h2>New Sales Report</h2>
                     <jsp:include page="reportForm.jsp"/>
-                    
-                    <br>
-                    <br>
-
-                    <h2>Manage Reports</h2>
-                    <p>Select a report to edit or delete.</p>
-                    <% 
-                        ArrayList<String> reportNames1 = (ArrayList<String>)session.getAttribute("reportNames");
-                        for (String name : reportNames) {
-                            String currentReportName1 = name;
-                            session.setAttribute("currentReportName1", currentReportName1);
-                    %>
-                        <a href="/IoTBay/ReportFormServlet">${currentReportName1}</a>
-                    <%
-                        }
-                    %>
                 </div>
             </div>
         </div>

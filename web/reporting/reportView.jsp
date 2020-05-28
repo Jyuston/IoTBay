@@ -54,13 +54,11 @@
                 </div>
 
                 <div class="col">
-                    <a href="/IoTBay/ReportFormServlet">Edit Report</a>
-                    <a href="/IoTBay/ReportFormServlet">Delete Report</a>
-
-                    <form method="post" action="/IoTBay/ReportFormServlet">
-                        <input class="form-control" type="hidden" name="deleteReport" value="yes">
-                        <input type="submit" class="btn btn-primary" value="Delete Report"></a> 
-                    </form>
+                    <a href="/IoTBay/ReportFormServlet">Manage Report</a>
+                    <form method="POST" action="/IoTBay/ReportingServlet">
+                        <input class="form-control" type="hidden" name="reportExit" value="yes">
+                        <input type="submit" class="btn btn-primary" value="Return"></a>
+                    </form>                    
                 </div>
             </div>
         </div>

@@ -61,6 +61,7 @@ public class ReportFormServlet extends HttpServlet {
                 Report r = ReportingDAO.get(reportName);
                 // Save the report to the session and redirect to the report view page
                 session.setAttribute("report", r);
+                session.setAttribute("editReport", null);
                 response.sendRedirect("reporting/reportView.jsp");
             }
 
