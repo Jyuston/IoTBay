@@ -11,7 +11,7 @@
     String errorMsg = (String) request.getAttribute("errorRegister");
 
     // If user registration successful
-    if (success) {
+    if (success != null) {
 %>
 <div class="row">
     <div class="col"></div>

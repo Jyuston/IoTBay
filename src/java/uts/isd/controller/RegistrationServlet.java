@@ -14,9 +14,6 @@ import java.util.LinkedList;
 public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        // Set success to true only when account is made
-        request.setAttribute("success", false);
-
         // Get form details
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
