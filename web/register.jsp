@@ -7,11 +7,11 @@
 <jsp:include page="templates/header.jsp"/>
 
 <%
-    Customer user = (Customer) session.getAttribute("user");
+    Boolean success = (Boolean) request.getAttribute("success");
     String errorMsg = (String) request.getAttribute("errorRegister");
 
     // If user registration successful
-    if (user != null) {
+    if (success) {
 %>
 <div class="row">
     <div class="col"></div>

@@ -14,6 +14,9 @@ import java.util.LinkedList;
 public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        // Set success to true only when account is made
+        request.setAttribute("success", false);
+
         // Get form details
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
@@ -59,6 +62,7 @@ public class RegistrationServlet extends HttpServlet {
 
             // Log the customer in
             request.getSession().setAttribute("user", newCustomer);
+            request.setAttribute("success", true);
 
             // STILL NEED TO DO VALIDATION
 
