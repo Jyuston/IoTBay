@@ -35,8 +35,7 @@ public class ReportingServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
         HttpSession session = request.getSession();
-        //Connection dbConnection = (Connection) session.getAttribute("dbConnection");
-        //ReportingDAO DAO = new ReportingDAO(dbConnection);
+        
 
         if (request.getParameter("newReportCreated") != null && request.getParameter("newReportCreated").equals("yes")) {
             // validate (check the dates)
@@ -69,7 +68,16 @@ public class ReportingServlet extends HttpServlet {
             session.setAttribute("report", "");
             session.setAttribute("editReport", "null");
             session.setAttribute("modifyingReport", "false");
-            response.sendRedirect("reporting.jsp");            
+            try {
+                ArrayList<String> reportNames = ReportingDAO.getReportNames();
+                session.setAttribute("reportNames", reportNames);
+                response.sendRedirect("reporting.jsp");            
+            }
+
+            catch (Exception e) {
+                // handle
+            }
+            
         }
 
         else {

@@ -19,8 +19,6 @@ public class ReportFormServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
         try {
             HttpSession session = request.getSession();
-            // Connection dbConnection = (Connection) session.getAttribute("dbConnection");
-            // ReportingDAO DAO = new ReportingDAO(dbConnection);
             ArrayList<String> reportNames = ReportingDAO.getReportNames();
             session.setAttribute("editReport", "yes");
             response.sendRedirect("reportForm.jsp");
@@ -35,10 +33,26 @@ public class ReportFormServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
         HttpSession session = request.getSession();
-        //Connection dbConnection = (Connection) session.getAttribute("dbConnection");
-        //ReportingDAO DAO = new ReportingDAO(dbConnection);
+        
+        // Logic for when a report deletion is selected
+        if (request.getParameter("deleteReport") != null && request.getParameter("deleteReport").equals("yes")) {
+            Report r = (Report)session.getAttribute("report");
+            try {
+                ReportingDAO.delete(r);
+                session.setAttribute("editReport", "null");
+                session.setAttribute("modifyingReport", "false");
+                session.setAttribute("deleteReport", "");
+                session.setAttribute("report", null);
+                response.sendRedirect("ReportingServlet");
+            }
 
-        if (request.getParameter("updateReport") != null && request.getParameter("updateReport").equals("yes")) {
+            catch (Throwable exception) {
+                // handle
+            }
+        }
+
+        // Logic for when a report edit is desired
+        else if (request.getParameter("updateReport") != null && request.getParameter("updateReport").equals("yes")) {
             // validate (check the dates)
             // create new report
             String reportName = (String)request.getParameter("reportName");
@@ -69,45 +83,6 @@ public class ReportFormServlet extends HttpServlet {
                 //TODO: handle exception
                 System.out.println(exception);
             }
-            
-        }
-
-        else if (request.getParameter("newReport") != null && request.getParameter("newReport").equals("yes")) {
-            // do stuff
-            String reportName = (String)request.getParameter("reportName");
-            String description = (String)request.getParameter("reportDescription");
-            String startDate = (String)request.getParameter("startDate");
-            String endDate = (String)request.getParameter("endDate");
-
-            try {
-                // Instantiate a temp report object
-                Report tempReport = new Report(reportName, description, startDate, endDate);
-                // Save the 'temp' report
-                ReportingDAO.save(tempReport);
-
-                // Retrieve the report + data from the db via the DAO
-                Report r = ReportingDAO.get(reportName);
-                session.setAttribute("report", r);
-                response.sendRedirect("reporting/reportView.jsp");
-            }
-
-            catch (Throwable exception) {
-                // handle exception
-            }
-        }
-
-        else {
-            Report r = (Report)session.getAttribute("report");
-            try {
-                ReportingDAO.delete(r);
-                session.setAttribute("report", null);
-                response.sendRedirect("ReportingServlet");
-            }
-
-            catch (Throwable exception) {
-                // handle
-            }
-            
             
         }
     }

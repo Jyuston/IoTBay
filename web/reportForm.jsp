@@ -33,13 +33,17 @@
         }
 
         else {
-            action = "newReport";
+            action = "newReportCreated";
             buttonText = "Create Report";
             modifyingReport = false;
         }
     %>
     <body>
-        <form method="post" action="/IoTBay/ReportFormServlet">
+        <% if (modifyingReport) { %>
+            <form method="post" action="/IoTBay/ReportFormServlet">
+        <% } else {%>
+            <form method="post" action="/IoTBay/ReportingServlet">
+        <% } %>
             <div class="form-row">                                                                         
                 <div class="form-group col-md-6">                                           
                     <label>Report Name</label>
@@ -67,19 +71,24 @@
             <%
                 if (modifyingReport) {                                    
             %>
-                    
-                        <input type="submit" class="btn btn-success" value="Update Report"></a>
-                        <a class="btn btn-warning" href="/IoTBay/reporting/reportView.jsp">Cancel</a>
-                        <a class="btn btn-danger" href="/IoTBay/ReportFormServlet">Delete Report</a>            
-                    
+                    <input type="submit" class="btn btn-success" value="Update Report"></a>
+                    <a class="btn btn-warning" href="/IoTBay/reporting/reportView.jsp">Cancel</a>                                                      
             <%
                 } else {
             %>
-            <input type="submit" class="btn btn-primary btn-lg btn-block" value="<% out.println(buttonText); %>"></a>
+                    <input type="submit" class="btn btn-primary btn-lg btn-block" value="<% out.println(buttonText); %>"></a>
             <%
                 }
             %>
-        </form> 
+        </form>
+        
+        <% if (modifyingReport) { %>
+            <form method="post" action="/IoTBay/ReportFormServlet">
+                <input class="form-control" type="hidden" name="deleteReport" value="yes">
+                <input type="submit" class="btn btn-danger" value="Delete Report">
+            </form>
+        <% } %>
+        
     </body>
     
 </html>
