@@ -1,14 +1,12 @@
 package uts.isd.controller;
 
 import uts.isd.model.*;
-import uts.isd.model.dao.AccountDAO;
 import uts.isd.model.dao.CustomerDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -39,12 +37,11 @@ public class RegistrationServlet extends HttpServlet {
         );
 
         // Try to log user in
-        // If any DAO method returns null, the NullPointerException catch will trigger
+        // The user ID starts null and will be auto-generated and set in CustomerDAO.save()
         try {
-            String newID = AccountDAO.getNextAvailableID();
             LinkedList<Order> newOrderList = new LinkedList<>();
             Customer newCustomer = new Customer(
-                    newID,
+                    null,
                     firstName,
                     lastName,
                     email,
@@ -63,7 +60,7 @@ public class RegistrationServlet extends HttpServlet {
             // Log the customer in
             request.getSession().setAttribute("user", newCustomer);
 
-            // STILL NEED TO DO CHECKS
+            // STILL NEED TO DO VALIDATION
 
         } catch (SQLException err) {
             request.setAttribute("errorRegister", "Error accessing database.");

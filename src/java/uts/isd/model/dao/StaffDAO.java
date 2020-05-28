@@ -2,10 +2,7 @@ package uts.isd.model.dao;
 
 import uts.isd.model.Staff;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,8 +12,8 @@ public class StaffDAO {
     public static Staff get(String email, String password) throws SQLException {
         Statement st = dbConnection.createStatement();
         String getUserIdQuery =
-                "SELECT USER_ID FROM ACCOUNTS " +
-                "WHERE USER_EMAIL LIKE '" + email + "' " +
+                "SELECT ID FROM ACCOUNTS " +
+                "WHERE EMAIL LIKE '" + email + "' " +
                 "AND PASSWORD LIKE '" + password + "'";
 
         ResultSet userIDRs = st.executeQuery(getUserIdQuery);
@@ -25,15 +22,15 @@ public class StaffDAO {
         if (!userIDRs.next())
             return null;
 
-        return get(userIDRs.getString("USER_ID"));
+        return get(userIDRs.getString("ID"));
     }
 
     public static Staff get(String accountID) throws SQLException {
         Statement st = dbConnection.createStatement();
         String getStaffDataQuery =
                 "SELECT * FROM ACCOUNTS A " +
-                "INNER JOIN STAFF S on A.USER_ID = S.USER_ID " +
-                "WHERE A.USER_ID = '" + accountID + "'";
+                "INNER JOIN STAFF S on A.ID = S.ID " +
+                "WHERE A.ID = '" + accountID + "'";
 
         ResultSet staffRs = st.executeQuery(getStaffDataQuery);
 
@@ -50,7 +47,7 @@ public class StaffDAO {
         Statement st = dbConnection.createStatement();
         String getUserIdQuery =
                 "SELECT * FROM ACCOUNTS A " +
-                "INNER JOIN STAFF S on A.USER_ID = S.USER_ID";
+                "INNER JOIN STAFF S on A.ID = S.ID";
 
         ResultSet customersRs = st.executeQuery(getUserIdQuery);
 
@@ -62,29 +59,15 @@ public class StaffDAO {
     }
 
     public static void save(Staff staff) throws SQLException {
-        Statement st = dbConnection.createStatement();
+        int newID = AccountDAO.save(staff);
 
-        String accountInsertQuery = String.format(
-                "INSERT INTO ACCOUNTS (USER_ID, USER_EMAIL, USER_F_NAME, USER_L_NAME, PASSWORD, CONTACT_NUMBER, IS_ACTIVE, ACCOUNT_TYPE) " +
-                "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s)",
-                staff.getID(),
-                staff.getEmail(),
-                staff.getFirstName(),
-                staff.getLastName(),
-                staff.getPassword(),
-                staff.getContactNumber(),
-                staff.isActive(),
-                "S"
+        PreparedStatement staffInsertSt = dbConnection.prepareStatement(
+                "INSERT INTO STAFF (ID, IS_ADMIN) " +
+                "VALUES (?, ?)"
         );
-        st.executeQuery(accountInsertQuery);
-
-        String paymentInfoInsertQuery = String.format(
-                "INSERT INTO STAFF (USER_ID, IS_ADMIN) " +
-                "VALUES ('%s', '%s')",
-                staff.getID(),
-                staff.isAdmin()
-        );
-        st.executeQuery(paymentInfoInsertQuery);
+        staffInsertSt.setInt(1, newID);
+        staffInsertSt.setBoolean(2, staff.isAdmin());
+        staffInsertSt.executeUpdate();
     }
 
     public static void update(Staff customer, String[] params) {
@@ -96,11 +79,11 @@ public class StaffDAO {
     // Helpers
     private static Staff createStaffObject(ResultSet customerRs) throws SQLException {
         return new Staff(
-                customerRs.getString("USER_ID"),
-                customerRs.getString("USER_F_NAME"),
-                customerRs.getString("USER_L_NAME"),
-                customerRs.getString("USER_EMAIL"),
-                customerRs.getString("PASSWORD"), // Lol
+                customerRs.getInt("ID"),
+                customerRs.getString("F_NAME"),
+                customerRs.getString("L_NAME"),
+                customerRs.getString("EMAIL"),
+                customerRs.getString("PASSWORD"),
                 customerRs.getString("CONTACT_NUMBER"),
                 customerRs.getBoolean("IS_ACTIVE"),
                 customerRs.getBoolean("IS_ADMIN")

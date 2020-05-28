@@ -8,7 +8,7 @@ public class Customer extends Account {
     private LinkedList<Order> orders;
     private boolean anonymous;
 
-    public Customer(String ID, String firstName, String lastName, String email, String password, String contactNumber, boolean active, Address address, PaymentInformation paymentInfo, LinkedList<Order> orders, boolean anonymous) {
+    public Customer(Integer ID, String firstName, String lastName, String email, String password, String contactNumber, boolean active, Address address, PaymentInformation paymentInfo, LinkedList<Order> orders, boolean anonymous) {
         super(ID, firstName, lastName, email, password, contactNumber, active);
         this.address = address;
         this.paymentInfo = paymentInfo;
@@ -27,36 +27,4 @@ public class Customer extends Account {
 
     public boolean isAnonymous() { return anonymous; }
     public void setAnonymous(boolean anonymous) { this.anonymous = anonymous; }
-
-//    public static Customer create(String firstName, String lastName, String email, String password, String contactNumber, Address address, PaymentInformation paymentInfo) {
-//        String ID;
-//        try {
-//            ID = AccountDAO.getNextAvailableID();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//
-//        Customer createdCustomer = new Customer(
-//                ID,
-//                firstName,
-//                lastName,
-//                email,
-//                password,
-//                contactNumber,
-//                address,
-//                paymentInfo,
-//                new LinkedList<>(),
-//                false
-//        );
-//
-//        try {
-//            DAO.save(createdCustomer);
-//        } catch (SQLException err) {
-//            err.printStackTrace();
-//            return null;
-//        }
-//
-//        return createdCustomer;
-//    }
 }
