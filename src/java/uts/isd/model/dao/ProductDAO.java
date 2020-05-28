@@ -14,7 +14,24 @@ public class ProductDAO{
     
     public static final Connection dbConnection = DBConnector.getConnection();
         
-    //reads ID and enables to perform the update and delete functions in view
+// get the last product and add one to it     
+        public static String getNextAvailableID() throws SQLException {
+        Statement st = dbConnection.createStatement();
+
+        String productIDsQuery = "SELECT PRODUCT_ID FROM PRODUCTS";
+        ResultSet productIDsRs = st.executeQuery(productIDsQuery);
+
+        // BROKEN RN
+        if (!productIDsRs.next())
+            return "U-1";
+
+        String lastID = productIDsRs.getString("PRODUCT_ID");
+        int lastNumber = Integer.parseInt(lastID.substring(2));
+        return "P-" + (lastNumber + 1);
+    }
+    
+
+//reads ID and enables to perform the update and delete functions in view
     public static Product get(String productID) throws SQLException {
         Statement st = dbConnection.createStatement();
         String getProductData =

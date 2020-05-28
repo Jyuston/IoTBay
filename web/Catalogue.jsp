@@ -1,128 +1,100 @@
 <%@page import="java.util.List"%>
 <%@page import="uts.isd.model.Product"%>
 <%@ page import="uts.isd.controller.ProductServlet.*" %>
-
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<jsp:include page="templates/header.jsp"/>
+
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
         <title>Search products from category</title>
     </head>
     
     <%
-        Product product = (Product)request.getAttribute("product");
+        List products = (List)request.getAttribute("productList");
+        Product productsNC = (Product)request.getAttribute("productsNC");
+
         
         
        
     
     %>
-    
-    <body>
-        <h1>Search Movies</h1>
-        <div name="search_part">
-            
-        
-         <div align = "center" style="border:1px solid orange">
-         <form action="search" method="post" >
-                
-                
-                <table cellpadding="10">
-                    <tr>
-                        <td>
-                            <label for="movieTitleInput">Title:</label>
-                        </td>
-                        <td>
-                         <input type="text" class="form-control" name="movieTitleInput" id="movieTitleInput" placeholder="Movie Name" required>
-                  
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                             <label for="movieGenreInput">Genre:</label>
-                        </td>
-                        <td>
-                               <input type="text" class="form-control" name="movieGenreInput" id="movieGenreInput" placeholder="Genre" required>
-                
-                        </td>
-                    </tr>
-                </table>
-             
-              <button type="submit" class="btn btn-primary">Search Movie</button>
-              <br>
-              <label hidden="true" id="resultLabel"> <%request.getAttribute("product");%></label>
-    
-         </form>
-                
-     <!--           
-              <button class="btn btn-primary" type="submit" name = "backhome" onclick="location.href('category.jsp')">Back to Category </button>
-   -->
-         </div>
-        <br><br><br>
-        
-        <%
-         if(product !=null){
-            
-            request.setAttribute("result", "No Movie Found!");
-               // out.println("MovieSearchResult:" + movieSearchResult.size());
-               //response.sendRedirect("search.jsp");
 
-               
-               
-               
-        
-        %>
-        <div align = "center" >
-            
-        <%--  searchResult is created in MovieServet: searching from title or genre --%>
-        <table style="border: 1px solid greenyellow" cellpadding="10">
-           
-                        <tr>
-                            <th scope ="col">ID</th>
-                            <th scope ="col">Title</th>
-                            <th scope ="col">Release Year</th>
-                            <th scope ="col">Genre</th>
-                            <th scope ="col">Price</th>
-                            <th scope ="col">Description</th>
-                            <th scope ="col">Action</th>
-                        </tr>
-                    
- 
+    <h2> Search a Product </h2>
+<div class="container-fluid">
+    <div class="row"> 
+        <div class="form-group">
+            <table>
                 <tr>
-                                <td><%= product.getID()%></td>
-                                <td><%= product.getName()%> </td>
-                               <td> <%= product.getStock()%></td>
-                                <td><%= product.getCategory()%></td>
-                                <td><%= product.getDescription()%></td>
-                                <td><%= product.getPrice()%></td>
+                    <td><input class="form-control-sm my-2 mr-1" id="productName" name="productName" placeholder="Product Name" required></td>
+                    <td><input class="form-control-sm" id="pCat" name="productCat" placeholder="Product Category" required></td>
+                </tr>
+                <tr>
+             
+                    <td><button type="button" class="btn btn-info btn-sm my-3" id="submit" name="submit">Search</button></td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="col-md-auto mx-auto my-2 p-4 border border-light rounded">
+            <!--This will be updated by Servlet based on the Form-->
+            <table class="my-auto">
+                <tr colspan="3" class="py-1"><h4>Product name</h4></th></tr>
+                <tr><td colspan="3" class="py-1">product cat</td></tr>
+                <tr><td colspan="3" class="py-1">stock</td></tr>
+                <tr><td colspan="3" class="py-1">price</td></tr>
+                <tr>
+                    <td><button class="btn btn-primary btn-sm my-2 mr-2">Edit</button></td>
+                    <td><button class="btn btn-warning btn-sm my-2 mr-2">Delete</button></td>
+                </tr>  
+                <tr>
+            </table>
+        </div>        
+    </div>
+</div>
+               
+        
+   <div class="my-4">
+    <button type="button" class="btn btn-success btn-sm"> + Add New Product</button>
+</div>
 
-<!-- for use to add to cart:  -->
-                                <td><a href="" >Add to Cart</a></td>
 
-                                
-                            </tr>
-                        <%
-            }
-        
-        
-                            
-                            %>
-                            
-             </table>                          
-                                       
-       </div>    
-        
-        <%
-        }
-        %>
-        
-        
-        
-        
-       </div>
-    </body>
+<h2> All Products </h2>
+<div class="my-3">
+    <table class="table">
+        <h4>Product<h4>
+        <thead>
+             <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Category</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+                
+            </tr>
+        </thead>
+        <c:forEach items="${productList}" var="Products" varStatus="count">
+                        <thead>
+
+            <tr>
+                <td>${products.ID}</td>
+                <td>${products.name}</td>
+                <td>${products.stock}</td>
+                <td>${products.description}</td>
+                <td>${products.price}</td>
+  
+            
+            
+            </tr>
+        </c:forEach>
+    </table>
+
     
-    <%
-        
-    %>
-</html>
+            </thead>
+  
+
+
+
+<jsp:include page="templates/footer.jsp"/>

@@ -3,8 +3,8 @@ package uts.isd.model.dao;
 import java.sql.*;
 
 public class DBConnector {
-    private static final String URL = "jdbc:derby://localhost:1527/testdb";
-    private static final String USER = "TST";
+    private static final String URL = "jdbc:derby://localhost:1527/usersDB";
+    private static final String USER = "isduser";
     private static final String PASS = "admin";
     private static final String driver = "org.apache.derby.jdbc.ClientDriver";
     private static Connection dbConnection = null;

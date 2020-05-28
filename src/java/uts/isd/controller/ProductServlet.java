@@ -27,41 +27,43 @@ public class ProductServlet extends HttpServlet {
             HttpSession session = request.getSession();
 
             List<Product> products = ProductDAO.getAll();
-            session.setAttribute("allProducts", products);
-            response.sendRedirect("Catalogue.jsp");
+            request.setAttribute("productList", products);
         } 
         
-        catch (Throwable exception) {
-            //TODO: handle exception
-            System.out.println(exception);
-        } finally {
-             request.getRequestDispatcher("/catalogue.jsp").include(request, response);
-
-            }
+        catch(SQLException err) {
+            request.setAttribute("errorCatalogue", "Error accessing database.");
+            err.printStackTrace();
+            
+        } 
+        
+        finally {
+            request.getRequestDispatcher("/Catalogue.jsp").include(request, response);
+        }
     }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
-        HttpSession session = request.getSession();
         String name = request.getParameter("pName");
         String category = request.getParameter("pCat");
 
             try {
                 // to generate list of products based on that name and type. 
-             Product product = ProductDAO.getRead(name, category);
+             Product productsNC = ProductDAO.getRead(name, category);
              
-             request.setAttribute("allproducts", product);
+             request.setAttribute("productsNC", productsNC);
         
               
               
             }
 
-            catch (Throwable exception) {
-                System.out.println(exception);
-            } finally {
-             request.getRequestDispatcher("/catalogue.jsp").include(request, response);
-
-            }
+            catch(SQLException err) {
+            request.setAttribute("errorCatalogue", "Error accessing database.");
+        }
+       
+            finally {
+           request.getRequestDispatcher("/Catalogue.jsp").include(request, response);
+           
+       }
             
         }
     }
