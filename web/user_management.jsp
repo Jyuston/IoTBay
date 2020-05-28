@@ -97,7 +97,7 @@
                 <td>${Staff.ID}</td>
                 <td>${Staff.email}
                 <td>${Staff.firstName} ${Staff.lastName}</td>
-                <td>Meant to Return isAdmin :)</td>
+                <td>Meant to Return isAdmin</td>
             </tr>
         </c:forEach>
     </table>

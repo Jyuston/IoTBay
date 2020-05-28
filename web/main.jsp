@@ -38,6 +38,12 @@
     <p class="text-center">
         <a href="index.jsp">Home</a>
     </p>
+    
+    <form action="/IoTBay/UserManagement" method="GET">
+        <button class="btn btn-info" type="submit">User Management</button>
+    </form>
+    
+ 
 </div>
 
 
