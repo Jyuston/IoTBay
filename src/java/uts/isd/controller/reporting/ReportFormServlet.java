@@ -39,10 +39,13 @@ public class ReportFormServlet extends HttpServlet {
             Report r = (Report)session.getAttribute("report");
             try {
                 ReportingDAO.delete(r);
-                session.setAttribute("editReport", "null");
-                session.setAttribute("modifyingReport", "false");
-                session.setAttribute("deleteReport", "");
-                session.setAttribute("report", null);
+                
+                // Remove all report functionality related attributes from the session
+                session.removeAttribute("editReport");
+                session.removeAttribute("modifyingReport");
+                session.removeAttribute("report");
+
+                // Redirect to the home page
                 response.sendRedirect("ReportingServlet");
             }
 
@@ -64,26 +67,29 @@ public class ReportFormServlet extends HttpServlet {
                 // Create a skeleton report (temp)
                 Report report = (Report)session.getAttribute("report");
                 String originalName = report.getName();
+                
                 // Create the record in the database
                 report.setReportName(reportName);
                 report.setDescription(description);
                 report.setReportStartDate(startDate);
                 report.setReportEndDate(endDate);
+
                 // Update the report
                 ReportingDAO.update(report, originalName);
+                
                 // Retrieve an updated report (necessary for data refresh)
                 Report r = ReportingDAO.get(reportName);
+
                 // Save the report to the session and redirect to the report view page
-                session.setAttribute("report", r);
-                session.setAttribute("editReport", null);
+                session.setAttribute("report", r);                                
+                session.removeAttribute("editReport");
                 response.sendRedirect("reporting/reportView.jsp");
             }
 
             catch (Throwable exception) {
                 //TODO: handle exception
                 System.out.println(exception);
-            }
-            
+            }            
         }
     }
 }
