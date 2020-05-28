@@ -28,6 +28,15 @@
         <servlet-name>RegistrationServlet</servlet-name>
         <url-pattern>/RegistrationServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>UserManagementServlet</servlet-name>
+        <servlet-class>uts.isd.controller.UserManagement.UserManagementServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserManagementServlet</servlet-name>
+        <url-pattern>/UserManagementServlet</url-pattern>
+    </servlet-mapping>
+    
     <session-config>
         <session-timeout>
             30

@@ -44,5 +44,23 @@ public class AccountDAO {
         ResultSet generatedKeysRs = accountInsertSt.getGeneratedKeys();
         generatedKeysRs.next();
         return generatedKeysRs.getInt(1);
+    } 
+    
+    public static Account getAccount(String firstName, String lastName, String contactNumber) throws SQLException{
+        Statement st = dbConnection.createStatement();
+        String getAccountDataQuery = 
+                "SELECT USER_ID FROM ACCOUNTS " +
+                "WHERE USER_F_NAME LIKE '" + firstName + "' " +
+                "AND USER_L_NAME LIKE '" + lastName + "' " + 
+                "AND CONTACT_NUMBER '" + contactNumber + "' ";
+        
+        ResultSet accountRs = st.executeQuery(getAccountDataQuery);
+        if (!accountRs.next()) return null;
+        
+        if (CustomerDAO.get(accountRs.getString("USER_ID")) != null){
+            return CustomerDAO.get(accountRs.getString("USER_ID"));
+        }
+        
+        return StaffDAO.get(accountRs.getString("USER_ID"));
     }
 }
