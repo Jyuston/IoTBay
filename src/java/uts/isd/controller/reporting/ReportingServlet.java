@@ -92,21 +92,39 @@ public class ReportingServlet extends HttpServlet {
 
         // Implements logic for opening the view for an existing report
         else {
-            try {
-                // Retrieve the selected report name, and instantiate a new report object from data in the db
-                Report r = ReportingDAO.get(request.getParameter("selectedReport"));
-
-                // Save the report to the session
-                session.setAttribute("report", r);
-
-                // Redirect to the report view
-                response.sendRedirect("reporting/reportView.jsp");          
-            } 
-            
-            catch (Throwable exception) {
-                //TODO: handle exception
-                System.out.println(exception);
+            if (!request.getParameter("selectedReport").equals("Stock Report")) {
+                try {
+                    // Retrieve the selected report name, and instantiate a new report object from data in the db
+                    Report r = ReportingDAO.get(request.getParameter("selectedReport"));
+    
+                    // Save the report to the session
+                    session.setAttribute("report", r);
+    
+                    // Redirect to the report view
+                    response.sendRedirect("reporting/reportView.jsp");          
+                } 
+                
+                catch (Throwable exception) {
+                    //TODO: handle exception
+                    System.out.println(exception);
+                }
             }
+
+            else {
+                try {
+                    Report r = new Report(ReportingDAO.getProductStock(), ReportingDAO.getProductCategories());
+
+                    session.setAttribute("report", r);
+
+                    response.sendRedirect("reporting/stockReport.jsp");
+                }
+
+                catch (Exception e) {
+                    // handle exception
+                }
+                
+            }
+            
         }
     }
 }

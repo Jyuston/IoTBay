@@ -204,4 +204,30 @@ public class SalesAnalyser implements Serializable {
         return dictionary;
     }
 
+    public HashMap<String, ArrayList<ProductSummary>> getStockReport(ArrayList<ProductSummary> products, ArrayList<String> categories) {
+        // Instatiate the HashMap
+        HashMap<String, ArrayList<ProductSummary>> dictionary = new HashMap<>();
+
+        // Generate keys
+        for (String string : categories) {
+            if (!dictionary.containsKey(string)) {
+                //add the key
+                //G
+                dictionary.put(string, new ArrayList<ProductSummary>());
+            }
+
+            else {
+                //add to its list
+                continue;
+            }
+        }
+
+        for (ProductSummary product : products) {
+            ArrayList<ProductSummary> array = dictionary.get(product.getProductCategory());
+            array.add(product);
+        }
+
+        return dictionary;
+    }
+
 }

@@ -113,4 +113,8 @@ public class Report implements Serializable {
     public boolean salesExist() {
         return saleRecords.size() > 0;
     }
+
+    public HashMap<String, ArrayList<ProductSummary>> getStockReport() {
+        return salesAnalyser.getStockReport(productSummaries, categories);
+    }
 }
