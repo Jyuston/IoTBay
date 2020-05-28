@@ -1,9 +1,6 @@
 package uts.isd.model;
 
 import java.io.Serializable;
-import java.sql.SQLException;
-import uts.isd.model.dao.DAO;
-import uts.isd.model.dao.ProductDAO;
 
 public class Product implements Serializable {
     private String ID;
@@ -20,6 +17,7 @@ public class Product implements Serializable {
         this.stock = stock;
         this.price = price;
         this.category = category;
+        this.description = description;
         this.archived = archived;
     }
 

@@ -13,10 +13,9 @@
 
     <p class="mt-4 mb-1">
         To continue, please Login or Register below.
-        <br />
-        <a href="login.jsp">Login</a> 
-                <a href="Catalogue.jsp">Cat</a> |
-|
+        <br/>
+        <a href="login.jsp">Login</a> |
+        <a href="ProductServlet">Catalogue</a> |
         <a href="register.jsp">Register</a>
     </p>
 </div>

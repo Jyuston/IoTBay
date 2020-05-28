@@ -11,32 +11,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ProductDAO{
-    
     public static final Connection dbConnection = DBConnector.getConnection();
-        
-// get the last product and add one to it     
-        public static String getNextAvailableID() throws SQLException {
-        Statement st = dbConnection.createStatement();
 
-        String productIDsQuery = "SELECT PRODUCT_ID FROM PRODUCTS";
-        ResultSet productIDsRs = st.executeQuery(productIDsQuery);
-
-        // BROKEN RN
-        if (!productIDsRs.next())
-            return "U-1";
-
-        String lastID = productIDsRs.getString("PRODUCT_ID");
-        int lastNumber = Integer.parseInt(lastID.substring(2));
-        return "P-" + (lastNumber + 1);
-    }
-    
 
 //reads ID and enables to perform the update and delete functions in view
     public static Product get(String productID) throws SQLException {
         Statement st = dbConnection.createStatement();
         String getProductData =
                 "SELECT * FROM PRODUCTS " +
-                "WHERE PRODUCT_ID = '" + productID + "'";
+                "WHERE ID = '" + productID + "'";
 
         ResultSet productRs = st.executeQuery(getProductData);
 
@@ -52,9 +35,9 @@ public class ProductDAO{
 // Setting up the initial SQL query to find the product by its name and type (category)
         Statement st = dbConnection.createStatement();
         String getProductID =
-                "SELECT PRODUCT_ID FROM PRODUCTS " +
-                "WHERE PRODUCT_NAME LIKE '" + productName + "' " +
-                "AND PRODUCT_CATEGORY LIKE '" + productCategory + "'";
+                "SELECT ID FROM PRODUCTS " +
+                "WHERE NAME LIKE '" + productName + "' " +
+                "AND CATEGORY LIKE '" + productCategory + "'";
 
         ResultSet productIDRs = st.executeQuery(getProductID);
 
@@ -122,9 +105,9 @@ public class ProductDAO{
    
     
     public static boolean update(Product product, String[] params) throws SQLException {
-         String updatePInfo = "UPDATE PRODUCTS SET PRODUCT_NAME = ?,STOCK = ?,  "
-                + "PRODUCT_PRICE = ?, PRODUCT_CATEGORY = ?,PRODUCT_DESCRIPTION = ?, ARCHIVED = ? "
-                + "WHERE PRODUCT_ID = ?";
+         String updatePInfo = "UPDATE PRODUCTS SET NAME = ?,STOCK = ?,  "
+                + "PRICE = ?, CATEGORY = ?,DESCRIPTION = ?, ARCHIVED = ? "
+                + "WHERE ID = ?";
         
 
         boolean isUpdated = false;
@@ -146,7 +129,7 @@ public class ProductDAO{
 
     public boolean deleteProduct(String productID) throws SQLException {
         
-        String dProd = "DELETE FROM PRODUCTS WHERE PRODUCT_ID = ?";
+        String dProd = "DELETE FROM PRODUCTS WHERE ID = ?";
 
         boolean isDeleted = false;
         try (PreparedStatement statement = this.dbConnection.prepareStatement(dProd)) {
@@ -163,12 +146,12 @@ public class ProductDAO{
     // Helpers
     private static Product createProductObject(ResultSet productRs) throws SQLException {
         return new Product(
-                productRs.getString("PRODUCT_ID"),
-                productRs.getString("PRODUCT_NAME"),
+                productRs.getString("ID"),
+                productRs.getString("NAME"),
                 productRs.getInt("STOCK"),
-                productRs.getDouble("PRODUCT_PRICE"),
-                productRs.getString("PRODUCT_CATEGORY"),
-                productRs.getString("PRODUCT_DESCRIPTION"),                 
+                productRs.getDouble("PRICE"),
+                productRs.getString("CATEGORY"),
+                productRs.getString("DESCRIPTION"),
                 productRs.getBoolean("ARCHIVED")
                 
         );
