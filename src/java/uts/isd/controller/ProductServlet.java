@@ -26,8 +26,8 @@ public class ProductServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
 
-            List<Product> products = ProductDAO.getAll();
-            request.setAttribute("productList", products);
+            List<Product> productList = ProductDAO.getAll();
+            request.setAttribute("productList", productList);
         } 
         
         catch(SQLException err) {
