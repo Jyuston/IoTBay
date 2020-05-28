@@ -19,10 +19,9 @@ public class ReportFormServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
         // Implements redirection to the edit form logic
         try {
-            HttpSession session = request.getSession();
             ArrayList<String> reportNames = ReportingDAO.getReportNames();
-            session.setAttribute("editReport", "yes");
-            response.sendRedirect("reportForm.jsp");
+            request.setAttribute("editReport", "yes");
+            request.getRequestDispatcher("reportForm.jsp").include(request, response);
         } 
         
         catch (Throwable exception) {
@@ -42,8 +41,6 @@ public class ReportFormServlet extends HttpServlet {
                 ReportingDAO.delete(r);
                 
                 // Remove all report functionality related attributes from the session
-                session.removeAttribute("editReport");
-                session.removeAttribute("modifyingReport");
                 session.removeAttribute("report");
 
                 // Redirect to the home page

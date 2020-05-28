@@ -222,6 +222,7 @@ public class SalesAnalyser implements Serializable {
             }
         }
 
+        // Organise each product into the correct hashmap key
         for (ProductSummary product : products) {
             ArrayList<ProductSummary> array = dictionary.get(product.getProductCategory());
             array.add(product);

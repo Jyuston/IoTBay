@@ -19,7 +19,7 @@
     <%! String action; %>
     <%! Boolean modifyingReport; %>
     <%
-        if (session.getAttribute("editReport") != null && session.getAttribute("editReport").equals("yes") ) {
+        if (request.getAttribute("editReport") != null && request.getAttribute("editReport").equals("yes")) {
             Report report = (Report)session.getAttribute("report");
             buttonText = "Update Report";
             action = "updateReport";

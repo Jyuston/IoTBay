@@ -19,10 +19,10 @@ public class ReportingServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
         // Implements logic for retrieving a list of report names and displaying them in the view
         try {
-            HttpSession session = request.getSession();
             ArrayList<String> reportNames = ReportingDAO.getReportNames();
-            session.setAttribute("reportNames", reportNames);
-            response.sendRedirect("reporting.jsp");
+
+            request.setAttribute("reportNames", reportNames);
+            request.getRequestDispatcher("reporting.jsp").include(request, response);
         } 
         
         catch (Throwable exception) {
@@ -70,18 +70,14 @@ public class ReportingServlet extends HttpServlet {
         else if (request.getParameter("reportExit") != null && request.getParameter("reportExit").equals("yes")) {
             // Remove all reporting functionality related attributes from the session
             session.removeAttribute("report");
-            session.removeAttribute("editReport");
-            session.removeAttribute("modifyingReport");
 
             try {
                 // Retrieve a fresh list of report names
                 ArrayList<String> reportNames = ReportingDAO.getReportNames();
-                
-                // Save them to the session
-                session.setAttribute("reportNames", reportNames);
 
-                // Redirect back to the home page
-                response.sendRedirect("reporting.jsp");            
+                // Save to request and forward
+                request.setAttribute("reportNames", reportNames);
+                request.getRequestDispatcher("reporting.jsp").include(request, response);         
             }
 
             catch (Exception e) {
@@ -92,6 +88,7 @@ public class ReportingServlet extends HttpServlet {
 
         // Implements logic for opening the view for an existing report
         else {
+            // Check if the selected report is a sales report
             if (!request.getParameter("selectedReport").equals("Stock Report")) {
                 try {
                     // Retrieve the selected report name, and instantiate a new report object from data in the db
@@ -110,12 +107,16 @@ public class ReportingServlet extends HttpServlet {
                 }
             }
 
+            // The sales report has been selected
             else {
                 try {
+                    // Instantaiate the report using the specially defined constructor
                     Report r = new Report(ReportingDAO.getProductStock(), ReportingDAO.getProductCategories());
 
+                    // Save it to the session
                     session.setAttribute("report", r);
 
+                    // Redirect the view to the stock report view
                     response.sendRedirect("reporting/stockReport.jsp");
                 }
 

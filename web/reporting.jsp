@@ -64,7 +64,7 @@
                                     <!-- will need to put in verification logic later if placeholder is desired -->
                                     <option>Stock Report</option>
                                     <% 
-                                        ArrayList<String> reportNames = (ArrayList<String>)session.getAttribute("reportNames");
+                                        ArrayList<String> reportNames = (ArrayList<String>)request.getAttribute("reportNames");
                                         for (String name : reportNames) {
                                             String currentReportName = name;
                                             session.setAttribute("currentReportName", currentReportName);
