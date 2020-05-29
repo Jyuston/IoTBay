@@ -32,7 +32,7 @@ public class ProductServlet extends HttpServlet {
 
         try {
             // to generate list of products based on that name and type.
-            Product productsNC = ProductDAO.getRead(name, category);
+            Product productsNC = ProductDAO.get(name, category);
 
             request.setAttribute("productsNC", productsNC);
 

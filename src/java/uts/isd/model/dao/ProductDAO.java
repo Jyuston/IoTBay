@@ -8,145 +8,180 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
-import java.util.List;
 
-public class ProductDAO{
+public class ProductDAO {
     public static final Connection dbConnection = DBConnector.getConnection();
 
-
-//reads ID and enables to perform the update and delete functions in view
-    public static Product get(String productID) throws SQLException {
+    /**
+     * Find a single Product by Product ID.
+     * @return An instantiated Product if found, otherwise null.
+     */
+    public static Product get(int productID) throws SQLException {
         Statement st = dbConnection.createStatement();
         String getProductData =
                 "SELECT * FROM PRODUCTS " +
-                "WHERE ID = '" + productID + "'";
+                "WHERE ID = " + productID;
 
         ResultSet productRs = st.executeQuery(getProductData);
 
-        // If no data, return null Customer
+        // If no data, return null Product
         if (!productRs.next())
             return null;
 
         return createProductObject(productRs);
     }
-   
-    // only for the read function in where a user can search a product by typing name and cat
-    public static Product getRead(String productName, String productCategory) throws SQLException {
-// Setting up the initial SQL query to find the product by its name and type (category)
+
+    /**
+     * Find a single Product by exact name and category.
+     * @return An instantiated Product if found, otherwise null.
+     */
+    public static Product get(String name, String category) throws SQLException {
         Statement st = dbConnection.createStatement();
         String getProductID =
-                "SELECT ID FROM PRODUCTS " +
-                "WHERE NAME LIKE '" + productName + "' " +
-                "AND CATEGORY LIKE '" + productCategory + "'";
+                "SELECT * FROM PRODUCTS " +
+                "WHERE NAME LIKE '" + name + "' " +
+                "AND CATEGORY LIKE '" + category + "'";
 
-        ResultSet productIDRs = st.executeQuery(getProductID);
+        ResultSet productRs = st.executeQuery(getProductID);
 
-        // If no user, return null
-        
-        while (productIDRs.next()) {
-            String pName = productIDRs.getString(1);
-            String pCat = productIDRs.getString(4);
-            if (pName.equals(productName) && pCat.equals(productCategory)) {
-                String pID = productIDRs.getString(0);
-                int stock = productIDRs.getInt(2);
-                double pPrice = productIDRs.getDouble(3);
-                String pDesc = productIDRs.getString(5);
-                boolean arch = productIDRs.getBoolean(6);
-                return new Product(pID, pName, stock, pPrice, pCat, pDesc, arch);
-                
-            }
-            
-        }
-        return null; 
-        
-    }    
+        // If no data, return null Product
+        if (!productRs.next())
+            return null;
 
+        return createProductObject(productRs);
+    }
 
-  
-     
-    //gets all the products to show all the product catalogue in the view 
-    public static List<Product> getAll() throws SQLException {
+    /**
+     * Find all products within the database.
+     * @return A list of all products within the database
+     */
+    public static LinkedList<Product> getAll() throws SQLException {
         LinkedList<Product> products = new LinkedList<>();
 
         Statement st = dbConnection.createStatement();
-        String getProductInfo =
-                "SELECT * FROM PRODUCTS ";
+        String getProductsQuery = "SELECT * FROM PRODUCTS ";
 
-        ResultSet productARs = st.executeQuery(getProductInfo);
+        ResultSet productsRs = st.executeQuery(getProductsQuery);
 
-        while (productARs.next()) {
-            products.add(createProductObject(productARs));
-        }
+        while (productsRs.next())
+            products.add(createProductObject(productsRs));
 
         return products;
-    }       
-    
-    
-  
-    public static void save(Product product) throws SQLException {
-        Statement st = dbConnection.createStatement();
+    }
 
-        String productInsertQuery = String.format(
-                "INSERT INTO PRODUCTS (PRODUCT_ID, PRODUCT_NAME, STOCK, PRODUCT_PRICE, PRODUCT_CATEGORY, PRODUCT_DESCRIPTION, ARCHIVED) " +
-                "VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
-                product.getID(),
-                product.getName(),
-                product.getStock(),
-                product.getPrice(),
-                product.getCategory(),
-                product.isArchived()
+    /**
+     * Search for a list of products by name.
+     * @param query The product name to search
+     * @return A list of products with names matching the search
+     */
+    public static LinkedList<Product> searchByName(String query) throws SQLException {
+        String searchQuery =
+                "SELECT * FROM PRODUCTS " +
+                "WHERE NAME LIKE '%" + query + "%'";
+
+        return search(searchQuery);
+    }
+
+    /**
+     * Search for a list of products by the category they belong to.
+     * @param query The product category to search
+     * @return A list of products that belong to a category
+     */
+    public static LinkedList<Product> searchByCategory(String query) throws SQLException {
+        String searchQuery =
+                "SELECT * FROM PRODUCTS " +
+                "WHERE CATEGORY LIKE '" + query + "'";
+
+        return search(searchQuery);
+    }
+
+    /**
+     * Save a new product to the database.
+     * New products can be created by instantiating a new model instance.
+     * @param product Product to save to DB
+     * @return Whether or not the write was successful
+     */
+    public static boolean save(Product product) throws SQLException {
+        PreparedStatement productInsertSt = dbConnection.prepareStatement(
+                "INSERT INTO PRODUCTS (CATEGORY, NAME, DESCRIPTION, STOCK, PRICE, ARCHIVED) " +
+                "VALUES (?, ?, ?, ?, ?, ?)",
+                Statement.RETURN_GENERATED_KEYS
         );
-        st.executeQuery(productInsertQuery);
 
-      
+        productInsertSt.setString(1, product.getCategory());
+        productInsertSt.setString(1, product.getName());
+        productInsertSt.setString(1, product.getDescription());
+        productInsertSt.setInt(1, product.getStock());
+        productInsertSt.setDouble(1, product.getPrice());
+        productInsertSt.setBoolean(1, product.isArchived());
+
+        productInsertSt.executeUpdate();
+
+        // Return Auto ID that was generated by SQL Server
+        ResultSet generatedKeysRs = productInsertSt.getGeneratedKeys();
+
+        // If no generated ID i.e. No Product saved to DB
+        if (!generatedKeysRs.next())
+            return false;
+
+        // Get generated ID
+        int generatedID = generatedKeysRs.getInt(1);
+
+        // Update instances ID and return true for successful write
+        product.setID(generatedID);
+        return true;
     }
 
-    
-   
-    
+    /**
+     * Update a single product from the database.
+     * @param product The instantiated product to update. Must have an ID.
+     * @return Returns whether or not the update action was successful.
+     */
     public static boolean update(Product product, String[] params) throws SQLException {
-         String updatePInfo = "UPDATE PRODUCTS SET NAME = ?,STOCK = ?,  "
-                + "PRICE = ?, CATEGORY = ?,DESCRIPTION = ?, ARCHIVED = ? "
-                + "WHERE ID = ?";
-        
+         PreparedStatement updateSt = dbConnection.prepareStatement(
+                "UPDATE PRODUCTS SET NAME = ?,STOCK = ?, PRICE = ?, CATEGORY = ?,DESCRIPTION = ?, ARCHIVED = ? " +
+                "WHERE ID = " + product.getID()
+         );
 
-        boolean isUpdated = false;
-        
-        try (PreparedStatement statement = ProductDAO.dbConnection.prepareStatement(updatePInfo)) {
-            statement.setString(1, product.getName());
-            statement.setInt(2, product.getStock());
-            statement.setDouble(3,  product.getPrice());
-            statement.setString(4, product.getCategory());
-            statement.setString(5, product.getDescription());
-            statement.setBoolean(6, product.isArchived());
-            
-            isUpdated = statement.executeUpdate() > 0;
+        updateSt.setString(1, product.getName());
+        updateSt.setInt(2, product.getStock());
+        updateSt.setDouble(3,  product.getPrice());
+        updateSt.setString(4, product.getCategory());
+        updateSt.setString(5, product.getDescription());
+        updateSt.setBoolean(6, product.isArchived());
 
-            statement.close();
-        }
-        return isUpdated;
+        int rowsChanged = updateSt.executeUpdate();
+
+        return rowsChanged > 0;
     }
 
+    /**
+     * Delete a single product from the database.
+     * @param productID ID of the product to delete
+     * @return Returns whether or not the delete action was successful.
+     */
     public boolean deleteProduct(String productID) throws SQLException {
-        
-        String dProd = "DELETE FROM PRODUCTS WHERE ID = ?";
+        String deleteQuery = "DELETE FROM PRODUCTS WHERE ID = " + productID;
 
-        boolean isDeleted = false;
-        try (PreparedStatement statement = this.dbConnection.prepareStatement(dProd)) {
-            
-            statement.setString(0, productID);
-            
-            isDeleted = statement.executeUpdate() > 0;
+        Statement st = dbConnection.createStatement();
+        int rowsChanged = st.executeUpdate(deleteQuery);
 
-            statement.close();
-        }
-        return isDeleted;
+        return rowsChanged > 0;
     }
 
     // Helpers
+
+    /**
+     * Used to create Product instances from SQL ResultSets after executing a db query.
+     *
+     * Will create the Product instance based on the current cursor position of the ResultSet.
+     * This means this helper method can be used within loops.
+     * @param productRs the ResultSet of the Product(s)
+     * @return An instantiated Product object
+     */
     private static Product createProductObject(ResultSet productRs) throws SQLException {
         return new Product(
-                productRs.getString("ID"),
+                productRs.getInt("ID"),
                 productRs.getString("NAME"),
                 productRs.getInt("STOCK"),
                 productRs.getDouble("PRICE"),
@@ -157,5 +192,21 @@ public class ProductDAO{
         );
     }
 
-   
+    /**
+     * Similar functionality that is re-used within search methods
+     * @param sqlQuery The search query performed
+     * @return A list of products created from the returned db rows
+     */
+    private static LinkedList<Product> search(String sqlQuery) throws SQLException {
+        LinkedList<Product> filteredProducts = new LinkedList<>();
+
+        Statement st = dbConnection.createStatement();
+        ResultSet productsRs = st.executeQuery(sqlQuery);
+
+        while (productsRs.next()) {
+            filteredProducts.add(createProductObject(productsRs));
+        }
+
+        return filteredProducts;
+    }
 }
