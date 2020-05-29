@@ -11,18 +11,19 @@ public class StaffDAO {
 
     public static Staff get(String email, String password) throws SQLException {
         Statement st = dbConnection.createStatement();
-        String getUserIdQuery =
-                "SELECT ID FROM ACCOUNTS " +
+        String getStaffQuery =
+                "SELECT * FROM ACCOUNTS A " +
+                "INNER JOIN STAFF S on A.ID = S.ID " +
                 "WHERE EMAIL LIKE '" + email + "' " +
                 "AND PASSWORD LIKE '" + password + "'";
 
-        ResultSet userIDRs = st.executeQuery(getUserIdQuery);
+        ResultSet staffRs = st.executeQuery(getStaffQuery);
 
         // If no table rows, return null
-        if (!userIDRs.next())
+        if (!staffRs.next())
             return null;
 
-        return get(userIDRs.getString("ID"));
+        return createStaffObject(staffRs);
     }
 
     public static Staff get(String accountID) throws SQLException {

@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="uts.isd.model.Customer" %>
+<%@ page import="uts.isd.model.Account" %>
 
 <%
-    Customer user = (Customer) session.getAttribute("user");
+    Account user = (Account) session.getAttribute("user");
 %>
 
 <header class="navbar navbar-expand-md navbar-light bg-light mb-5">
