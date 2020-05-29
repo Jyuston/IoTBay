@@ -39,7 +39,7 @@ public class ProductDAO {
         Statement st = dbConnection.createStatement();
         String getProductID =
                 "SELECT * FROM PRODUCTS " +
-                "WHERE NAME LIKE '" + name + "' " +
+                "WHERE NAME LIKE '%" + name + "%' " +
                 "AND CATEGORY LIKE '" + category + "'";
 
         ResultSet productRs = st.executeQuery(getProductID);
