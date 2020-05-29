@@ -4,6 +4,9 @@
     Author     : justinhyuen
 --%>
 <%@page import="uts.isd.model.Account"%>
+<%@page import="uts.isd.model.Customer"%>
+<%@page import="uts.isd.model.Staff"%>
+
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -15,7 +18,8 @@
 <%
     List customerList = (List) request.getAttribute("customerList");
     List staffList = (List) request.getAttribute("staffList");
-    Account searchedAccount = (Account) request.getAttribute("resultAccount");
+    Account resultAcc = (Account) request.getAttribute("resultAccount");
+    System.out.println(resultAcc.getEmail() + resultAcc.getFirstName() + resultAcc.getLastName());
 %>
 <h1 class="mb-4">User Management</h1>
 
@@ -40,16 +44,16 @@
         </div>
         
 <%
-    if(searchedAccount != null) {
+    if(resultAcc != null) {
 %>
         <div class="col-md-auto mx-auto my-2 p-4 border border-light rounded">
             <!--This will be updated by Servlet based on the Form-->  
             <table class="my-auto">
-                <tr colspan="3" class="py-1"><h4>${searchedAccount.firstName} + ${searchedAccount.lastName}</h4></th></tr>
-                <tr><td colspan="3" class="py-1">${searchedAccount.class}</td></tr>
-                <tr><td colspan="3" class="py-1">${searchedAccount.ID}</td></tr>
-                <tr><td colspan="3" class="py-1">${searchedAccount.email}</td></tr>
-                <tr><td colspan="3" class="py-1">${searchedAccount.active}</td></tr>
+                <tr colspan="3" class="py-1"><h4>${resultAcc.firstName} + ${resultAcc.lastName}</h4></th></tr>
+                <tr><td colspan="3" class="py-1">${resultAcc.class}</td></tr>
+                <tr><td colspan="3" class="py-1">${resultAcc.ID}</td></tr>
+                <tr><td colspan="3" class="py-1">${resultAcc.email}</td></tr>
+                <tr><td colspan="3" class="py-1">${resultAcc.active}</td></tr>
                 <tr>
                     <td><button class="btn btn-primary btn-sm my-2 mr-2">Activate</button></td>
                     <td><button class="btn btn-warning btn-sm my-2 mr-2">Deactivate</button></td>

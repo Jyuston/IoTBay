@@ -1,3 +1,4 @@
+<%@page import="uts.isd.model.Account"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="uts.isd.model.Account" %>
 
