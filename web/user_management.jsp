@@ -26,11 +26,11 @@
             <form action="/IoTBay/UserManagementServlet" method="POST">
             <table>
                 <tr>
-                    <td><input class="form-control-sm my-2 mr-1" id="firstName" name="firstName" placeholder="First Name" required></td>
-                    <td><input class="form-control-sm" id="lastName" name="lastName" placeholder="Last Name" required></td>
+                    <td><input class="form-control-sm my-2 mr-1" name="firstName" placeholder="First Name" required></td>
+                    <td><input class="form-control-sm" name="lastName" placeholder="Last Name" required></td>
                 </tr>
                 <tr>
-                    <td><input class="form-control-sm m-r" id="phoneNumber" name="phoneNumber" placeholder="Phone Number" required></td> 
+                    <td><input class="form-control-sm m-r" name="contactNumber" placeholder="Contact Number" required></td> 
                 </tr>
                 <tr>
                     <td><button type="submit" class="btn btn-info btn-sm my-3">Search</button></td>
@@ -45,7 +45,7 @@
         <div class="col-md-auto mx-auto my-2 p-4 border border-light rounded">
             <!--This will be updated by Servlet based on the Form-->  
             <table class="my-auto">
-                <tr colspan="3" class="py-1"><h4>${searchedAccount.firstName} + ${searchedAccount.lasdtName}</h4></th></tr>
+                <tr colspan="3" class="py-1"><h4>${searchedAccount.firstName} + ${searchedAccount.lastName}</h4></th></tr>
                 <tr><td colspan="3" class="py-1">${searchedAccount.class}</td></tr>
                 <tr><td colspan="3" class="py-1">${searchedAccount.ID}</td></tr>
                 <tr><td colspan="3" class="py-1">${searchedAccount.email}</td></tr>
@@ -131,7 +131,7 @@
                 <th scope="col">Account</th>
                 
             </tr>
-                </thead>
+        </thead>
         </table>
     </div>
 

@@ -52,12 +52,13 @@ public class AccountDAO {
                 "SELECT ID, ACCOUNT_TYPE FROM ACCOUNTS " +
                 "WHERE F_NAME LIKE '" + firstName + "' " +
                 "AND L_NAME LIKE '" + lastName + "' " + 
-                "AND CONTACT_NUMBER LIKE '" + contactNumber + "' ";
+                "AND CONTACT_NUMBER LIKE '" + contactNumber + "'";
         
         ResultSet accountRs = st.executeQuery(getAccountDataQuery);
         if (!accountRs.next()) return null;
         
         if ((accountRs.getString("ACCOUNT_TYPE").charAt(0)) == 'C'){
+            System.out.print(accountRs.getString("ID"));
             return CustomerDAO.get(accountRs.getString("ID"));
         } 
         else if ((accountRs.getString("ACCOUNT_TYPE").charAt(0)) == 'S'){

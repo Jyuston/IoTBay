@@ -13,7 +13,7 @@
 
 <h2> Add a new user account </h2>
 
-        <form class="m-5">
+        <form class="m-5" method="POST" action="/IoTBay/UserManagementCreateServlet">
             <%--Details--%>
             <h4>Details</h4>
             <div class="form-group">
