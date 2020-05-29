@@ -30,13 +30,13 @@ public class CustomerDAO {
         return createCustomerObject(customerRs);
     }
 
-    public static Customer get(String accountID) throws SQLException {
+    public static Customer get(int accountID) throws SQLException {
         Statement st = dbConnection.createStatement();
         String getCustomerDataQuery =
                 "SELECT * FROM ACCOUNTS A " +
                 "INNER JOIN CUSTOMERS C on A.ID = C.ID " +
                 "INNER JOIN PAYMENT_INFORMATION PI on C.ID = PI.CUSTOMER_ID " +
-                "WHERE C.ID = '" + accountID + "'";
+                "WHERE C.ID = " + accountID;
 
         ResultSet customerRs = st.executeQuery(getCustomerDataQuery);
 
