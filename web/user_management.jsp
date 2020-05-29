@@ -23,6 +23,7 @@
 <div class="container-fluid">
     <div class="row"> 
         <div class="form-group">
+            <form action="/IoTBay/UserManagementServlet" method="POST">
             <table>
                 <tr>
                     <td><input class="form-control-sm my-2 mr-1" id="firstName" name="firstName" placeholder="First Name" required></td>
@@ -32,19 +33,23 @@
                     <td><input class="form-control-sm m-r" id="phoneNumber" name="phoneNumber" placeholder="Phone Number" required></td> 
                 </tr>
                 <tr>
-                    <td><button type="button" class="btn btn-info btn-sm my-3" id="submit" name="submit">Search</button></td>
+                    <td><button type="submit" class="btn btn-info btn-sm my-3">Search</button></td>
                 </tr>
             </table>
+            </form>
         </div>
-
         
+<%
+    if(searchedAccount != null) {
+%>
         <div class="col-md-auto mx-auto my-2 p-4 border border-light rounded">
-            <!--This will be updated by Servlet based on the Form-->
+            <!--This will be updated by Servlet based on the Form-->  
             <table class="my-auto">
-                <tr colspan="3" class="py-1"><h4>John Smith</h4></th></tr>
-                <tr><td colspan="3" class="py-1">Staff-Admin</td></tr>
-                <tr><td colspan="3" class="py-1">UD-999999999</td></tr>
-                <tr><td colspan="3" class="py-1">JohnSmith@burrito.com</td></tr>
+                <tr colspan="3" class="py-1"><h4>${searchedAccount.firstName} + ${searchedAccount.lasdtName}</h4></th></tr>
+                <tr><td colspan="3" class="py-1">${searchedAccount.class}</td></tr>
+                <tr><td colspan="3" class="py-1">${searchedAccount.ID}</td></tr>
+                <tr><td colspan="3" class="py-1">${searchedAccount.email}</td></tr>
+                <tr><td colspan="3" class="py-1">${searchedAccount.active}</td></tr>
                 <tr>
                     <td><button class="btn btn-primary btn-sm my-2 mr-2">Activate</button></td>
                     <td><button class="btn btn-warning btn-sm my-2 mr-2">Deactivate</button></td>
@@ -53,7 +58,8 @@
                 </tr>  
                 <tr>
             </table>
-        </div>        
+        </div>  
+<%}%>
     </div>
 </div>
 
@@ -64,7 +70,8 @@
 
 <h2> All Users </h2>
 <div class="my-3">
-    <table class="table overflow-auto" style="max-height: 10px">
+    <div style="max-height: 400px" class="overflow-auto mb-4">
+    <table class="table overflow-auto" style="max-height: 100px">
         <h4>Customer<h4>
         <thead>
              <tr>
@@ -84,8 +91,10 @@
             </tr>
         </c:forEach>
     </table>
+    </div>
 
-    <table class="table overflow-auto" style="max-height: 500px">
+    <div style="max-height: 400px" class="overflow-auto mb-4">
+    <table class="table">
         <h4>Staff<h4>
             <thead>
             <tr>
@@ -106,6 +115,7 @@
             </tr>
         </c:forEach>
     </table>
+    </div>
 </div>
 
 <h2>Audit Logs</h2>

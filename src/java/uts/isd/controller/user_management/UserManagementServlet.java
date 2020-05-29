@@ -22,18 +22,20 @@ import uts.isd.model.dao.StaffDAO;
  */
 public class UserManagementServlet extends HttpServlet {
 
-            
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-        
-        try {
-            HttpSession session = request.getSession();
-            
+    private void getTables(HttpServletRequest request) throws SQLException{
             List<Customer> customerList = CustomerDAO.getAll();
             List<Staff> staffList = StaffDAO.getAll();
             
             request.setAttribute("customerList", customerList);
             request.setAttribute("staffList", staffList);
+    }
+            
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+        
+        try {
+            HttpSession session = request.getSession(); 
+            getTables(request);
             //request.getAttribute in jsp
         } 
         
@@ -56,6 +58,8 @@ public class UserManagementServlet extends HttpServlet {
         String contactNumber = request.getParameter("contactNumber");
   
        try {
+            HttpSession session = request.getSession(); 
+            getTables(request);
             Account resultAccount = AccountDAO.getAccount(firstName, lastName, contactNumber);
             request.setAttribute("resultAccount", resultAccount);
         }
