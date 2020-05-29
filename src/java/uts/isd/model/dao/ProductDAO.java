@@ -183,12 +183,11 @@ public class ProductDAO {
         return new Product(
                 productRs.getInt("ID"),
                 productRs.getString("NAME"),
-                productRs.getInt("STOCK"),
-                productRs.getDouble("PRICE"),
                 productRs.getString("CATEGORY"),
                 productRs.getString("DESCRIPTION"),
+                productRs.getInt("STOCK"),
+                productRs.getDouble("PRICE"),
                 productRs.getBoolean("ARCHIVED")
-                
         );
     }
 
