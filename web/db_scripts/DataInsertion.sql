@@ -79,16 +79,16 @@ VALUES ('0.5 Ohm Resistor', 10, 0.20, 'Resistors', 'This is a 0.5 ohn resistor',
        ('plastic capacitor', 10, 0.50, 'Capacitors', 'This is a plastic capacitor', false)
 ;
 
-INSERT INTO ORDERS (DATE_TIME, SHIPPING_ADDRESS, TOTAL, CUSTOMER_ID, TRACKING_ID, CARD_NUMBER)
-VALUES ('2020-01-01 00:00:05', '21 Shipping Ave--Waterloo-2017-NSW', 23.99, 2, '0', '5244 8746 5799 2270'),
-       ('2020-03-04 00:01:05', '30 Shipping Ave--Waterloo-3105-QLD', 28.00, 2, '1', '5244 8746 5799 2271'),
-       ('2020-06-05 00:04:05', '21 Madison Ave--Wetherill-2164-NSW', 24.00, 3, '2', '5244 8746 5799 2270'),
-       ('2020-09-10 00:06:05', '54 Lexington St--Gregory-2570-NSW', 23.99, 5, '3', '5588298188999519'),
-       ('2020-01-12 00:03:05', '66 Dakota Ave--Emerald-2174-NSW', 29.00, 6, '4', '547 25471 14513 607'),
-       ('2020-02-01 00:06:05', '78 Renwick St--Gledswood-2570-NSW', 30.00, 9, '5', '549151 905253 2532'),
-       ('2020-06-01 00:07:05', '29 Belmont Ave--Edmondson-2174-NSW', 25.99, 8, '6', '550 84054 11825 588'),
-       ('2020-08-01 00:04:05', '28 Lincoln Ave--Willowdale-2174-NSW', 29.99, 7, '8', '5483 5394 8183 4028'),
-       ('2020-02-01 00:04:05', '30 Easton St--Catherine-2570-NSW', 33.99, 4, '9', '5301127140287588')
+INSERT INTO ORDERS (ORDERED_ON, SHIPPING_ADDRESS, STATUS, TOTAL, CUSTOMER_ID, TRACKING_ID)
+VALUES ('2020-01-01 00:00:05', '21 Shipping Ave--Waterloo-2017-NSW', 'shipped', 23.99, 2, '0'),
+       ('2020-03-04 00:01:05', '30 Shipping Ave--Waterloo-3105-QLD', 'shipped', 28.00, 2, '1'),
+       ('2020-06-05 00:04:05', '21 Madison Ave--Wetherill-2164-NSW', 'shipped', 24.00, 3, '2'),
+       ('2020-09-10 00:06:05', '54 Lexington St--Gregory-2570-NSW', 'shipped', 23.99, 5, '3'),
+       ('2020-01-12 00:03:05', '66 Dakota Ave--Emerald-2174-NSW', 'shipped', 29.00, 6, '4'),
+       ('2020-02-01 00:06:05', '78 Renwick St--Gledswood-2570-NSW', 'shipped', 30.00, 9, '5'),
+       ('2020-06-01 00:07:05', '29 Belmont Ave--Edmondson-2174-NSW', 'shipped', 25.99, 8, '6'),
+       ('2020-08-01 00:04:05', '28 Lincoln Ave--Willowdale-2174-NSW', 'shipped', 29.99, 7, '8'),
+       ('2020-02-01 00:04:05', '30 Easton St--Catherine-2570-NSW', 'shipped', 33.99, 4, '9')
 ;
 
 INSERT INTO ORDER_LINE (ORDER_ID, PRODUCT_ID, QUANTITY_ORDERED, PRICE)
