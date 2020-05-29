@@ -59,7 +59,7 @@ public class AccountDAO {
         
         if ((accountRs.getString("ACCOUNT_TYPE").charAt(0)) == 'C'){
             System.out.print(accountRs.getString("ID"));
-            return CustomerDAO.get(accountRs.getString("ID"));
+            return CustomerDAO.get(accountRs.getInt("ID"));
         } 
         else if ((accountRs.getString("ACCOUNT_TYPE").charAt(0)) == 'S'){
             return StaffDAO.get(accountRs.getString("ID"));
