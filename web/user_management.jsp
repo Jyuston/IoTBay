@@ -64,40 +64,45 @@
 
 <h2> All Users </h2>
 <div class="my-3">
-    <table class="table">
+    <table class="table overflow-auto" style="max-height: 10px">
         <h4>Customer<h4>
         <thead>
              <tr>
                 <th scope="col">#</th>
-                <th scope="col">Email</th>
                 <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Contact Number</th>
             </tr>
         </thead>
         <c:forEach items="${customerList}" var="Customer" varStatus="count">
             <tr>
                 <td>${Customer.ID}</td>
-                <td>${Customer.email}
                 <td>${Customer.firstName} ${Customer.lastName}</td>
+                <td>${Customer.email}</td>
+                <td>${Customer.contactNumber}</td>
+                
             </tr>
         </c:forEach>
     </table>
 
-    <table class="table">
+    <table class="table overflow-auto" style="max-height: 500px">
         <h4>Staff<h4>
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Email</th>
                 <th scope="col">Name</th>
-                <th scope="col">Account</th>
+                <th scope="col">Email</th>
+                <th scope="col">Contact Number</th>
+                <th scope="col">Staff-Admin</th>
             </tr>
             </thead>
         <c:forEach items="${staffList}" var="Staff" varStatus="count">
             <tr>
                 <td>${Staff.ID}</td>
-                <td>${Staff.email}
                 <td>${Staff.firstName} ${Staff.lastName}</td>
-                <td>Meant to Return isAdmin</td>
+                <td>${Staff.email}</td>
+                <td>${Staff.contactNumber}</td>
+                <td>${Staff.admin}</td>
             </tr>
         </c:forEach>
     </table>

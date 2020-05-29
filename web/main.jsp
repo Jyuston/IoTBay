@@ -39,7 +39,7 @@
         <a href="index.jsp">Home</a>
     </p>
     
-    <form action="/IoTBay/UserManagement" method="GET">
+    <form action="/IoTBay/UserManagementServlet" method="GET">
         <button class="btn btn-info" type="submit">User Management</button>
     </form>
     

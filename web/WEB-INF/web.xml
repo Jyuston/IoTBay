@@ -27,7 +27,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>UserManagementServlet</servlet-name>
-        <servlet-class>uts.isd.controller.usermanagement.UserManagementServlet</servlet-class>
+        <servlet-class>uts.isd.controller.user_management.UserManagementServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserManagementServlet</servlet-name>
