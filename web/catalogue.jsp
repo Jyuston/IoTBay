@@ -10,27 +10,33 @@
 
 <%
     LinkedList<Product> productList = (LinkedList<Product>) request.getAttribute("productList");
-    Product productsNC = (Product) request.getAttribute("productsNC");
+    Product searchedProduct = (Product) request.getAttribute("searchedProduct");
+
+    String errorCatalogue = (String) request.getAttribute("errorCatalogue");
 %>
 
 <h2> Search a Product </h2>
 <div class="container-fluid">
     <div class="row">
         <div class="form-group">
-            <table>
-                <tr>
-                    <td><input class="form-control-sm my-2 mr-1" id="productName" name="productName"
-                               placeholder="Product Name" required></td>
-                    <td><input class="form-control-sm" id="pCat" name="productCat" placeholder="Product Category"
-                               required></td>
-                </tr>
-                <tr>
+            <form action="CatalogueServlet" method="post">
+                <table>
+                    <tr>
+                        <td><input class="form-control-sm my-2 mr-1" id="name" name="name"
+                                   placeholder="Product Name" required></td>
+                        <td><input class="form-control-sm" id="pCat" name="category" placeholder="Product Category"
+                                   required></td>
+                    </tr>
+                    <tr>
 
-                    <td>
-                        <button type="button" class="btn btn-info btn-sm my-3" id="submit" name="submit">Search</button>
-                    </td>
-                </tr>
-            </table>
+                        <td>
+                            <button type="submit" class="btn btn-info btn-sm my-3" id="submit" name="submit">Search
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
         </div>
 
         <div class="col-md-auto mx-auto my-2 p-4 border border-light rounded">
@@ -84,16 +90,16 @@
                 </thead>
 
 
-                <c:forEach items="${productList}" var="Product" varStatus="count">
+                <c:forEach items="${productList}" var="product" varStatus="count">
                 <thead>
 
                 <tr>
-                    <td>${Product.ID}</td>
-                    <td>${Product.name}</td>
-                    <td>${Product.category}</td>
-                    <td>${Product.stock}</td>
-                    <td>${Product.description}</td>
-                    <td>${Product.price}</td>
+                    <td>${product.ID}</td>
+                    <td>${product.name}</td>
+                    <td>${product.category}</td>
+                    <td>${product.stock}</td>
+                    <td>${product.description}</td>
+                    <td>${product.price}</td>
 
 
                 </tr>

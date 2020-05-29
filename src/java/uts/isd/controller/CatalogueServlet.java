@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import uts.isd.model.Product;
 import uts.isd.model.dao.ProductDAO;
 
-public class ProductServlet extends HttpServlet {
+public class CatalogueServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
         try {
@@ -27,18 +27,21 @@ public class ProductServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
-        String name = request.getParameter("pName");
-        String category = request.getParameter("pCat");
+        String name = request.getParameter("name");
+        String category = request.getParameter("category");
 
         try {
-            // to generate list of products based on that name and type.
-            Product productsNC = ProductDAO.get(name, category);
+            Product searchedProduct = ProductDAO.get(name, category);
 
-            request.setAttribute("productsNC", productsNC);
+            if (searchedProduct == null)
+                throw new Error("No product found.");
 
-
+            request.setAttribute("searchedProduct", searchedProduct);
+        } catch (Error err) {
+            request.setAttribute("errorCatalogue", err.getMessage());
         } catch (SQLException err) {
             request.setAttribute("errorCatalogue", "Error accessing database.");
+            err.printStackTrace();
         } finally {
             request.getRequestDispatcher("/catalogue.jsp").include(request, response);
 

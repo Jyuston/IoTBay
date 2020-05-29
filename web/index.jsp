@@ -15,7 +15,7 @@
         To continue, please Login or Register below.
         <br/>
         <a href="login.jsp">Login</a> |
-        <a href="ProductServlet">Catalogue</a> |
+        <a href="CatalogueServlet">Catalogue</a> |
         <a href="register.jsp">Register</a>
     </p>
 </div>
