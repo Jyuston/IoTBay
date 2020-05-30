@@ -3,7 +3,7 @@ package uts.isd.model;
 import java.io.Serializable;
 
 public abstract class Account implements Serializable {
-    private Integer ID; // Must be Integer type since we new users to have a null ID
+    private Integer ID;
     private String firstName;
     private String lastName;
     private String email;
@@ -11,15 +11,7 @@ public abstract class Account implements Serializable {
     private String contactNumber;
     private boolean active;
 
-    Account(Integer ID, String firstName, String lastName, String email, String password, String contactNumber, boolean active) {
-        this.ID = ID;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.contactNumber = contactNumber;
-        this.active = active;
-    }
+    public Account() { }
 
     public Integer getID() { return ID; }
     public void setID(Integer ID) { this.ID = ID; }
