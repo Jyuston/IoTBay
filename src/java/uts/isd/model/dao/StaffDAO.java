@@ -26,12 +26,12 @@ public class StaffDAO {
         return createStaffObject(staffRs);
     }
 
-    public static Staff get(String accountID) throws SQLException {
+    public static Staff get(int accountID) throws SQLException {
         Statement st = dbConnection.createStatement();
         String getStaffDataQuery =
                 "SELECT * FROM ACCOUNTS A " +
                 "INNER JOIN STAFF S on A.ID = S.ID " +
-                "WHERE A.ID = '" + accountID + "'";
+                "WHERE A.ID ="+ accountID;
 
         ResultSet staffRs = st.executeQuery(getStaffDataQuery);
 

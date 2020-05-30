@@ -15,12 +15,6 @@
 <head>
     <title>User Management</title>
 </head>
-<%
-    List customerList = (List) request.getAttribute("customerList");
-    List staffList = (List) request.getAttribute("staffList");
-    Account resultAcc = (Account) request.getAttribute("resultAccount");
-    System.out.println(resultAcc.getEmail() + resultAcc.getFirstName() + resultAcc.getLastName());
-%>
 <h1 class="mb-4">User Management</h1>
 
 <h2> Search a User </h2>
@@ -43,17 +37,15 @@
             </form>
         </div>
         
-<%
-    if(resultAcc != null) {
-%>
+<c:if test="${not empty resultAccount}">
         <div class="col-md-auto mx-auto my-2 p-4 border border-light rounded">
-            <!--This will be updated by Servlet based on the Form-->  
+            <!--This will be updated by Servlet based on the Form--> 
             <table class="my-auto">
-                <tr colspan="3" class="py-1"><h4>${resultAcc.firstName} + ${resultAcc.lastName}</h4></th></tr>
-                <tr><td colspan="3" class="py-1">${resultAcc.class}</td></tr>
-                <tr><td colspan="3" class="py-1">${resultAcc.ID}</td></tr>
-                <tr><td colspan="3" class="py-1">${resultAcc.email}</td></tr>
-                <tr><td colspan="3" class="py-1">${resultAcc.active}</td></tr>
+                <tr colspan="3" class="py-1"><th><h4>${resultAccount.firstName} ${resultAccount.lastName}</h4></th></tr>
+                <tr><td colspan="3" class="py-1">Type: ${resultAccount.class.getSimpleName()}</td></tr>
+                <tr><td colspan="3" class="py-1"> ID: ${resultAccount.ID}</td></tr>
+                <tr><td colspan="3" class="py-1">Email: ${resultAccount.email}</td></tr>
+                <tr><td colspan="3" class="py-1">Active: ${resultAccount.active}</td></tr>
                 <tr>
                     <td><button class="btn btn-primary btn-sm my-2 mr-2">Activate</button></td>
                     <td><button class="btn btn-warning btn-sm my-2 mr-2">Deactivate</button></td>
@@ -63,7 +55,8 @@
                 <tr>
             </table>
         </div>  
-<%}%>
+</c:if>
+        
     </div>
 </div>
 

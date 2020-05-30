@@ -57,12 +57,11 @@ public class AccountDAO {
         ResultSet accountRs = st.executeQuery(getAccountDataQuery);
         if (!accountRs.next()) return null;
         
-        if ((accountRs.getString("ACCOUNT_TYPE").charAt(0)) == 'C'){
-            System.out.print(accountRs.getString("ID"));
+        if ((accountRs.getString("ACCOUNT_TYPE").charAt(0)) == 'C'){;
             return CustomerDAO.get(accountRs.getInt("ID"));
         } 
         else if ((accountRs.getString("ACCOUNT_TYPE").charAt(0)) == 'S'){
-            return StaffDAO.get(accountRs.getString("ID"));
+            return StaffDAO.get(accountRs.getInt("ID"));
         }
         
         return null;

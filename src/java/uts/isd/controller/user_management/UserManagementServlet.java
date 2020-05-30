@@ -36,7 +36,6 @@ public class UserManagementServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession(); 
             getTables(request);
-            //request.getAttribute in jsp
         } 
         
         catch(SQLException err) {
@@ -61,12 +60,16 @@ public class UserManagementServlet extends HttpServlet {
             HttpSession session = request.getSession(); 
             getTables(request);
             Account resultAccount = AccountDAO.getAccount(firstName, lastName, contactNumber);
+            if(resultAccount == null){throw new Error("No Account found.");}
             request.setAttribute("resultAccount", resultAccount);
         }
         
        catch(SQLException err) {
             request.setAttribute("errorUserManagement", "Error accessing database.");
         }
+       catch(Error err){
+           request.setAttribute("errorUserManagement", err.getMessage());
+       }
        
        finally {
            request.getRequestDispatcher("/user_management.jsp").include(request, response);
