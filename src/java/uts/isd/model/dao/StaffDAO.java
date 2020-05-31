@@ -14,7 +14,7 @@ public class StaffDAO {
                 "WHERE EMAIL LIKE ? AND PASSWORD LIKE ?";
 
         PreparedStatement st = DAOUtils.prepareStatement(getStaffQuery, false, email, password);
-        ResultSet staffRs = st.executeQuery(getStaffQuery);
+        ResultSet staffRs = st.executeQuery();
 
         if (!staffRs.next())
             throw new DAOException("No Staff found. Incorrect Email or Password.");

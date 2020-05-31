@@ -94,8 +94,8 @@ public class CustomerDAO {
                 "INSERT INTO PAYMENT_INFORMATION (CUSTOMER_ID, CARD_NUMBER, CVV_NUMBER, EXPIRY_MONTH, EXPIRY_YEAR) " +
                 "VALUES (?, null, null, null, null)";
 
-        Statement paymentInfoInsertSt = DAOUtils.prepareStatement(paymentInfoInsertQuery, false, newID);
-        rowsChanged = paymentInfoInsertSt.executeUpdate(paymentInfoInsertQuery);
+        PreparedStatement paymentInfoInsertSt = DAOUtils.prepareStatement(paymentInfoInsertQuery, false, newID);
+        rowsChanged = paymentInfoInsertSt.executeUpdate();
         if (rowsChanged == 0)
             throw new DAOException("Failed to add customer payment information. Please try again.");
     }
