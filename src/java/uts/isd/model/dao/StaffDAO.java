@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class StaffDAO {
-    public static Staff get(String email, String password) throws SQLException {
+    public static Staff get(String email, String password) throws SQLException, DAOException {
         String getStaffQuery =
                 "SELECT * FROM ACCOUNTS A " +
                 "INNER JOIN STAFF S on A.ID = S.ID " +
@@ -16,25 +16,23 @@ public class StaffDAO {
         PreparedStatement st = DAOUtils.prepareStatement(getStaffQuery, false, email, password);
         ResultSet staffRs = st.executeQuery(getStaffQuery);
 
-        // If no table rows, return null
         if (!staffRs.next())
-            return null;
+            throw new DAOException("No Staff found. Incorrect Email or Password.");
 
         return createStaffObject(staffRs);
     }
 
-    public static Staff get(String accountID) throws SQLException {
+    public static Staff get(int accountID) throws SQLException, DAOException {
         String getStaffDataQuery =
                 "SELECT * FROM ACCOUNTS A " +
                 "INNER JOIN STAFF S on A.ID = S.ID " +
                 "WHERE A.ID = ?";
 
         PreparedStatement st = DAOUtils.prepareStatement(getStaffDataQuery, false, accountID);
-        ResultSet staffRs = st.executeQuery(getStaffDataQuery);
+        ResultSet staffRs = st.executeQuery();
 
-        // If no table rows, return null
         if (!staffRs.next())
-            return null;
+            throw new DAOException("No Staff with that ID exists.");
 
         return createStaffObject(staffRs);
     }
@@ -47,7 +45,7 @@ public class StaffDAO {
                 "INNER JOIN STAFF S on A.ID = S.ID";
 
         PreparedStatement st = DAOUtils.prepareStatement(getUserIdQuery, false);
-        ResultSet customersRs = st.executeQuery(getUserIdQuery);
+        ResultSet customersRs = st.executeQuery();
 
         while (customersRs.next()) {
             customers.add(createStaffObject(customersRs));
@@ -56,7 +54,7 @@ public class StaffDAO {
         return customers;
     }
 
-    public static void save(Staff staff) throws SQLException {
+    public static void save(Staff staff) throws SQLException, DAOException {
         int newID = AccountDAO.save(staff);
 
         String staffInsertQuery = "INSERT INTO STAFF (ID, IS_ADMIN) VALUES (?, ?)";

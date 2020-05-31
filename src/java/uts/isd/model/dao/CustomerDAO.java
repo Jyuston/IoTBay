@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CustomerDAO {
-    public static Customer get(String email, String password) throws SQLException {
+    public static Customer get(String email, String password) throws SQLException, DAOException {
         String query =
                 "SELECT * FROM ACCOUNTS A " +
                 "INNER JOIN CUSTOMERS C on A.ID = C.ID " +
@@ -27,7 +27,7 @@ public class CustomerDAO {
         return createCustomerObject(customerRs);
     }
 
-    public static Customer get(int accountID) throws SQLException {
+    public static Customer get(int accountID) throws SQLException, DAOException {
         String getCustomerDataQuery =
                 "SELECT * FROM ACCOUNTS A " +
                 "INNER JOIN CUSTOMERS C on A.ID = C.ID " +
