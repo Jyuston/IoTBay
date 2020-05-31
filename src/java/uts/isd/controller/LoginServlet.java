@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import uts.isd.model.Account;
 import uts.isd.model.dao.AccountDAO;
 import uts.isd.model.dao.CustomerDAO;
+import uts.isd.model.dao.DAOException;
 import uts.isd.model.dao.StaffDAO;
 
 import javax.servlet.ServletException;
@@ -23,26 +24,22 @@ public class LoginServlet extends HttpServlet {
 
         // Try to log user in
         try {
-            Character accountType = AccountDAO.getAccountType(email, password);
-
-            // If no account found, set error message on request
-            // TODO change to proper Exception. NullPointer is not used in this scenario
-            if (accountType == null) throw new NullPointerException("Incorrect Username or Password.");
+            char accountType = AccountDAO.getAccountType(email, password);
 
             Account account = (accountType == 'C') ?
                     CustomerDAO.get(email, password) :
                     StaffDAO.get(email, password);
 
-            // Same as above
-            if (account == null) throw new NullPointerException("Incorrect Username or Password.");
-
             request.getSession().setAttribute("user", account);
-        } catch (NullPointerException err) {
+        }
+        catch (DAOException err) {
             request.setAttribute("errorLogin", err.getMessage());
-        } catch (SQLException err) {
+        }
+        catch (SQLException err) {
             request.setAttribute("errorLogin", "Error accessing database.");
             err.printStackTrace();
-        } finally {
+        }
+        finally {
             request.getRequestDispatcher("/login.jsp").include(request, response);
         }
     }
