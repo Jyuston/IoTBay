@@ -8,13 +8,6 @@
     <title>Search products from category</title>
 </head>
 
-<%
-    LinkedList<Product> productList = (LinkedList<Product>) request.getAttribute("productList");
-    Product searchedProduct = (Product) request.getAttribute("searchedProduct");
-
-    String errorCatalogue = (String) request.getAttribute("errorCatalogue");
-%>
-
 <h2> Search a Product </h2>
 <div class="container-fluid">
     <div class="row">
@@ -42,7 +35,7 @@
         <div class="col-md-auto mx-auto my-2 p-4 border border-light rounded">
             <!--This will be updated by Servlet based on the Form-->
             <table class="my-auto">
-                <tr colspan="3" class="py-1"><h4>Product name</h4></th></tr>
+                <tr colspan="3" class="py-1"><h4>Product name</h4></tr>
                 <tr>
                     <td colspan="3" class="py-1">product cat</td>
                 </tr>
@@ -75,39 +68,29 @@
 <h2> All Products </h2>
 <div class="my-3">
     <table class="table">
-        <h4>Product
-            <h4>
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Stock</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Price</th>
-
-                </tr>
-                </thead>
+        <h4>Product</h4>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+        </tr>
 
 
-                <c:forEach items="${productList}" var="product" varStatus="count">
-                <thead>
-
-                <tr>
-                    <td>${product.ID}</td>
-                    <td>${product.name}</td>
-                    <td>${product.category}</td>
-                    <td>${product.stock}</td>
-                    <td>${product.description}</td>
-                    <td>${product.price}</td>
-
-
-                </tr>
-                </c:forEach>
+        <c:forEach items="${productList}" var="product" varStatus="count">
+            <tr>
+                <td>${product.ID}</td>
+                <td>${product.name}</td>
+                <td>${product.category}</td>
+                <td>${product.stock}</td>
+                <td>${product.description}</td>
+                <td>${product.price}</td>
+            </tr>
+        </c:forEach>
     </table>
-
-
-    </thead>
+</div>
 
 
 <jsp:include page="templates/footer.jsp"/>

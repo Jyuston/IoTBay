@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import uts.isd.model.Product;
+import uts.isd.model.dao.DAOException;
 import uts.isd.model.dao.ProductDAO;
 
 public class CatalogueServlet extends HttpServlet {
@@ -17,10 +18,12 @@ public class CatalogueServlet extends HttpServlet {
         try {
             List<Product> productList = ProductDAO.getAll();
             request.setAttribute("productList", productList);
-        } catch (SQLException err) {
+        }
+        catch (SQLException err) {
             request.setAttribute("errorCatalogue", "Error accessing database.");
             err.printStackTrace();
-        } finally {
+        }
+        finally {
             request.getRequestDispatcher("/catalogue.jsp").include(request, response);
         }
     }
@@ -32,20 +35,17 @@ public class CatalogueServlet extends HttpServlet {
 
         try {
             Product searchedProduct = ProductDAO.get(name, category);
-
-            if (searchedProduct == null)
-                throw new Error("No product found.");
-
             request.setAttribute("searchedProduct", searchedProduct);
-        } catch (Error err) {
+        }
+        catch (DAOException err) {
             request.setAttribute("errorCatalogue", err.getMessage());
-        } catch (SQLException err) {
+        }
+        catch (SQLException err) {
             request.setAttribute("errorCatalogue", "Error accessing database.");
             err.printStackTrace();
-        } finally {
-            request.getRequestDispatcher("/catalogue.jsp").include(request, response);
-
         }
-
+        finally {
+            request.getRequestDispatcher("/catalogue.jsp").include(request, response);
+        }
     }
 }
