@@ -6,7 +6,7 @@ import java.sql.*;
 
 
 public class AccountDAO {
-    public static Character getAccountType(String email, String password) throws SQLException, DAOException {
+    public static char getAccountType(String email, String password) throws SQLException, DAOException {
         String accountTypeQuery =
                 "SELECT ACCOUNT_TYPE FROM ACCOUNTS " +
                 "WHERE EMAIL LIKE ? AND PASSWORD LIKE ?";

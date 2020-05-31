@@ -24,7 +24,7 @@ public class LoginServlet extends HttpServlet {
 
         // Try to log user in
         try {
-            Character accountType = AccountDAO.getAccountType(email, password);
+            char accountType = AccountDAO.getAccountType(email, password);
 
             Account account = (accountType == 'C') ?
                     CustomerDAO.get(email, password) :
