@@ -1,9 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="uts.isd.model.Customer" %>
-
-<%
-    Customer user = (Customer) session.getAttribute("user");
-%>
 
 <head>
     <title>Home</title>
@@ -18,7 +13,6 @@
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
             <th scope="col">Email</th>
-            <th scope="col">Address</th>
         </tr>
         </thead>
         <tbody>
@@ -26,7 +20,6 @@
             <td>${user.firstName}</td>
             <td>${user.lastName}</td>
             <td>${user.email}</td>
-            <td>${user.address}</td>
         </tr>
         </tbody>
     </table>

@@ -1,14 +1,13 @@
 package uts.isd.controller;
 
 import uts.isd.model.*;
-import uts.isd.model.dao.AccountDAO;
 import uts.isd.model.dao.CustomerDAO;
+import uts.isd.model.dao.DAOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -23,51 +22,50 @@ public class RegistrationServlet extends HttpServlet {
         String contactNumber = request.getParameter("contactNumber");
         String password = request.getParameter("password");
 
-        Address address = new Address(
-                request.getParameter("addressLine1"),
-                request.getParameter("addressLine2"),
-                request.getParameter("suburb"),
-                request.getParameter("postcode"),
-                request.getParameter("state")
-        );
+        // STILL NEED TO DO VALIDATION
 
-        PaymentInformation paymentInfo = new PaymentInformation(
-                request.getParameter("cardNumber"),
-                request.getParameter("cvvNumber"),
-                request.getParameter("expiryMonth"),
-                request.getParameter("expiryYear")
-        );
+        Address address = new Address();
+        address.setAddressLine1(request.getParameter("addressLine1"));
+        address.setAddressLine2(request.getParameter("addressLine1"));
+        address.setSuburb(request.getParameter("suburb"));
+        address.setPostcode(request.getParameter("postcode"));
+        address.setState(request.getParameter("state"));
 
-        // Try to log user in
-        // If any DAO method returns null, the NullPointerException catch will trigger
+        // Payment Info is set on purchase page.
+        PaymentInformation paymentInfo = new PaymentInformation();
+
+        LinkedList<Order> orders = new LinkedList<>();
+
+        // Create new Customer Object.
+        // The Account ID starts null and will be auto-generated and set in CustomerDAO.save()
+        Customer newCustomer = new Customer();
+        newCustomer.setFirstName(firstName);
+        newCustomer.setLastName(lastName);
+        newCustomer.setEmail(email);
+        newCustomer.setPassword(password);
+        newCustomer.setContactNumber(contactNumber);
+        newCustomer.setActive(true);
+        newCustomer.setAddress(address);
+        newCustomer.setPaymentInfo(paymentInfo);
+        newCustomer.setOrders(orders);
+        newCustomer.setAnonymous(false);
+
         try {
-            String newID = AccountDAO.getNextAvailableID();
-            LinkedList<Order> newOrderList = new LinkedList<>();
-            Customer newCustomer = new Customer(
-                    newID,
-                    firstName,
-                    lastName,
-                    email,
-                    password,
-                    contactNumber,
-                    address,
-                    paymentInfo,
-                    newOrderList,
-                    false
-            );
-
             // Write new customer to database
             CustomerDAO.save(newCustomer);
 
             // Log the customer in
             request.getSession().setAttribute("user", newCustomer);
-
-            // STILL NEED TO DO CHECKS
-
-        } catch (SQLException err) {
+            request.setAttribute("success", true);
+        }
+        catch (DAOException err) {
+            request.setAttribute("errorRegister", err.getMessage());
+        }
+        catch (SQLException err) {
             request.setAttribute("errorRegister", "Error accessing database.");
             err.printStackTrace();
-        } finally {
+        }
+        finally {
             request.getRequestDispatcher("/register.jsp").include(request, response);
         }
     }
