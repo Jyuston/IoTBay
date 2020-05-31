@@ -6,6 +6,16 @@ import java.sql.*;
 
 
 public class AccountDAO {
+    /**
+     * Used to determine the type of a specified account.
+     * Useful when trying to log the user in as either a Customer or Staff.
+     *
+     * @param email Email of Account
+     * @param password Password of Account
+     * @return Character representing the account type. Either 'C' or 'S'.
+     * @throws SQLException When db access cannot be established.
+     * @throws DAOException When account cannot be found.
+     */
     public static char getAccountType(String email, String password) throws SQLException, DAOException {
         String accountTypeQuery =
                 "SELECT ACCOUNT_TYPE FROM ACCOUNTS " +
@@ -24,7 +34,14 @@ public class AccountDAO {
     }
 
     /**
-     * @return Auto-generated ID of new Account
+     * Saves Account information to the database, creating a new row.
+     * Returns the auto-generated primary key ID of the new account.
+     * Use a try catch with DAOException to catch and display errors to the user.
+     *
+     * @param account The Account to save to the database.
+     * @return The auto-generated ID of the new account.
+     * @throws SQLException When db access cannot be established.
+     * @throws DAOException When account creation fails.
      */
     public static int save(Account account) throws SQLException, DAOException {
         String query =

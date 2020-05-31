@@ -10,8 +10,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CustomerDAO {
-    public static final Connection dbConnection = DBConnector.getConnection();
-
     public static Customer get(String email, String password) throws SQLException {
         String query =
                 "SELECT * FROM ACCOUNTS A " +
@@ -19,10 +17,7 @@ public class CustomerDAO {
                 "INNER JOIN PAYMENT_INFORMATION PI on C.ID = PI.CUSTOMER_ID " +
                 "WHERE A.EMAIL LIKE ? AND A.PASSWORD LIKE ?";
 
-        PreparedStatement st = DAOUtils.prepareStatement(query, false,
-                email, password
-        );
-
+        PreparedStatement st = DAOUtils.prepareStatement(query, false, email, password);
         ResultSet customerRs = st.executeQuery();
 
         // If no table rows, return null
@@ -33,14 +28,14 @@ public class CustomerDAO {
     }
 
     public static Customer get(int accountID) throws SQLException {
-        Statement st = dbConnection.createStatement();
         String getCustomerDataQuery =
                 "SELECT * FROM ACCOUNTS A " +
                 "INNER JOIN CUSTOMERS C on A.ID = C.ID " +
                 "INNER JOIN PAYMENT_INFORMATION PI on C.ID = PI.CUSTOMER_ID " +
-                "WHERE C.ID = " + accountID;
+                "WHERE C.ID = ?";
 
-        ResultSet customerRs = st.executeQuery(getCustomerDataQuery);
+        PreparedStatement getCustomerDataSt = DAOUtils.prepareStatement(getCustomerDataQuery, false, accountID);
+        ResultSet customerRs = getCustomerDataSt.executeQuery();
 
         // If no table rows, return null
         if (!customerRs.next())
@@ -52,13 +47,13 @@ public class CustomerDAO {
     public static List<Customer> getAll() throws SQLException {
         LinkedList<Customer> customers = new LinkedList<>();
 
-        Statement st = dbConnection.createStatement();
-        String getUserIdQuery =
+        String getAllUsersQuery =
                 "SELECT * FROM ACCOUNTS A " +
                 "INNER JOIN CUSTOMERS C on A.ID = C.ID " +
                 "INNER JOIN PAYMENT_INFORMATION PI on C.ID = PI.CUSTOMER_ID";
 
-        ResultSet customersRs = st.executeQuery(getUserIdQuery);
+        PreparedStatement getAllUsersSt = DAOUtils.prepareStatement(getAllUsersQuery, false);
+        ResultSet customersRs = getAllUsersSt.executeQuery();
 
         while (customersRs.next()) {
             customers.add(createCustomerObject(customersRs));
@@ -99,11 +94,8 @@ public class CustomerDAO {
                 "INSERT INTO PAYMENT_INFORMATION (CUSTOMER_ID, CARD_NUMBER, CVV_NUMBER, EXPIRY_MONTH, EXPIRY_YEAR) " +
                 "VALUES (?, null, null, null, null)";
 
-        PreparedStatement paymentInfoInsertSt = DAOUtils.prepareStatement(paymentInfoInsertQuery, false,
-                newID
-        );
-
-        rowsChanged = paymentInfoInsertSt.executeUpdate();
+        Statement paymentInfoInsertSt = DAOUtils.prepareStatement(paymentInfoInsertQuery, false, newID);
+        rowsChanged = paymentInfoInsertSt.executeUpdate(paymentInfoInsertQuery);
         if (rowsChanged == 0)
             throw new DAOException("Failed to add customer payment information. Please try again.");
     }

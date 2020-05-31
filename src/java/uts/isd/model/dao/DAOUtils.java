@@ -3,7 +3,7 @@ package uts.isd.model.dao;
 import java.sql.*;
 
 public class DAOUtils {
-    public static Connection dbConnection = DBConnector.getConnection();
+    private static final Connection dbConnection = DBConnector.getConnection();
 
     /**
      * Returns a PreparedStatement of the given connection, set with the given SQL query and the
