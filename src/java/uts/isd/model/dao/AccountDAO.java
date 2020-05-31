@@ -21,10 +21,7 @@ public class AccountDAO {
                 "SELECT ACCOUNT_TYPE FROM ACCOUNTS " +
                 "WHERE EMAIL LIKE ? AND PASSWORD LIKE ?";
 
-        PreparedStatement accountTypeSt = DAOUtils.prepareStatement(accountTypeQuery, false,
-                email, password
-        );
-
+        PreparedStatement accountTypeSt = DAOUtils.prepareStatement(accountTypeQuery, false, email, password);
         ResultSet accountTypeRs = accountTypeSt.executeQuery();
 
         if (!accountTypeRs.next())
