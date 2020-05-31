@@ -26,7 +26,7 @@ public class AccountDAO {
     /**
      * @return Auto-generated ID of new Account
      */
-    public static Integer save(Account account) throws SQLException, DAOException {
+    public static int save(Account account) throws SQLException, DAOException {
         String query =
                 "INSERT INTO ACCOUNTS (EMAIL, F_NAME, L_NAME, CONTACT_NUMBER, ACCOUNT_TYPE, PASSWORD, IS_ACTIVE) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";

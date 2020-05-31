@@ -3,7 +3,7 @@ package uts.isd.model;
 import java.io.Serializable;
 
 public abstract class Account implements Serializable {
-    private Integer ID;
+    private int ID;
     private String firstName;
     private String lastName;
     private String email;
@@ -13,8 +13,8 @@ public abstract class Account implements Serializable {
 
     public Account() { }
 
-    public Integer getID() { return ID; }
-    public void setID(Integer ID) { this.ID = ID; }
+    public int getID() { return ID; }
+    public void setID(int ID) { this.ID = ID; }
 
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }

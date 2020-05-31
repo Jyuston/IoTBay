@@ -133,19 +133,19 @@ public class CustomerDAO {
         // THIS SHOULD GET THE CUSTOMERS ORDERS FROM RESULT SET, NOT MAKE A EMPTY LIST
         LinkedList<Order> customerOrders = new LinkedList<>();
 
-        Customer newCustomer = new Customer();
-        newCustomer.setID(customerRs.getInt("ID"));
-        newCustomer.setFirstName(customerRs.getString("F_NAME"));
-        newCustomer.setLastName(customerRs.getString("L_NAME"));
-        newCustomer.setEmail(customerRs.getString("EMAIL"));
-        newCustomer.setPassword(customerRs.getString("PASSWORD"));
-        newCustomer.setContactNumber(customerRs.getString("CONTACT_NUMBER"));
-        newCustomer.setActive(customerRs.getBoolean("IS_ACTIVE"));
-        newCustomer.setAddress(address);
-        newCustomer.setPaymentInfo(paymentInfo);
-        newCustomer.setOrders(customerOrders);
-        newCustomer.setAnonymous(customerRs.getBoolean("IS_ANONYMOUS"));
+        Customer customer = new Customer();
+        customer.setID(customerRs.getInt("ID"));
+        customer.setFirstName(customerRs.getString("F_NAME"));
+        customer.setLastName(customerRs.getString("L_NAME"));
+        customer.setEmail(customerRs.getString("EMAIL"));
+        customer.setPassword(customerRs.getString("PASSWORD"));
+        customer.setContactNumber(customerRs.getString("CONTACT_NUMBER"));
+        customer.setActive(customerRs.getBoolean("IS_ACTIVE"));
+        customer.setAddress(address);
+        customer.setPaymentInfo(paymentInfo);
+        customer.setOrders(customerOrders);
+        customer.setAnonymous(customerRs.getBoolean("IS_ANONYMOUS"));
 
-        return newCustomer;
+        return customer;
     }
 }

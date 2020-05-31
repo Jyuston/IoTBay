@@ -78,16 +78,11 @@ public class StaffDAO {
     }
 
     // Helpers
-    private static Staff createStaffObject(ResultSet customerRs) throws SQLException {
-        return new Staff(
-                customerRs.getInt("ID"),
-                customerRs.getString("F_NAME"),
-                customerRs.getString("L_NAME"),
-                customerRs.getString("EMAIL"),
-                customerRs.getString("PASSWORD"),
-                customerRs.getString("CONTACT_NUMBER"),
-                customerRs.getBoolean("IS_ACTIVE"),
-                customerRs.getBoolean("IS_ADMIN")
-        );
+    private static Staff createStaffObject(ResultSet staffRs) throws SQLException {
+        Staff staff = new Staff();
+
+        staff.setAdmin(staffRs.getBoolean("IS_ADMIN"));
+
+        return staff;
     }
 }
