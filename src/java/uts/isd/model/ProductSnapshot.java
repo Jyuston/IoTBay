@@ -8,12 +8,7 @@ public class ProductSnapshot implements Serializable {
     private double unitPrice;
     private int quantityOrdered;
 
-    public ProductSnapshot(Product current, double purchasedPrice, double unitPrice, int quantityOrdered) {
-        this.current = current;
-        this.purchasedPrice = purchasedPrice;
-        this.unitPrice = unitPrice;
-        this.quantityOrdered = quantityOrdered;
-    }
+    public ProductSnapshot() { }
 
     public Product getCurrent() { return current; }
     public void setCurrent(Product current) { this.current = current; }

@@ -8,13 +8,7 @@ public class Customer extends Account {
     private LinkedList<Order> orders;
     private boolean anonymous;
 
-    public Customer(Integer ID, String firstName, String lastName, String email, String password, String contactNumber, boolean active, Address address, PaymentInformation paymentInfo, LinkedList<Order> orders, boolean anonymous) {
-        super(ID, firstName, lastName, email, password, contactNumber, active);
-        this.address = address;
-        this.paymentInfo = paymentInfo;
-        this.orders = orders;
-        this.anonymous = anonymous;
-    }
+    public Customer() { }
 
     public Address getAddress() { return address; }
     public void setAddress(Address address) { this.address = address; }
