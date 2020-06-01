@@ -18,6 +18,7 @@
     <%! String buttonText; %>
     <%! String action; %>
     <%! Boolean modifyingReport; %>
+
     <%
         if (request.getAttribute("editReport") != null && request.getAttribute("editReport").equals("yes")) {
             Report report = (Report)session.getAttribute("report");

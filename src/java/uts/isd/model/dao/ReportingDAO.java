@@ -13,15 +13,10 @@ import java.util.*;
 public class ReportingDAO {
     public static final Connection dbConnection = DBConnector.getConnection();
 
-    public static ArrayList<OrderLineItem> totalSales(String beginTimeStamp, String endTimeStamp) throws SQLException {
+    public static ArrayList<OrderLineItem> totalSales(String beginTimeStamp, String endTimeStamp) throws SQLException, DAOException {
         // Set up the inital SQL query hre
         Statement st = dbConnection.createStatement();
-        /*
-        String query = ("SELECT ORDER_LINE.PRODUCT_ID, NAME, CATEGORY, QUANTITY_ORDERED, ORDER_LINE.PRICE, SHIPPING_ADDRESS " +
-            "FROM ORDERS inner join ORDER_LINE on ORDERS.ORDER_ID = ORDER_LINE.ORDER_ID " +
-            "inner join PRODUCTS on ORDER_LINE.PRODUCT_ID = PRODUCTS.PRODUCT_ID " +
-            "WHERE ORDERS.ORDERED_ON > '" + beginTimeStamp + "' AND ORDERS.ORDERED_ON < '" + endTimeStamp + "'");
-        */
+
         String query = 
             "SELECT ORDER_LINE.PRODUCT_ID, NAME, CATEGORY, QUANTITY_ORDERED, ORDER_LINE.PRICE, SHIPPING_ADDRESS " +
             "FROM ORDERS " +
@@ -33,6 +28,10 @@ public class ReportingDAO {
         ResultSet queryResult = st.executeQuery(query);
 
         ArrayList<OrderLineItem> queryResultsStructured = new ArrayList<OrderLineItem>();
+
+        if (!queryResult.next()) {
+            throw new DAOException("No sales occured during the selected period. Please select a different time period and try again.");
+        }
         
         while (queryResult.next()) {
             OrderLineItem record = new OrderLineItem(queryResult.getString(1), queryResult.getString(2), queryResult.getString(3), queryResult.getInt(4), queryResult.getDouble(5), queryResult.getString(6));            
@@ -192,7 +191,7 @@ public class ReportingDAO {
     }
 
     // Update
-    public static void update(Report r, String originalName) throws SQLException {
+    public static void update(Report r, String originalName) throws SQLException, DAOException {
         Statement st = dbConnection.createStatement();
 
         String query = 
@@ -200,16 +199,24 @@ public class ReportingDAO {
             "', START_DATE = '" + r.getStartDate() + " 00:00:00', END_DATE = '" + r.getEndDate() + " 23:59:59' " +
             "WHERE NAME = '" + originalName + "'";
 
-        st.executeUpdate(query);
+        int rowsChanged = st.executeUpdate(query);
+
+        if (rowsChanged == 0) {
+            throw new DAOException("Report update failed. DAO error.");
+        }
     }
 
     // Delete
-    public static void delete(Report r) throws SQLException {
+    public static void delete(Report r) throws SQLException, DAOException {
         Statement st = dbConnection.createStatement();
 
         String query = "DELETE FROM REPORTS WHERE NAME = '" + r.getName() + "'";
 
-        st.executeUpdate(query);
+        int rowsChanged = st.executeUpdate(query);
+
+        if (rowsChanged == 0) {
+            throw new DAOException("Report deletion failed. DAO error.");
+        }
     }
 
     // Helper Methods

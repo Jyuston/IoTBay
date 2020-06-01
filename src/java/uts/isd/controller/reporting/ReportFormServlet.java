@@ -6,11 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import uts.isd.model.dao.DAOException;
 import uts.isd.model.dao.ReportingDAO;
 import uts.isd.model.reporting.Report;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ReportFormServlet extends HttpServlet {   
@@ -24,10 +26,11 @@ public class ReportFormServlet extends HttpServlet {
             request.getRequestDispatcher("reportForm.jsp").include(request, response);
         } 
         
-        catch (Throwable exception) {
-            //TODO: handle exception
-            System.out.println(exception);
+        catch (SQLException e) {
+            request.setAttribute("error", e.getMessage());
+            request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
         }
+
     }
 
     @Override
@@ -47,8 +50,25 @@ public class ReportFormServlet extends HttpServlet {
                 response.sendRedirect("ReportingServlet");
             }
 
-            catch (Throwable exception) {
-                // handle
+            // Catches a DAO Exception
+            catch (DAOException e) {
+                request.setAttribute("error", e.getMessage());
+
+                // Clear the report from the session if still exists
+                session.removeAttribute("report");
+
+                // Redirects to error page to display error message to user
+                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+            }
+
+            catch (SQLException e) {
+                request.setAttribute("error", e.getMessage());
+
+                // Clear the report from the session if still exists
+                session.removeAttribute("report");
+
+                // Redirects to error page to display error message to user
+                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
             }
         }
 
@@ -57,9 +77,7 @@ public class ReportFormServlet extends HttpServlet {
             // validate (check the dates)
             // create new report
             String reportName = (String)request.getParameter("reportName");
-            String description = (String)request.getParameter("reportDescription");
-            String startDate = (String)request.getParameter("startDate");
-            String endDate = (String)request.getParameter("endDate");
+
             // save the report
             try {
                 // Create a skeleton report (temp)
@@ -68,9 +86,9 @@ public class ReportFormServlet extends HttpServlet {
 
                 // Create the record in the database
                 report.setReportName(reportName);
-                report.setDescription(description);
-                report.setReportStartDate(startDate);
-                report.setReportEndDate(endDate);
+                report.setDescription((String)request.getParameter("reportDescription"));
+                report.setReportStartDate((String)request.getParameter("startDate"));
+                report.setReportEndDate((String)request.getParameter("endDate"));
 
                 // Update the report
                 ReportingDAO.update(report, originalName);
@@ -84,10 +102,24 @@ public class ReportFormServlet extends HttpServlet {
                 response.sendRedirect("reporting/reportView.jsp");
             }
 
-            catch (Throwable exception) {
-                //TODO: handle exception
-                System.out.println(exception);
-            }            
+            // Catches a DAO Exception
+            catch (DAOException e) {
+                request.setAttribute("error", e.getMessage());
+                session.removeAttribute("editReport");
+                session.removeAttribute("report");
+                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+            }
+            
+            // Catches an SQL Exception
+            catch (SQLException e) {
+                // Clean up the session
+                request.setAttribute("error", e.getMessage());
+                session.removeAttribute("editReport");
+                session.removeAttribute("report");
+
+                // Redirect to error page and display message
+                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+            }
         }
     }
 }

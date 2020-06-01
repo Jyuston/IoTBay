@@ -6,11 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import uts.isd.model.dao.DAOException;
 import uts.isd.model.dao.ReportingDAO;
 import uts.isd.model.reporting.Report;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ReportingServlet extends HttpServlet {   
@@ -25,9 +27,14 @@ public class ReportingServlet extends HttpServlet {
             request.getRequestDispatcher("reporting.jsp").include(request, response);
         } 
         
-        catch (Throwable exception) {
-            //TODO: handle exception
-            System.out.println(exception);
+        catch (DAOException e) {
+            request.setAttribute("error", e.getMessage());
+            request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+        }
+        
+        catch (SQLException e) {
+            request.setAttribute("error", e.getMessage());
+            request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
         }
     }
     
@@ -59,9 +66,14 @@ public class ReportingServlet extends HttpServlet {
                 response.sendRedirect("reporting/reportView.jsp");
             }
 
-            catch (Throwable exception) {
-                //TODO: handle exception
-                System.out.println(exception);
+            catch (DAOException e) {
+                request.setAttribute("error", e.getMessage());
+                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+            }
+            
+            catch (SQLException e) {
+                request.setAttribute("error", e.getMessage());
+                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
             }
             
         }
@@ -80,8 +92,14 @@ public class ReportingServlet extends HttpServlet {
                 request.getRequestDispatcher("reporting.jsp").include(request, response);         
             }
 
-            catch (Exception e) {
-                // handle
+            catch (DAOException e) {
+                request.setAttribute("error", e.getMessage());
+                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+            }
+            
+            catch (SQLException e) {
+                request.setAttribute("error", e.getMessage());
+                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
             }
             
         }
@@ -101,9 +119,14 @@ public class ReportingServlet extends HttpServlet {
                     response.sendRedirect("reporting/reportView.jsp");          
                 } 
                 
-                catch (Throwable exception) {
-                    //TODO: handle exception
-                    System.out.println(exception);
+                catch (DAOException e) {
+                    request.setAttribute("error", e.getMessage());
+                    request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+                }
+                
+                catch (SQLException e) {
+                    request.setAttribute("error", e.getMessage());
+                    request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
                 }
             }
 
@@ -120,10 +143,15 @@ public class ReportingServlet extends HttpServlet {
                     response.sendRedirect("reporting/stockReport.jsp");
                 }
 
-                catch (Exception e) {
-                    // handle exception
+                catch (DAOException e) {
+                    request.setAttribute("error", e.getMessage());
+                    request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
                 }
                 
+                catch (SQLException e) {
+                    request.setAttribute("error", e.getMessage());
+                    request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+                }
             }
             
         }
