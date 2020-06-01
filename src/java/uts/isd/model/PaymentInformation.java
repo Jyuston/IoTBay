@@ -8,12 +8,7 @@ public class PaymentInformation implements Serializable {
     private String expiryMonth;
     private String expiryYear;
 
-    public PaymentInformation(String cardNumber, String cvvNumber, String expiryMonth, String expiryYear) {
-        this.cardNumber = cardNumber;
-        this.cvvNumber = cvvNumber;
-        this.expiryMonth = expiryMonth;
-        this.expiryYear = expiryYear;
-    }
+    public PaymentInformation() { }
 
     public String getCardNumber() { return cardNumber; }
     public void setCardNumber(String cardNumber) { this.cardNumber = cardNumber; }

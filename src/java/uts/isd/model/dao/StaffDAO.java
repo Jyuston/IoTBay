@@ -7,37 +7,32 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class StaffDAO {
-    public static final Connection dbConnection = DBConnector.getConnection();
-
-    public static Staff get(String email, String password) throws SQLException {
-        Statement st = dbConnection.createStatement();
+    public static Staff get(String email, String password) throws SQLException, DAOException {
         String getStaffQuery =
                 "SELECT * FROM ACCOUNTS A " +
                 "INNER JOIN STAFF S on A.ID = S.ID " +
-                "WHERE EMAIL LIKE '" + email + "' " +
-                "AND PASSWORD LIKE '" + password + "'";
+                "WHERE EMAIL LIKE ? AND PASSWORD LIKE ?";
 
-        ResultSet staffRs = st.executeQuery(getStaffQuery);
+        PreparedStatement st = DAOUtils.prepareStatement(getStaffQuery, false, email, password);
+        ResultSet staffRs = st.executeQuery();
 
-        // If no table rows, return null
         if (!staffRs.next())
-            return null;
+            throw new DAOException("No Staff found. Incorrect Email or Password.");
 
         return createStaffObject(staffRs);
     }
 
-    public static Staff get(int accountID) throws SQLException {
-        Statement st = dbConnection.createStatement();
+    public static Staff get(int accountID) throws SQLException, DAOException {
         String getStaffDataQuery =
                 "SELECT * FROM ACCOUNTS A " +
                 "INNER JOIN STAFF S on A.ID = S.ID " +
-                "WHERE A.ID ="+ accountID;
+                "WHERE A.ID = ?";
 
-        ResultSet staffRs = st.executeQuery(getStaffDataQuery);
+        PreparedStatement st = DAOUtils.prepareStatement(getStaffDataQuery, false, accountID);
+        ResultSet staffRs = st.executeQuery();
 
-        // If no table rows, return null
         if (!staffRs.next())
-            return null;
+            throw new DAOException("No Staff with that ID exists.");
 
         return createStaffObject(staffRs);
     }
@@ -45,12 +40,12 @@ public class StaffDAO {
     public static List<Staff> getAll() throws SQLException {
         LinkedList<Staff> customers = new LinkedList<>();
 
-        Statement st = dbConnection.createStatement();
         String getUserIdQuery =
                 "SELECT * FROM ACCOUNTS A " +
                 "INNER JOIN STAFF S on A.ID = S.ID";
 
-        ResultSet customersRs = st.executeQuery(getUserIdQuery);
+        PreparedStatement st = DAOUtils.prepareStatement(getUserIdQuery, false);
+        ResultSet customersRs = st.executeQuery();
 
         while (customersRs.next()) {
             customers.add(createStaffObject(customersRs));
@@ -59,35 +54,35 @@ public class StaffDAO {
         return customers;
     }
 
-    public static void save(Staff staff) throws SQLException {
+    public static void save(Staff staff) throws SQLException, DAOException {
         int newID = AccountDAO.save(staff);
 
-        PreparedStatement staffInsertSt = dbConnection.prepareStatement(
-                "INSERT INTO STAFF (ID, IS_ADMIN) " +
-                "VALUES (?, ?)"
-        );
-        staffInsertSt.setInt(1, newID);
-        staffInsertSt.setBoolean(2, staff.isAdmin());
-        staffInsertSt.executeUpdate();
+        String staffInsertQuery = "INSERT INTO STAFF (ID, IS_ADMIN) VALUES (?, ?)";
+        PreparedStatement staffInsertSt = DAOUtils.prepareStatement(staffInsertQuery, false, newID, staff.isAdmin());
+
+        int rowsChanged = staffInsertSt.executeUpdate();
+        if (rowsChanged == 0)
+            throw new DAOException("Failed to create staff profile. Please try again.");
     }
 
     public static void update(Staff customer, String[] params) {
     }
 
-    public static void delete(Staff customer) throws SQLException {
+    public static void delete(Staff customer) {
     }
 
     // Helpers
-    private static Staff createStaffObject(ResultSet customerRs) throws SQLException {
-        return new Staff(
-                customerRs.getInt("ID"),
-                customerRs.getString("F_NAME"),
-                customerRs.getString("L_NAME"),
-                customerRs.getString("EMAIL"),
-                customerRs.getString("PASSWORD"),
-                customerRs.getString("CONTACT_NUMBER"),
-                customerRs.getBoolean("IS_ACTIVE"),
-                customerRs.getBoolean("IS_ADMIN")
-        );
+    private static Staff createStaffObject(ResultSet staffRs) throws SQLException {
+        Staff staff = new Staff();
+        staff.setID(staffRs.getInt("ID"));
+        staff.setFirstName(staffRs.getString("F_NAME"));
+        staff.setLastName(staffRs.getString("L_NAME"));
+        staff.setEmail(staffRs.getString("EMAIL"));
+        staff.setPassword(staffRs.getString("PASSWORD"));
+        staff.setContactNumber(staffRs.getString("CONTACT_NUMBER"));
+        staff.setActive(staffRs.getBoolean("IS_ACTIVE"));
+        staff.setAdmin(staffRs.getBoolean("IS_ADMIN"));
+
+        return staff;
     }
 }

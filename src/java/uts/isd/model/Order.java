@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.util.LinkedList;
 
 public class Order implements Serializable {
-    private Integer ID;
+    private int ID;
     private Customer customer;
     private LinkedList<ProductSnapshot> orderedProducts;
     private Date orderedOn;
@@ -14,19 +14,10 @@ public class Order implements Serializable {
     private String status;
     private String shippingAddress;
 
-    public Order(Integer ID, Customer customer, LinkedList<ProductSnapshot> orderedProducts, Date orderedOn, int total, String trackingID, String status, String shippingAddress) {
-        this.ID = ID;
-        this.customer = customer;
-        this.orderedProducts = orderedProducts;
-        this.orderedOn = orderedOn;
-        this.total = total;
-        this.trackingID = trackingID;
-        this.status = status;
-        this.shippingAddress = shippingAddress;
-    }
+    public Order() { }
 
-    public Integer getID() { return ID; }
-    public void setID(Integer ID) { this.ID = ID; }
+    public int getID() { return ID; }
+    public void setID(int ID) { this.ID = ID; }
 
     public Customer getCustomer() { return customer; }
     public void setCustomer(Customer customer) { this.customer = customer; }

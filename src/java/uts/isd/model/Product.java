@@ -3,24 +3,17 @@ package uts.isd.model;
 import java.io.Serializable;
 
 public class Product implements Serializable {
-    private Integer ID;
+    private int ID;
     private String name;
     private  String category;
     private int stock;
     private double price;
     private boolean archived;
 
-    public Product(Integer ID, String name, String category, int stock, double price, boolean archived) {
-        this.ID = ID;
-        this.name = name;
-        this.category = category;
-        this.stock = stock;
-        this.price = price;
-        this.archived = archived;
-    }
+    public Product() { }
 
-    public Integer getID() { return ID; }
-    public void setID(Integer ID) { this.ID = ID; }
+    public int getID() { return ID; }
+    public void setID(int ID) { this.ID = ID; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }

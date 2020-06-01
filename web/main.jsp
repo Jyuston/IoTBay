@@ -1,11 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="uts.isd.model.Account"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="uts.isd.model.Customer" %>
-
-<%
-    Account user = (Account) session.getAttribute("user");
-%>
 
 <head>
     <title>Home</title>
@@ -28,8 +22,8 @@
             <td>${user.firstName}</td>
             <td>${user.lastName}</td>
             <td>${user.email}</td>
-            <c:if test="{user.accountType =='C'}">
-            <td>${user.address}</td>
+            <c:if test="${user.isCustomer()}">
+                <td>${user.address}</td>
             </c:if>
         </tr>
         </tbody>
@@ -43,7 +37,7 @@
         <a href="index.jsp">Home</a>
     </p>
     
-    <c:if test="${user.accountType =='S' && user.admin}">
+    <c:if test="${user.isStaff() && user.admin}">
         <form action="/IoTBay/UserManagementServlet" method="GET">
             <button class="btn btn-info" type="submit">User Management</button>
         </form>
