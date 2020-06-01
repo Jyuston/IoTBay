@@ -40,47 +40,43 @@
         }
     %>
     <body>
-        <% if (modifyingReport) { %>
             <form method="post" action="/IoTBay/ReportFormServlet">
-        <% } else {%>
-            <form method="post" action="/IoTBay/ReportingServlet">
-        <% } %>
-            <div class="form-row">                                                                         
-                <div class="form-group col-md-6">                                           
-                    <label>Report Name</label>
-                    <input class="form-control" type="text" name="reportName" value="${modifyingReport eq 'true' ? report.name : ''}" required">
+                <div class="form-row">                                                                         
+                    <div class="form-group col-md-6">                                           
+                        <label>Report Name</label>
+                        <input class="form-control" type="text" name="reportName" value="${modifyingReport eq 'true' ? report.name : ''}" required">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label>Report Description</label> 
+                        <input class="form-control" type="text" name="reportDescription" value="${modifyingReport eq 'true' ? report.description : ''}" required">
+                    </div>
                 </div>
 
-                <div class="form-group col-md-6">
-                    <label>Report Description</label> 
-                    <input class="form-control" type="text" name="reportDescription" value="${modifyingReport eq 'true' ? report.description : ''}" required">
-                </div>
-            </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">                                           
+                        <label>Report Start Date</label>
+                        <input class="form-control" type="date" name="startDate" value=${modifyingReport eq 'true' ? report.startDate : ''} required">
+                    </div>
 
-            <div class="form-row">
-                <div class="form-group col-md-6">                                           
-                    <label>Report Start Date</label>
-                    <input class="form-control" type="date" name="startDate" value=${modifyingReport eq 'true' ? report.startDate : ''} required">
+                    <div class="form-group col-md-6">
+                        <label>Report End Date</label> 
+                        <input class="form-control" type="date" name="endDate" value=${modifyingReport eq 'true' ? report.endDate : ''} required">
+                    </div>
                 </div>
-
-                <div class="form-group col-md-6">
-                    <label>Report End Date</label> 
-                    <input class="form-control" type="date" name="endDate" value=${modifyingReport eq 'true' ? report.endDate : ''} required">
-                </div>
-            </div>
-            <input class="form-control" type="hidden" name="<%=action%>" value="yes">
-            <%
-                if (modifyingReport) {                                    
-            %>
-                    <input type="submit" class="btn btn-success" value="Update Report"></a>
-                    <a class="btn btn-warning" href="/IoTBay/reporting/reportView.jsp">Cancel</a>                                                      
-            <%
-                } else {
-            %>
-                    <input type="submit" class="btn btn-primary btn-lg btn-block" value="<% out.println(buttonText); %>"></a>
-            <%
-                }
-            %>
+                <input class="form-control" type="hidden" name="<%=action%>" value="yes">
+                <%
+                    if (modifyingReport) {                                    
+                %>
+                        <input type="submit" class="btn btn-success" value="Update Report"></a>
+                        <a class="btn btn-warning" href="/IoTBay/reporting/reportView.jsp">Cancel</a>                                                      
+                <%
+                    } else {
+                %>
+                        <input type="submit" class="btn btn-primary btn-lg btn-block" value="<% out.println(buttonText); %>"></a>
+                <%
+                    }
+                %>
         </form>
         
         <br>

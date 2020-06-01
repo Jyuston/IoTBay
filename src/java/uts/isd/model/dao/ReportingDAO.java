@@ -2,10 +2,7 @@ package uts.isd.model.dao;
 
 import uts.isd.model.reporting.ProductSummary;
 import uts.isd.model.reporting.Report;
-import uts.isd.model.reporting.SalesAnalyser;
 import uts.isd.model.reporting.OrderLineItem;
-import uts.isd.model.Customer;
-import uts.isd.model.ProductSnapshot;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -33,8 +30,9 @@ public class ReportingDAO {
 
         while (queryResult.next()) {
             OrderLineItem record = new OrderLineItem(queryResult.getString(1), queryResult.getString(2),
-                    queryResult.getString(3), queryResult.getInt(4), queryResult.getDouble(5),
-                    queryResult.getString(6));
+                queryResult.getString(3), queryResult.getInt(4), queryResult.getDouble(5),
+                queryResult.getString(6));
+                
             queryResultsStructured.add(record);
         }
 
@@ -76,7 +74,8 @@ public class ReportingDAO {
 
         while (queryResult.next()) {
             ProductSummary snapshot = new ProductSummary(queryResult.getString(1), queryResult.getString(2),
-                    queryResult.getString(3), queryResult.getInt(4), queryResult.getDouble(5));
+                queryResult.getString(3), queryResult.getInt(4), queryResult.getDouble(5));
+            
             snapshots.add(snapshot);
         }
 
@@ -134,27 +133,23 @@ public class ReportingDAO {
     }
 
     // Create
-    public static void save(Report r) throws SQLException, ParseException {
-        Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(r.getStartDate());
-        Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(r.getEndDate());
-
-        if (startDate.compareTo(endDate) > 0) {
-            throw new DAOException("The start date of a report cannot be after the end date.");
-        }
-
-        if (checkDuplicate(r.getName())) {
-            throw new DAOException("The report name, '" + r.getName() + "', is already in use. Please choose another report name.");
-        }
+    public static Report save(String params[]) throws SQLException, ParseException {
+        checkDate(params[2], params[3]);
+        checkDuplicate(params[0]);
 
         Statement st = dbConnection.createStatement();
 
         String query = 
             "INSERT INTO REPORTS (NAME, DESCRIPTION, START_DATE, END_DATE) " +
             "VALUES " +
-            "('" + r.getName() + "', '" + r.getDescription() + "', '" + 
-            r.getStartDate() + " 00:00:00', '" + r.getEndDate() + " 23:59:59')";
+            "('" + params[0] + "', '" + params[1] + "', '" + 
+            params[2] + " 00:00:00', '" + params[3] + " 23:59:59')";
 
-        st.executeUpdate(query);
+        int rowsChanged = st.executeUpdate(query);
+
+        checkExecutionFails(rowsChanged);
+
+        return get(params[0]);
     }
 
     // Read
@@ -199,26 +194,22 @@ public class ReportingDAO {
     }
 
     // Update
-    public static void update(Report r, String originalName) throws SQLException, DAOException, ParseException {
-        Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(r.getStartDate());
-        Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(r.getEndDate());
-
-        if (startDate.compareTo(endDate) > 0) {
-            throw new DAOException("The start date of a report cannot be after the end date.");
-        }
+    public static Report update(String reportName, String params[]) throws SQLException, DAOException, ParseException {
+        checkDate(params[2], params[3]);
+        checkDuplicate(params[0]);
 
         Statement st = dbConnection.createStatement();
 
         String query = 
-            "UPDATE REPORTS set NAME = '" + r.getName() + "', DESCRIPTION = '" + r.getDescription() + 
-            "', START_DATE = '" + r.getStartDate() + " 00:00:00', END_DATE = '" + r.getEndDate() + " 23:59:59' " +
-            "WHERE NAME = '" + originalName + "'";
+            "UPDATE REPORTS set NAME = '" + params[0] + "', DESCRIPTION = '" + params[1] + 
+            "', START_DATE = '" + params[2] + " 00:00:00', END_DATE = '" + params[3] + " 23:59:59' " +
+            "WHERE NAME = '" + reportName + "'";
 
         int rowsChanged = st.executeUpdate(query);
 
-        if (rowsChanged == 0) {
-            throw new DAOException("Report update failed. DAO error.");
-        }
+        checkExecutionFails(rowsChanged);
+
+        return get(params[0]);
     }
 
     // Delete
@@ -229,20 +220,32 @@ public class ReportingDAO {
 
         int rowsChanged = st.executeUpdate(query);
 
-        if (rowsChanged == 0) {
-            throw new DAOException("Report deletion failed. DAO error.");
+        checkExecutionFails(rowsChanged);        
+    }
+    
+    // Helper Functions
+    private static void checkDate(String d1, String d2) throws ParseException {
+        Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(d1);
+        Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(d2);
+
+        if (startDate.compareTo(endDate) > 0) {
+            throw new DAOException("The start date of a report cannot be after the end date.");
         }
     }
 
-    private static boolean checkDuplicate(String name) throws SQLException {
+    private static void checkDuplicate(String name) throws SQLException {
         ArrayList<String> names = getReportNames();
         
         for (String string : names) {
             if (string.equals(name)) {
-                return true;
+                throw new DAOException("The report name, '" + name + "', is already in use. Please choose another report name.");
             }
         }
-        
-        return false;        
+    }
+
+    private static void checkExecutionFails(int i) {
+        if (i == 0) {
+            throw new DAOException("Execution failed in DAO. No rows were changed.");
+        }
     }
 }

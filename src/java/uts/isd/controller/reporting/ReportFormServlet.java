@@ -13,6 +13,7 @@ import uts.isd.model.reporting.Report;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -52,17 +53,7 @@ public class ReportFormServlet extends HttpServlet {
             }
 
             // Catches a DAO Exception
-            catch (DAOException e) {
-                request.setAttribute("error", e.getMessage());
-
-                // Clear the report from the session if still exists
-                session.removeAttribute("report");
-
-                // Redirects to error page to display error message to user
-                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
-            }
-
-            catch (SQLException e) {
+            catch (DAOException | SQLException e) {
                 request.setAttribute("error", e.getMessage());
 
                 // Clear the report from the session if still exists
@@ -75,45 +66,26 @@ public class ReportFormServlet extends HttpServlet {
 
         // Logic for when a report edit is desired
         else if (request.getParameter("updateReport") != null && request.getParameter("updateReport").equals("yes")) {
-            // create new report
-            String reportName = (String)request.getParameter("reportName");
-
-            // save the report
             try {
-                // Create a skeleton report (temp)
+                // Get the report from the session
                 Report report = (Report)session.getAttribute("report");
+                
+                // Get its original name
                 String originalName = report.getName();
 
-                // Create the record in the database
-                report.setReportName(reportName);
-                report.setDescription((String)request.getParameter("reportDescription"));
-                report.setReportStartDate((String)request.getParameter("startDate"));
-                report.setReportEndDate((String)request.getParameter("endDate"));
-
-                // Update the report
-                ReportingDAO.update(report, originalName);
-                
-                // Retrieve an updated report (necessary for data refresh)
-                Report r = ReportingDAO.get(reportName);
-
-                // Save the report to the session and redirect to the report view page
-                session.setAttribute("report", r);                                
+                // Update the report, then retrieve it with latest data and save it to the session
+                // Note this is neccessary for data refresh
+                session.setAttribute("report", ReportingDAO.update(originalName, createParamsArray(request))); 
+                                              
                 session.removeAttribute("editReport");
                 response.sendRedirect("reporting/reportView.jsp");
             }
 
-            // Catches a DAO Exception
-            catch (DAOException e) {
+            // Catches an exception that may occur in the model when working with DAO objects
+            catch (DAOException | SQLException | ParseException  e) {
                 request.setAttribute("error", e.getMessage());
-                session.removeAttribute("editReport");
-                session.removeAttribute("report");
-                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
-            }
-            
-            // Catches an SQL Exception
-            catch (SQLException e) {
+
                 // Clean up the session
-                request.setAttribute("error", e.getMessage());
                 session.removeAttribute("editReport");
                 session.removeAttribute("report");
 
@@ -121,5 +93,30 @@ public class ReportFormServlet extends HttpServlet {
                 request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
             }
         }
+        
+        // Logic for creating a new report
+        else {  
+            try {
+                Report r = ReportingDAO.save(createParamsArray(request));
+                session.setAttribute("report", r);
+                response.sendRedirect("reporting/reportView.jsp");
+            }          
+
+            catch (DAOException | SQLException | ParseException e) {
+                request.setAttribute("error", e.getMessage());
+                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+            }
+        }
+    }
+
+    private String[] createParamsArray(HttpServletRequest request) throws ServletException {
+        String params[] = {
+            (String)request.getParameter("reportName"),
+            (String)request.getParameter("reportDescription"),
+            (String)request.getParameter("startDate"),
+            (String)request.getParameter("endDate")
+        };
+
+        return params;
     }
 }
