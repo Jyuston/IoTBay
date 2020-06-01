@@ -37,6 +37,19 @@ public class UserManagementCreateServlet extends HttpServlet {
 
     
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{ 
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        try{
+            String firstName = request.getParameter("firstName");
+            String lastName = request.getParameter("lastName");
+            String contactNumber = request.getParameter("contactNumber");
+        }
+        
+        catch(){
+        
+        }
+        
+        finally{
+        
+        }
     }
 }

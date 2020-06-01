@@ -10,7 +10,7 @@
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<!-- Will need to wrap this in an If statement to check the session if they are a Staff0-Admin TRUE-->
 <jsp:include page="templates/header.jsp"/>
 <head>
     <title>User Management</title>
@@ -59,7 +59,10 @@
                         <td><button class="btn btn-warning btn-sm my-2 mr-2">Deactivate</button></td>
                         </form>
                     </c:if>
-                <form action="/IoTBay/UserManagementEditServlet" method="GET">
+                <form action="/IoTBay/UserManagementEditServlet" method="POST">
+                    <input type="hidden" name="accountID"  value="${resultAccount.ID}">
+                    <input type="hidden" name="accountEmail" value="${resultAccount.email}">
+                    <input type="hidden" name="accountPassword" value="${resultAccount.password}">
                     <td><button class="btn btn-info btn-sm my-2 mr-2">Edit</button></td>
                 </form>
                 
