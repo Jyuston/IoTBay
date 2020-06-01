@@ -33,6 +33,22 @@
         <servlet-name>UserManagementServlet</servlet-name>
         <url-pattern>/UserManagementServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>UserManagementCreateServlet</servlet-name>
+        <servlet-class>uts.isd.controller.user_management.UserManagementCreateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserManagementCreateServlet</servlet-name>
+        <url-pattern>/UserManagementCreateServlet</url-pattern>
+    </servlet-mapping>
+        <servlet>
+        <servlet-name>UserManagementEditServlet</servlet-name>
+        <servlet-class>uts.isd.controller.user_management.UserManagementEditServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserManagementEditServlet</servlet-name>
+        <url-pattern>/UserManagementEditServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

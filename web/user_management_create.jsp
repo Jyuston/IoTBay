@@ -53,7 +53,7 @@
                     <option value="Staff-Admin">Staff-Admin</option>
                 </select>
             </div>
-            <button class="btn btn-success mt-4">Add Account</button> 
+            <button type="submit" class="btn btn-success mt-4">Add Account</button> 
         </form>
 
 <jsp:include page="templates/footer.jsp"/>

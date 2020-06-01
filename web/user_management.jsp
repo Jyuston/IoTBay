@@ -42,17 +42,32 @@
             <!--This will be updated by Servlet based on the Form--> 
             <table class="my-auto">
                 <tr colspan="3" class="py-1"><th><h4>${resultAccount.firstName} ${resultAccount.lastName}</h4></th></tr>
-                <tr><td colspan="3" class="py-1">Type: ${resultAccount.class.getSimpleName()}</td></tr>
-                <tr><td colspan="3" class="py-1"> ID: ${resultAccount.ID}</td></tr>
-                <tr><td colspan="3" class="py-1">Email: ${resultAccount.email}</td></tr>
+                <tr><td colspan="3" class="py-1">${resultAccount.class.getSimpleName()}</td></tr>
+                <tr><td colspan="3" class="py-1">#${resultAccount.ID}</td></tr>
+                <tr><td colspan="3" class="py-1">${resultAccount.email}</td></tr>
                 <tr><td colspan="3" class="py-1">Active: ${resultAccount.active}</td></tr>
+                
                 <tr>
-                    <td><button class="btn btn-primary btn-sm my-2 mr-2">Activate</button></td>
-                    <td><button class="btn btn-warning btn-sm my-2 mr-2">Deactivate</button></td>
+                    <c:if test="${resultAccount.active == true}">
+                        <form action="/IoTBay/UserManagementActiveServlet" method="POST">
+                        <td><button class="btn btn-primary btn-sm my-2 mr-2">Activate</button></td>
+                        </form>
+                    </c:if>
+                    
+                    <c:if test="${resultAccount.active == false}">
+                        <form action="/IoTBay/UserManagementActiveServlet" method="POST">
+                        <td><button class="btn btn-warning btn-sm my-2 mr-2">Deactivate</button></td>
+                        </form>
+                    </c:if>
+                <form action="/IoTBay/UserManagementEditServlet" method="GET">
                     <td><button class="btn btn-info btn-sm my-2 mr-2">Edit</button></td>
+                </form>
+                
+                <form action="/IoTBay/UserManagementDeleteServlet" method="GET">
                     <td><button class="btn btn-danger btn-sm my-2 float-right">Delete</button></td>
-                </tr>  
-                <tr>
+                </form>   
+                </tr>
+                
             </table>
         </div>  
 </c:if>
@@ -61,21 +76,24 @@
 </div>
 
 <div class="my-4">
-    <button type="button" class="btn btn-success btn-sm"> + Add New Account</button>
+    <form action="/IoTBay/UserManagementCreateServlet" method="GET">
+    <button type="submit" class="btn btn-success btn-sm"> + Add New Account</button>
+    </form>
 </div>
 
 
 <h2> All Users </h2>
 <div class="my-3">
+    <h4 class="mb-3">Customer</h4>
     <div style="max-height: 400px" class="overflow-auto mb-4">
     <table class="table overflow-auto" style="max-height: 100px">
-        <h4>Customer<h4>
         <thead>
              <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Contact Number</th>
+                <th></th>
             </tr>
         </thead>
         <c:forEach items="${customerList}" var="Customer" varStatus="count">
@@ -84,15 +102,22 @@
                 <td>${Customer.firstName} ${Customer.lastName}</td>
                 <td>${Customer.email}</td>
                 <td>${Customer.contactNumber}</td>
-                
+                <td> 
+                    <form action="/IoTBay/UserManagementEditServlet" method="POST">
+                        <input type="hidden" name="accountID" value="${Customer.ID}">
+                        <input type="hidden" name="accountEmail" value="${Customer.email}">
+                        <input type="hidden" name="accountPassword" value="${Customer.password}">
+                        <button type="submit">Edit</button>
+                    </form> 
+                </td>
             </tr>
         </c:forEach>
     </table>
     </div>
-
+    
+    <h4 class="mb-3">Staff</h4>
     <div style="max-height: 400px" class="overflow-auto mb-4">
     <table class="table">
-        <h4>Staff<h4>
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -100,6 +125,7 @@
                 <th scope="col">Email</th>
                 <th scope="col">Contact Number</th>
                 <th scope="col">Staff-Admin</th>
+                <th></th>
             </tr>
             </thead>
         <c:forEach items="${staffList}" var="Staff" varStatus="count">
@@ -109,6 +135,14 @@
                 <td>${Staff.email}</td>
                 <td>${Staff.contactNumber}</td>
                 <td>${Staff.admin}</td>
+                <td>
+                    <form action="/IoTBay/UserManagementEditServlet" method="POST">
+                        <input type="hidden" name="accountID" value="${Staff.ID}">
+                        <input type="hidden" name="accountEmail" value="${Staff.email}">
+                        <input type="hidden" name="accountPassword" value="${Staff.password}">
+                        <button type="submit">Edit</button>
+                    </form> 
+                </td>
             </tr>
         </c:forEach>
     </table>

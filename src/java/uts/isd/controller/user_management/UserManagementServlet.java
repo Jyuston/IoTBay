@@ -69,12 +69,11 @@ public class UserManagementServlet extends HttpServlet {
         }
        catch(Error err){
            request.setAttribute("errorUserManagement", err.getMessage());
-       }
+        }
        
        finally {
-           request.getRequestDispatcher("/user_management.jsp").include(request, response);
-           
-       }
+           request.getRequestDispatcher("/user_management.jsp").include(request, response);    
+        }
 
     }
     
