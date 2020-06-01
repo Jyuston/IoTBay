@@ -25,10 +25,10 @@
     <body>
         <div class="alert alert-danger my-4" role="alert">
             <h1>Oops. Something went wrong.</h1>
-            <p>An error occured whilst processing your request. Please attach the following message to our customer support line:</p>
+            <p class="lead">An error occured whilst processing your request. Please see the attached error message.</p>
             <% out.println(errorMessage); %>
         </div>
-        <a href="main.jsp" class="btn btn-primary btn-lg btn-block">Return Home</a>
+        <a href="ReportingServlet" class="btn btn-primary btn-lg btn-block">Return to Reports</a>
     </body>
 
     <jsp:include page="/templates/footer.jsp"/>

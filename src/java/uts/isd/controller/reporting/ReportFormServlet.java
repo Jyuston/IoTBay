@@ -13,6 +13,7 @@ import uts.isd.model.reporting.Report;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class ReportFormServlet extends HttpServlet {   
@@ -74,7 +75,6 @@ public class ReportFormServlet extends HttpServlet {
 
         // Logic for when a report edit is desired
         else if (request.getParameter("updateReport") != null && request.getParameter("updateReport").equals("yes")) {
-            // validate (check the dates)
             // create new report
             String reportName = (String)request.getParameter("reportName");
 

@@ -8,33 +8,33 @@ import uts.isd.model.Customer;
 import uts.isd.model.ProductSnapshot;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 
 public class ReportingDAO {
     public static final Connection dbConnection = DBConnector.getConnection();
 
-    public static ArrayList<OrderLineItem> totalSales(String beginTimeStamp, String endTimeStamp) throws SQLException, DAOException {
+    public static ArrayList<OrderLineItem> totalSales(String beginTimeStamp, String endTimeStamp)
+            throws SQLException, DAOException {
         // Set up the inital SQL query hre
         Statement st = dbConnection.createStatement();
 
-        String query = 
-            "SELECT ORDER_LINE.PRODUCT_ID, NAME, CATEGORY, QUANTITY_ORDERED, ORDER_LINE.PRICE, SHIPPING_ADDRESS " +
-            "FROM ORDERS " +
-            "INNER JOIN ORDER_LINE on ORDERS.ID = ORDER_LINE.ORDER_ID " +
-            "INNER JOIN PRODUCTS on ORDER_LINE.PRODUCT_ID = PRODUCTS.ID " +
-            "WHERE ORDERS.ORDERED_ON > '" + beginTimeStamp + "' AND ORDERS.ORDERED_ON < '" + endTimeStamp + "'";
+        String query = "SELECT ORDER_LINE.PRODUCT_ID, NAME, CATEGORY, QUANTITY_ORDERED, ORDER_LINE.PRICE, SHIPPING_ADDRESS "
+                + "FROM ORDERS " + "INNER JOIN ORDER_LINE on ORDERS.ID = ORDER_LINE.ORDER_ID "
+                + "INNER JOIN PRODUCTS on ORDER_LINE.PRODUCT_ID = PRODUCTS.ID " + "WHERE ORDERS.ORDERED_ON > '"
+                + beginTimeStamp + "' AND ORDERS.ORDERED_ON < '" + endTimeStamp + "'";
 
         // Execute the query and store the results in the result set
         ResultSet queryResult = st.executeQuery(query);
 
         ArrayList<OrderLineItem> queryResultsStructured = new ArrayList<OrderLineItem>();
 
-        if (!queryResult.next()) {
-            throw new DAOException("No sales occured during the selected period. Please select a different time period and try again.");
-        }
-        
         while (queryResult.next()) {
-            OrderLineItem record = new OrderLineItem(queryResult.getString(1), queryResult.getString(2), queryResult.getString(3), queryResult.getInt(4), queryResult.getDouble(5), queryResult.getString(6));            
+            OrderLineItem record = new OrderLineItem(queryResult.getString(1), queryResult.getString(2),
+                    queryResult.getString(3), queryResult.getInt(4), queryResult.getDouble(5),
+                    queryResult.getString(6));
             queryResultsStructured.add(record);
         }
 
@@ -44,10 +44,9 @@ public class ReportingDAO {
     public static ArrayList<String> categories(String beginTimeStamp, String endTimeStamp) throws SQLException {
         // Set up the inital SQL query here
         Statement st = dbConnection.createStatement();
-        String query = 
-            "SELECT distinct(CATEGORY) FROM PRODUCTS P, ORDERS O " +
-            "WHERE (P.ID in (SELECT P.ID FROM ORDER_LINE)) " +
-            "AND (O.ORDERED_ON > '" + beginTimeStamp + "' AND O.ORDERED_ON < '" + endTimeStamp + "')";
+        String query = "SELECT distinct(CATEGORY) FROM PRODUCTS P, ORDERS O "
+                + "WHERE (P.ID in (SELECT P.ID FROM ORDER_LINE)) " + "AND (O.ORDERED_ON > '" + beginTimeStamp
+                + "' AND O.ORDERED_ON < '" + endTimeStamp + "')";
 
         // Execute the query and store the results in the result set
         ResultSet queryResult = st.executeQuery(query);
@@ -61,24 +60,23 @@ public class ReportingDAO {
         return categories;
     }
 
-    public static ArrayList<ProductSummary> productSnapshots(String beginTimeStamp, String endTimeStamp) throws SQLException {
+    public static ArrayList<ProductSummary> productSnapshots(String beginTimeStamp, String endTimeStamp)
+            throws SQLException {
         Statement st = dbConnection.createStatement();
 
-        String query = 
-            "SELECT ol.PRODUCT_ID as id, NAME, CATEGORY as category, QUANTITY_ORDERED, (ol.PRICE * QUANTITY_ORDERED) as PRICE " +
-            "FROM ORDER_LINE ol " +
-            "INNER JOIN PRODUCTS on ol.PRODUCT_ID = PRODUCTS.ID " +
-            "INNER JOIN ORDERS on ol.ORDER_ID = ORDERS.ID " +
-            "WHERE ORDERED_ON > '" + beginTimeStamp + "' AND ORDERS.ORDERED_ON < '" + endTimeStamp + "'" + 
-            "ORDER BY category, id";
-        
+        String query = "SELECT ol.PRODUCT_ID as id, NAME, CATEGORY as category, QUANTITY_ORDERED, (ol.PRICE * QUANTITY_ORDERED) as PRICE "
+                + "FROM ORDER_LINE ol " + "INNER JOIN PRODUCTS on ol.PRODUCT_ID = PRODUCTS.ID "
+                + "INNER JOIN ORDERS on ol.ORDER_ID = ORDERS.ID " + "WHERE ORDERED_ON > '" + beginTimeStamp
+                + "' AND ORDERS.ORDERED_ON < '" + endTimeStamp + "'" + "ORDER BY category, id";
+
         // Execute the query and store the results in the result set
         ResultSet queryResult = st.executeQuery(query);
 
         ArrayList<ProductSummary> snapshots = new ArrayList<>();
 
         while (queryResult.next()) {
-            ProductSummary snapshot = new ProductSummary(queryResult.getString(1), queryResult.getString(2), queryResult.getString(3), queryResult.getInt(4), queryResult.getDouble(5));
+            ProductSummary snapshot = new ProductSummary(queryResult.getString(1), queryResult.getString(2),
+                    queryResult.getString(3), queryResult.getInt(4), queryResult.getDouble(5));
             snapshots.add(snapshot);
         }
 
@@ -111,7 +109,8 @@ public class ReportingDAO {
         ArrayList<ProductSummary> snapshots = new ArrayList<>();
 
         while (queryResult.next()) {
-            ProductSummary snapshot = new ProductSummary(queryResult.getString(1), queryResult.getString(2), queryResult.getString(3), queryResult.getInt(4), 0.00);
+            ProductSummary snapshot = new ProductSummary(queryResult.getString(1), queryResult.getString(2),
+                    queryResult.getString(3), queryResult.getInt(4), 0.00);
             snapshots.add(snapshot);
         }
 
@@ -130,15 +129,24 @@ public class ReportingDAO {
         while (queryResult.next()) {
             categories.add(queryResult.getString(1));
         }
-        
+
         return categories;
     }
 
     // Create
-    public static void save(Report r) throws SQLException {
+    public static void save(Report r) throws SQLException, ParseException {
+        Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(r.getStartDate());
+        Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(r.getEndDate());
+
+        if (startDate.compareTo(endDate) > 0) {
+            throw new DAOException("The start date of a report cannot be after the end date.");
+        }
+
+        if (checkDuplicate(r.getName())) {
+            throw new DAOException("The report name, '" + r.getName() + "', is already in use. Please choose another report name.");
+        }
+
         Statement st = dbConnection.createStatement();
-        
-        String reportID = generateID();
 
         String query = 
             "INSERT INTO REPORTS (NAME, DESCRIPTION, START_DATE, END_DATE) " +
@@ -191,7 +199,14 @@ public class ReportingDAO {
     }
 
     // Update
-    public static void update(Report r, String originalName) throws SQLException, DAOException {
+    public static void update(Report r, String originalName) throws SQLException, DAOException, ParseException {
+        Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(r.getStartDate());
+        Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(r.getEndDate());
+
+        if (startDate.compareTo(endDate) > 0) {
+            throw new DAOException("The start date of a report cannot be after the end date.");
+        }
+
         Statement st = dbConnection.createStatement();
 
         String query = 
@@ -219,45 +234,15 @@ public class ReportingDAO {
         }
     }
 
-    // Helper Methods
-    private static String generateID() throws SQLException {
-        Statement st = dbConnection.createStatement();
+    private static boolean checkDuplicate(String name) throws SQLException {
+        ArrayList<String> names = getReportNames();
         
-        // Build the SELECT query that will retrieve all USER_IDs FROM the database
-        String getIDs = "SELECT ID FROM REPORTS";
-
-        // Execute the query against the database
-        ResultSet reportIDResult = st.executeQuery(getIDs);
-
-        // Instiate a list to store the IDs (for easy iteration)
-        ArrayList<String> reportIDs = new ArrayList<String>();
-
-        // Add the IDs to the list
-        while (reportIDResult.next()) {
-            reportIDs.add(reportIDResult.getString(1));
+        for (String string : names) {
+            if (string.equals(name)) {
+                return true;
+            }
         }
-
-        // Instantiate a new random number generator object
-        Random rand = new Random();
-
-        // Set the upper bound of the object
-        int upperbound = 99999999;
-
-        // Generate the random number
-        int random = rand.nextInt(upperbound);
-
-        // Check that the ID is in fact unique (using a helper method)
-        while (!checkUnique(Integer.toString(random), reportIDs)) {
-            random = rand.nextInt(upperbound);
-        }
-
-        // Return the final Report for the new record
-        return "R-" + random;
+        
+        return false;        
     }
-
-    private static boolean checkUnique(String value, ArrayList<String> collection) {
-        // Checking to see if the supplied value already exists
-        return !collection.contains(value);
-    }
-
 }
