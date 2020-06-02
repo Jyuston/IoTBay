@@ -8,7 +8,7 @@
 
 <%
     Account user = (Account) session.getAttribute("user");
-    String errorMsg = (String) request.getAttribute("errorLogin");
+    String loginErr = (String) request.getAttribute("loginErr");
 
     // If user logged in
     if (user != null) {
@@ -28,9 +28,9 @@
     <h1>Login</h1>
 
     <%-- If error message --%>
-    <% if (errorMsg != null) { %>
+    <% if (loginErr != null) { %>
     <div class="alert alert-danger my-4" role="alert">
-        <%= errorMsg %>
+        <%= loginErr %>
     </div>
     <% } %>
 

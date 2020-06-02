@@ -8,7 +8,7 @@
 
 <%
     Boolean success = (Boolean) request.getAttribute("success");
-    String errorMsg = (String) request.getAttribute("errorRegister");
+    String registerErr = (String) request.getAttribute("registerErr");
 
     // If user registration successful
     if (success != null) {
@@ -32,9 +32,9 @@
             <h1>Register</h1>
 
             <%-- If error message --%>
-            <% if (errorMsg != null) { %>
+            <% if (registerErr != null) { %>
             <div class="alert alert-danger my-4" role="alert">
-                <%= errorMsg %>
+                <%= registerErr %>
             </div>
             <% } %>
 
