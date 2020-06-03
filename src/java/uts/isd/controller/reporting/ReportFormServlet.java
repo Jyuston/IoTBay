@@ -25,12 +25,15 @@ public class ReportFormServlet extends HttpServlet {
         try {
             ArrayList<String> reportNames = ReportingDAO.getReportNames();
             request.setAttribute("editReport", "yes");
-            request.getRequestDispatcher("reportForm.jsp").include(request, response);
         } 
         
         catch (SQLException e) {
             request.setAttribute("error", e.getMessage());
-            request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+            //request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+        }
+
+        finally {
+            request.getRequestDispatcher("reportForm.jsp").include(request, response);
         }
 
     }
@@ -60,7 +63,7 @@ public class ReportFormServlet extends HttpServlet {
                 session.removeAttribute("report");
 
                 // Redirects to error page to display error message to user
-                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+                request.getRequestDispatcher("reporting.jsp").include(request, response);
             }
         }
 
@@ -89,8 +92,8 @@ public class ReportFormServlet extends HttpServlet {
                 session.removeAttribute("editReport");
                 session.removeAttribute("report");
 
-                // Redirect to error page and display message
-                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+                // Redirect back to error page
+                request.getRequestDispatcher("reporting.jsp").include(request, response);
             }
         }
         
@@ -104,7 +107,8 @@ public class ReportFormServlet extends HttpServlet {
 
             catch (DAOException | SQLException | ParseException e) {
                 request.setAttribute("error", e.getMessage());
-                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+                // Redirects back to the ORIGINAL page
+                request.getRequestDispatcher("reporting.jsp").include(request, response);
             }
         }
     }

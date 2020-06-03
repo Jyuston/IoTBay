@@ -39,6 +39,7 @@
             modifyingReport = false;
         }
     %>
+
     <body>
             <form method="post" action="/IoTBay/ReportFormServlet">
                 <div class="form-row">                                                                         

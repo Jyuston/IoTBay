@@ -24,25 +24,36 @@
         String reportDescription = request.getParameter("reportDescription");
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
+    %>
 
-        if (newReportCreated != null && newReportCreated.equals("yes")) {
+    <% 
+        if (request.getAttribute("error") != null) {
+    %>
+        <div class="alert alert-danger my-4" role="alert">
+            <h1>Oops. Something went wrong.</h1>
+            <p class="lead">An error occured whilst processing your request. Please see the attached error message.</p>
+            <% out.println(request.getAttribute("error")); %>
+        </div>
+        <a href="ReportingServlet" class="btn btn-primary btn-lg btn-block">Return to Reports</a>
+    
+    <%
+        } else if (newReportCreated != null && newReportCreated.equals("yes")) {
             //ReportingController rc = new ReportingController();
             //rc.createReport(reportName, reportDescription, startDate, endDate);
-        
     %>
-    <body>
-        <div class="row">
-            <div class="col"></div>
-            <div class="col-md-auto">
-                <div class="alert alert-success" role="alert">
-                    <h4 class="alert-heading"> Report Created!</h4>
-                    <a class="btn btn-primary btn-lg btn-block" href="main.jsp"> View Report </a>
+            <body>
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col-md-auto">
+                        <div class="alert alert-success" role="alert">
+                            <h4 class="alert-heading"> Report Created!</h4>
+                            <a class="btn btn-primary btn-lg btn-block" href="main.jsp"> View Report </a>
+                        </div>
+                    </div>
+                    <div class="col"></div>
                 </div>
-            </div>
-            <div class="col"></div>
-        </div>
-    </body>
-    
+            </body>
+
     <% } else { %>
     <body>
         <div class="container">     
