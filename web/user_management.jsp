@@ -22,9 +22,12 @@
     <div class="row"> 
         <div class="form-group">
             <c:if test="${not empty errorUserManagement}">
-                <div class="alert alert-danger my-4" role="alert">
-                    ${errorUserManagement}
-                </div>
+                <c:if test="${successDelete != true}">
+                    <div class="alert alert-danger my-4" role="alert">
+                        ${errorUserManagement}
+                    </div>
+                </c:if>
+
             </c:if>
             <c:if test="${success}">
                 <div class="alert alert-success my-4" role="alert">

@@ -82,11 +82,11 @@ public class UserManagementCreateServlet extends HttpServlet {
                 newCustomer.setActive(true);
 
                 Address address = new Address();
-                address.setAddressLine1("null");
-                address.setAddressLine2("null");
-                address.setSuburb(request.getParameter("null"));
-                address.setPostcode("0000");
-                address.setState("null");
+                address.setAddressLine1("");
+                address.setAddressLine2("");
+                address.setSuburb(request.getParameter(""));
+                address.setPostcode("");
+                address.setState("");
 
                 PaymentInformation paymentInfo = new PaymentInformation();
                 LinkedList<Order> orders = new LinkedList<>();
