@@ -1,9 +1,6 @@
 package uts.isd.model.dao;
 
-import uts.isd.model.Address;
-import uts.isd.model.Customer;
-import uts.isd.model.Order;
-import uts.isd.model.PaymentInformation;
+import uts.isd.model.*;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -100,11 +97,33 @@ public class CustomerDAO {
             throw new DAOException("Failed to add customer payment information. Please try again.");
     }
 
-    public static void update(Customer customer, String[] params) {
+    /**
+     * Update a single account from the database.
+     *
+     * @param customer The instantiated account to update. Must have an ID.
+     */
+    public static void update(Customer customer) throws SQLException, DAOException {
+        AccountDAO.update(customer);
 
-    }
+        String updateQuery =
+                "UPDATE CUSTOMERS SET ADDRESS_LINE_1 = ?,ADDRESS_LINE_2 = ?, SUBURB = ?, STATE = ?,POSTCODE = ?, IS_ANONYMOUS = ? " +
+                "WHERE ID = ?";
 
-    public static void delete(Customer customer) {
+        Address address = customer.getAddress();
+
+        PreparedStatement updateSt = DAOUtils.prepareStatement(updateQuery, false,
+                address.getAddressLine1(),
+                address.getAddressLine2(),
+                address.getSuburb(),
+                address.getState(),
+                address.getPostcode(),
+                customer.isAnonymous(),
+                customer.getID()
+        );
+
+        int rowsChanged = updateSt.executeUpdate();
+        if (rowsChanged == 0)
+            throw new DAOException("Failed to update Customer details. Please try again.");
     }
 
     // Helpers

@@ -28,6 +28,22 @@
         <servlet-name>RegistrationServlet</servlet-name>
         <url-pattern>/RegistrationServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>ReportingServlet</servlet-name>
+        <servlet-class>uts.isd.controller.reporting.ReportingServlet</servlet-class>
+     </servlet>
+    <servlet-mapping>
+        <servlet-name>ReportingServlet</servlet-name>
+        <url-pattern>/ReportingServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ReportFormServlet</servlet-name>
+        <servlet-class>uts.isd.controller.reporting.ReportFormServlet</servlet-class>
+     </servlet>
+    <servlet-mapping>
+        <servlet-name>ReportFormServlet</servlet-name>
+        <url-pattern>/ReportFormServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
