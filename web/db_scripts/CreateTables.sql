@@ -36,9 +36,8 @@ CREATE TABLE USER_ACCESS
 (
     "ACCOUNT_ID"    INTEGER REFERENCES ACCOUNTS (ID) ON DELETE CASCADE,
     "PERFORMED_ON"  TIMESTAMP,
-    "ACTION"        ENUM('create_account','login','logout','delete_account','purchase') DEFAULT ('unknown'),
+    "ACTION"        VARCHAR(50) CONSTRAINT ACTION_CHECK CHECK (ACTION IN('create_account', 'login', 'logout', 'delete_account', 'purchase')),
     PRIMARY KEY (ACCOUNT_ID, PERFORMED_ON)
-
 );
 
 CREATE TABLE STAFF
