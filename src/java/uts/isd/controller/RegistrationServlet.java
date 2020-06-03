@@ -15,6 +15,9 @@ import java.util.LinkedList;
 public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        // Create validator for the request
+        Validator validator = new Validator(request);
+
         // Get form details
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
@@ -22,7 +25,16 @@ public class RegistrationServlet extends HttpServlet {
         String contactNumber = request.getParameter("contactNumber");
         String password = request.getParameter("password");
 
-        // STILL NEED TO DO VALIDATION
+        // Run validation checks
+        validator.checkEmpty(email, password)
+                .validateEmail(email)
+                .validatePassword(password)
+                .validateName(firstName + " " + lastName);
+
+        if (validator.failed()) {
+            request.getRequestDispatcher("/register.jsp").include(request, response);
+            return;
+        }
 
         Address address = new Address();
         address.setAddressLine1(request.getParameter("addressLine1"));
@@ -59,10 +71,10 @@ public class RegistrationServlet extends HttpServlet {
             request.setAttribute("success", true);
         }
         catch (DAOException err) {
-            request.setAttribute("errorRegister", err.getMessage());
+            request.setAttribute("registerErr", err.getMessage());
         }
         catch (SQLException err) {
-            request.setAttribute("errorRegister", "Error accessing database.");
+            request.setAttribute("registerErr", "Error accessing database.");
             err.printStackTrace();
         }
         finally {

@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<%--@elvariable id="user" type="uts.isd.model.Account"--%>
+
 <head>
     <title>Home</title>
 </head>

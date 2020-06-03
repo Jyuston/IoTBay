@@ -20,6 +20,6 @@
     </p>
 </div>
 
-<%--We dont jsp:include the ConnServlet here because we access the single db connection directly in the DAOs--%>
+<%--We dont jsp:include the ConnServlet here because we access the single db connection directly in the DAOs and DAOUtils--%>
 
 <jsp:include page="templates/footer.jsp"/>
