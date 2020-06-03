@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<%--@elvariable id="user" type="uts.isd.model.Account"--%>
+
 <head>
     <title>Home</title>
 </head>
@@ -35,6 +37,7 @@
 
     <p class="text-center">
         <a href="index.jsp">Home</a>
+        <a href="ReportingServlet">reporting</a>
     </p>
     
     <c:if test="${user.isStaff() && user.admin}">
