@@ -1,4 +1,4 @@
-package uts.isd.controller;
+package uts.isd.model;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Matcher;
@@ -19,7 +19,7 @@ public class Validator {
 
     public Validator checkEmpty(String email, String password) {
         if (email.isEmpty() || password.isEmpty()) {
-            request.setAttribute("emptyEmailPassVErr", "Error: Email or Password field is empty");
+            request.setAttribute("emptyEmailPassVErr", "Email or Password field is empty");
             failed = true;
         }
 
@@ -28,7 +28,7 @@ public class Validator {
 
     public Validator validateEmail(String email) {
         if (!validate(emailPattern, email)) {
-            request.setAttribute("emailVErr", "Error: Email format incorrect");
+            request.setAttribute("emailVErr", "Email format incorrect");
             failed = true;
         }
 
@@ -38,7 +38,7 @@ public class Validator {
 
     public Validator validateName(String name) {
         if (!validate(namePattern, name)) {
-            request.setAttribute("nameVErr", "Error: Name format incorrect");
+            request.setAttribute("nameVErr", "Name format incorrect");
             failed = true;
         }
 
@@ -48,7 +48,7 @@ public class Validator {
 
     public Validator validatePassword(String password) {
         if (!validate(passwordPattern, password))  {
-            request.setAttribute("passVErr", "Error: Password format incorrect");
+            request.setAttribute("passVErr", "Password format incorrect");
             failed = true;
         }
 
