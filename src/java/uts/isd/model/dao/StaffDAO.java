@@ -65,10 +65,23 @@ public class StaffDAO {
             throw new DAOException("Failed to create staff profile. Please try again.");
     }
 
-    public static void update(Staff customer, String[] params) {
-    }
+    /**
+     * Update a single account from the database.
+     *
+     * @param staff The instantiated account to update. Must have an ID.
+     */
+    public static void update(Staff staff) throws SQLException, DAOException {
+        AccountDAO.update(staff);
 
-    public static void delete(Staff customer) {
+        String updateQuery = "UPDATE STAFF SET IS_ADMIN = ? WHERE ID = ?";
+        PreparedStatement updateSt = DAOUtils.prepareStatement(updateQuery, false,
+                staff.isAdmin(),
+                staff.getID()
+        );
+
+        int rowsChanged = updateSt.executeUpdate();
+        if (rowsChanged == 0)
+            throw new DAOException("Failed to update Staff details. Please try again.");
     }
 
     // Helpers
