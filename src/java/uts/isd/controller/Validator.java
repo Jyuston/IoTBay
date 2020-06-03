@@ -47,7 +47,7 @@ public class Validator {
 
 
     public Validator validatePassword(String password) {
-        if (validate(passwordPattern, password))  {
+        if (!validate(passwordPattern, password))  {
             request.setAttribute("passVErr", "Error: Password format incorrect");
             failed = true;
         }
