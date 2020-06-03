@@ -43,7 +43,8 @@ public class ReportingDAO {
         // Set up the inital SQL query here
         Statement st = dbConnection.createStatement();
         String query = "SELECT distinct(CATEGORY) FROM PRODUCTS P, ORDERS O "
-                + "WHERE (P.ID in (SELECT P.ID FROM ORDER_LINE)) " + "AND (O.ORDERED_ON > '" + beginTimeStamp
+                + "WHERE (P.ID in (SELECT PRODUCT_ID FROM ORDER_LINE)) " 
+                + "AND (O.ORDERED_ON > '" + beginTimeStamp
                 + "' AND O.ORDERED_ON < '" + endTimeStamp + "')";
 
         // Execute the query and store the results in the result set
@@ -101,7 +102,10 @@ public class ReportingDAO {
     public static ArrayList<ProductSummary> getProductStock() throws SQLException {
         Statement st = dbConnection.createStatement();
 
-        String query = "SELECT ID, NAME, CATEGORY, STOCK FROM PRODUCTS";
+        // Retrievs a product and its stock if its not archived
+        String query = "SELECT ID, NAME, CATEGORY, STOCK " +
+            "FROM PRODUCTS " +
+            "WHERE CATEGORY IN (SELECT CATEGORY FROM PRODUCT_CATEGORIES WHERE NOT ARCHIVED)" ;
 
         ResultSet queryResult = st.executeQuery(query);
 
@@ -119,7 +123,10 @@ public class ReportingDAO {
     public static ArrayList<String> getProductCategories() throws SQLException {
         Statement st = dbConnection.createStatement();
 
-        String query = "SELECT CATEGORY FROM PRODUCTS";
+        // Gets a category if it has not been archived
+        String query = "SELECT CATEGORY " + 
+            "FROM PRODUCTS " + 
+            "WHERE CATEGORY IN (SELECT CATEGORY FROM PRODUCT_CATEGORIES WHERE NOT ARCHIVED)";
 
         ResultSet queryResult = st.executeQuery(query);
 
@@ -196,7 +203,7 @@ public class ReportingDAO {
     // Update
     public static Report update(String reportName, String params[]) throws SQLException, DAOException, ParseException {
         checkDate(params[2], params[3]);
-        checkDuplicate(params[0]);
+        //checkDuplicate(params[0]);
 
         Statement st = dbConnection.createStatement();
 

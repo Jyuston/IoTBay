@@ -77,7 +77,7 @@ public class ReportingServlet extends HttpServlet {
             }
         }
 
-        // The sales report has been selected
+        // The stock report has been selected
         else {
             try {
                 // Instantaiate the report using the specially defined constructor

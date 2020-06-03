@@ -130,6 +130,7 @@
         <br>
 
         <h3> Sales by Category</h3>
+        <p class="font-weight-light">Note: Categories where no products were sold will not appear in this report.</p>
         <table class="table table-bordered table-sm table-dark">
             <thead class="thead-light">
                 <th scope="col">Category</th>
@@ -160,6 +161,7 @@
         <br>
 
         <h2> Sales by Category by Product</h2>
+        <p class="font-weight-light">Note: Categories where no products were sold will not appear in this report.</p>
         <%
             HashMap<String, ArrayList<ProductSummary>> salesByCategorybyProduct = report.getSalesBreakdown();
             Set<String> dictionaryKeys3 = salesByCategorybyProduct.keySet();

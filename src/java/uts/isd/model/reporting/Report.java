@@ -18,6 +18,7 @@ public class Report implements Serializable {
     private final SalesAnalyser salesAnalyser = new SalesAnalyser();
     private ProductSummary topProduct;
 
+    // Standard constructor for a sales report
     public Report(String reportName, String reportDescription, String startDate, String endDate, 
         ArrayList<OrderLineItem> saleRecords, ArrayList<ProductSummary> summaries, ArrayList<String> categories) {
         this.name = reportName;
@@ -25,6 +26,7 @@ public class Report implements Serializable {
         this.startDate = startDate;
         this.endDate = endDate;
         
+        // Prevents null pointer exception errors if no sales records were found for the selected period
         if (saleRecords.size() > 0 && saleRecords != null) {
             this.saleRecords.addAll(saleRecords);
             this.productSummaries.addAll(summaries);
@@ -33,13 +35,7 @@ public class Report implements Serializable {
         }
     }
 
-    public Report(String reportName, String reportDescription, String startDate, String endDate) {
-        this.name = reportName;
-        this.description = reportDescription;
-        this.startDate = startDate;
-        this.endDate = endDate;
-    }
-
+    // Constructor for stock report
     public Report(ArrayList<ProductSummary> summaries, ArrayList<String> categories) {
         this.name = "Stock Report";
         this.description = "Inventory Level Report";
@@ -95,7 +91,6 @@ public class Report implements Serializable {
 
     public final ProductSummary getTopSellingItem() {
         return topProduct;
-        //return salesAnalyser.getTopProduct(productSummaries);
     }
 
     public final Hashtable<String, Double> getSalesByState() {
