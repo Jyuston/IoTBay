@@ -14,6 +14,7 @@ import uts.isd.model.Customer;
 import uts.isd.model.Staff;
 import uts.isd.model.dao.AccountDAO;
 import uts.isd.model.dao.CustomerDAO;
+import uts.isd.model.dao.DAOException;
 import uts.isd.model.dao.StaffDAO;
 
 /**
@@ -67,8 +68,9 @@ public class UserManagementServlet extends HttpServlet {
        catch(SQLException err) {
             request.setAttribute("errorUserManagement", "Error accessing database.");
         }
-       catch(Error err){
+       catch(DAOException err){
            request.setAttribute("errorUserManagement", err.getMessage());
+           err.printStackTrace();
         }
        
        finally {

@@ -13,7 +13,7 @@
 
 <h2> Edit Account </h2>
 
-<form class="m-5" method="POST" action="/IoTBay/UserManagementCreateServlet">
+<form class="m-5" method="POST" action="/IoTBay/UserManagementEditServlet">
     <%--Details--%>
     <h4>Details</h4>
     <div class="form-group">

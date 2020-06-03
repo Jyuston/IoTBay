@@ -37,7 +37,7 @@
                 <small id="emailHelp" class="form-text text-muted">Must be a valid email address.</small>
             </div>
             <div class="form-group">
-                <label for="contactNumber">Phone Number</label>
+                <label for="contactNumber">Contact Number</label>
                 <input type="number" class="form-control" name="contactNumber" id="contactNumber" required>
             </div>
             <div class="form-group">
