@@ -45,7 +45,7 @@
         <input class="form-control" name="password" value="${account.password}" required>
     </div>
 
-    <button type="submit" class="btn btn-success mt-4">Add Account</button> 
+    <button type="submit" class="btn btn-success mt-4">Edit Account</button> 
 </form>
 
 <jsp:include page="templates/footer.jsp"/>

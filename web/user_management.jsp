@@ -75,10 +75,11 @@
                             </c:when>
                         </c:choose>
                     
-                    <form action="/IoTBay/UserManagementEditServlet" method="POST">
+                    <form action="/IoTBay/UserManagementEditServlet" method="GET">
                         <input type="hidden" name="accountID"  value="${resultAccount.ID}">
-                        <input type="hidden" name="accountEmail" value="${resultAccount.email}">
-                        <input type="hidden" name="accountPassword" value="${resultAccount.password}">
+                        <input type="hidden" name="accountFirstName" value="${resultAccount.firstName}">
+                        <input type="hidden" name="accountLastName" value="${resultAccount.lastName}">
+                        <input type="hidden" name="accountContactNumber" value="${resultAccount.contactNumber}">
                         <td><button class="btn btn-info btn-sm my-2 mr-2">Edit</button></td>
                     </form>
 
@@ -122,10 +123,11 @@
                     <td>${Customer.email}</td>
                     <td>${Customer.contactNumber}</td>
                     <td> 
-                        <form action="/IoTBay/UserManagementEditServlet" method="POST">
-                            <input type="hidden" name="accountID" value="${Customer.ID}">
-                            <input type="hidden" name="accountEmail" value="${Customer.email}">
-                            <input type="hidden" name="accountPassword" value="${Customer.password}">
+                        <form action="/IoTBay/UserManagementEditServlet" method="GET">
+                            <input type="hidden" name="accountID"  value="${Customer.ID}">
+                            <input type="hidden" name="accountFirstName" value="${Customer.firstName}">
+                            <input type="hidden" name="accountLastName" value="${Customer.lastName}">
+                            <input type="hidden" name="accountContactNumber" value="${Customer.contactNumber}">
                             <button type="submit">Edit</button>
                         </form> 
                     </td>
@@ -155,10 +157,11 @@
                     <td>${Staff.contactNumber}</td>
                     <td>${Staff.admin}</td>
                     <td>
-                        <form action="/IoTBay/UserManagementEditServlet" method="POST">
-                            <input type="hidden" name="accountID" value="${Staff.ID}">
-                            <input type="hidden" name="accountEmail" value="${Staff.email}">
-                            <input type="hidden" name="accountPassword" value="${Staff.password}">
+                        <form action="/IoTBay/UserManagementEditServlet" method="GET">
+                            <input type="hidden" name="accountID"  value="${Staff.ID}">
+                            <input type="hidden" name="accountFirstName" value="${Staff.firstName}">
+                            <input type="hidden" name="accountLastName" value="${Staff.lastName}">
+                            <input type="hidden" name="accountContactNumber" value="${Staff.contactNumber}">
                             <button type="submit">Edit</button>
                         </form> 
                     </td>
