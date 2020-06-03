@@ -20,8 +20,12 @@ public class ReportingServlet extends HttpServlet {
     
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
+        HttpSession session = request.getSession();
         // Implements logic for retrieving a list of report names and displaying them in the view
         try {
+            // Clean the session in case an exit was done inproperly
+            session.removeAttribute("report");
+
             ArrayList<String> reportNames = ReportingDAO.getReportNames();
 
             request.setAttribute("reportNames", reportNames);
