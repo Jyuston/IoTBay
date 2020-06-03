@@ -77,15 +77,20 @@
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Top Selling Item</h5>
-                    <p class="card-text">Name: ${report.topSellingItem.productName}</p>
-                    <p class="card-text">Product ID: ${report.topSellingItem.productID}</p>
-                    <p class="card-text">Quantity Sold: ${report.topSellingItem.unitsSold}</p>
-                    <p class="card-text">Revenue: $ <% out.println(revenueFormatter.format(report.getTopSellingItem().getProductRevenue())); %></p>
-                </div>
-            </div>
+            <%
+                if (report.getTopSellingItem().size() == 1) {
+            %>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Top Selling Item</h5>
+                                <p class="card-text">Name: ${report.topSellingItem[0].productName}</p>
+                                <p class="card-text">Product ID: ${report.topSellingItem[0].productID}</p>
+                                <p class="card-text">Quantity Sold: ${report.topSellingItem[0].unitsSold}</p>   
+                        </div>
+                    </div>
+            <%
+                }
+            %>
 
             <div class="card">
                 <div class="card-body">
@@ -97,6 +102,37 @@
         </div>
 
         <br>
+        <%
+            if (report.getTopSellingItem().size() > 1) {
+        %>
+                <h3> Top Products</h2>
+                <p class="font-weight-light">Note: This table is only displayed when multiple products had the highest quantity sold.</p>
+                <table class="table table-bordered table-sm table-dark">
+                    <thead class="thead-light">
+                        <th scope="col">Product ID</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Quantity Sold</th>
+                        <th scope="col">Revenue</th>
+                    </thead>
+                    <tbody>
+                        <%
+                                ArrayList<ProductSummary> topProducts = report.getTopSellingItem();
+                                for (ProductSummary product : topProducts) {
+                        %>
+                                    <tr>
+                                        <td><% out.println(product.getProductID()); %></td>
+                                        <td><% out.println(product.getProductName()); %></td>
+                                        <td><% out.println(product.getUnitsSold()); %></td>
+                                        <td>$ <% out.println(revenueFormatter.format(product.getProductRevenue())); %> </td>
+                                    </tr>
+                        <%
+                                }
+                        %>
+                    </tbody>
+                </table>
+        <%
+            }
+        %>
         <br>
 
         <h2> Sales Distribution Overview</h2>

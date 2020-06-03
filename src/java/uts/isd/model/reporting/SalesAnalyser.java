@@ -49,16 +49,39 @@ public class SalesAnalyser implements Serializable {
         return dictionary.get(category);
     }
 
-    public ProductSummary getTopProduct(ArrayList<ProductSummary> snapshots) {
-        ProductSummary topProduct = snapshots.get(0);
+    public ArrayList<ProductSummary> getTopProduct(ArrayList<ProductSummary> snapshots) {
+        ProductSummary reference = snapshots.get(0);
+        int topQuantity = 0;
+        int topOccuranceCount = 0;
+
+        ArrayList<ProductSummary> topProducts = new ArrayList<>();
 
         for (ProductSummary product : snapshots) {
-            if (product.getUnitsSold() > topProduct.getUnitsSold()) {
-                topProduct = product;
+            if (product.getUnitsSold() > topQuantity) {
+                topQuantity = product.getUnitsSold();
+                topOccuranceCount = 1;
+                reference = product;
+            }
+
+            else if (topQuantity == product.getUnitsSold()) {
+                topOccuranceCount++;
+            }
+        }
+        
+        // Add all products
+        if (topOccuranceCount > 1) {
+            for (ProductSummary product : snapshots) {
+                if (product.getUnitsSold() == topQuantity) {
+                    topProducts.add(product);
+                }
             }
         }
 
-        return topProduct;
+        else {
+            topProducts.add(reference);
+        }
+        
+        return topProducts;
     }
 
     // Returns a hashtable object with a breakdown of sales by product category
