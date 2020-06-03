@@ -54,12 +54,14 @@ public class SalesAnalyser implements Serializable {
     }
 
     public ProductSummary getTopProduct(ArrayList<ProductSummary> snapshots) {
+        /*
         ArrayList<ProductSummary> productSummaries = new ArrayList<>();
         productSummaries.addAll(getSalesByProduct(snapshots));
+        */
 
-        ProductSummary topProduct = productSummaries.get(0);
+        ProductSummary topProduct = snapshots.get(0);
 
-        for (ProductSummary product : productSummaries) {
+        for (ProductSummary product : snapshots) {
             if (product.getUnitsSold() > topProduct.getUnitsSold()) {
                 topProduct = product;
             }
@@ -91,7 +93,8 @@ public class SalesAnalyser implements Serializable {
         // Returns the hash table to the caller
         return dictionary;
     }
-
+    
+    
     // Returns a HashMap of key-value pairs. Key - product category. Value - all products sold in that category.
     public HashMap<String, ArrayList<ProductSummary>> getSalesByCategoryByProduct(ArrayList<ProductSummary> snapshots, ArrayList<String> categories) {
         // Instatiate the HashMap
@@ -101,7 +104,6 @@ public class SalesAnalyser implements Serializable {
         for (String string : categories) {
             if (!dictionary.containsKey(string)) {
                 //add the key
-                //G
                 dictionary.put(string, new ArrayList<ProductSummary>());
             }
 
@@ -111,10 +113,11 @@ public class SalesAnalyser implements Serializable {
             }
         }
 
+        /*
         ArrayList<ProductSummary> products = new ArrayList<>();
-        products.addAll(getSalesByProduct(snapshots));
-
-        for (ProductSummary product : products) {
+        products.addAll(snapshots);
+        */ 
+        for (ProductSummary product : snapshots) {
             // The key in the dictionary
             String key = product.getProductCategory();
 
@@ -127,7 +130,8 @@ public class SalesAnalyser implements Serializable {
 
         return dictionary;
     }
-
+    
+    /*
     // Gets the units sold for each product, and the revenue from each product
     public ArrayList<ProductSummary> getSalesByProduct(ArrayList<ProductSummary> snapshots) {
 
@@ -167,6 +171,7 @@ public class SalesAnalyser implements Serializable {
         // Return the new list
         return products;
     }
+    */
 
     private int determineIndex(ArrayList<ProductSummary> items, String productID) {
         // Returns the index of a certain product in the list
