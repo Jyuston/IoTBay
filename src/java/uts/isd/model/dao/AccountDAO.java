@@ -84,4 +84,14 @@ public class AccountDAO {
         }
         return null;  
     }
+    
+    public static void delete(String ID) throws SQLException, DAOException{
+        String deleteQuery = "DELETE FROM ACCOUNTS WHERE ID = " + ID;
+        
+        PreparedStatement st = DAOUtils.prepareStatement(deleteQuery, false);
+        
+        int rowsChanged = st.executeUpdate();
+        if (rowsChanged == 0) {throw new DAOException("Failed to delete Product. Please try again.");}
+    }
+    
 }

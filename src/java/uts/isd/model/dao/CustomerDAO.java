@@ -104,9 +104,6 @@ public class CustomerDAO {
 
     }
 
-    public static void delete(Customer customer) {
-    }
-
     // Helpers
     private static Customer createCustomerObject(ResultSet customerRs) throws SQLException {
         Address address = new Address();

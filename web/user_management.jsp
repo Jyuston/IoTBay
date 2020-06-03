@@ -31,6 +31,11 @@
                     <h2> YOUR CRAZZY You MADE A NEW ACCOUNT </h2>
                 </div>
             </c:if>
+            <c:if test="${successDelete}">
+                <div class="alert alert-success my-4" role="alert">
+                    <h2> YOUR CRAZY DELETED </h2>
+                </div>
+            </c:if>
             <form action="/IoTBay/UserManagementServlet" method="POST">
                 <table>
                     <tr>
@@ -76,15 +81,16 @@
                         </c:choose>
                     
                     <form action="/IoTBay/UserManagementEditServlet" method="GET">
+                        <td><button class="btn btn-info btn-sm my-2 mr-2">Edit</button></td>
                         <input type="hidden" name="accountID"  value="${resultAccount.ID}">
                         <input type="hidden" name="accountFirstName" value="${resultAccount.firstName}">
                         <input type="hidden" name="accountLastName" value="${resultAccount.lastName}">
-                        <input type="hidden" name="accountContactNumber" value="${resultAccount.contactNumber}">
-                        <td><button class="btn btn-info btn-sm my-2 mr-2">Edit</button></td>
+                        <input type="hidden" name="accountContactNumber" value="${resultAccount.contactNumber}">    
                     </form>
 
-                    <form action="/IoTBay/UserManagementDeleteServlet" method="GET">
+                    <form action="/IoTBay/UserManagementDeleteServlet" method="POST">
                         <td><button class="btn btn-danger btn-sm my-2 float-right">Delete</button></td>
+                        <input type="hidden" name="accountID"  value="${resultAccount.ID}">
                     </form>   
                     </tr>
 
@@ -182,12 +188,9 @@
                 <th scope="col">Email</th>
                 <th scope="col">Name</th>
                 <th scope="col">Account</th>
-
             </tr>
         </thead>
     </table>
 </div>
-
-
 
 <jsp:include page="templates/footer.jsp"/>

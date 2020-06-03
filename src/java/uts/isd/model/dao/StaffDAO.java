@@ -68,9 +68,6 @@ public class StaffDAO {
     public static void update(Staff customer, String[] params) {
     }
 
-    public static void delete(Staff customer) {
-    }
-
     // Helpers
     private static Staff createStaffObject(ResultSet staffRs) throws SQLException {
         Staff staff = new Staff();

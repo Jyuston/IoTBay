@@ -41,13 +41,21 @@
         <servlet-name>UserManagementCreateServlet</servlet-name>
         <url-pattern>/UserManagementCreateServlet</url-pattern>
     </servlet-mapping>
-        <servlet>
+    <servlet>
         <servlet-name>UserManagementEditServlet</servlet-name>
         <servlet-class>uts.isd.controller.user_management.UserManagementEditServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserManagementEditServlet</servlet-name>
         <url-pattern>/UserManagementEditServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UserManagementDeleteServlet</servlet-name>
+        <servlet-class>uts.isd.controller.user_management.UserManagementDeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserManagementDeleteServlet</servlet-name>
+        <url-pattern>/UserManagementDeleteServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
