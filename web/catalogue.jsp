@@ -1,14 +1,13 @@
-<%@page import="uts.isd.model.Product" %>
-<%@ page import="java.util.LinkedList" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<jsp:include page="templates/header.jsp"/>
+<%--@elvariable id="productList" type="java.util.List<Product>"--%>
 
 <head>
     <title>Search products from category</title>
 </head>
+<jsp:include page="templates/header.jsp"/>
 
-<h2> Search a Product </h2>
+<h2>Search a Product</h2>
 <div class="container-fluid">
     <div class="row">
         <div class="form-group">
@@ -23,7 +22,8 @@
                     <tr>
 
                         <td>
-                            <button type="submit" class="btn btn-info btn-sm my-3" id="submit" name="submit">Search
+                            <button type="submit" class="btn btn-info btn-sm my-3" id="submit" name="submit">
+                                Search
                             </button>
                         </td>
                     </tr>
@@ -61,11 +61,11 @@
 
 
 <div class="my-4">
-    <button type="button" class="btn btn-success btn-sm"> + Add New Product</button>
+    <button type="button" class="btn btn-success btn-sm">+ Add New Product</button>
 </div>
 
 
-<h2> All Products </h2>
+<h2>All Products</h2>
 <div class="my-3">
     <table class="table">
         <h4>Product</h4>

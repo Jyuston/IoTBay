@@ -20,7 +20,7 @@ public class CatalogueServlet extends HttpServlet {
             request.setAttribute("productList", productList);
         }
         catch (SQLException err) {
-            request.setAttribute("errorCatalogue", "Error accessing database.");
+            request.setAttribute("catalogueErr", "Error accessing database.");
             err.printStackTrace();
         }
         finally {
@@ -38,10 +38,10 @@ public class CatalogueServlet extends HttpServlet {
             request.setAttribute("searchedProduct", searchedProduct);
         }
         catch (DAOException err) {
-            request.setAttribute("errorCatalogue", err.getMessage());
+            request.setAttribute("catalogueErr", err.getMessage());
         }
         catch (SQLException err) {
-            request.setAttribute("errorCatalogue", "Error accessing database.");
+            request.setAttribute("catalogueErr", "Error accessing database.");
             err.printStackTrace();
         }
         finally {
