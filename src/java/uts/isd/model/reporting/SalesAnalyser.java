@@ -10,10 +10,6 @@ import uts.isd.model.Product;
 
 public class SalesAnalyser implements Serializable {
 
-    public void use(ArrayList<OrderLineItem> records) {
-        //might be used
-    }
-
     // Calculates the total sales value
     // Takes an ArrayList input of TotalSalesRecord objects
     public double getTotalSalesValue(ArrayList<OrderLineItem> records) {
@@ -54,12 +50,9 @@ public class SalesAnalyser implements Serializable {
     }
 
     public ProductSummary getTopProduct(ArrayList<ProductSummary> snapshots) {
-        ArrayList<ProductSummary> productSummaries = new ArrayList<>();
-        productSummaries.addAll(getSalesByProduct(snapshots));
+        ProductSummary topProduct = snapshots.get(0);
 
-        ProductSummary topProduct = productSummaries.get(0);
-
-        for (ProductSummary product : productSummaries) {
+        for (ProductSummary product : snapshots) {
             if (product.getUnitsSold() > topProduct.getUnitsSold()) {
                 topProduct = product;
             }
@@ -91,7 +84,8 @@ public class SalesAnalyser implements Serializable {
         // Returns the hash table to the caller
         return dictionary;
     }
-
+    
+    
     // Returns a HashMap of key-value pairs. Key - product category. Value - all products sold in that category.
     public HashMap<String, ArrayList<ProductSummary>> getSalesByCategoryByProduct(ArrayList<ProductSummary> snapshots, ArrayList<String> categories) {
         // Instatiate the HashMap
@@ -101,7 +95,6 @@ public class SalesAnalyser implements Serializable {
         for (String string : categories) {
             if (!dictionary.containsKey(string)) {
                 //add the key
-                //G
                 dictionary.put(string, new ArrayList<ProductSummary>());
             }
 
@@ -111,10 +104,7 @@ public class SalesAnalyser implements Serializable {
             }
         }
 
-        ArrayList<ProductSummary> products = new ArrayList<>();
-        products.addAll(getSalesByProduct(snapshots));
-
-        for (ProductSummary product : products) {
+        for (ProductSummary product : snapshots) {
             // The key in the dictionary
             String key = product.getProductCategory();
 
@@ -126,58 +116,6 @@ public class SalesAnalyser implements Serializable {
         }
 
         return dictionary;
-    }
-
-    // Gets the units sold for each product, and the revenue from each product
-    public ArrayList<ProductSummary> getSalesByProduct(ArrayList<ProductSummary> snapshots) {
-
-        ArrayList<ProductSummary> products = new ArrayList<>();
-
-        for (ProductSummary snapshot : snapshots) {
-            // The productID of the snapshot
-            String productID = snapshot.getProductID();
-            
-            
-            int index = determineIndex(products, productID);
-            // If the index is 0 --> that product is not yet in the list.
-            if (index != -1) {
-                // The product is already in the list
-                // Get the reference to the object within the list (objects in list are mutable)
-                ProductSummary lineItem = products.get(index);
-               
-                // Increment that products quantity sold, and add to the revenue
-                lineItem.addUnitsSold(snapshot.getUnitsSold());
-                lineItem.addProductRevenue(snapshot.getProductRevenue());
-
-                // No need to re-add to the list as we are working with references
-            }
-
-            // As the product is not in the list, we need to add it
-            else {
-                // Insantiate a new object and add to the list
-                // Necessary as we should not be adding references to the new lists (as it would result in over-writing data we need)
-                ProductSummary lineItem = new ProductSummary(productID, snapshot.getProductName(), snapshot.getProductCategory(), 
-                snapshot.getUnitsSold(), snapshot.getProductRevenue());
-                
-                // Add the new object to the list
-                products.add(lineItem);
-            }
-        }
-
-        // Return the new list
-        return products;
-    }
-
-    private int determineIndex(ArrayList<ProductSummary> items, String productID) {
-        // Returns the index of a certain product in the list
-        // Returns 0 if the product is not yet in the list
-        for (ProductSummary orderLineSnapshot : items) {
-            if (orderLineSnapshot.getProductID().equals(productID)) {
-                return items.indexOf(orderLineSnapshot);
-            }
-        }
-
-        return -1;
     }
 
     // Returns a hashtable object with a breakdown of sales by state
@@ -212,7 +150,6 @@ public class SalesAnalyser implements Serializable {
         for (String string : categories) {
             if (!dictionary.containsKey(string)) {
                 //add the key
-                //G
                 dictionary.put(string, new ArrayList<ProductSummary>());
             }
 

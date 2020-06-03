@@ -77,7 +77,7 @@ public class ReportingServlet extends HttpServlet {
             
             catch (DAOException | SQLException e) {
                 request.setAttribute("error", e.getMessage());
-                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+                request.getRequestDispatcher("reporting.jsp").include(request, response);
             }
         }
 
