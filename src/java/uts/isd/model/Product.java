@@ -5,7 +5,8 @@ import java.io.Serializable;
 public class Product implements Serializable {
     private int ID;
     private String name;
-    private  String category;
+    private String category;
+    private String description;
     private int stock;
     private double price;
     private boolean archived;
@@ -20,6 +21,9 @@ public class Product implements Serializable {
 
     public String getCategory() { return category; }
     public void setCategory(String category) { this.category = category; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
     public int getStock() { return stock; }
     public void setStock(int stock) { this.stock = stock; }
