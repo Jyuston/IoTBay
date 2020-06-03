@@ -128,7 +128,7 @@ public class ProductDAO {
      * Update a single product from the database.
      * @param product The instantiated product to update. Must have an ID.
      */
-    public static void update(Product product, String[] params) throws SQLException, DAOException {
+    public static void update(Product product) throws SQLException, DAOException {
         String updateQuery =
                 "UPDATE PRODUCTS SET NAME = ?,STOCK = ?, PRICE = ?, CATEGORY = ?,DESCRIPTION = ?, ARCHIVED = ? " +
                 "WHERE ID = ?";
@@ -152,7 +152,7 @@ public class ProductDAO {
      * Delete a single product from the database.
      * @param productID ID of the product to delete
      */
-    public void deleteProduct(String productID) throws SQLException, DAOException {
+    public void delete(String productID) throws SQLException, DAOException {
         String deleteQuery = "DELETE FROM PRODUCTS WHERE ID = " + productID;
 
         PreparedStatement st = DAOUtils.prepareStatement(deleteQuery, false);
