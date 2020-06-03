@@ -62,14 +62,6 @@ public class ReportingDAO {
     public static ArrayList<ProductSummary> productSnapshots(String beginTimeStamp, String endTimeStamp) throws SQLException {
         Statement st = dbConnection.createStatement();
         
-        /*
-        String query = "SELECT ol.PRODUCT_ID as id, NAME, CATEGORY as category, QUANTITY_ORDERED, (ol.PRICE * QUANTITY_ORDERED) as PRICE "
-                + "FROM ORDER_LINE ol " + "INNER JOIN PRODUCTS on ol.PRODUCT_ID = PRODUCTS.ID "
-                + "INNER JOIN ORDERS on ol.ORDER_ID = ORDERS.ID " + "WHERE ORDERED_ON > '" + beginTimeStamp
-                + "' AND ORDERS.ORDERED_ON < '" + endTimeStamp + "'" + "ORDER BY category, id";
-        
-        */
-
         String query = "SELECT p.id, p.\"NAME\", p.CATEGORY, SUM(ol.QUANTITY_ORDERED) AS TotalQuantity, SUM(ol.QUANTITY_ORDERED * ol.PRICE) AS TotalPrice " +
                 "FROM ORDER_LINE ol " +
                 "INNER JOIN PRODUCTS p ON ol.PRODUCT_ID = p.ID " +
