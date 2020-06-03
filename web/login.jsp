@@ -25,7 +25,7 @@
 
             <c:otherwise>
                 <form action="LoginServlet" method="post" class="validate">
-                    <h1>Login</h1>
+                    <h1>Login</h1>e
 
                         <%--General Errors--%>
                     <c:if test="${not empty emptyEmailPassVErr}">
