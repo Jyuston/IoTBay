@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 
-import uts.isd.model.dao.ReportingDAO;
-
 public class Report implements Serializable {
     private String name;
     private String description;
@@ -16,7 +14,7 @@ public class Report implements Serializable {
     private final ArrayList<ProductSummary> productSummaries = new ArrayList<>();
     private final ArrayList<String> categories = new ArrayList<>();
     private final SalesAnalyser salesAnalyser = new SalesAnalyser();
-    private ProductSummary topProduct;
+    private final ArrayList<ProductSummary> topProducts = new ArrayList<>();
 
     // Standard constructor for a sales report
     public Report(String reportName, String reportDescription, String startDate, String endDate, 
@@ -31,7 +29,7 @@ public class Report implements Serializable {
             this.saleRecords.addAll(saleRecords);
             this.productSummaries.addAll(summaries);
             this.categories.addAll(categories);
-            this.topProduct = salesAnalyser.getTopProduct(summaries);
+            topProducts.addAll(salesAnalyser.getTopProduct(summaries));
         }
     }
 
@@ -89,8 +87,8 @@ public class Report implements Serializable {
         return salesAnalyser.getTopCategoryRevenue(getTopCategory(), saleRecords);
     }
 
-    public final ProductSummary getTopSellingItem() {
-        return topProduct;
+    public final ArrayList<ProductSummary> getTopSellingItem() {
+        return topProducts;
     }
 
     public final Hashtable<String, Double> getSalesByState() {

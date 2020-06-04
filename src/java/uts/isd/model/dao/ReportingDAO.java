@@ -202,9 +202,13 @@ public class ReportingDAO {
     }
 
     // Update
-    public static Report update(String reportName, String params[]) throws SQLException, DAOException, ParseException {
+    public static Report update(String reportName, String params[], Boolean nameChanged) throws SQLException, DAOException, ParseException {
         checkDate(params[2], params[3]);
-        //checkDuplicate(params[0]);
+
+        // If the name of the report was changed, a check must be done to ensure the name is unique
+        if (nameChanged) {
+            checkDuplicate(params[0]);
+        }
 
         Statement st = dbConnection.createStatement();
 

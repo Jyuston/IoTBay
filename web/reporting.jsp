@@ -98,7 +98,7 @@
                     <br>
                     <br>
                     <h2>New Sales Report</h2>
-                    <jsp:include page="reportForm.jsp"/>
+                    <jsp:include page="/reportForm.jsp"/>
                 </div>
             </div>
         </div>
