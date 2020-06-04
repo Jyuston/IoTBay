@@ -78,7 +78,7 @@ public class ReportFormServlet extends HttpServlet {
 
                 // Update the report, then retrieve it with latest data and save it to the session
                 // Note this is neccessary for data refresh
-                session.setAttribute("report", ReportingDAO.update(originalName, createParamsArray(request))); 
+                session.setAttribute("report", ReportingDAO.update(originalName, createParamsArray(request), isNameChanged(createParamsArray(request), report))); 
                                               
                 session.removeAttribute("editReport");
                 response.sendRedirect("reporting/reportView.jsp");
@@ -122,5 +122,10 @@ public class ReportFormServlet extends HttpServlet {
         };
 
         return params;
+    }
+
+    private boolean isNameChanged(String[] params, Report r) throws ServletException {
+        // Checks to see if name was changed
+        return !params[0].equals(r.getName());
     }
 }
