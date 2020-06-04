@@ -81,7 +81,7 @@ public class ReportFormServlet extends HttpServlet {
                 session.setAttribute("report", ReportingDAO.update(originalName, createParamsArray(request), isNameChanged(createParamsArray(request), report))); 
                                               
                 session.removeAttribute("editReport");
-                response.sendRedirect("reporting/reportView.jsp");
+                response.sendRedirect("reportView.jsp");
             }
 
             // Catches an exception that may occur in the model when working with DAO objects
@@ -102,7 +102,7 @@ public class ReportFormServlet extends HttpServlet {
             try {
                 Report r = ReportingDAO.save(createParamsArray(request));
                 session.setAttribute("report", r);
-                response.sendRedirect("reporting/reportView.jsp");
+                response.sendRedirect("reportView.jsp");
             }          
 
             catch (DAOException | SQLException | ParseException e) {

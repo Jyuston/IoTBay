@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="css/workshop.css">
         <title>IoT Bay</title>
     </head>
-    <jsp:include page="../templates/header.jsp"/>
+    <jsp:include page="templates/header.jsp"/>
 
     <%
         Report report = (Report)session.getAttribute("report");
@@ -82,5 +82,5 @@
         %>
     </body>
         
-    <jsp:include page="../templates/footer.jsp"/>
+    <jsp:include page="templates/footer.jsp"/>
 </html>
