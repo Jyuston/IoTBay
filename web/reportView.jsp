@@ -68,7 +68,7 @@
         <br>
         <br>
         <% if (report.salesExist()) { %>
-        <h2> Key Sales Statisitics & KPIs</h2>
+        <h2> Key Sales Statisitics & KPIs Dashboard</h2>
         <div class="card-deck">
             <div class="card">
                 <div class="card-body">
