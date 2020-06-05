@@ -9,6 +9,7 @@
 <%@ page import="uts.isd.controller.reporting.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.text.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -38,48 +39,27 @@
         
         <h2> Stock by Category by Product</h2>
 
-        <%
-            HashMap<String, ArrayList<ProductSummary>> salesByCategorybyProduct = report.getStockReport();
-            Set<String> dictionaryKeys3 = salesByCategorybyProduct.keySet();
-
-            for (String key : dictionaryKeys3) {
-                String category = key;
-                session.setAttribute("category", category);
-        %>
-            <h4> ${category}</h4>
-            <div class="table-responsive-sm">
-            <table class="table table-bordered table-sm table-dark">
-                <thead class="thead-light">
-                    <th scope="col">Product ID</th>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Stock</th>
-                </thead>
-                <tbody>
-            <%
-                ArrayList<ProductSummary> list = salesByCategorybyProduct.get(category);
-                for (ProductSummary p : list) {
-                    String productID = p.getProductID();
-                    String productName = p.getProductName();
-                    String units = Integer.toString(p.getUnitsSold());
-
-                    session.setAttribute("productID", productID);
-                    session.setAttribute("productName", productName);
-                    session.setAttribute("units", units);
-            %>
-                <tr>
-                    <td>${productID}</td>
-                    <td>${productName}</td>
-                    <td>${units}</td>
-                </tr>
-            <%
-                }
-            %>
-            </tbody>
-            </table>
-            </div>
-        <%
-            }
-        %>
+        <c:forEach items="${report.stockReport}" var="entry" varStatus="loop">
+                    <h4>${entry.key}</h4>
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-sm table-dark">
+                            <thead class="thead-light">
+                                <th scope="col">Product ID</th>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Stock</th>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${entry.value}" var="item" varStatus="loop">
+                                        <tr>
+                                            <td>${item.ID}</td>
+                                            <td>${item.name}</td>
+                                            <td>${item.unitsSold}</td>                                            
+                                        </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>       
+                </c:forEach>
     </body>
         
     <jsp:include page="templates/footer.jsp"/>

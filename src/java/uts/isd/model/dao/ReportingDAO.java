@@ -124,8 +124,7 @@ public class ReportingDAO {
 
         // Gets a category if it has not been archived
         String query = "SELECT CATEGORY " + 
-            "FROM PRODUCTS " + 
-            "WHERE CATEGORY IN (SELECT CATEGORY FROM PRODUCT_CATEGORIES WHERE NOT ARCHIVED)";
+            "FROM PRODUCTS";
 
         ResultSet queryResult = st.executeQuery(query);
 
