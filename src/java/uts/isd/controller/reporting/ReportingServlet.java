@@ -25,6 +25,7 @@ public class ReportingServlet extends HttpServlet {
         try {
             // Clean the session in case an exit was done inproperly
             session.removeAttribute("report");
+            session.removeAttribute("error");
 
             ArrayList<String> reportNames = ReportingDAO.getReportNames();
 
