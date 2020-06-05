@@ -51,7 +51,10 @@ VALUES (1, '5244 8746 5799 2270', '832', '04', '21'),
 
 INSERT INTO PRODUCT_CATEGORIES (CATEGORY, ARCHIVED)
 VALUES ('Resistors', false),
-       ('Capacitors', false)
+       ('Capacitors', false),
+       ('Actuators', false),
+       ('Sensors', false),
+       ('Raspberry Pi', false)
 ;
 
 INSERT INTO PRODUCTS (NAME, STOCK, PRICE, CATEGORY, DESCRIPTION, ARCHIVED)
@@ -61,9 +64,8 @@ VALUES ('0.5 Ohm Resistor', 10, 0.20, 'Resistors', 'This is a 0.5 ohn resistor',
        ('0.5 force sensitive resistor sensor', 25, 8.50, 'Resistors',
         'This is a force sensitive resistor with a round, 0.5" diameter, sensing area.', false),
        ('2.5 micro farahs capacitor', 20, 1.50, 'Capacitors', 'This is a micro farahs capacitor', false),
-       ('1/4W resistor kit', 30, 12.00, 'Resistors', 'Resistor kit comes with 25 each of 20 different resistor values ',
-        false),
-       ('ceramic capacitor', 22, 3.50, 'Capacitors', 'This is a ceramic capacitor', false),
+       ('1/4W resistor kit', 30, 12.00, 'Resistors', 'Resistor kit comes with 25 each of 20 different resistor values', false),
+       ('ceramic capacitor', 16, 3.50, 'Capacitors', 'This is a ceramic capacitor', false),
        ('tantalum capacitor', 20, 4.00, 'Capacitors', 'This is a tantalum capacitor', false),
        ('plastic film capacitor', 20, 1.50, 'Capacitors', 'This is a plastic film capacitor', false),
        ('aluminium capacitor', 30, 5.50, 'Capacitors', 'This is a aluminium capacitor', false),
@@ -76,7 +78,10 @@ VALUES ('0.5 Ohm Resistor', 10, 0.20, 'Resistors', 'This is a 0.5 ohn resistor',
        ('voltage led load resistor', 20, 1.50, 'Resistors', 'This is a voltage led load resistor', false),
        ('high temp electrolytic capacitors', 80, 7.00, 'Capacitors', 'This is a high temp capacitor', false),
        ('microfarad run capacitor', 20, 1.50, 'Capacitors', 'This is a microfarad run capacitor', false),
-       ('plastic capacitor', 10, 0.50, 'Capacitors', 'This is a plastic capacitor', false)
+       ('plastic capacitor', 10, 0.50, 'Capacitors', 'This is a plastic capacitor', false),
+       ('Colour sensor', 18, 12.80, 'Sensors', 'RGB color sensor', false),
+       ('Light sensor', 23, 7.99, 'Sensors', 'Photon (light) sensor', false),
+       ('12V 100mm Linear Actuator', 3, 24.99, 'Actuators', '12V 50-100mm Linear Actuator', false)
 ;
 
 INSERT INTO ORDERS (ORDERED_ON, SHIPPING_ADDRESS, STATUS, TOTAL, CUSTOMER_ID, TRACKING_ID)
@@ -96,11 +101,13 @@ VALUES (1, 1, 5, 0.20),
        (1, 2, 8, 0.50),
        (1, 3, 10, 0.70),
        (1, 4, 2, 1.50),
+       (1, 20, 3, 12.80),
+       (1, 21, 5, 8.99),
        (2, 1, 1, 0.20),
        (2, 2, 1, 0.50),
        (2, 3, 4, 0.70),
        (3, 6, 6, 12.00),
-       (3, 7, 3, 3.50),
+       (3, 7, 15, 3.50),
        (4, 3, 4, 0.70),
        (5, 3, 2, 0.70),
        (6, 5, 5, 1.50),
@@ -109,10 +116,13 @@ VALUES (1, 1, 5, 0.20),
        (8, 9, 6, 1.50),
        (8, 7, 2, 3.50),
        (9, 3, 2, 0.70),
-       (9, 4, 5, 1.50)
+       (9, 4, 5, 1.50),
+       (9, 20, 3, 12.80)
 ;
 
 INSERT INTO REPORTS (NAME, DESCRIPTION, START_DATE, END_DATE)
 VALUES ('January 2020 Sales Report', 'Total sales for January', '2020-01-01 00:00:00', '2020-01-31 23:59:59'),
-       ('02 2020 Sales Report', 'Feb Sales report', '2020-02-01 00:00:00', '2020-02-29 23:59:59')
+       ('Q1 2020 Sales', 'Sales report for Q1 of 2020', '2020-01-01 00:00:00', '2020-03-31 23:59:59'),
+       ('2019 Sales', 'Sales report for 2019', '2019-01-01 00:00:00', '2019-12-31 23:59:59'),
+       ('2020 Sales', 'Sales report for 2020', '2020-01-01 00:00:00', '2020-12-31 23:59:59')
 ;
