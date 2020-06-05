@@ -2,14 +2,14 @@ package uts.isd.model.reporting;
 
 import java.io.Serializable;
 
-public class OrderLineSnapshot implements Serializable {
+public class ProductSummary implements Serializable {
     private final String productID;
     private final String productName;
     private final String productCategory;
     private int unitsSold;
     private double productRevenue;
 
-    public OrderLineSnapshot(String productID, String productName, String productCategory, int unitsSold, double productRevenue) {
+    public ProductSummary(String productID, String productName, String productCategory, int unitsSold, double productRevenue) {
         this.productID = productID;
         this.productName = productName;
         this.productCategory = productCategory;
