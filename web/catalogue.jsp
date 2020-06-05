@@ -19,27 +19,23 @@
 </form>
 
 <h1>Products</h1>
-<div class="product-list">
+
+<div class="card-deck products-list">
     <c:forEach items="${productList}" var="product" varStatus="count">
-        <div class="product">
-            <div class="img"></div>
-            <div class="content card-body d-flex flex-column">
-                <div>
-                    <a href="ProductDetailsServlet?id=${product.ID}" class="card-title mr-2" style="font-size: 1.25rem">${product.name}</a>
-                    <h6 class="d-inline px-2 py-1 mb-3 rounded-pill bg-primary text-white"
-                        style="font-size: 0.875rem; line-height: 2rem;">${product.category}</h6>
-                </div>
-
-                <c:choose>
-                    <c:when test="${product.stock > 0}">
-                        <p class="text-success flex-grow-1">${product.stock} currently in stock</p>
-                    </c:when>
-                    <c:otherwise>
-                        <p class="text-danger flex-grow-1">Out of stock</p>
-                    </c:otherwise>
-                </c:choose>
-
-                <p class="font-weight-medium mb-0" style="font-size: 1.25rem">AU $${product.price}</p>
+        <div class="card">
+            <svg class="card-img-top" style="text-anchor: middle" width="100%" height="160" xmlns="http://www.w3.org/2000/svg"
+                 preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap">
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#868e96"></rect>
+                <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text>
+            </svg>
+            <div class="card-body">
+                <h5 class="card-title"><a href="ProductDetailsServlet?id=${product.ID}">${product.name}</a></h5>
+                <p class="card-text price">$${product.price} AUD</p>
+                <p class="card-text"><small class="text-muted">${product.stock} currently in stock</small></p>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">${product.category}</small>
             </div>
         </div>
     </c:forEach>
