@@ -23,12 +23,7 @@ public class CatalogueServlet extends HttpServlet {
         LinkedList<Product> productList;
 
         try {
-//            if (query != null || category != null) {
-                productList = ProductDAO.search(query, category);
-//            } else {
-//                productList = ProductDAO.getAll();
-//            }
-
+            productList = ProductDAO.search(query, category);
             request.setAttribute("productList", productList);
         }
         catch (SQLException err) {
@@ -42,12 +37,10 @@ public class CatalogueServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
-        String name = request.getParameter("name");
-        String category = request.getParameter("category");
+        int productID = Integer.parseInt(request.getParameter("productID"));
 
         try {
-            // TODO better way to search for specific item
-            Product searchedProduct = ProductDAO.get(123);
+            Product searchedProduct = ProductDAO.get(productID);
             request.setAttribute("searchedProduct", searchedProduct);
         }
         catch (DAOException err) {
