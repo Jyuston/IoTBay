@@ -68,27 +68,24 @@
                     <tr>
                         <c:choose>
                             <c:when test="${resultAccount.active}">
-                                <form action="/IoTBay/UserManagementActiveServlet" method="POST">
-                                    <td><button class="btn btn-primary btn-sm my-2 mr-2">Deactivate</button></td>
-                                    <input type="hidden" value="deactivate" name="action">
-                                    <input type="hidden" name="accountID"  value="${resultAccount.ID}">
-                                </form>                          
-                            </c:when>
-                            <c:when test="${!resultAccount.active}">
-                                <form action="/IoTBay/UserManagementActiveServlet" method="POST">
-                                    <td><button class="btn btn-warning btn-sm my-2 mr-2">Activate</button></td>
-                                    <input type="hidden" value="activate" name="action">
-                                    <input type="hidden" name="accountID"  value="${resultAccount.ID}">                            
-                                </form>
-                            </c:when>
-                        </c:choose>
-                    
+                            <form action="/IoTBay/UserManagementActiveServlet" method="POST">
+                                <td><button class="btn btn-primary btn-sm my-2 mr-2">Deactivate</button></td>
+                                <input type="hidden" value="deactivate" name="action">
+                                <input type="hidden" name="accountID"  value="${resultAccount.ID}">
+                            </form>                          
+                        </c:when>
+                        <c:when test="${!resultAccount.active}">
+                            <form action="/IoTBay/UserManagementActiveServlet" method="POST">
+                                <td><button class="btn btn-warning btn-sm my-2 mr-2">Activate</button></td>
+                                <input type="hidden" value="activate" name="action">
+                                <input type="hidden" name="accountID"  value="${resultAccount.ID}">                            
+                            </form>
+                        </c:when>
+                    </c:choose>
+
                     <form action="/IoTBay/UserManagementEditServlet" method="GET">
                         <td><button class="btn btn-info btn-sm my-2 mr-2">Edit</button></td>
-                        <input type="hidden" name="accountID"  value="${resultAccount.ID}">
-                        <input type="hidden" name="accountFirstName" value="${resultAccount.firstName}">
-                        <input type="hidden" name="accountLastName" value="${resultAccount.lastName}">
-                        <input type="hidden" name="accountContactNumber" value="${resultAccount.contactNumber}">    
+                        <input type="hidden" name="accountID"  value="${resultAccount.ID}">   
                     </form>
 
                     <form action="/IoTBay/UserManagementDeleteServlet" method="POST">
@@ -114,31 +111,28 @@
 <h2> All Users </h2>
 <div class="my-3">
     <h4 class="mb-3">Customer</h4>
-    <div style="max-height: 400px" class="overflow-auto mb-4">
-        <table class="table overflow-auto" style="max-height: 100px">
+    <div style="max-height: 400px;" class="table-responsive overflow-auto mb-4">
+        <table class="table">
             <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Contact Number</th>
-                    <th></th>
+                <tr class="d-flex">
+                    <th class="col-1">#</th>
+                    <th class="col-3">Name</th>
+                    <th class="col-4">Email</th>
+                    <th class="col-2">Contact Number</th>
+                    <th class="col-2"></th>
                 </tr>
             </thead>
             <c:forEach items="${customerList}" var="Customer" varStatus="count">
-                <tr>
-                    <td>${Customer.ID}</td>
-                    <td>${Customer.firstName} ${Customer.lastName}</td>
-                    <td>${Customer.email}</td>
-                    <td>${Customer.contactNumber}</td>
-                    <td> 
+                <tr class="d-flex">
+                    <td class="col-1">${Customer.ID}</td>
+                    <td class="col-3">${Customer.firstName} ${Customer.lastName}</td>
+                    <td class="col-4">${Customer.email}</td>
+                    <td class="col-2">${Customer.contactNumber}</td>
+                    <td class="col-2"> 
                         <form action="/IoTBay/UserManagementEditServlet" method="GET">
                             <input type="hidden" name="accountID"  value="${Customer.ID}">
-                            <input type="hidden" name="accountFirstName" value="${Customer.firstName}">
-                            <input type="hidden" name="accountLastName" value="${Customer.lastName}">
-                            <input type="hidden" name="accountContactNumber" value="${Customer.contactNumber}">
                             <button type="submit">Edit</button>
-                        </form> 
+                        </form>
                     </td>
                 </tr>
             </c:forEach>
@@ -146,31 +140,28 @@
     </div>
 
     <h4 class="mb-3">Staff</h4>
-    <div style="max-height: 400px" class="overflow-auto mb-4">
+    <div style="max-height: 400px" class="table-responsive overflow-auto mb-4">
         <table class="table">
             <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Contact Number</th>
-                    <th scope="col">Staff-Admin</th>
-                    <th></th>
+                <tr class="d-flex">
+                    <th class="col-1">#</th>
+                    <th class="col-2">Name</th>
+                    <th class="col-3">Email</th>
+                    <th class="col-2">Contact Number</th>
+                    <th class="col-2">Staff-Admin</th>
+                    <th class="col-2"></th>
                 </tr>
             </thead>
             <c:forEach items="${staffList}" var="Staff" varStatus="count">
-                <tr>
-                    <td>${Staff.ID}</td>
-                    <td>${Staff.firstName} ${Staff.lastName}</td>
-                    <td>${Staff.email}</td>
-                    <td>${Staff.contactNumber}</td>
-                    <td>${Staff.admin}</td>
-                    <td>
+                <tr class="d-flex">
+                    <td class="col-1">${Staff.ID}</td>
+                    <td class="col-2">${Staff.firstName} ${Staff.lastName}</td>
+                    <td class="col-3">${Staff.email}</td>
+                    <td class="col-2">${Staff.contactNumber}</td>
+                    <td class="col-2">${Staff.admin}</td>
+                    <td class="col-2">
                         <form action="/IoTBay/UserManagementEditServlet" method="GET">
                             <input type="hidden" name="accountID"  value="${Staff.ID}">
-                            <input type="hidden" name="accountFirstName" value="${Staff.firstName}">
-                            <input type="hidden" name="accountLastName" value="${Staff.lastName}">
-                            <input type="hidden" name="accountContactNumber" value="${Staff.contactNumber}">
                             <button type="submit">Edit</button>
                         </form> 
                     </td>

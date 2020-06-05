@@ -84,6 +84,24 @@ public class AccountDAO {
         }
         return null;  
     }
+    
+    public static Account getAccount(int ID) throws SQLException{
+        Statement st = dbConnection.createStatement();
+        String getAccountDataQuery = 
+                "SELECT * FROM ACCOUNTS " +
+                "WHERE ID = " + ID;
+        
+        ResultSet accountRs = st.executeQuery(getAccountDataQuery);
+        if (!accountRs.next()) throw new DAOException("Account not found. Please try again.");
+        
+        if ((accountRs.getString("ACCOUNT_TYPE").charAt(0)) == 'C'){;
+            return CustomerDAO.get(accountRs.getInt("ID"));
+        } 
+        else if ((accountRs.getString("ACCOUNT_TYPE").charAt(0)) == 'S'){
+            return StaffDAO.get(accountRs.getInt("ID"));
+        }
+        return null;  
+    }
 
     /**
      * Update a single account from the database.

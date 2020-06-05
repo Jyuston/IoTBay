@@ -8,18 +8,14 @@ package uts.isd.controller.user_management;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
-import uts.isd.model.Account;
 import uts.isd.model.Address;
 import uts.isd.model.Customer;
 import uts.isd.model.Order;
 import uts.isd.model.PaymentInformation;
 import uts.isd.model.Staff;
-import uts.isd.model.dao.AccountDAO;
+import uts.isd.model.Validator;
 import uts.isd.model.dao.CustomerDAO;
 import uts.isd.model.dao.DAOException;
 import uts.isd.model.dao.StaffDAO;
@@ -44,12 +40,25 @@ public class UserManagementCreateServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        Validator validator = new Validator(request);
+        
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
         String contactNumber = request.getParameter("contactNumber");
         String password = request.getParameter("password");
         String accountType = request.getParameter("accountType");
+        
+                // Run validation checks
+        validator.checkEmpty(email, password)
+                .validateEmail(email)
+                .validatePassword(password)
+                .validateName(firstName + " " + lastName);
+
+        if (validator.failed()) {
+            request.getRequestDispatcher("/user_management_create.jsp").include(request, response);
+            return;
+        }
 
         try {
 
