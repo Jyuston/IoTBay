@@ -8,6 +8,7 @@ public class Validator {
     private final String emailPattern = "([a-zA-Z0-9]+)(([._-])([a-zA-Z0-9]+))*(@)([a-z]+)(.)([a-z]{3})((([.])[a-z]{0,2})*)";
     private final String namePattern = "([A-Z][a-z]+[\\s])+[A-Z][a-z]*";
     private final String passwordPattern = "[a-z0-9]{4,}";
+    private final String contactNumberPattern = "[0-9] [0-9]{3} [0-9]{3}";
     private final HttpServletRequest request;
     private boolean failed = false;
 
@@ -52,6 +53,15 @@ public class Validator {
             failed = true;
         }
 
+        return this;
+    }
+    
+    public Validator validateContactNumber(String contactNumber) {
+        if (!validate(contactNumberPattern, contactNumber)){
+            request.setAttribute("contactNumberVErr", "Contact Number format incorrect");
+            failed = true;
+        }
+    
         return this;
     }
 

@@ -66,7 +66,7 @@
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control ${not empty emailVErr ? 'border border-danger' : ''}"
+                        <input class="form-control ${not empty emailVErr ? 'border border-danger' : ''}"
                                name="email" id="email" placeholder="email@example.com">
                         <small class="form-text text-danger">
                             <c:out value="${emailVErr}"/>

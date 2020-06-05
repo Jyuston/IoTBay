@@ -7,11 +7,14 @@ package uts.isd.controller.user_management;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import uts.isd.model.Account;
 import uts.isd.model.Customer;
 import uts.isd.model.Staff;
+import uts.isd.model.Validator;
 import uts.isd.model.dao.AccountDAO;
 import uts.isd.model.dao.CustomerDAO;
 import uts.isd.model.dao.DAOException;
@@ -52,10 +55,26 @@ public class UserManagementServlet extends HttpServlet {
     
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        
+        Validator validator = new Validator(request);
+
         //form deets
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String contactNumber = request.getParameter("contactNumber");
+        
+        validator.validateName(firstName + " " + lastName)
+                .validateContactNumber(contactNumber);
+
+        if (validator.failed()) {
+            try {
+                getTables(request);
+            } catch (SQLException err) {
+                request.setAttribute("errorUserManagement", "Error accessing database.");
+            }
+            request.getRequestDispatcher("/user_management.jsp").include(request, response);
+            return;
+        }
   
        try {
             HttpSession session = request.getSession(); 

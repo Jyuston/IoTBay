@@ -62,14 +62,15 @@ public class UserManagementEditServlet extends HttpServlet {
         
 
         // Run validation checks
-        /*validator.checkEmpty(email, password)
+        validator.checkEmpty(email, password)
                 .validateEmail(email)
                 .validatePassword(password)
                 .validateName(firstName + " " + lastName);
 
         if (validator.failed()) {
             request.getRequestDispatcher("/user_management_edit.jsp").include(request, response);
-        }*/
+            return;
+        }
         
         try{
             Account account = AccountDAO.getAccount(Integer.parseInt(ID));

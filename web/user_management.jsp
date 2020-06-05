@@ -15,44 +15,61 @@
 <head>
     <title>User Management</title>
 </head>
-<h1 class="mb-4">User Management</h1>
+<h1 class="mb-2">User Management</h1>
 
-<h2> Search a User </h2>
+<h2 class="mb-3"> Search a User </h2>
 <div class="container-fluid">
     <div class="row"> 
         <div class="form-group">
+
             <c:if test="${not empty errorUserManagement}">
                 <c:if test="${successDelete != true}">
                     <div class="alert alert-danger my-4" role="alert">
                         ${errorUserManagement}
                     </div>
                 </c:if>
-
             </c:if>
+
             <c:if test="${success}">
                 <div class="alert alert-success my-4" role="alert">
-                    <h2> YOUR CRAZZY You MADE A NEW ACCOUNT </h2>
+                    <h2> New account created. </h2>
                 </div>
             </c:if>
+
             <c:if test="${successDelete}">
                 <div class="alert alert-success my-4" role="alert">
-                    <h2> YOUR CRAZY DELETED </h2>
+                    <h2> Account has been deleted. </h2>
                 </div>
             </c:if>
+
             <form action="/IoTBay/UserManagementServlet" method="POST">
                 <table>
                     <tr>
-                        <td><input class="form-control-sm my-2 mr-1" name="firstName" placeholder="First Name" required></td>
-                        <td><input class="form-control-sm" name="lastName" placeholder="Last Name" required></td>
+                        <td><input class="form-control-sm mb-2 mr-2  ${not empty nameVErr ? 'border border-danger' : ''}" name="firstName" placeholder="First Name">
+                                <small class="form-text text-danger mb-1">
+                                    <c:out value="${nameVErr}"/>
+                                </small>
+                        </td>
+                        
+                        <td><input class="form-control-sm mb-2 ${not empty nameVErr ? 'border border-danger' : ''}" name="lastName" placeholder="Last Name">
+                                <small class="form-text text-danger mb-1">
+                                    <c:out value="${nameVErr}"/>
+                                </small>
+                        </td>
                     </tr>
                     <tr>
-                        <td><input class="form-control-sm m-r" name="contactNumber" placeholder="Contact Number" required></td> 
+                        <td><input class="form-control-sm ${not empty contactNumberVErr ? 'border border-danger' : ''}" name="contactNumber" placeholder="Contact Number">
+                                <small class="form-text text-danger">
+                                    <c:out value="${contactNumberVErr}"/>
+                                </small>
+                        </td> 
                     </tr>
                     <tr>
-                        <td><button type="submit" class="btn btn-info btn-sm my-3">Search</button></td>
+                        <td><button type="submit" class="btn btn-info btn-sm my-2">Search</button></td>
                     </tr>
                 </table>
             </form>
+
         </div>
 
         <c:if test="${not empty resultAccount}">
@@ -68,20 +85,21 @@
                     <tr>
                         <c:choose>
                             <c:when test="${resultAccount.active}">
-                            <form action="/IoTBay/UserManagementActiveServlet" method="POST">
-                                <td><button class="btn btn-primary btn-sm my-2 mr-2">Deactivate</button></td>
-                                <input type="hidden" value="deactivate" name="action">
-                                <input type="hidden" name="accountID"  value="${resultAccount.ID}">
-                            </form>                          
-                        </c:when>
-                        <c:when test="${!resultAccount.active}">
-                            <form action="/IoTBay/UserManagementActiveServlet" method="POST">
-                                <td><button class="btn btn-warning btn-sm my-2 mr-2">Activate</button></td>
-                                <input type="hidden" value="activate" name="action">
-                                <input type="hidden" name="accountID"  value="${resultAccount.ID}">                            
-                            </form>
-                        </c:when>
-                    </c:choose>
+                                <form action="/IoTBay/UserManagementActiveServlet" method="POST">
+                                    <td><button class="btn btn-primary btn-sm my-2 mr-2">Deactivate</button></td>
+                                    <input type="hidden" value="deactivate" name="action">
+                                    <input type="hidden" name="accountID"  value="${resultAccount.ID}">
+                                </form>                          
+                            </c:when>
+                            
+                            <c:when test="${!resultAccount.active}">
+                                <form action="/IoTBay/UserManagementActiveServlet" method="POST">
+                                    <td><button class="btn btn-warning btn-sm my-2 mr-2">Activate</button></td>
+                                    <input type="hidden" value="activate" name="action">
+                                    <input type="hidden" name="accountID"  value="${resultAccount.ID}">                            
+                                </form>
+                            </c:when>
+                        </c:choose>
 
                     <form action="/IoTBay/UserManagementEditServlet" method="GET">
                         <td><button class="btn btn-info btn-sm my-2 mr-2">Edit</button></td>
@@ -107,12 +125,12 @@
     </form>
 </div>
 
-
 <h2> All Users </h2>
 <div class="my-3">
     <h4 class="mb-3">Customer</h4>
     <div style="max-height: 400px;" class="table-responsive overflow-auto mb-4">
         <table class="table">
+            
             <thead>
                 <tr class="d-flex">
                     <th class="col-1">#</th>
@@ -122,6 +140,7 @@
                     <th class="col-2"></th>
                 </tr>
             </thead>
+            
             <c:forEach items="${customerList}" var="Customer" varStatus="count">
                 <tr class="d-flex">
                     <td class="col-1">${Customer.ID}</td>
@@ -136,12 +155,14 @@
                     </td>
                 </tr>
             </c:forEach>
+                
         </table>
     </div>
 
     <h4 class="mb-3">Staff</h4>
     <div style="max-height: 400px" class="table-responsive overflow-auto mb-4">
         <table class="table">
+            
             <thead>
                 <tr class="d-flex">
                     <th class="col-1">#</th>
@@ -152,6 +173,7 @@
                     <th class="col-2"></th>
                 </tr>
             </thead>
+            
             <c:forEach items="${staffList}" var="Staff" varStatus="count">
                 <tr class="d-flex">
                     <td class="col-1">${Staff.ID}</td>
@@ -167,6 +189,7 @@
                     </td>
                 </tr>
             </c:forEach>
+                
         </table>
     </div>
 </div>
