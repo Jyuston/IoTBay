@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 import uts.isd.model.dao.DAOException;
 import uts.isd.model.dao.ReportingDAO;
 import uts.isd.model.reporting.Report;
-import uts.isd.model.Validator;
+import uts.isd.controller.Validator;
 
 import java.io.IOException;
 import java.sql.Connection;
