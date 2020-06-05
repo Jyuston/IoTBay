@@ -55,6 +55,11 @@ hr {
     display: flex;
 }
 
+.product .card-title {
+    color: var(--text);
+    font-weight: 500;
+}
+
 .product .img {
     background: #F9564F;
     min-width: var(--item-height);

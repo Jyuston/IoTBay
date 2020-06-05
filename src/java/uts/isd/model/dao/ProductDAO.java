@@ -102,6 +102,10 @@ public class ProductDAO {
     public static LinkedList<Product> search(String name, String category) throws SQLException {
         LinkedList<Product> products = new LinkedList<>();
 
+        // Set defaults
+        if (name == null) name = "";
+        if (category == null) category = "";
+
         String searchQuery =
                 "SELECT * FROM PRODUCTS " +
                 "WHERE NAME LIKE ? " +

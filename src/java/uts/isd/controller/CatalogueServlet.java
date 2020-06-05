@@ -2,7 +2,7 @@
 package uts.isd.controller;
 
 import java.sql.SQLException;
-import java.util.List;
+import java.util.LinkedList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +15,20 @@ import uts.isd.model.dao.ProductDAO;
 public class CatalogueServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
+        String query = request.getParameter("query");
+        String category = request.getParameter("category");
+
+        request.setAttribute("prevQuery", query);
+
+        LinkedList<Product> productList;
+
         try {
-            List<Product> productList = ProductDAO.getAll();
+//            if (query != null || category != null) {
+                productList = ProductDAO.search(query, category);
+//            } else {
+//                productList = ProductDAO.getAll();
+//            }
+
             request.setAttribute("productList", productList);
         }
         catch (SQLException err) {
