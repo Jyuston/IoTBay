@@ -13,6 +13,15 @@
         <url-pattern>/ConnServlet</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>LogsServlet</servlet-name>
+        <servlet-class>uts.isd.controller.LogsServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogsServlet</servlet-name>
+        <url-pattern>/LogsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>uts.isd.controller.LoginServlet</servlet-class>
     </servlet>
