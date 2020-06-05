@@ -4,6 +4,9 @@
 <%--@elvariable id="productList" type="java.util.List<uts.isd.model.Product>"--%>
 <%--@elvariable id="prevQuery" type="java.lang.String"--%>
 
+<%--Session Scope EL Vars--%>
+<%--@elvariable id="user" type="uts.isd.model.Account"--%>
+
 <head>
     <title>Search products from category</title>
 </head>
@@ -23,8 +26,8 @@
 <div class="card-deck products-list">
     <c:forEach items="${productList}" var="product" varStatus="count">
         <div class="card">
-            <svg class="card-img-top" style="text-anchor: middle" width="100%" height="160" xmlns="http://www.w3.org/2000/svg"
-                 preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap">
+            <svg class="card-img-top" style="text-anchor: middle" width="100%" height="160"
+                 xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false">
                 <title>Placeholder</title>
                 <rect width="100%" height="100%" fill="#868e96"></rect>
                 <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text>
@@ -32,9 +35,25 @@
             <div class="card-body">
                 <h5 class="card-title"><a href="ProductDetailsServlet?id=${product.ID}">${product.name}</a></h5>
                 <p class="card-text price">$${product.price} AUD</p>
-                <p class="card-text"><small class="text-muted">${product.stock} currently in stock</small></p>
+
+                <p class="card-text">
+                    <c:choose>
+                        <c:when test="${product.stock > 0}">
+                            <small class="text-${product.stock <= 20 ? 'warning' : 'success'}">${product.stock} currently in stock</small>
+                        </c:when>
+                        <c:otherwise>
+                            <small class="text-danger">Out of stock</small>
+                        </c:otherwise>
+                    </c:choose>
+                </p>
+
             </div>
             <div class="card-footer">
+                <c:if test="${not empty user && user.staff}">
+                    <small class="float-right">
+                        <a href="EditProductServlet?id=${product.ID}" class="text-warning">Edit Product Details</a>
+                    </small>
+                </c:if>
                 <small class="text-muted">${product.category}</small>
             </div>
         </div>
