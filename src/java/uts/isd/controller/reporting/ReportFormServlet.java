@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import uts.isd.model.dao.DAOException;
 import uts.isd.model.dao.ReportingDAO;
 import uts.isd.model.reporting.Report;
+import uts.isd.model.Validator;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 public class ReportFormServlet extends HttpServlet {   
     
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
         // Implements redirection to the edit form logic
         try {
             ArrayList<String> reportNames = ReportingDAO.getReportNames();
@@ -39,8 +40,9 @@ public class ReportFormServlet extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
         HttpSession session = request.getSession();
+        Validator validator = new Validator(request);
         
         // Logic for when a report deletion is selected
         if (request.getParameter("deleteReport") != null && request.getParameter("deleteReport").equals("yes")) {
@@ -76,36 +78,62 @@ public class ReportFormServlet extends HttpServlet {
                 // Get its original name
                 String originalName = report.getName();
 
+                // Construct Parameters
+                String[] params = createParamsArray(request);
+
+                // Run validation check
+                validator.validateReportDates(params[2], params[3])
+                        .validateReportName(params[0])
+                        .validateReportDescription(params[1]);
+
+
+                // Check if validation failed
+                if (validator.failed()) {
+                    request.getRequestDispatcher("reportForm.jsp").include(request, response);
+                    return;
+                }
+
                 // Update the report, then retrieve it with latest data and save it to the session
                 // Note this is neccessary for data refresh
-                session.setAttribute("report", ReportingDAO.update(originalName, createParamsArray(request), isNameChanged(createParamsArray(request), report))); 
+                session.setAttribute("report", ReportingDAO.update(originalName, params, isNameChanged(params, report))); 
                                               
                 session.removeAttribute("editReport");
                 response.sendRedirect("reportView.jsp");
             }
 
             // Catches an exception that may occur in the model when working with DAO objects
-            catch (DAOException | SQLException | ParseException  e) {
+            catch (Exception e) {
                 request.setAttribute("error", e.getMessage());
 
-                // Clean up the session
-                session.removeAttribute("editReport");
-                session.removeAttribute("report");
-
-                // Redirect back to error page
-                request.getRequestDispatcher("reporting.jsp").include(request, response);
+                // Redirect back
+                request.getRequestDispatcher("reportForm.jsp").include(request, response);
             }
         }
         
         // Logic for creating a new report
         else {  
             try {
+                // Construct Parameters
+                String[] params = createParamsArray(request);
+
+                // Run validation check
+                validator.validateReportDates(params[2], params[3])
+                        .validateReportName(params[0])
+                        .validateReportDescription(params[1]);
+
+
+                // Check if validation failed
+                if (validator.failed()) {
+                    request.getRequestDispatcher("reporting.jsp").include(request, response);
+                    return;
+                }
+
                 Report r = ReportingDAO.save(createParamsArray(request));
                 session.setAttribute("report", r);
                 response.sendRedirect("reportView.jsp");
             }          
 
-            catch (DAOException | SQLException | ParseException e) {
+            catch (Exception e) {
                 request.setAttribute("error", e.getMessage());
                 // Redirects back to the ORIGINAL page
                 request.getRequestDispatcher("reporting.jsp").include(request, response);
@@ -114,7 +142,7 @@ public class ReportFormServlet extends HttpServlet {
     }
 
     private String[] createParamsArray(HttpServletRequest request) throws ServletException {
-        String params[] = {
+        String[] params = {
             (String)request.getParameter("reportName"),
             (String)request.getParameter("reportDescription"),
             (String)request.getParameter("startDate"),

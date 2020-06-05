@@ -55,7 +55,7 @@
 
                 <div class="col">
                     <div class="btn-group" role="group">
-                        <a class="btn btn-primary" href="/IoTBay/ReportFormServlet">Modify Report</a>
+                        <a class="btn btn-primary" href="/IoTBay/ReportFormServlet">Report Settings</a>
                         <form method="POST" action="/IoTBay/ReportingServlet">
                             <input class="form-control" type="hidden" name="reportExit" value="yes">
                             <input type="submit" class="btn btn-primary" value="Exit"></a>

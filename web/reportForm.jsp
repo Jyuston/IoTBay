@@ -19,6 +19,22 @@
     <%! String action; %>
     <%! Boolean modifyingReport; %>
 
+    <% 
+        if (request.getAttribute("error") != null) {
+    %>
+        <jsp:include page="templates/header.jsp"/>
+        <div class="alert alert-danger my-4" role="alert">
+            <h1>Oops. Something went wrong.</h1>
+            <p class="lead">An error occured whilst processing your request. Please see the attached error message.</p>
+            <% out.println(request.getAttribute("error")); %>
+        </div>
+
+        <a href="ReportFormServlet" class="btn btn-primary btn-lg btn-block">Return</a>
+
+    <%
+        } else {
+    %>
+
     <%
         if (request.getAttribute("editReport") != null && request.getAttribute("editReport").equals("yes")) {
             Report report = (Report)session.getAttribute("report");
@@ -45,24 +61,24 @@
                 <div class="form-row">                                                                         
                     <div class="form-group col-md-6">                                           
                         <label>Report Name</label>
-                        <input class="form-control" type="text" name="reportName" value="${modifyingReport eq 'true' ? report.name : ''}" required">
+                        <input class="form-control" type="text" name="reportName" value="${modifyingReport eq 'true' ? report.name : ''}">
                     </div>
 
                     <div class="form-group col-md-6">
                         <label>Report Description</label> 
-                        <input class="form-control" type="text" name="reportDescription" value="${modifyingReport eq 'true' ? report.description : ''}" required">
+                        <input class="form-control" type="text" name="reportDescription" value="${modifyingReport eq 'true' ? report.description : ''}">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-6">                                           
                         <label>Report Start Date</label>
-                        <input class="form-control" type="date" name="startDate" value=${modifyingReport eq 'true' ? report.startDate : ''} required">
+                        <input class="form-control" type="date" name="startDate" value=${modifyingReport eq 'true' ? report.startDate : ''}>
                     </div>
 
                     <div class="form-group col-md-6">
                         <label>Report End Date</label> 
-                        <input class="form-control" type="date" name="endDate" value=${modifyingReport eq 'true' ? report.endDate : ''} required">
+                        <input class="form-control" type="date" name="endDate" value=${modifyingReport eq 'true' ? report.endDate : ''}>
                     </div>
                 </div>
                 <input class="form-control" type="hidden" name="<%=action%>" value="yes">
@@ -90,5 +106,6 @@
         <% } %>
         
     </body>
+    <% } %>
     
 </html>

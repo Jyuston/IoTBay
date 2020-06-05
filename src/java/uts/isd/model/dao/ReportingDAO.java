@@ -6,9 +6,7 @@ import uts.isd.model.reporting.OrderLineItem;
 
 import java.sql.*;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Date;
 
 public class ReportingDAO {
     public static final Connection dbConnection = DBConnector.getConnection();
@@ -141,8 +139,7 @@ public class ReportingDAO {
     }
 
     // Create
-    public static Report save(String params[]) throws SQLException, ParseException {
-        checkDate(params[2], params[3]);
+    public static Report save(String[] params) throws SQLException, ParseException {
         checkDuplicate(params[0]);
 
         Statement st = dbConnection.createStatement();
@@ -202,9 +199,7 @@ public class ReportingDAO {
     }
 
     // Update
-    public static Report update(String reportName, String params[], Boolean nameChanged) throws SQLException, DAOException, ParseException {
-        checkDate(params[2], params[3]);
-
+    public static Report update(String reportName, String[] params, Boolean nameChanged) throws SQLException, DAOException, ParseException {
         // If the name of the report was changed, a check must be done to ensure the name is unique
         if (nameChanged) {
             checkDuplicate(params[0]);
@@ -236,14 +231,6 @@ public class ReportingDAO {
     }
     
     // Helper Functions
-    private static void checkDate(String d1, String d2) throws ParseException {
-        Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(d1);
-        Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(d2);
-
-        if (startDate.compareTo(endDate) > 0) {
-            throw new DAOException("The start date of a report cannot be after the end date.");
-        }
-    }
 
     private static void checkDuplicate(String name) throws SQLException {
         ArrayList<String> names = getReportNames();

@@ -1,6 +1,10 @@
 package uts.isd.model;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,6 +54,36 @@ public class Validator {
         if (!validate(passwordPattern, password))  {
             request.setAttribute("passVErr", "Password format incorrect");
             failed = true;
+        }
+
+        return this;
+    }
+
+    public Validator validateReportDates(String d1, String d2) throws ParseException, Exception {
+        Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(d1);
+        Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(d2);
+
+        if (startDate.compareTo(endDate) > 0) {
+            failed = true;
+            request.setAttribute("error", "The report end date cannot be before the report start date");
+        }
+        
+        return this;
+    }
+
+    public Validator validateReportDescription(String description) throws Exception {
+        if (description.equals("")) {
+            failed = true;
+            request.setAttribute("error", "The report description cannot be empty.");
+        }
+
+        return this;
+    }
+
+    public Validator validateReportName(String name) throws Exception {
+        if (name.equals("")) {
+            failed = true;
+            request.setAttribute("error", "The report name cannot be empty.");
         }
 
         return this;

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class ReportingServlet extends HttpServlet {   
     
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
         HttpSession session = request.getSession();
         // Implements logic for retrieving a list of report names and displaying them in the view
         try {
@@ -39,7 +39,7 @@ public class ReportingServlet extends HttpServlet {
     }
     
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
         HttpSession session = request.getSession();
 
         // Implements logic for exiting a report view and cleaning the session correctly
