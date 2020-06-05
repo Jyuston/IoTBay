@@ -48,7 +48,7 @@
         %>
             <h4> ${category}</h4>
             <div class="table-responsive-sm">
-            <table class="table table-bordered table-sm table-dark">
+            <table class="table table-bordered table-sm">
                 <thead class="thead-light">
                     <th scope="col">Product ID</th>
                     <th scope="col">Product Name</th>

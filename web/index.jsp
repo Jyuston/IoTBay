@@ -5,7 +5,7 @@
 </head>
 <jsp:include page="templates/header.jsp"/>
 
-<div class="text-center text-white max-w-sm">
+<div class="text-center max-w-sm">
     <em>Welcome to...</em>
     <h1 class="display-1 font-weight-bold">IoT Bay!</h1>
     <hr class="my-3 w-25 mx-auto">
