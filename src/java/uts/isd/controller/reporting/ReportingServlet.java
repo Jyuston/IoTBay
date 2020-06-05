@@ -72,8 +72,6 @@ public class ReportingServlet extends HttpServlet {
                 // Save the report to the session
                 session.setAttribute("report", r);
 
-                request.setAttribute("topProducts", r.getTopProducts());
-
                 // Redirect to the report view
                 request.getRequestDispatcher("reportView.jsp").include(request, response);         
             } 
