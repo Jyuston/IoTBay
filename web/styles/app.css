@@ -1,6 +1,7 @@
 body {
     --background: #0C0A3E;
     --primary: #F9564F;
+    --surface: #3d3a71;
     --text: rgba(255, 255, 255, 0.93);
     --text-muted: rgba(255, 255, 255, 0.6);
     --divider: rgba(255, 255, 255, 0.3)
@@ -21,10 +22,6 @@ h4 {
     color: var(--primary);
 }
 
-.card-title, .card-text {
-    color: black !important;
-}
-
 hr {
     border-color: var(--divider);
 }
@@ -36,4 +33,52 @@ hr {
 .table {
     color: var(--text);
     table-layout: fixed;
+}
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -1rem;
+}
+
+.product-list .product {
+    --item-height: 128px;
+    --item-width: 100%;
+    --item-margin: 1rem;
+
+    flex-basis: var(--item-width);
+    margin: var(--item-margin);
+    background-color: var(--surface);
+    min-height: var(--item-height);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+}
+
+.product .img {
+    background: #F9564F;
+    min-width: var(--item-height);
+    height: 100%
+}
+
+.product .content {
+    flex-grow: 1;
+    padding: 1rem 1.5rem;
+}
+
+@media screen and (min-width: 992px) {
+    .product-list .product {
+        --item-width: calc(50% - 2rem);
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .product-list {
+        margin: 0 -2rem;
+    }
+
+    .product-list .product {
+        --item-width: calc(50% - 4rem);
+        --item-margin: 1.25rem 2rem;
+    }
 }
