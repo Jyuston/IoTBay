@@ -34,7 +34,8 @@ public class CatalogueServlet extends HttpServlet {
         String category = request.getParameter("category");
 
         try {
-            Product searchedProduct = ProductDAO.get(name, category);
+            // TODO better way to search for specific item
+            Product searchedProduct = ProductDAO.get(123);
             request.setAttribute("searchedProduct", searchedProduct);
         }
         catch (DAOException err) {

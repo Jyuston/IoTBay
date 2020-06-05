@@ -60,37 +60,17 @@
 </div>
 
 
-<div class="my-4">
-    <button type="button" class="btn btn-success btn-sm">+ Add New Product</button>
-</div>
-
-
 <h2>All Products</h2>
-<div class="my-3">
-    <table class="table">
-        <h4>Product</h4>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Category</th>
-            <th scope="col">Stock</th>
-            <th scope="col">Description</th>
-            <th scope="col">Price</th>
-        </tr>
-
-
-        <c:forEach items="${productList}" var="product" varStatus="count">
-            <tr>
-                <td>${product.ID}</td>
-                <td>${product.name}</td>
-                <td>${product.category}</td>
-                <td>${product.stock}</td>
-                <td>${product.description}</td>
-                <td>${product.price}</td>
-            </tr>
-        </c:forEach>
-    </table>
-</div>
+<c:forEach items="${productList}" var="product" varStatus="count">
+    <tr>
+        <td>${product.ID}</td>
+        <td>${product.name}</td>
+        <td>${product.category}</td>
+        <td>${product.stock}</td>
+        <td>${product.description}</td>
+        <td>${product.price}</td>
+    </tr>
+</c:forEach>
 
 
 <jsp:include page="templates/footer.jsp"/>

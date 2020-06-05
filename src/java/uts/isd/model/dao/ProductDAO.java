@@ -2,20 +2,21 @@ package uts.isd.model.dao;
 
 import uts.isd.model.Product;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.LinkedList;
 
 public class ProductDAO {
     /**
      * Find a single Product by Product ID.
+     *
      * @return An instantiated Product if found, otherwise null.
      */
     public static Product get(int productID) throws SQLException, DAOException {
-        String getProductDataQuery = "SELECT * FROM PRODUCTS WHERE ID = " + productID;
+        String getProductDataQuery =
+                "SELECT * FROM PRODUCTS " +
+                "WHERE ID = " + productID;
 
         PreparedStatement st = DAOUtils.prepareStatement(getProductDataQuery, false);
         ResultSet productRs = st.executeQuery();
@@ -28,37 +29,14 @@ public class ProductDAO {
     }
 
     /**
-     * Find a single Product by exact name and category.
-     * @return An instantiated Product if found, otherwise null.
-     */
-    public static Product get(String name, String category) throws SQLException, DAOException {
-        String getByIDQuery =
-                "SELECT * FROM PRODUCTS " +
-                "WHERE NAME LIKE ? " +
-                "AND CATEGORY LIKE ?";
-
-        PreparedStatement st = DAOUtils.prepareStatement(getByIDQuery, false,
-                "%" + name + "%",
-                category
-        );
-        ResultSet productRs = st.executeQuery();
-
-        // If no data, return null Product
-        if (!productRs.next())
-            throw new DAOException("No Product found matching that Name or Category");
-
-        return createProductObject(productRs);
-    }
-
-    /**
      * Find all products within the database.
+     *
      * @return A list of all products within the database
      */
     public static LinkedList<Product> getAll() throws SQLException {
         LinkedList<Product> products = new LinkedList<>();
 
         String getProductsQuery = "SELECT * FROM PRODUCTS ";
-
         PreparedStatement st = DAOUtils.prepareStatement(getProductsQuery, false);
         ResultSet productsRs = st.executeQuery();
 
@@ -70,33 +48,83 @@ public class ProductDAO {
 
     /**
      * Search for a list of products by name.
+     *
      * @param query The product name to search
      * @return A list of products with names matching the search
      */
     public static LinkedList<Product> searchByName(String query) throws SQLException {
-        String searchQuery =
-                "SELECT * FROM PRODUCTS " +
-                "WHERE NAME LIKE '%" + query + "%'";
+        LinkedList<Product> products = new LinkedList<>();
 
-        return search(searchQuery);
+        String searchQuery = "SELECT * FROM PRODUCTS WHERE NAME LIKE ?";
+        PreparedStatement st = DAOUtils.prepareStatement(searchQuery, false,
+                "%" + query + "%"
+        );
+
+        ResultSet productsRs = st.executeQuery();
+
+        while (productsRs.next()) {
+            products.add(createProductObject(productsRs));
+        }
+
+        return products;
     }
 
     /**
      * Search for a list of products by the category they belong to.
+     *
      * @param query The product category to search
      * @return A list of products that belong to a category
      */
     public static LinkedList<Product> searchByCategory(String query) throws SQLException {
+        LinkedList<Product> products = new LinkedList<>();
+
+        String searchQuery = "SELECT * FROM PRODUCTS WHERE CATEGORY LIKE ?";
+        PreparedStatement st = DAOUtils.prepareStatement(searchQuery, false,
+                "%" + query + "%"
+        );
+
+        ResultSet productsRs = st.executeQuery();
+
+        while (productsRs.next()) {
+            products.add(createProductObject(productsRs));
+        }
+
+        return products;
+    }
+
+    /**
+     * Search for products by name and optionally category as well.
+     *
+     * @param name The product name to search
+     * @param category The product name to search
+     * @return A list of products that belong to a category
+     */
+    public static LinkedList<Product> search(String name, String category) throws SQLException {
+        LinkedList<Product> products = new LinkedList<>();
+
         String searchQuery =
                 "SELECT * FROM PRODUCTS " +
-                "WHERE CATEGORY LIKE '" + query + "'";
+                "WHERE NAME LIKE ? " +
+                "AND CATEGORY LIKE ?";
 
-        return search(searchQuery);
+        PreparedStatement st = DAOUtils.prepareStatement(searchQuery, false,
+                "%" + name + "%",
+                "%" + category + "%"
+        );
+
+        ResultSet productsRs = st.executeQuery();
+
+        while (productsRs.next()) {
+            products.add(createProductObject(productsRs));
+        }
+
+        return products;
     }
 
     /**
      * Save a new product to the database.
      * New products can be created by instantiating a new model instance.
+     *
      * @param product Product to save to DB
      */
     public static void save(Product product) throws SQLException, DAOException {
@@ -126,6 +154,7 @@ public class ProductDAO {
 
     /**
      * Update a single product from the database.
+     *
      * @param product The instantiated product to update. Must have an ID.
      */
     public static void update(Product product) throws SQLException, DAOException {
@@ -150,6 +179,7 @@ public class ProductDAO {
 
     /**
      * Delete a single product from the database.
+     *
      * @param productID ID of the product to delete
      */
     public void delete(String productID) throws SQLException, DAOException {
@@ -169,6 +199,7 @@ public class ProductDAO {
      *
      * Will create the Product instance based on the current cursor position of the ResultSet.
      * This means this helper method can be used within loops.
+     *
      * @param productRs the ResultSet of the Product(s)
      * @return An instantiated Product object
      */
@@ -183,23 +214,5 @@ public class ProductDAO {
         newProduct.setArchived(productRs.getBoolean("ARCHIVED"));
 
         return newProduct;
-    }
-
-    /**
-     * Similar functionality that is re-used within search methods
-     * @param sqlQuery The search query performed
-     * @return A list of products created from the returned db rows
-     */
-    private static LinkedList<Product> search(String sqlQuery) throws SQLException {
-        LinkedList<Product> filteredProducts = new LinkedList<>();
-
-        PreparedStatement st = DAOUtils.prepareStatement(sqlQuery, false);
-        ResultSet productsRs = st.executeQuery();
-
-        while (productsRs.next()) {
-            filteredProducts.add(createProductObject(productsRs));
-        }
-
-        return filteredProducts;
     }
 }
