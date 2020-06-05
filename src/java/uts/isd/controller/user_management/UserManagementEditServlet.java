@@ -7,6 +7,8 @@ package uts.isd.controller.user_management;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,9 +32,6 @@ public class UserManagementEditServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
             
             String accountID = request.getParameter("accountID");
-            String accountFirstName = request.getParameter("accountFirstName");
-            String accountLastName = request.getParameter("accountLastName");
-            String accountContactNumber = request.getParameter("accountContactNumber");
             
         try {
             Account account = AccountDAO.getAccount(Integer.parseInt(accountID));
@@ -65,11 +64,24 @@ public class UserManagementEditServlet extends HttpServlet {
         validator.checkEmpty(email, password)
                 .validateEmail(email)
                 .validatePassword(password)
-                .validateName(firstName + " " + lastName);
+                .validateName(firstName + " " + lastName)
+                .validateContactNumber(contactNumber)
+                .validatePassword(password);
 
         if (validator.failed()) {
-            request.getRequestDispatcher("/user_management_edit.jsp").include(request, response);
-            return;
+            
+            try {
+                Account account = AccountDAO.getAccount(Integer.parseInt(ID));
+                request.setAttribute("account", account);
+            } catch (SQLException err) {
+                request.setAttribute("errorUserManagement", "Error accessing database.");
+                err.printStackTrace();
+            } finally {
+                request.getRequestDispatcher("/user_management_edit.jsp").include(request, response);
+                return;
+            }
+            
+
         }
         
         try{
@@ -81,7 +93,6 @@ public class UserManagementEditServlet extends HttpServlet {
             account.setPassword(password);
             AccountDAO.update(account);
             request.setAttribute("successEdit", true);
-            
         }
         catch(DAOException err){
             request.setAttribute("errorUserManagement", err.getMessage());

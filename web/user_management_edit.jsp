@@ -49,7 +49,7 @@
             </div>
             <div class="form-group">
                 <label for="contactNumber">Phone Number</label>
-                <input type="number" class="form-control" name="contactNumber" value="${account.contactNumber}"required>
+                <input type="text" class="form-control" name="contactNumber" value="${account.contactNumber}"required>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
