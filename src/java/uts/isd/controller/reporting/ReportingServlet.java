@@ -19,12 +19,13 @@ import java.util.ArrayList;
 public class ReportingServlet extends HttpServlet {   
     
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
         HttpSession session = request.getSession();
         // Implements logic for retrieving a list of report names and displaying them in the view
         try {
             // Clean the session in case an exit was done inproperly
             session.removeAttribute("report");
+            session.removeAttribute("error");
 
             ArrayList<String> reportNames = ReportingDAO.getReportNames();
 
@@ -39,7 +40,7 @@ public class ReportingServlet extends HttpServlet {
     }
     
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
         HttpSession session = request.getSession();
 
         // Implements logic for exiting a report view and cleaning the session correctly
@@ -62,7 +63,7 @@ public class ReportingServlet extends HttpServlet {
             }
         }
 
-        // Implements logic for opening the view for the stock report
+        // Implements logic for opening the view for the sales report
         else if (!request.getParameter("selectedReport").equals("Stock Report")) {
             try {
                 // Retrieve the selected report name, and instantiate a new report object from data in the db
@@ -71,8 +72,10 @@ public class ReportingServlet extends HttpServlet {
                 // Save the report to the session
                 session.setAttribute("report", r);
 
+                request.setAttribute("topProducts", r.getTopProducts());
+
                 // Redirect to the report view
-                response.sendRedirect("reportView.jsp");          
+                request.getRequestDispatcher("reportView.jsp").include(request, response);         
             } 
             
             catch (DAOException | SQLException e) {

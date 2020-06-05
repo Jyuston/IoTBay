@@ -87,7 +87,7 @@ public class Report implements Serializable {
         return salesAnalyser.getTopCategoryRevenue(getTopCategory(), saleRecords);
     }
 
-    public final ArrayList<ProductSummary> getTopSellingItem() {
+    public final ArrayList<ProductSummary> getTopProducts() {
         return topProducts;
     }
 
@@ -103,7 +103,7 @@ public class Report implements Serializable {
         return salesAnalyser.getSalesByCategoryByProduct(productSummaries, categories);
     }
 
-    public boolean salesExist() {
+    public boolean getSalesExist() {
         return saleRecords.size() > 0;
     }
 
