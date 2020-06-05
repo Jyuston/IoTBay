@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import uts.isd.model.Account;
 import uts.isd.model.Customer;
 import uts.isd.model.Staff;
-import uts.isd.model.Validator;
+import uts.isd.controller.Validator;
 import uts.isd.model.dao.AccountDAO;
 import uts.isd.model.dao.CustomerDAO;
 import uts.isd.model.dao.DAOException;

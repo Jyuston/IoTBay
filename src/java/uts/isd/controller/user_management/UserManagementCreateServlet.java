@@ -15,7 +15,7 @@ import uts.isd.model.Customer;
 import uts.isd.model.Order;
 import uts.isd.model.PaymentInformation;
 import uts.isd.model.Staff;
-import uts.isd.model.Validator;
+import uts.isd.controller.Validator;
 import uts.isd.model.dao.CustomerDAO;
 import uts.isd.model.dao.DAOException;
 import uts.isd.model.dao.StaffDAO;
@@ -40,7 +40,7 @@ public class UserManagementCreateServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        Validator validator = new Validator(request);
+        //Validator validator = new Validator(request);
         
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
@@ -50,7 +50,7 @@ public class UserManagementCreateServlet extends HttpServlet {
         String accountType = request.getParameter("accountType");
         
                 // Run validation checks
-        validator.checkEmpty(email, password)
+        /*validator.checkEmpty(email, password)
                 .validateEmail(email)
                 .validatePassword(password)
                 .validateName(firstName + " " + lastName);
@@ -58,7 +58,7 @@ public class UserManagementCreateServlet extends HttpServlet {
         if (validator.failed()) {
             request.getRequestDispatcher("/user_management_create.jsp").include(request, response);
             return;
-        }
+        }*/
 
         try {
 
