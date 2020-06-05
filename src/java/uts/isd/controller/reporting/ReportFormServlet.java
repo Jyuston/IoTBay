@@ -25,7 +25,7 @@ public class ReportFormServlet extends HttpServlet {
         // Implements redirection to the edit form logic
         try {
             ArrayList<String> reportNames = ReportingDAO.getReportNames();
-            request.setAttribute("editReport", "yes");
+            request.setAttribute("editReport", "true");
         } 
         
         catch (SQLException e) {
