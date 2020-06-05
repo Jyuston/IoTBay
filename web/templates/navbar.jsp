@@ -26,8 +26,9 @@
             </div>
 
             <% if (user != null) { %>
-            <a class="btn btn-outline-dark my-2 my-sm-0" href="${pageContext.request.contextPath}/logout.jsp"
-               role="button">Logout</a>
+            <form action="LogoutServlet" method="post" class="validate">
+                <button type="submit" class="btn btn-outline-dark my-2 my-sm-0">Logout</button>
+            </form>
             <% } else { %>
             <a class="btn btn-outline-dark my-2 my-sm-0" href="${pageContext.request.contextPath}/login.jsp"
                role="button">Login</a>

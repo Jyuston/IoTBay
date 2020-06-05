@@ -21,6 +21,14 @@
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>uts.isd.controller.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/LogoutServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>RegistrationServlet</servlet-name>
         <servlet-class>uts.isd.controller.RegistrationServlet</servlet-class>
     </servlet>
