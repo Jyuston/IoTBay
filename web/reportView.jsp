@@ -107,7 +107,7 @@
         %>
                 <h3> Top Products</h2>
                 <p class="font-weight-light">Note: This table is only displayed when multiple products had the highest quantity sold.</p>
-                <table class="table table-bordered table-sm table-dark">
+                <table class="table table-bordered table-sm">
                     <thead class="thead-light">
                         <th scope="col">Product ID</th>
                         <th scope="col">Product Name</th>
@@ -137,7 +137,7 @@
 
         <h2> Sales Distribution Overview</h2>
         <h3> Sales by State</h3>
-        <table class="table table-bordered table-sm table-dark">
+        <table class="table table-bordered table-sm">
             <thead class="thead-light">
                 <th scope="col">State</th>
                 <th scope="col">Revenue</th>
@@ -167,7 +167,7 @@
 
         <h3> Sales by Category</h3>
         <p class="font-weight-light">Note: Categories where no products were sold will not appear in this report.</p>
-        <table class="table table-bordered table-sm table-dark">
+        <table class="table table-bordered table-sm">
             <thead class="thead-light">
                 <th scope="col">Category</th>
                 <th scope="col">Revenue</th>
@@ -208,7 +208,7 @@
         %>
             <h4> ${category}</h4>
             <div class="table-responsive-sm">
-            <table class="table table-bordered table-sm table-dark">
+            <table class="table table-bordered table-sm">
                 <thead class="thead-light">
                     <th scope="col">Product ID</th>
                     <th scope="col">Product Name</th>
