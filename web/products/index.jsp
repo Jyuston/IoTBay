@@ -8,9 +8,9 @@
 <%--@elvariable id="user" type="uts.isd.model.Account"--%>
 
 <head>
-    <title>Search products from category</title>
+    <title>Products Catalogue</title>
 </head>
-<jsp:include page="templates/header.jsp"/>
+<jsp:include page="../templates/header.jsp"/>
 
 <form class="form-inline mb-2" method="get" action="CatalogueServlet">
     <label class="sr-only" for="searchQuery">Search</label>
@@ -60,4 +60,4 @@
     </c:forEach>
 </div>
 
-<jsp:include page="templates/footer.jsp"/>
+<jsp:include page="../templates/footer.jsp"/>

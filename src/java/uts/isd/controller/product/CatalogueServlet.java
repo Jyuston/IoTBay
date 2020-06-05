@@ -1,5 +1,5 @@
 
-package uts.isd.controller;
+package uts.isd.controller.product;
 
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -36,7 +36,7 @@ public class CatalogueServlet extends HttpServlet {
             err.printStackTrace();
         }
         finally {
-            request.getRequestDispatcher("/catalogue.jsp").include(request, response);
+            request.getRequestDispatcher("/index.jsp").include(request, response);
         }
     }
 
@@ -58,7 +58,7 @@ public class CatalogueServlet extends HttpServlet {
             err.printStackTrace();
         }
         finally {
-            request.getRequestDispatcher("/catalogue.jsp").include(request, response);
+            request.getRequestDispatcher("/index.jsp").include(request, response);
         }
     }
 }

@@ -46,11 +46,19 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>CatalogueServlet</servlet-name>
-        <servlet-class>uts.isd.controller.CatalogueServlet</servlet-class>
+        <servlet-class>uts.isd.controller.product.CatalogueServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CatalogueServlet</servlet-name>
-        <url-pattern>/CatalogueServlet</url-pattern>
+        <url-pattern>/products/CatalogueServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AddProductServlet</servlet-name>
+        <servlet-class>uts.isd.controller.product.AddProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddProductServlet</servlet-name>
+        <url-pattern>/products/AddProductServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -17,9 +17,18 @@ public class Validator {
 
     public boolean failed() { return failed; }
 
-    public Validator checkEmpty(String email, String password) {
+    public Validator checkEmpty(String input, String errorPrefix) {
+        if (input.isEmpty()) {
+            request.setAttribute("empty" + errorPrefix + "VErr", errorPrefix + " field cannot be empty");
+            failed = true;
+        }
+
+        return this;
+    }
+
+    public Validator checkEmptyEmailPass(String email, String password) {
         if (email.isEmpty() || password.isEmpty()) {
-            request.setAttribute("emptyEmailPassVErr", "Email or Password field is empty");
+            request.setAttribute("emptyEmailPassVErr", "Email or Password field cannot be empty");
             failed = true;
         }
 
@@ -49,6 +58,26 @@ public class Validator {
     public Validator validatePassword(String password) {
         if (!validate(passwordPattern, password))  {
             request.setAttribute("passVErr", "Password format incorrect");
+            failed = true;
+        }
+
+        return this;
+    }
+
+    // Product
+
+    public Validator checkNegativePrice(double price) {
+        if (price < 0)  {
+            request.setAttribute("negativePriceVErr", "Price cannot be negative");
+            failed = true;
+        }
+
+        return this;
+    }
+
+    public Validator checkNegativeStock(int price) {
+        if (price < 0)  {
+            request.setAttribute("negativeStockVErr", "Stock cannot be negative");
             failed = true;
         }
 

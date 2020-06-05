@@ -26,7 +26,7 @@ public class RegistrationServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         // Run validation checks
-        validator.checkEmpty(email, password)
+        validator.checkEmptyEmailPass(email, password)
                 .validateEmail(email)
                 .validatePassword(password)
                 .validateName(firstName + " " + lastName);
