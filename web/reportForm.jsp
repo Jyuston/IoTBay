@@ -26,7 +26,7 @@
         <div class="alert alert-danger my-4" role="alert">
             <h1>Oops. Something went wrong.</h1>
             <p class="lead">An error occured whilst processing your request. Please see the attached error message.</p>
-            <% out.println(request.getAttribute("error")); %>
+            <p>${error}</p>
         </div>
 
         <a href="ReportFormServlet" class="btn btn-primary btn-lg btn-block">Return</a>

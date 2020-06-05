@@ -38,8 +38,6 @@
     
     <%
         } else if (newReportCreated != null && newReportCreated.equals("yes")) {
-            //ReportingController rc = new ReportingController();
-            //rc.createReport(reportName, reportDescription, startDate, endDate);
     %>
             <body>
                 <div class="row">
@@ -71,14 +69,12 @@
                             <div class="form-group col-md-6">
                                 <label>Report Name</label>
                                 <select class="form-control" name="selectedReport" required">
-                                    <!-- <option hidden>...</option> -->
-                                    <!-- will need to put in verification logic later if placeholder is desired -->
                                     <option>Stock Report</option>
                                     <% 
                                         ArrayList<String> reportNames = (ArrayList<String>)request.getAttribute("reportNames");
                                         for (String name : reportNames) {
                                             String currentReportName = name;
-                                            session.setAttribute("currentReportName", currentReportName);
+                                            request.setAttribute("currentReportName", currentReportName);
                                     %>        
                                         
                                         <option>${currentReportName}</option>

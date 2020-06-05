@@ -129,7 +129,7 @@ public class SalesAnalyser implements Serializable {
 
         for (ProductSummary product : snapshots) {
             // The key in the dictionary
-            String key = product.getProductCategory();
+            String key = product.getCategory();
 
             // Retrieve the list at that key in the dictionary
             ArrayList<ProductSummary> list = dictionary.get(key);
@@ -184,7 +184,7 @@ public class SalesAnalyser implements Serializable {
 
         // Organise each product into the correct hashmap key
         for (ProductSummary product : products) {
-            ArrayList<ProductSummary> array = dictionary.get(product.getProductCategory());
+            ArrayList<ProductSummary> array = dictionary.get(product.getCategory());
             array.add(product);
         }
 

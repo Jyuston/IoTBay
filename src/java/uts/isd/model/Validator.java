@@ -72,6 +72,7 @@ public class Validator {
     }
 
     public Validator validateReportDescription(String description) throws Exception {
+        // Note - for reporting, any report description is valid provided it is not empty
         if (description.equals("")) {
             failed = true;
             request.setAttribute("error", "The report description cannot be empty.");
@@ -81,6 +82,7 @@ public class Validator {
     }
 
     public Validator validateReportName(String name) throws Exception {
+        // Note - for reporting, any report name is valid provided it is not empty
         if (name.equals("")) {
             failed = true;
             request.setAttribute("error", "The report name cannot be empty.");

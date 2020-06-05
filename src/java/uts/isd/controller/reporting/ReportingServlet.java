@@ -62,7 +62,7 @@ public class ReportingServlet extends HttpServlet {
             }
         }
 
-        // Implements logic for opening the view for the stock report
+        // Implements logic for opening the view for the sales report
         else if (!request.getParameter("selectedReport").equals("Stock Report")) {
             try {
                 // Retrieve the selected report name, and instantiate a new report object from data in the db
@@ -71,8 +71,10 @@ public class ReportingServlet extends HttpServlet {
                 // Save the report to the session
                 session.setAttribute("report", r);
 
+                request.setAttribute("topProducts", r.getTopProducts());
+
                 // Redirect to the report view
-                response.sendRedirect("reportView.jsp");          
+                request.getRequestDispatcher("reportView.jsp").include(request, response);         
             } 
             
             catch (DAOException | SQLException e) {
