@@ -1,4 +1,4 @@
-package uts.isd.model;
+package uts.isd.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Matcher;

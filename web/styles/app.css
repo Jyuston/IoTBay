@@ -1,39 +1,3 @@
-body {
-    --background: #0C0A3E;
-    --primary: #F9564F;
-    --text: rgba(255, 255, 255, 0.93);
-    --text-muted: rgba(255, 255, 255, 0.6);
-    --divider: rgba(255, 255, 255, 0.3)
-}
-
-body {
-    background-color: var(--background);
-    color: var(--text);
-}
-
 h1 {
     font-weight: bold;
-    color: var(--primary);
-}
-
-h4 {
-    font-weight: normal;
-    color: var(--primary);
-}
-
-.card-title, .card-text {
-    color: black !important;
-}
-
-hr {
-    border-color: var(--divider);
-}
-
-.text-muted {
-    color: var(--text-muted) !important;
-}
-
-.table {
-    color: var(--text);
-    table-layout: fixed;
 }

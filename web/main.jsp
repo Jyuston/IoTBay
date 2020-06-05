@@ -37,7 +37,6 @@
 
     <p class="text-center">
         <a href="index.jsp">Home</a>
-        <a href="ReportingServlet">reporting</a>
     </p>
     
     <c:if test="${user.isStaff() && user.admin}">

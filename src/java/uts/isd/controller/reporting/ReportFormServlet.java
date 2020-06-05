@@ -25,12 +25,15 @@ public class ReportFormServlet extends HttpServlet {
         try {
             ArrayList<String> reportNames = ReportingDAO.getReportNames();
             request.setAttribute("editReport", "yes");
-            request.getRequestDispatcher("reportForm.jsp").include(request, response);
         } 
         
         catch (SQLException e) {
             request.setAttribute("error", e.getMessage());
-            request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+            //request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+        }
+
+        finally {
+            request.getRequestDispatcher("reportForm.jsp").include(request, response);
         }
 
     }
@@ -60,7 +63,7 @@ public class ReportFormServlet extends HttpServlet {
                 session.removeAttribute("report");
 
                 // Redirects to error page to display error message to user
-                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+                request.getRequestDispatcher("reporting.jsp").include(request, response);
             }
         }
 
@@ -75,10 +78,10 @@ public class ReportFormServlet extends HttpServlet {
 
                 // Update the report, then retrieve it with latest data and save it to the session
                 // Note this is neccessary for data refresh
-                session.setAttribute("report", ReportingDAO.update(originalName, createParamsArray(request))); 
+                session.setAttribute("report", ReportingDAO.update(originalName, createParamsArray(request), isNameChanged(createParamsArray(request), report))); 
                                               
                 session.removeAttribute("editReport");
-                response.sendRedirect("reporting/reportView.jsp");
+                response.sendRedirect("reportView.jsp");
             }
 
             // Catches an exception that may occur in the model when working with DAO objects
@@ -89,8 +92,8 @@ public class ReportFormServlet extends HttpServlet {
                 session.removeAttribute("editReport");
                 session.removeAttribute("report");
 
-                // Redirect to error page and display message
-                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+                // Redirect back to error page
+                request.getRequestDispatcher("reporting.jsp").include(request, response);
             }
         }
         
@@ -99,12 +102,13 @@ public class ReportFormServlet extends HttpServlet {
             try {
                 Report r = ReportingDAO.save(createParamsArray(request));
                 session.setAttribute("report", r);
-                response.sendRedirect("reporting/reportView.jsp");
+                response.sendRedirect("reportView.jsp");
             }          
 
             catch (DAOException | SQLException | ParseException e) {
                 request.setAttribute("error", e.getMessage());
-                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+                // Redirects back to the ORIGINAL page
+                request.getRequestDispatcher("reporting.jsp").include(request, response);
             }
         }
     }
@@ -118,5 +122,10 @@ public class ReportFormServlet extends HttpServlet {
         };
 
         return params;
+    }
+
+    private boolean isNameChanged(String[] params, Report r) throws ServletException {
+        // Checks to see if name was changed
+        return !params[0].equals(r.getName());
     }
 }

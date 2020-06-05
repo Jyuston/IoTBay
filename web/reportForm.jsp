@@ -39,6 +39,7 @@
             modifyingReport = false;
         }
     %>
+
     <body>
             <form method="post" action="/IoTBay/ReportFormServlet">
                 <div class="form-row">                                                                         
@@ -69,7 +70,7 @@
                     if (modifyingReport) {                                    
                 %>
                         <input type="submit" class="btn btn-success" value="Update Report"></a>
-                        <a class="btn btn-warning" href="/IoTBay/reporting/reportView.jsp">Cancel</a>                                                      
+                        <a class="btn btn-warning" href="/IoTBay/reportView.jsp">Cancel</a>                                                      
                 <%
                     } else {
                 %>

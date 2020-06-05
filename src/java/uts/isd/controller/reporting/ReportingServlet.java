@@ -20,8 +20,12 @@ public class ReportingServlet extends HttpServlet {
     
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
+        HttpSession session = request.getSession();
         // Implements logic for retrieving a list of report names and displaying them in the view
         try {
+            // Clean the session in case an exit was done inproperly
+            session.removeAttribute("report");
+
             ArrayList<String> reportNames = ReportingDAO.getReportNames();
 
             request.setAttribute("reportNames", reportNames);
@@ -30,7 +34,7 @@ public class ReportingServlet extends HttpServlet {
         
         catch (DAOException | SQLException e) {
             request.setAttribute("error", e.getMessage());
-            request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+            request.getRequestDispatcher("reporting.jsp").include(request, response);
         }
     }
     
@@ -54,7 +58,7 @@ public class ReportingServlet extends HttpServlet {
 
             catch (DAOException | SQLException e) {
                 request.setAttribute("error", e.getMessage());
-                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+                request.getRequestDispatcher("reporting.jsp").include(request, response);
             }
         }
 
@@ -68,12 +72,12 @@ public class ReportingServlet extends HttpServlet {
                 session.setAttribute("report", r);
 
                 // Redirect to the report view
-                response.sendRedirect("reporting/reportView.jsp");          
+                response.sendRedirect("reportView.jsp");          
             } 
             
             catch (DAOException | SQLException e) {
                 request.setAttribute("error", e.getMessage());
-                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+                request.getRequestDispatcher("reporting.jsp").include(request, response);
             }
         }
 
@@ -87,12 +91,12 @@ public class ReportingServlet extends HttpServlet {
                 session.setAttribute("report", r);
 
                 // Redirect the view to the stock report view
-                response.sendRedirect("reporting/stockReport.jsp");
+                response.sendRedirect("stockReport.jsp");
             }
 
             catch (DAOException | SQLException e) {
                 request.setAttribute("error", e.getMessage());
-                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+                request.getRequestDispatcher("reporting.jsp").include(request, response);
             }
         }
     }
