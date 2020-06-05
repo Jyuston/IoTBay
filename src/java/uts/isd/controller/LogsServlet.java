@@ -6,7 +6,6 @@ import java.util.List;
 
 import uts.isd.model.Log;
 import uts.isd.model.Account;
-import uts.isd.model.Validator;
 import uts.isd.model.dao.StaffDAO;
 import uts.isd.model.dao.AccountDAO;
 import uts.isd.model.dao.CustomerDAO;

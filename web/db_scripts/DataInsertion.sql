@@ -1,18 +1,18 @@
 INSERT INTO ACCOUNTS (EMAIL, F_NAME, L_NAME, CONTACT_NUMBER, ACCOUNT_TYPE, PASSWORD, IS_ACTIVE)
-VALUES ('john.smith@gmail.com', 'John', 'Smith', '0438278971', 'C', 'password123', true),
-       ('odio@sed.ca', 'Nehru', 'Rivers', '0438278972', 'C', 'password123', true),
-       ('Sed@iderat.edu', 'Craig', 'Estrada', '0438278973', 'C', 'password123', true),
-       ('risus.quis@tortorat.org', 'Judah', 'Erickson', '0438278975', 'C', 'password123', true),
-       ('Nullam@augue.org', 'Hakeem', 'Townsend', '0493750271', 'C', 'password123', true),
-       ('consectetuer.adipiscing@Donecnibh.org', 'Leroy', 'Hoffman', '0438278976', 'C', 'password123', true),
-       ('ante.Nunc@vestibulum.com', 'Zachery', 'Acosta', '0438278977', 'C', 'password123', true),
-       ('dis.parturient.montes@malesuadafames.edu', 'Upton', 'Phelps', '0438278978', 'C', 'password123', true),
-       ('elementum.sem@utnullaCras.net', 'Barrett', 'Lewis', '0438278979', 'C', 'password123', true),
-       ('vulputate.velit@quisaccumsanconvallis.com', 'Stuart', 'Kramer', '0438278980', 'C', 'password123', true),
-       ('egestas.Duis.ac@Morbinon.edu', 'Tyler', 'Owens', '0438278981', 'C', 'password123', true),
-       ('nicholsonK@iotbay.com', 'Kirby', 'Nicholson', '0404285927', 'S', 'jSev*UkN1DJr', true),
-       ('farleyS@iotbay.com', 'Lenore', 'Farley', '04030385162', 'S', 'ilOh%@hQ&$LZ', true),
-       ('talleyS@iotbay.com', 'Stephanie', 'Talley', '0404477143', 'S', 'jAupTO!0DnHt', true)
+VALUES ('john.smith@gmail.com', 'John', 'Smith', '0438 278 971', 'C', 'password123', true),
+       ('odio@sed.ca', 'Nehru', 'Rivers', '0438 278 972', 'C', 'password123', true),
+       ('Sed@iderat.edu', 'Craig', 'Estrada', '0438 278 973', 'C', 'password123', true),
+       ('risus.quis@tortorat.org', 'Judah', 'Erickson', '0438 278 975', 'C', 'password123', true),
+       ('Nullam@augue.org', 'Hakeem', 'Townsend', '0493 750 271', 'C', 'password123', true),
+       ('consectetuer.adipiscing@Donecnibh.org', 'Leroy', 'Hoffman', '0438 278 976', 'C', 'password123', true),
+       ('ante.Nunc@vestibulum.com', 'Zachery', 'Acosta', '0438 278 977', 'C', 'password123', true),
+       ('dis.parturient.montes@malesuadafames.edu', 'Upton', 'Phelps', '0438 278 978', 'C', 'password123', true),
+       ('elementum.sem@utnullaCras.net', 'Barrett', 'Lewis', '0438 278 979', 'C', 'password123', true),
+       ('vulputate.velit@quisaccumsanconvallis.com', 'Stuart', 'Kramer', '0438 278 980', 'C', 'password123', true),
+       ('egestas.Duis.ac@Morbinon.edu', 'Tyler', 'Owens', '0438 278 981', 'C', 'password123', true),
+       ('nicholsonK@iotbay.com', 'Kirby', 'Nicholson', '0404 285 927', 'S', 'jSev*UkN1DJr', true),
+       ('farleyS@iotbay.com', 'Lenore', 'Farley', '0403 038 516', 'S', 'ilOh%@hQ&$LZ', true),
+       ('talleyS@iotbay.com', 'Stephanie', 'Talley', '0404 477 143', 'S', 'jAupTO!0DnHt', true)
 ;
 
 INSERT INTO CUSTOMERS (ID, ADDRESS_LINE_1, ADDRESS_LINE_2, SUBURB, POSTCODE, STATE, IS_ANONYMOUS)

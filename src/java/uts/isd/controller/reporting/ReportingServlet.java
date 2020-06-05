@@ -34,7 +34,7 @@ public class ReportingServlet extends HttpServlet {
         
         catch (DAOException | SQLException e) {
             request.setAttribute("error", e.getMessage());
-            request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+            request.getRequestDispatcher("reporting.jsp").include(request, response);
         }
     }
     
@@ -58,7 +58,7 @@ public class ReportingServlet extends HttpServlet {
 
             catch (DAOException | SQLException e) {
                 request.setAttribute("error", e.getMessage());
-                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+                request.getRequestDispatcher("reporting.jsp").include(request, response);
             }
         }
 
@@ -72,12 +72,12 @@ public class ReportingServlet extends HttpServlet {
                 session.setAttribute("report", r);
 
                 // Redirect to the report view
-                response.sendRedirect("reporting/reportView.jsp");          
+                response.sendRedirect("reportView.jsp");          
             } 
             
             catch (DAOException | SQLException e) {
                 request.setAttribute("error", e.getMessage());
-                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+                request.getRequestDispatcher("reporting.jsp").include(request, response);
             }
         }
 
@@ -91,12 +91,12 @@ public class ReportingServlet extends HttpServlet {
                 session.setAttribute("report", r);
 
                 // Redirect the view to the stock report view
-                response.sendRedirect("reporting/stockReport.jsp");
+                response.sendRedirect("stockReport.jsp");
             }
 
             catch (DAOException | SQLException e) {
                 request.setAttribute("error", e.getMessage());
-                request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+                request.getRequestDispatcher("reporting.jsp").include(request, response);
             }
         }
     }
