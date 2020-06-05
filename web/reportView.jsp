@@ -106,7 +106,7 @@
             <c:if test="${report.topProducts.size() > 1}">
                 <h3> Top Products</h2>
                 <p class="font-weight-light">Note: This table is only displayed when multiple products had the highest quantity sold.</p>
-                <table class="table table-bordered table-sm table-dark">
+                <table class="table table-bordered table-sm">
                     <thead class="thead-light">
                         <th scope="col">Product ID</th>
                         <th scope="col">Product Name</th>

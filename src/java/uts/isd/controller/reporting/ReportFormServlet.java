@@ -81,7 +81,6 @@ public class ReportFormServlet extends HttpServlet {
                 // Construct Parameters
                 String[] params = createParamsArray(request);
 
-                /*
                 // Run validation check
                 validator.validateReportDates(params[2], params[3])
                         .validateReportName(params[0])
@@ -93,7 +92,6 @@ public class ReportFormServlet extends HttpServlet {
                     request.getRequestDispatcher("reportForm.jsp").include(request, response);
                     return;
                 }
-                */
 
                 // Update the report, then retrieve it with latest data and save it to the session
                 // Note this is neccessary for data refresh
@@ -118,7 +116,6 @@ public class ReportFormServlet extends HttpServlet {
                 // Construct Parameters
                 String[] params = createParamsArray(request);
 
-                /*
                 // Run validation check
                 validator.validateReportDates(params[2], params[3])
                         .validateReportName(params[0])
@@ -130,7 +127,6 @@ public class ReportFormServlet extends HttpServlet {
                     request.getRequestDispatcher("reporting.jsp").include(request, response);
                     return;
                 }
-                */
                 
                 Report r = ReportingDAO.save(createParamsArray(request));
                 session.setAttribute("report", r);

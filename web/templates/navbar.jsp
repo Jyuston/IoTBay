@@ -5,7 +5,7 @@
     Account user = (Account) session.getAttribute("user");
 %>
 
-<header class="navbar navbar-expand-md navbar-light bg-light mb-5">
+<header class="navbar navbar-expand-md navbar-dark bg-primary mb-5">
     <div class="container">
         <a class="navbar-brand h1 mb-0 font-weight-bold" href="${pageContext.request.contextPath}/index.jsp">IoT Bay</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -26,10 +26,10 @@
             </div>
 
             <% if (user != null) { %>
-            <a class="btn btn-outline-dark my-2 my-sm-0" href="${pageContext.request.contextPath}/logout.jsp"
+            <a class="btn btn-outline-light my-2 my-sm-0" href="${pageContext.request.contextPath}/logout.jsp"
                role="button">Logout</a>
             <% } else { %>
-            <a class="btn btn-outline-dark my-2 my-sm-0" href="${pageContext.request.contextPath}/login.jsp"
+            <a class="btn btn-outline-light my-2 my-sm-0" href="${pageContext.request.contextPath}/login.jsp"
                role="button">Login</a>
             <% } %>
         </div>
