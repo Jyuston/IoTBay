@@ -65,27 +65,18 @@ public class UserManagementEditServlet extends HttpServlet {
                 .validateEmail(email)
                 .validatePassword(password)
                 .validateName(firstName + " " + lastName)
-                .validateContactNumber(contactNumber)
-                .validatePassword(password);
-
-        if (validator.failed()) {
+                .validateContactNumber(contactNumber);
+    
+        
+        try{
             
-            try {
-                Account account = AccountDAO.getAccount(Integer.parseInt(ID));
-                request.setAttribute("account", account);
-            } catch (SQLException err) {
-                request.setAttribute("errorUserManagement", "Error accessing database.");
-                err.printStackTrace();
-            } finally {
-                request.getRequestDispatcher("/user_management_edit.jsp").include(request, response);
+            Account account = AccountDAO.getAccount(Integer.parseInt(ID));
+            request.setAttribute("account", account);
+        
+            if (validator.failed()) {
                 return;
             }
             
-
-        }
-        
-        try{
-            Account account = AccountDAO.getAccount(Integer.parseInt(ID));
             account.setFirstName(firstName);
             account.setLastName(lastName);
             account.setEmail(email);

@@ -35,32 +35,60 @@
                             <div class="col">
                                 <label for="firstName">First Name</label>
                                 <input type="text" class="form-control ${not empty nameVErr ? 'border border-danger' : ''}" 
-                                       name="firstName" value="${account.firstName}" required>
+                                       name="firstName" value="${account.firstName}">
+                                <small class="form-text text-danger">
+                                    <c:out value="${nameVErr}"/>
+                                 </small> 
                             </div>
                             <div class="col">
                                 <label for="lastName">Last Name</label>
                                 <input type="text" class="form-control ${not empty nameVErr ? 'border border-danger' : ''}" 
-                                       name="lastName" value="${account.lastName}" required>
+                                       name="lastName" value="${account.lastName}">
+                                <small class="form-text text-danger">
+                                    <c:out value="${nameVErr}"/>
+                                </small>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control ${not empty emailVErr ? 'border border-danger' : ''}" 
-                               name="email" value="${account.email}" aria-describedby="emailHelp" required>    
-                        <small id="emailHelp" class="form-text text-muted">Must be a valid email address.</small>
+                        <input type="text" class="form-control ${not empty emailVErr ? 'border border-danger' : ''}" 
+                               name="email" value="${account.email}" aria-describedby="emailHelp">    
+                        <small class="form-text text-danger">
+                            <c:out value="${emailVErr}"/>
+                        </small>
                     </div>
                     <div class="form-group">
                         <label for="contactNumber">Contact Number</label>
                         <input type="text" class="form-control ${not empty contactNumberVErr ? 'border border-danger' : ''}" 
-                               name="contactNumber" value="${account.contactNumber}" required >
+                               name="contactNumber" value="${account.contactNumber}">
+                        <small class="form-text text-danger">
+                            <c:out value="${contactNumberVErr}"/>
+                        </small>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input class="form-control ${not empty passwordVErr ? 'border border-danger' : ''}"
-                               name="password" value="${account.password}" required>
+                        <input class="form-control ${not empty passVErr ? 'border border-danger' : ''}"
+                               name="password" value="${account.password}">
+                        <small class="form-text text-danger">
+                            <c:out value="${passVErr}"/>
+                        </small>
                     </div>
-                    <button type="submit" class="btn btn-success mt-4">Edit Account</button> 
+                        
+                    <c:if test="${account.customer}">
+                        <div class="form-group">
+                        <label for="Address">Address</label>
+                        <input class="form-control"
+                               name="TestAdressform" value="">
+                        </div>
+                    </c:if>
+                        
+                    <a href="/IoTBay/UserManagementServlet" class="text-danger mt-5">Cancel</a>
+                    <button type="submit" class="btn btn-success mt-4 float-right">Edit Account</button>
+                    
+                    
+                    
+
                 </form>
             </c:when>
         </c:choose>

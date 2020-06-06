@@ -17,7 +17,7 @@
 </head>
 <h1 class="mb-2">User Management</h1>
 
-<h2 class="mb-3"> Search a User </h2>
+<h2 class="mb-5"> Search a User </h2>
 <div class="container-fluid">
     <div class="row"> 
         <div class="form-group">
@@ -39,6 +39,12 @@
             <c:if test="${successDelete}">
                 <div class="alert alert-success my-4" role="alert">
                     <h2> Account has been deleted. </h2>
+                </div>
+            </c:if>
+            
+            <c:if test="${successActive}">
+                <div class="alert alert-success my-4" role="alert">
+                    <h2> Account Activity has been changed. </h2>
                 </div>
             </c:if>
 
@@ -73,7 +79,7 @@
         </div>
 
         <c:if test="${not empty resultAccount}">
-            <div class="col-md-auto mx-auto my-2 p-4 border border-dark rounded">
+            <div class="col-md-auto mx-auto my-2 px-5 py-4 rounded bg-primary text-light">
                 <!--This will be updated by Servlet based on the Form--> 
                 <table class="my-auto">
                     <tr colspan="3" class="py-1"><th><h4>${resultAccount.firstName} ${resultAccount.lastName}</h4></th></tr>
@@ -86,8 +92,8 @@
                         <c:choose>
                             <c:when test="${resultAccount.active}">
                                 <form action="/IoTBay/UserManagementActiveServlet" method="POST">
-                                    <td><button class="btn btn-primary btn-sm my-2 mr-2">Deactivate</button></td>
-                                    <input type="hidden" value="deactivate" name="action">
+                                    <td><button class="btn btn-warning btn-sm my-2 mr-2">Deactivate</button></td>
+                                    <input type="hidden" value="false" name="action">
                                     <input type="hidden" name="accountID"  value="${resultAccount.ID}">
                                 </form>                          
                             </c:when>
@@ -95,7 +101,7 @@
                             <c:when test="${!resultAccount.active}">
                                 <form action="/IoTBay/UserManagementActiveServlet" method="POST">
                                     <td><button class="btn btn-warning btn-sm my-2 mr-2">Activate</button></td>
-                                    <input type="hidden" value="activate" name="action">
+                                    <input type="hidden" value="true" name="action">
                                     <input type="hidden" name="accountID"  value="${resultAccount.ID}">                            
                                 </form>
                             </c:when>

@@ -58,6 +58,14 @@
         <url-pattern>/UserManagementDeleteServlet</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>UserManagementActiveServlet</servlet-name>
+        <servlet-class>uts.isd.controller.user_management.UserManagementActiveServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserManagementActiveServlet</servlet-name>
+        <url-pattern>/UserManagementActiveServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>ReportingServlet</servlet-name>
         <servlet-class>uts.isd.controller.reporting.ReportingServlet</servlet-class>
      </servlet>
