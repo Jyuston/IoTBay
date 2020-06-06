@@ -39,7 +39,8 @@
                 <p class="card-text">
                     <c:choose>
                         <c:when test="${product.stock > 0}">
-                            <small class="text-${product.stock <= 20 ? 'warning' : 'success'}">${product.stock} currently in stock</small>
+                            <small class="text-${product.stock <= 20 ? 'warning' : 'success'}">${product.stock}
+                                currently in stock</small>
                         </c:when>
                         <c:otherwise>
                             <small class="text-danger">Out of stock</small>
@@ -54,7 +55,12 @@
                         <a href="EditProductServlet?ID=${product.ID}" class="text-info">Edit Product</a>
                     </small>
                 </c:if>
-                <small class="text-muted">${product.category}</small>
+                <form class="form-inline mb-0" method="get" action="CatalogueServlet">
+                    <input type="hidden" name="category" value="${product.category}">
+                    <button type="submit" class="btn btn-link text-muted p-0">
+                        <small>${product.category}</small>
+                    </button>
+                </form>
             </div>
         </div>
     </c:forEach>
