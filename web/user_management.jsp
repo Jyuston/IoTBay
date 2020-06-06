@@ -150,11 +150,11 @@
                     <td class="col-1">${Customer.ID}</td>
                     <td class="col-3">${Customer.firstName} ${Customer.lastName}</td>
                     <td class="col-4">${Customer.email}</td>
-                    <td class="col-2">${Customer.contactNumber}</td>
-                    <td class="col-2"> 
+                    <td class="col-3">${Customer.contactNumber}</td>
+                    <td class="col-1"> 
                         <form action="/IoTBay/UserManagementEditServlet" method="GET">
                             <input type="hidden" name="accountID"  value="${Customer.ID}">
-                            <button type="submit">Edit</button>
+                            <button type="submit" class="btn btn-info">Edit</button>
                         </form>
                     </td>
                 </tr>
@@ -171,7 +171,7 @@
                     <th class="col-1">#</th>
                     <th class="col-2">Name</th>
                     <th class="col-3">Email</th>
-                    <th class="col-2">Contact Number</th>
+                    <th class="col-3">Contact Number</th>
                     <th class="col-2">Staff-Admin</th>
                     <th class="col-2"></th>
                 </tr>
@@ -187,12 +187,12 @@
                     <td class="col-1">${Staff.ID}</td>
                     <td class="col-2">${Staff.firstName} ${Staff.lastName}</td>
                     <td class="col-3">${Staff.email}</td>
-                    <td class="col-2">${Staff.contactNumber}</td>
+                    <td class="col-3">${Staff.contactNumber}</td>
                     <td class="col-2">${Staff.admin}</td>
                     <td class="col-2">
                         <form action="/IoTBay/UserManagementEditServlet" method="GET">
                             <input type="hidden" name="accountID"  value="${Staff.ID}">
-                            <button type="submit">Edit</button>
+                            <button type="submit" class="btn btn-info">Edit</button>
                         </form> 
                     </td>
                 </tr>

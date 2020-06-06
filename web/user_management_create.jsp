@@ -38,7 +38,7 @@
             </div>
             <div class="form-group">
                 <label for="contactNumber">Contact Number</label>
-                <input type="number" class="form-control" name="contactNumber" id="contactNumber" required>
+                <input type="text" class="form-control" name="contactNumber" id="contactNumber" required>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
