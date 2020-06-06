@@ -29,7 +29,7 @@
                 <form class="m-5" method="POST" action="/IoTBay/UserManagementEditServlet">
             </c:when>
             <c:otherwise>
-                <form class="m-5" method="POST" action="/IoTBay/user_management_edit.jsp">    
+                <form class="m-5" method="POST" action="/IoTBay/editProfileServlet">    
             </c:otherwise>
         </c:choose>
 ${account.accountType}

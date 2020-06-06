@@ -32,26 +32,54 @@ public class editProfileServlet extends HttpServlet {
     }
     }
     
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
        
         Validator validator = new Validator(request);
 
-        //form deets
+        //Form Details
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
+        String email = request.getParameter("email");
         String contactNumber = request.getParameter("contactNumber");
+        String password = request.getParameter("password");
+        String ID = request.getParameter("ID");
         
-        validator.validateName(firstName + " " + lastName)
+        /*validator.validateName(firstName + " " + lastName)
                 .validateContactNumber(contactNumber);
 
         if (validator.failed()) {
             try {
-                getTables(request);
+                Account account = AccountDAO.getAccount(Integer.parseInt(ID));
+                request.setAttribute("account", account);
             } catch (SQLException err) {
                 request.setAttribute("errorUserManagement", "Error accessing database.");
+                err.printStackTrace();
+            } finally {
+                request.getRequestDispatcher("/user_management_edit.jsp").include(request, response);
+                return;
             }
+        }*/
+        try {
+            Account account = AccountDAO.getAccount(Integer.parseInt(ID));
+            account.setFirstName(firstName);
+            account.setLastName(lastName);
+            account.setEmail(email);
+            account.setContactNumber(contactNumber);
+            account.setPassword(password);
+            AccountDAO.update(account);
+            request.setAttribute("successEdit", true);
+            request.setAttribute("account", account);
+        }
+        catch (DAOException err) {
+            request.setAttribute("errorUserManagement", err.getMessage());
+            err.printStackTrace();           
+        }
+        catch (SQLException err) { 
+            request.setAttribute("errorUserManagement", err.getMessage());
+            }
+        finally {
             request.getRequestDispatcher("/user_management_edit.jsp").include(request, response);
-            return;
         }
     }
 }
