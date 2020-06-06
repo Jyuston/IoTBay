@@ -35,11 +35,11 @@ public class DeleteProductServlet extends HttpServlet {
         } 
         
         catch (SQLException err) {
-            request.setAttribute("errorCat", "Error accessing database.");
+            request.setAttribute("errorCatA", "Error accessing database.");
         } 
         
         catch (DAOException err) {
-            request.setAttribute("errorCat", err.getMessage());
+            request.setAttribute("errorCatA", err.getMessage());
         } 
         
         finally {
