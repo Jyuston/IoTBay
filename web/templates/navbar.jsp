@@ -20,14 +20,16 @@
                 <% if (user != null) { %>
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/edit.jsp">Edit Profile</a>
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/ReportingServlet">Reporting</a>
+                <a class="nav-item nav-link" href="${pageContext.request.contextPath}/LogsServlet">Logs</a>
                 <% } else { %>
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/register.jsp">Register</a>
                 <% } %>
             </div>
 
             <% if (user != null) { %>
-            <a class="btn btn-outline-light my-2 my-sm-0" href="${pageContext.request.contextPath}/logout.jsp"
-               role="button">Logout</a>
+            <form class="form-inline mb-0" action="LogoutServlet" method="post">
+                <button type="submit" class="btn btn-outline-light my-2 my-sm-0">Logout</button>
+            </form>
             <% } else { %>
             <a class="btn btn-outline-light my-2 my-sm-0" href="${pageContext.request.contextPath}/login.jsp"
                role="button">Login</a>
@@ -35,3 +37,5 @@
         </div>
     </div>
 </header>
+
+        

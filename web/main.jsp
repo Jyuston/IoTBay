@@ -27,10 +27,6 @@
     </table>
 
     <p class="text-center">
-        <a class="text-danger" href="logout.jsp">Logout</a>
-    </p>
-
-    <p class="text-center">
         <a href="index.jsp">Home</a>
     </p>
 </div>
