@@ -34,6 +34,15 @@
         <url-pattern>/UserManagementServlet</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>editProfileServlet</servlet-name>
+        <servlet-class>uts.isd.controller.editProfileServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editProfileServlet</servlet-name>
+        <url-pattern>/editProfileServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>UserManagementCreateServlet</servlet-name>
         <servlet-class>uts.isd.controller.user_management.UserManagementCreateServlet</servlet-class>
     </servlet>
