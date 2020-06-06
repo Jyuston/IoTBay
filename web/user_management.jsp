@@ -73,7 +73,7 @@
         </div>
 
         <c:if test="${not empty resultAccount}">
-            <div class="col-md-auto mx-auto my-2 p-4 border border-light rounded">
+            <div class="col-md-auto mx-auto my-2 p-4 border border-dark rounded">
                 <!--This will be updated by Servlet based on the Form--> 
                 <table class="my-auto">
                     <tr colspan="3" class="py-1"><th><h4>${resultAccount.firstName} ${resultAccount.lastName}</h4></th></tr>
@@ -128,18 +128,22 @@
 <h2> All Users </h2>
 <div class="my-3">
     <h4 class="mb-3">Customer</h4>
-    <div style="max-height: 400px;" class="table-responsive overflow-auto mb-4">
-        <table class="table">
-            
-            <thead>
-                <tr class="d-flex">
+    <div style="max-height: 400px;" class="table-responsive overflow-auto table-light">
+        <table class="table text-dark">
+
+                <tr class="d-flex table-info">
                     <th class="col-1">#</th>
                     <th class="col-3">Name</th>
                     <th class="col-4">Email</th>
                     <th class="col-2">Contact Number</th>
                     <th class="col-2"></th>
                 </tr>
-            </thead>
+    
+        </table>
+    </div>
+
+    <div style="max-height: 400px;" class="table-responsive overflow-auto mb-4 table-striped table-light">
+        <table class="table text-dark">
             
             <c:forEach items="${customerList}" var="Customer" varStatus="count">
                 <tr class="d-flex">
@@ -160,11 +164,10 @@
     </div>
 
     <h4 class="mb-3">Staff</h4>
-    <div style="max-height: 400px" class="table-responsive overflow-auto mb-4">
-        <table class="table">
+    <div style="max-height: 400px" class="table-responsive overflow-auto table-striped table-light">
+        <table class="table text-dark">
             
-            <thead>
-                <tr class="d-flex">
+                <tr class="d-flex table-info">
                     <th class="col-1">#</th>
                     <th class="col-2">Name</th>
                     <th class="col-3">Email</th>
@@ -172,7 +175,12 @@
                     <th class="col-2">Staff-Admin</th>
                     <th class="col-2"></th>
                 </tr>
-            </thead>
+
+        </table>
+    </div>
+            
+    <div style="max-height: 400px" class="table-responsive overflow-auto mb-4 table-striped table-light">
+        <table class="table text-dark">           
             
             <c:forEach items="${staffList}" var="Staff" varStatus="count">
                 <tr class="d-flex">
@@ -195,16 +203,16 @@
 </div>
 
 <h2>Audit Logs</h2>
-<div class="my-4">
-    <table class="table">
+<div class="my-4 table-striped table-light">
+    <table class="table text-dark">
         <thead>
-            <tr>
-                <th scope="col">Date</th>
-                <th scope="col">Operation</th>
-                <th scope="col">#</th>
+            <tr class="table-info">
+                <th scope="col">ID Tampered with</th>
+                <th scope="col">Action</th>
+                <th scope="col">Performed On</th>
                 <th scope="col">Email</th>
                 <th scope="col">Name</th>
-                <th scope="col">Account</th>
+                <th scope="col">Account</th>              
             </tr>
         </thead>
     </table>
