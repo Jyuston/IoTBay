@@ -22,7 +22,8 @@
                 <% if (user != null) { %>
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/editProfileServlet">Edit Profile</a>
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/ReportingServlet">Reporting</a>
-                <c:if test="${user.staff}">
+                
+                <c:if test="${user.staff && user.admin}">
                     <a class="nav-item nav-link" href="${pageContext.request.contextPath}/UserManagementServlet">User Management</a>
                 </c:if>
                 <% } else { %>

@@ -39,12 +39,6 @@
         <a href="index.jsp">Home</a>
     </p>
     
-    <c:if test="${user.isStaff() && user.admin}">
-        <form action="/IoTBay/UserManagementServlet" method="GET">
-            <button class="btn btn-info" type="submit">User Management</button>
-        </form>
-    </c:if>
-    
  
 </div>
 

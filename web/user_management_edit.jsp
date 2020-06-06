@@ -21,12 +21,12 @@
             <div class="alert alert-success my-4" role="alert">
                 Account # ${account.ID} has successfully been updated.<br>
 
-                <c:if test="${account.staff}">
+                <c:if test="${user.staff}">
                     <a class="text-info" href="UserManagementServlet">Back to User Management</a>
                 </c:if>
 
-                <c:if test="${account.customer}">
-                    <a class="text-info" href="UserManagementServlet">Back to User Management</a>
+                <c:if test="${user.customer}">
+                    <a class="text-info" href="main.jsp">Back to Main</a>
                 </c:if>
  
             </div>
@@ -34,7 +34,7 @@
 
 
         <c:choose>
-            <c:when test="${account.staff}">
+            <c:when test="${user.staff}">
                 <form class="m-5" method="POST" action="/IoTBay/UserManagementEditServlet">
             </c:when>
             <c:otherwise>

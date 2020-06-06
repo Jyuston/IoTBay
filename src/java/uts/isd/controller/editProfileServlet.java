@@ -45,7 +45,7 @@ public class editProfileServlet extends HttpServlet {
         String password = request.getParameter("password");
         String ID = request.getParameter("ID");
         
-        /*validator.validateName(firstName + " " + lastName)
+        validator.validateName(firstName + " " + lastName)
                 .validateContactNumber(contactNumber);
 
         if (validator.failed()) {
@@ -59,8 +59,9 @@ public class editProfileServlet extends HttpServlet {
                 request.getRequestDispatcher("/user_management_edit.jsp").include(request, response);
                 return;
             }
-        }*/
+        }
         try {
+            HttpSession session = request.getSession();
             Account account = AccountDAO.getAccount(Integer.parseInt(ID));
             account.setFirstName(firstName);
             account.setLastName(lastName);
@@ -70,6 +71,7 @@ public class editProfileServlet extends HttpServlet {
             AccountDAO.update(account);
             request.setAttribute("successEdit", true);
             request.setAttribute("account", account);
+            session.setAttribute("user", account);
         }
         catch (DAOException err) {
             request.setAttribute("errorUserManagement", err.getMessage());
