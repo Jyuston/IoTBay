@@ -107,7 +107,7 @@
                     </form>
 
                     <form action="/IoTBay/UserManagementDeleteServlet" method="POST">
-                        <td><button class="btn btn-danger btn-sm my-2 float-right">Delete</button></td>
+                        <td><button class="btn btn-danger btn-sm my-2 float-right" onclick="return confirm('Are you sure you want to delete this Account?')">Delete</button></td>
                         <input type="hidden" name="accountID"  value="${resultAccount.ID}">
                     </form>   
                     </tr>

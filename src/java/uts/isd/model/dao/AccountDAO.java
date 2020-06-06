@@ -133,7 +133,7 @@ public class AccountDAO {
      *
      * @param accountID ID of the account to delete.
      */
-    public static void delete(String accountID) throws SQLException, DAOException {
+    public static void delete(int accountID) throws SQLException, DAOException {
         String deleteQuery = "DELETE FROM ACCOUNTS WHERE ID = " + accountID;
 
         PreparedStatement st = DAOUtils.prepareStatement(deleteQuery, false);

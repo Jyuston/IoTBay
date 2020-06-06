@@ -7,12 +7,17 @@ package uts.isd.controller.user_management;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import uts.isd.model.Customer;
+import uts.isd.model.Staff;
 import uts.isd.model.dao.AccountDAO;
+import uts.isd.model.dao.CustomerDAO;
 import uts.isd.model.dao.DAOException;
+import uts.isd.model.dao.StaffDAO;
 
 /**
  *
@@ -28,9 +33,9 @@ public class UserManagementDeleteServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String accountID = request.getParameter("accountID");
+        
         try {
-            
-            AccountDAO.delete(accountID);
+            AccountDAO.delete(Integer.parseInt(accountID));
             request.setAttribute("successDelete", true); 
         } 
         
@@ -43,7 +48,20 @@ public class UserManagementDeleteServlet extends HttpServlet {
         } 
         
         finally {
-            request.getRequestDispatcher("/UserManagementServlet").include(request, response);
+            try {
+                List<Customer> customerList = CustomerDAO.getAll();
+                List<Staff> staffList = StaffDAO.getAll();
+                request.setAttribute("customerList", customerList);
+                request.setAttribute("staffList", staffList);
+            }
+            
+            catch(SQLException err){
+                request.setAttribute("errorUserManagement", "Error accessing database.");
+            }
+
+            finally{
+                request.getRequestDispatcher("/user_management.jsp").include(request, response);
+            }
         }
     }
 }
