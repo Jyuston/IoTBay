@@ -23,8 +23,17 @@
     </c:when>
             
     <c:when test="${!successEdit}">
-        <form class="m-5" method="POST" action="/IoTBay/UserManagementEditServlet">
-            <%--Details--%>
+        <c:choose>
+
+            <c:when test="${account.accountType eq 'S'.charAt(0)}">
+                <form class="m-5" method="POST" action="/IoTBay/UserManagementEditServlet">
+            </c:when>
+            <c:otherwise>
+                <form class="m-5" method="POST" action="/IoTBay/user_management_edit.jsp">    
+            </c:otherwise>
+        </c:choose>
+${account.accountType}
+                    <%--Details--%>
             <h4>Details for Account #${account.ID}</h4>
             <div class="form-group">
                 <input type="hidden" name="ID" value="${account.ID}">
