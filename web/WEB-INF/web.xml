@@ -48,7 +48,7 @@
     <servlet>
         <servlet-name>ReportingServlet</servlet-name>
         <servlet-class>uts.isd.controller.reporting.ReportingServlet</servlet-class>
-     </servlet>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ReportingServlet</servlet-name>
         <url-pattern>/ReportingServlet</url-pattern>
@@ -56,7 +56,7 @@
     <servlet>
         <servlet-name>ReportFormServlet</servlet-name>
         <servlet-class>uts.isd.controller.reporting.ReportFormServlet</servlet-class>
-     </servlet>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ReportFormServlet</servlet-name>
         <url-pattern>/ReportFormServlet</url-pattern>
@@ -85,14 +85,14 @@
         <servlet-name>EditProductServlet</servlet-name>
         <url-pattern>/products/EditProductServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
         <servlet-name>DeleteProductServlet</servlet-name>
         <servlet-class>uts.isd.controller.product.DeleteProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>EditProductServlet</servlet-name>
-        <url-pattern>/products/EditProductServlet</url-pattern>
-    </servlet-mapping>            
-                
+        <servlet-name>DeleteProductServlet</servlet-name>
+        <url-pattern>/products/DeleteProductServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

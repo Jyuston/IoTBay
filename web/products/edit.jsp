@@ -4,7 +4,7 @@
 <%--Request Scope EL Vars--%>
 <%--@elvariable id="editProductErr" type="java.lang.String"--%>
 <%--@elvariable id="product" type="uts.isd.model.Product"--%>
-<%--@elvariable id="success" type="java.lang.Boolean"--%>
+<%--@elvariable id="successEdit" type="java.lang.Boolean"--%>
 
 <%--Session Scope EL Vars--%>
 <%--@elvariable id="user" type="uts.isd.model.Account"--%>
@@ -22,7 +22,7 @@
     <c:otherwise>
         <div class="w mx-auto">
                 <%--Success Message--%>
-            <c:if test="${not empty success}">
+            <c:if test="${not empty successEdit}">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <p><strong>Product #${product.ID}</strong> updated successfully!</p>
                     <hr>
@@ -43,7 +43,20 @@
                 </div>
             </c:if>
 
-            <h1>Edit Product #${product.ID}</h1>
+            <div class="d-flex mb-2">
+                <h1 class="mb-0 flex-grow-1">Edit Product #${product.ID}</h1>
+
+                    <%--Delete form--%>
+                <form class="form-inline mb-0" method="post" action="DeleteProductServlet"
+                      onsubmit="return confirm('Are you sure you want to delete this product?');">
+                    <input type="hidden" value="${product.ID}" name="ID">
+                    <button type="submit" class="btn btn-sm btn-outline-${empty product ? 'secondary' : 'danger'}"
+                        ${empty product ? 'disabled' : ''}>
+                        Delete Product
+                    </button>
+                </form>
+            </div>
+
             <form action="EditProductServlet" method="post" class="validate">
                 <input type="hidden" name="ID" value="${product.ID}">
 
@@ -51,7 +64,7 @@
                     <label for="name">Name</label>
                     <input type="text" class="form-control ${not empty emptyNameVErr ? 'border border-danger' : ''}"
                            name="name" id="name" value="${product.name}">
-                    <small class="form-text text-danger">
+                    <small class="invalid-feedback d-block">
                         <c:out value="${emptyNameVErr}"/>
                     </small>
                 </div>
@@ -60,7 +73,7 @@
                     <label for="category">Category</label>
                     <input type="text" class="form-control ${not empty emptyCategoryVErr ? 'border border-danger' : ''}"
                            id="category" name="category" value="${product.category}">
-                    <small class="form-text text-danger">
+                    <small class="invalid-feedback d-block">
                         <c:out value="${emptyCategoryVErr}"/>
                     </small>
                 </div>
@@ -69,7 +82,7 @@
                     <label for="description">Description</label>
                     <textarea class="form-control ${not empty emptyDescriptionVErr ? 'border border-danger' : ''}"
                               id="description" name="description" rows="3">${product.description}</textarea>
-                    <small class="form-text text-danger">
+                    <small class="invalid-feedback d-block">
                         <c:out value="${emptyDescriptionVErr}"/>
                     </small>
                 </div>
@@ -84,7 +97,7 @@
                             <input type="number"
                                    class="form-control ${not empty negativePriceVErr ? 'border border-danger' : ''}"
                                    id="price" name="price" value="${product.price}" required>
-                            <small class="form-text text-danger">
+                            <small class="invalid-feedback d-block">
                                 <c:out value="${negativePriceVErr}"/>
                             </small>
                         </div>
@@ -99,7 +112,7 @@
                             <input type="number"
                                    class="form-control ${not empty negativeStockVErr ? 'border border-danger' : ''}"
                                    id="stock" name="stock" value="${product.stock}" required>
-                            <small class="form-text text-danger">
+                            <small class="invalid-feedback d-block">
                                 <c:out value="${negativeStockVErr}"/>
                             </small>
                         </div>
@@ -108,11 +121,10 @@
 
 
                 <button type="submit" class="btn btn-${empty product ? 'secondary' : 'primary'} btn-block mt-4 mb-2"
-                    ${empty product ? 'disabled' : ''}>Edit Product
+                    ${empty product ? 'disabled' : ''}>
+                    Edit Product
                 </button>
-               <button type="submit" class="btn btn-${empty product ? 'secondary' : 'primary'} btn-block mt-4 mb-2"
-                    ${empty product ? 'disabled' : ''}>Delete Product
-                </button>
+
                 <a href="CatalogueServlet" class="text-center d-block text-danger">Cancel</a>
             </form>
         </div>

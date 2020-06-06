@@ -12,6 +12,16 @@
 </head>
 <jsp:include page="../templates/header.jsp"/>
 
+<%--Success Message--%>
+<c:if test="${not empty successDelete}">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <p class="mb-0"><strong>Hooray! </strong>Product deleted successfully!</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</c:if>
+
 <form class="form-inline mb-2" method="get" action="CatalogueServlet">
     <label class="sr-only" for="searchQuery">Search</label>
     <input type="text" class="form-control" id="searchQuery" name="query" placeholder="Search..." value="${prevQuery}">

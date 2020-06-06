@@ -69,7 +69,7 @@ public class EditProductServlet extends HttpServlet {
 
             ProductDAO.update(product);
 
-            request.setAttribute("success", true);
+            request.setAttribute("successEdit", true);
         }
         catch (DAOException err) {
             request.setAttribute("editProductErr", err.getMessage());

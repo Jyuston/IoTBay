@@ -14,10 +14,7 @@ public class ProductDAO {
      * @return An instantiated Product if found, otherwise null.
      */
     public static Product get(int productID) throws SQLException, DAOException {
-        String getProductDataQuery =
-                "SELECT * FROM PRODUCTS " +
-                "WHERE ID = " + productID;
-
+        String getProductDataQuery = "SELECT * FROM PRODUCTS WHERE ID = " + productID;
         PreparedStatement st = DAOUtils.prepareStatement(getProductDataQuery, false);
         ResultSet productRs = st.executeQuery();
 
@@ -36,8 +33,7 @@ public class ProductDAO {
     public static LinkedList<Product> getAll() throws SQLException {
         LinkedList<Product> products = new LinkedList<>();
 
-        String getProductsQuery =
-                "SELECT * FROM PRODUCTS WHERE ARCHIVED = 'false' ";
+        String getProductsQuery = "SELECT * FROM PRODUCTS WHERE ARCHIVED = false";
         PreparedStatement st = DAOUtils.prepareStatement(getProductsQuery, false);
         ResultSet productsRs = st.executeQuery();
 
@@ -56,7 +52,7 @@ public class ProductDAO {
     public static LinkedList<Product> searchByName(String query) throws SQLException {
         LinkedList<Product> products = new LinkedList<>();
 
-        String searchQuery = "SELECT * FROM PRODUCTS WHERE NAME LIKE ?";
+        String searchQuery = "SELECT * FROM PRODUCTS WHERE NAME LIKE ? AND ARCHIVED = false";
         PreparedStatement st = DAOUtils.prepareStatement(searchQuery, false,
                 "%" + query + "%"
         );
@@ -79,7 +75,7 @@ public class ProductDAO {
     public static LinkedList<Product> searchByCategory(String query) throws SQLException {
         LinkedList<Product> products = new LinkedList<>();
 
-        String searchQuery = "SELECT * FROM PRODUCTS WHERE CATEGORY LIKE ?";
+        String searchQuery = "SELECT * FROM PRODUCTS WHERE CATEGORY LIKE ? AND ARCHIVED = false";
         PreparedStatement st = DAOUtils.prepareStatement(searchQuery, false,
                 "%" + query + "%"
         );
@@ -110,7 +106,8 @@ public class ProductDAO {
         String searchQuery =
                 "SELECT * FROM PRODUCTS " +
                 "WHERE NAME LIKE ? " +
-                "AND CATEGORY LIKE ?";
+                "AND CATEGORY LIKE ? " +
+                "AND  ARCHIVED = false";
 
         PreparedStatement st = DAOUtils.prepareStatement(searchQuery, false,
                 "%" + name + "%",
@@ -187,18 +184,27 @@ public class ProductDAO {
      *
      * @param productID ID of the product to delete
      */
-    public static void delete(String productID) throws SQLException, DAOException {
-        
+    public void delete(int productID) throws SQLException, DAOException {
         String deleteQuery = "DELETE FROM PRODUCTS WHERE ID = " + productID;
-        String dUpdate = "UPDATE PRODUCTS SET ARCHIVED = 'true' WHERE ID = " + productID;
-        PreparedStatement st = DAOUtils.prepareStatement(dUpdate, false);
+        PreparedStatement st = DAOUtils.prepareStatement(deleteQuery, false);
 
         int rowsChanged = st.executeUpdate();
         if (rowsChanged == 0)
             throw new DAOException("Failed to delete Product. Please try again.");
-    
-    
-  
+    }
+
+    /**
+     * Archive a product in the database.
+     *
+     * @param productID ID of the product to archive
+     */
+    public static void archive(int productID) throws SQLException, DAOException {
+        String archiveQuery = "UPDATE PRODUCTS SET ARCHIVED = true WHERE ID = ?";
+        PreparedStatement st = DAOUtils.prepareStatement(archiveQuery, false, productID);
+
+        int rowsChanged = st.executeUpdate();
+        if (rowsChanged == 0)
+            throw new DAOException("Failed to archive Product. Please try again.");
     }
 
     // Helpers

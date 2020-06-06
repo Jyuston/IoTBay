@@ -19,43 +19,25 @@ import uts.isd.model.dao.StaffDAO;
  *
  */
 public class DeleteProductServlet extends HttpServlet {
-
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-            
-    }
-
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String productID = request.getParameter("productID");
+        int productID = Integer.parseInt(request.getParameter("ID"));
         
         try {
-            ProductDAO.delete(Integer.parseInt(productID));
-            request.setAttribute("successDelete", true); 
-        } 
-        
-        catch (SQLException err) {
-            request.setAttribute("errorCatA", "Error accessing database.");
-        } 
-        
-        catch (DAOException err) {
-            request.setAttribute("errorCatA", err.getMessage());
-        } 
-        
-        finally {
-            try {
-                List<Product> productList = ProductDAO.getAll();
-                request.setAttribute("productList", productList);
-            }
-            
-            catch(SQLException err){
-                request.setAttribute("errorCat", "Error accessing database.");
-            }
+            ProductDAO.archive(productID);
+            request.setAttribute("successDelete", true);
 
-            finally{
-                request.getRequestDispatcher("/CatalogueServlet.jsp").include(request, response);
-                System.out.println("Product has been deleted");
-            }
+            List<Product> productList = ProductDAO.getAll();
+            request.setAttribute("productList", productList);
+        }
+        catch (SQLException err) {
+            request.setAttribute("deleteProductErr", "Error accessing database.");
+        }
+        catch (DAOException err) {
+            request.setAttribute("deleteProductErr", err.getMessage());
+        }
+        finally {
+            request.getRequestDispatcher("index.jsp").include(request, response);
         }
     }
 }
