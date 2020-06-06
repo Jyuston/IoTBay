@@ -40,7 +40,7 @@ public class UserManagementCreateServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        //Validator validator = new Validator(request);
+        Validator validator = new Validator(request);
         
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
@@ -49,16 +49,17 @@ public class UserManagementCreateServlet extends HttpServlet {
         String password = request.getParameter("password");
         String accountType = request.getParameter("accountType");
         
-                // Run validation checks
-        /*validator.checkEmpty(email, password)
+        //Run validation checks
+        validator.checkEmpty(email, password)
+                .validateName(firstName + " " + lastName)
                 .validateEmail(email)
                 .validatePassword(password)
-                .validateName(firstName + " " + lastName);
+                .validateContactNumber(contactNumber);
 
         if (validator.failed()) {
             request.getRequestDispatcher("/user_management_create.jsp").include(request, response);
             return;
-        }*/
+        }
 
         try {
 
