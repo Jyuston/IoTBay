@@ -13,7 +13,6 @@ import uts.isd.model.dao.DAOException;
 import uts.isd.model.dao.ProductDAO;
 
 public class EditProductServlet extends HttpServlet {
-
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         int ID = Integer.parseInt(request.getParameter("ID"));

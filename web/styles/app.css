@@ -47,9 +47,3 @@ h1 {
         width: 50% !important;
     }
 }
-
-@media screen and (min-width: 1200px) {
-    .w {
-        width: 40% !important;
-    }
-}
