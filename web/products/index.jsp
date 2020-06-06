@@ -51,7 +51,10 @@
             <div class="card-footer">
                 <c:if test="${not empty user && user.staff}">
                     <small class="float-right">
-                        <a href="EditProductServlet?id=${product.ID}" class="text-warning">Edit Product Details</a>
+                             <form action="/IoTBay/EditProductServlet" method="GET">
+                            <input type="hidden" name="ID"  value="${product.ID}">
+                            <button type="submit" class="btn btn-info">Edit</button>
+                        </form> 
                     </small>
                     <small class="float-left">
                         <a href="DeleteProductServlet?id=${product.ID}" class="text-warning">Delete</a>

@@ -187,6 +187,7 @@ public class ProductDAO {
      * @param productID ID of the product to delete
      */
     public void delete(String productID) throws SQLException, DAOException {
+        
         String deleteQuery = "DELETE FROM PRODUCTS WHERE ID = " + productID;
 
         PreparedStatement st = DAOUtils.prepareStatement(deleteQuery, false);
