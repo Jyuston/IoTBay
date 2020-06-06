@@ -16,83 +16,142 @@
 <div class="row">
 
     <div class="col-lg-6">
-        <c:choose>
 
-            <c:when test="${successEdit}">
-                <div class="alert alert-success my-4" role="alert">
-                        <h4>Account # ${account.ID} has successfully been updated.</h4>
-                    <a class="btn btn-primary btn-lg btn-block" href="UserManagementServlet">Back to User Management</a>
+        <c:if test="${successEdit}">
+            <div class="alert alert-success my-4" role="alert">
+                Account # ${account.ID} has successfully been updated.<br>
+                <a class="text-info" href="UserManagementServlet">Back to User Management</a>
+            </div>
+        </c:if>
+
+
+        <form class="m-5" method="POST" action="/IoTBay/UserManagementEditServlet">
+            <%--Details--%>
+            <h4>Account Details</h4> 
+            <p>ID: #${account.ID}</p>
+            <div class="form-group">
+                <input type="hidden" name="ID" value="${account.ID}">
+                <div class="row">         
+                    <div class="col">
+                        <label for="firstName">First Name</label>
+                        <input type="text" class="form-control ${not empty nameVErr ? 'border border-danger' : ''}" 
+                               name="firstName" value="${account.firstName}">
+                        <small class="form-text text-danger">
+                            <c:out value="${nameVErr}"/>
+                        </small> 
+                    </div>
+                    <div class="col">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" class="form-control ${not empty nameVErr ? 'border border-danger' : ''}" 
+                               name="lastName" value="${account.lastName}">
+                        <small class="form-text text-danger">
+                            <c:out value="${nameVErr}"/>
+                        </small>
+                    </div>
                 </div>
-            </c:when>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control ${not empty emailVErr ? 'border border-danger' : ''}" 
+                       name="email" value="${account.email}" aria-describedby="emailHelp">    
+                <small class="form-text text-danger">
+                    <c:out value="${emailVErr}"/>
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="contactNumber">Contact Number</label>
+                <input type="text" class="form-control ${not empty contactNumberVErr ? 'border border-danger' : ''}" 
+                       name="contactNumber" value="${account.contactNumber}">
+                <small class="form-text text-danger">
+                    <c:out value="${contactNumberVErr}"/>
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input class="form-control ${not empty passVErr ? 'border border-danger' : ''}"
+                       name="password" value="${account.password}">
+                <small class="form-text text-danger">
+                    <c:out value="${passVErr}"/>
+                </small>
+            </div>
 
-            <c:when test="${!successEdit}">
-                <form class="m-5" method="POST" action="/IoTBay/UserManagementEditServlet">
-                    <%--Details--%>
-                    <h4>Details for Account #${account.ID}</h4>
-                    <div class="form-group">
-                        <input type="hidden" name="ID" value="${account.ID}">
-                        <div class="row">         
-                            <div class="col">
-                                <label for="firstName">First Name</label>
-                                <input type="text" class="form-control ${not empty nameVErr ? 'border border-danger' : ''}" 
-                                       name="firstName" value="${account.firstName}">
-                                <small class="form-text text-danger">
-                                    <c:out value="${nameVErr}"/>
-                                 </small> 
-                            </div>
-                            <div class="col">
-                                <label for="lastName">Last Name</label>
-                                <input type="text" class="form-control ${not empty nameVErr ? 'border border-danger' : ''}" 
-                                       name="lastName" value="${account.lastName}">
-                                <small class="form-text text-danger">
-                                    <c:out value="${nameVErr}"/>
-                                </small>
-                            </div>
+            <c:if test="${account.customer}">
+                
+                <h4 class="mt-5">Shipping Address</h4>
+                <div class="form-group">
+                    <label for="addressLine1">Address</label>
+                    <input type="text" class="form-control" name="addressLine1" id="addressLine1"
+                           value="${account.address.addressLine1}"
+                           placeholder="Sherman 42 Wallaby Way, Sydney"
+                           >
+                </div>
+                <div class="form-group">
+                    <label for="addressLine2">Address 2 (Optional)</label>
+                    <input type="text" class="form-control" name="addressLine2" id="addressLine2"
+                           value="${account.address.addressLine2}"
+                           >
+                </div>
+                <div class="form-group">
+                    <label for="suburb">Suburb</label>
+                    <input type="text" class="form-control" name="suburb" id="suburb"
+                           value="${account.address.suburb}"
+                           >
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <label for="state">State</label>
+                            <select class="form-control" name="state" id="state" selected="${account.address.state}">
+                                <option>NSW</option>
+                                <option>QLD</option>
+                                <option>ACT</option>
+                                <option>VIC</option>
+                                <option>TAS</option>
+                                <option>SA</option>
+                                <option>WA</option>
+                                <option>NT</option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <label for="postcode">Postcode</label>
+                            <input type="text" class="form-control" name="postcode" id="postcode"
+                                   value="${account.address.postcode}">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="text" class="form-control ${not empty emailVErr ? 'border border-danger' : ''}" 
-                               name="email" value="${account.email}" aria-describedby="emailHelp">    
-                        <small class="form-text text-danger">
-                            <c:out value="${emailVErr}"/>
-                        </small>
-                    </div>
-                    <div class="form-group">
-                        <label for="contactNumber">Contact Number</label>
-                        <input type="text" class="form-control ${not empty contactNumberVErr ? 'border border-danger' : ''}" 
-                               name="contactNumber" value="${account.contactNumber}">
-                        <small class="form-text text-danger">
-                            <c:out value="${contactNumberVErr}"/>
-                        </small>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input class="form-control ${not empty passVErr ? 'border border-danger' : ''}"
-                               name="password" value="${account.password}">
-                        <small class="form-text text-danger">
-                            <c:out value="${passVErr}"/>
-                        </small>
-                    </div>
-                        
-                    <c:if test="${account.customer}">
-                        <div class="form-group">
-                        <label for="Address">Address</label>
-                        <input class="form-control"
-                               name="TestAdressform" value="">
+                </div>
+
+                <%--Payment--%>
+                <h4 class="mt-5">Billing Information</h4>
+                <div class="form-group">
+                    <label for="cardNumber">Card Number</label>
+                    <input type="text" class="form-control" name="cardNumber" id="cardNumber" 
+                        value="${account.paymentInfo.cardNumber}">
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <label for="expiryMonth">Expiry Month</label>
+                            <input type="text" class="form-control" name="expiryMonth" id="expiryMonth" 
+                                   value="${account.paymentInfo.expiryMonth}">
                         </div>
-                    </c:if>
-                        
-                    <a href="/IoTBay/UserManagementServlet" class="text-danger mt-5">Cancel</a>
-                    <button type="submit" class="btn btn-success mt-4 float-right">Edit Account</button>
-                    
-                    
-                    
+                        <div class="col">
+                            <label for="expiryYear">Expiry Year</label>
+                            <input type="text" class="form-control" name="expiryYear" id="expiryYear" 
+                                   value="${account.paymentInfo.expiryYear}">
+                        </div>
+                        <div class="col">
+                            <label for="cvvNumber">CVV</label>
+                            <input type="text" class="form-control mb-5" name="cvvNumber" id="cvvNumber"
+                                   value="${account.paymentInfo.cvvNumber}">
+                        </div>
+                    </div>
+                </div>
+            </c:if>
 
-                </form>
-            </c:when>
-        </c:choose>
+            <a href="/IoTBay/UserManagementServlet" class=" mt-5 text-danger">Cancel</a>
+            <button type="submit" class="btn btn-success float-right">Edit Account</button>
 
+        </form>
     </div>
 
 </div>

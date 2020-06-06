@@ -69,15 +69,15 @@
 
     <div class="form-group">
         <label for="accountType">Account Type</label>
-        <select class="custom-select" id="accountType" name="accountType">
+        <select class="custom-select mb-5" id="accountType" name="accountType">
             <option value="Customer">Customer</option>
             <option value="Staff">Staff</option>
             <option value="Staff-Admin">Staff-Admin</option>
         </select>
     </div>
     
-    <a href="/IoTBay/UserManagementServlet" class="text-danger mt-5">Cancel</a>
-    <button type="submit" class="btn btn-success mt-4 float-right">Add Account</button> 
+    <a href="/IoTBay/UserManagementServlet" class="text-danger ">Cancel</a>
+    <button type="submit" class="btn btn-success float-right">Add Account</button> 
 </form>
 
 <jsp:include page="templates/footer.jsp"/>

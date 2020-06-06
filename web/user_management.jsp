@@ -51,20 +51,20 @@
             <form action="/IoTBay/UserManagementServlet" method="POST">
                 <table>
                     <tr>
-                        <td><input class="form-control-sm mb-2 mr-2  ${not empty nameVErr ? 'border border-danger' : ''}" name="firstName" placeholder="First Name">
+                        <td><input class="form-control-sm mb-2 mr-2 border border-secondary ${not empty nameVErr ? 'border border-danger' : ''}" name="firstName" placeholder="First Name">
                                 <small class="form-text text-danger mb-1">
                                     <c:out value="${nameVErr}"/>
                                 </small>
                         </td>
                         
-                        <td><input class="form-control-sm mb-2 ${not empty nameVErr ? 'border border-danger' : ''}" name="lastName" placeholder="Last Name">
+                        <td><input class="form-control-sm mb-2 border border-secondary ${not empty nameVErr ? 'border border-danger' : ''}" name="lastName" placeholder="Last Name">
                                 <small class="form-text text-danger mb-1">
                                     <c:out value="${nameVErr}"/>
                                 </small>
                         </td>
                     </tr>
                     <tr>
-                        <td><input class="form-control-sm ${not empty contactNumberVErr ? 'border border-danger' : ''}" name="contactNumber" placeholder="Contact Number">
+                        <td><input class="form-control-sm border border-secondary ${not empty contactNumberVErr ? 'border border-danger' : ''}" name="contactNumber" placeholder="Contact Number">
                                 <small class="form-text text-danger">
                                     <c:out value="${contactNumberVErr}"/>
                                 </small>
@@ -79,7 +79,7 @@
         </div>
 
         <c:if test="${not empty resultAccount}">
-            <div class="col-md-auto mx-auto my-2 px-5 py-4 rounded bg-primary text-light">
+            <div class="col-md-auto mx-auto p-4 rounded bg-primary text-light">
                 <!--This will be updated by Servlet based on the Form--> 
                 <table class="my-auto">
                     <tr colspan="3" class="py-1"><th><h4>${resultAccount.firstName} ${resultAccount.lastName}</h4></th></tr>
