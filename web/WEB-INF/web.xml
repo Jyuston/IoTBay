@@ -84,7 +84,15 @@
     <servlet-mapping>
         <servlet-name>EditProductServlet</servlet-name>
         <url-pattern>/products/EditProductServlet</url-pattern>
-    </servlet-mapping>    
+    </servlet-mapping>
+        <servlet-name>DeleteProductServlet</servlet-name>
+        <servlet-class>uts.isd.controller.product.DeleteProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditProductServlet</servlet-name>
+        <url-pattern>/products/EditProductServlet</url-pattern>
+    </servlet-mapping>            
+                
     <session-config>
         <session-timeout>
             30

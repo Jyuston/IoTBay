@@ -36,7 +36,8 @@ public class ProductDAO {
     public static LinkedList<Product> getAll() throws SQLException {
         LinkedList<Product> products = new LinkedList<>();
 
-        String getProductsQuery = "SELECT * FROM PRODUCTS ";
+        String getProductsQuery =
+                "SELECT * FROM PRODUCTS WHERE ARCHIVED = 'false' ";
         PreparedStatement st = DAOUtils.prepareStatement(getProductsQuery, false);
         ResultSet productsRs = st.executeQuery();
 
@@ -186,15 +187,18 @@ public class ProductDAO {
      *
      * @param productID ID of the product to delete
      */
-    public void delete(String productID) throws SQLException, DAOException {
+    public static void delete(String productID) throws SQLException, DAOException {
         
         String deleteQuery = "DELETE FROM PRODUCTS WHERE ID = " + productID;
-
-        PreparedStatement st = DAOUtils.prepareStatement(deleteQuery, false);
+        String dUpdate = "UPDATE PRODUCTS SET ARCHIVED = 'true' WHERE ID = " + productID;
+        PreparedStatement st = DAOUtils.prepareStatement(dUpdate, false);
 
         int rowsChanged = st.executeUpdate();
         if (rowsChanged == 0)
             throw new DAOException("Failed to delete Product. Please try again.");
+    
+    
+  
     }
 
     // Helpers

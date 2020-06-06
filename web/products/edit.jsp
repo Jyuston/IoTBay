@@ -110,6 +110,9 @@
                 <button type="submit" class="btn btn-${empty product ? 'secondary' : 'primary'} btn-block mt-4 mb-2"
                     ${empty product ? 'disabled' : ''}>Edit Product
                 </button>
+               <button type="submit" class="btn btn-${empty product ? 'secondary' : 'primary'} btn-block mt-4 mb-2"
+                    ${empty product ? 'disabled' : ''}>Delete Product
+                </button>
                 <a href="CatalogueServlet" class="text-center d-block text-danger">Cancel</a>
             </form>
         </div>
