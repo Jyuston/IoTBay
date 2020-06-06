@@ -16,7 +16,7 @@
         To continue, please Login or Register below.
         <br/>
         <a href="login.jsp">Login</a> |
-        <a href="/IoTBay/product/CatalogueServlet">Catalogue</a> |
+        <a href="products/CatalogueServlet">Catalogue</a> |
         <a href="register.jsp">Register</a>
     </p>
 </div>

@@ -18,7 +18,7 @@
     <%--select--%>
 
     <button type="submit" class="btn btn-primary mx-2">Submit</button>
-    <a href="/IoTBay/product/CatalogueServlet" class="text-danger">Clear</a>
+    <a href="CatalogueServlet" class="text-danger">Clear</a>
 </form>
 
 <h1>Products</h1>
@@ -33,7 +33,7 @@
                 <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text>
             </svg>
             <div class="card-body">
-                <h5 class="card-title"><a href="ProductDetailsServlet?id=${product.ID}">${product.name}</a></h5>
+                <h5 class="card-title"><a href="ProductDetailsServlet?ID=${product.ID}">${product.name}</a></h5>
                 <p class="card-text price">$${product.price} AUD</p>
 
                 <p class="card-text">
@@ -51,15 +51,8 @@
             <div class="card-footer">
                 <c:if test="${not empty user && user.staff}">
                     <small class="float-right">
-                             <form action="/IoTBay/EditProductServlet" method="GET">
-                            <input type="hidden" name="ID"  value="${product.ID}">
-                            <button type="submit" class="btn btn-info">Edit</button>
-                        </form> 
+                        <a href="EditProductServlet?ID=${product.ID}" class="text-info">Edit Product</a>
                     </small>
-                    <small class="float-left">
-                        <a href="DeleteProductServlet?id=${product.ID}" class="text-warning">Delete</a>
-                    </small>
-                    
                 </c:if>
                 <small class="text-muted">${product.category}</small>
             </div>

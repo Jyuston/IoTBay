@@ -31,7 +31,7 @@ public class CatalogueServlet extends HttpServlet {
             err.printStackTrace();
         }
         finally {
-            request.getRequestDispatcher("/index.jsp").include(request, response);
+            request.getRequestDispatcher("index.jsp").include(request, response);
         }
     }
 
@@ -51,7 +51,7 @@ public class CatalogueServlet extends HttpServlet {
             err.printStackTrace();
         }
         finally {
-            request.getRequestDispatcher("/index.jsp").include(request, response);
+            request.getRequestDispatcher("index.jsp").include(request, response);
         }
     }
 }
