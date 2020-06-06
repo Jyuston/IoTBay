@@ -3,6 +3,7 @@ package uts.isd.controller;
 import uts.isd.model.*;
 import uts.isd.model.dao.CustomerDAO;
 import uts.isd.model.dao.DAOException;
+import uts.isd.model.dao.UserAccessDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -65,7 +66,7 @@ public class RegistrationServlet extends HttpServlet {
         try {
             // Write new customer to database
             CustomerDAO.save(newCustomer);
-
+            UserAccessDAO.save(newCustomer.getID(),"create_account");
             // Log the customer in
             request.getSession().setAttribute("user", newCustomer);
             request.setAttribute("success", true);

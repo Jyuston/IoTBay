@@ -3,38 +3,38 @@ package uts.isd.model.reporting;
 import java.io.Serializable;
 
 public class ProductSummary implements Serializable {
-    private final String productID;
-    private final String productName;
-    private final String productCategory;
+    private final String id;
+    private final String name;
+    private final String category;
     private int unitsSold;
-    private double productRevenue;
+    private double revenue;
 
     public ProductSummary(String productID, String productName, String productCategory, int unitsSold, double productRevenue) {
-        this.productID = productID;
-        this.productName = productName;
-        this.productCategory = productCategory;
+        this.id = productID;
+        this.name = productName;
+        this.category = productCategory;
         this.unitsSold = unitsSold;
-        this.productRevenue = productRevenue;
+        this.revenue = productRevenue;
     }
 
-    public String getProductID() {
-        return productID;
+    public String getID() {
+        return id;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getName() {
+        return name;
     }
 
     public int getUnitsSold() {
         return unitsSold;
     }
 
-    public double getProductRevenue() {
-        return productRevenue;
+    public double getRevenue() {
+        return revenue;
     }
 
-    public String getProductCategory() {
-        return productCategory;
+    public String getCategory() {
+        return category;
     }
 
     public void addUnitsSold(int unitsSold) {
@@ -42,10 +42,7 @@ public class ProductSummary implements Serializable {
     }
 
     public void addProductRevenue(double productRevenue) {
-        this.productRevenue += productRevenue;
+        this.revenue += productRevenue;
     }
 
-    public void printObj() {
-        System.out.println("Product ID: " + productID + "; Product Name: " + productName + "; Product Category: " + productCategory + "; Units Sold: " + unitsSold + "; Product Revenue = $" + productRevenue);
-    }
 }

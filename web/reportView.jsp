@@ -9,6 +9,8 @@
 <%@ page import="uts.isd.controller.reporting.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.text.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -55,7 +57,7 @@
 
                 <div class="col">
                     <div class="btn-group" role="group">
-                        <a class="btn btn-primary" href="/IoTBay/ReportFormServlet">Modify Report</a>
+                        <a class="btn btn-primary" href="/IoTBay/ReportFormServlet">Report Settings</a>
                         <form method="POST" action="/IoTBay/ReportingServlet">
                             <input class="form-control" type="hidden" name="reportExit" value="yes">
                             <input type="submit" class="btn btn-primary" value="Exit"></a>
@@ -67,47 +69,46 @@
         
         <br>
         <br>
-        <% if (report.salesExist()) { %>
-        <h2> Key Sales Statisitics & KPIs</h2>
-        <div class="card-deck">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Total Revenue</h5>
-                    <p class="card-text">$ <% out.println(revenueFormatter.format(report.getTotalRevenue())); %></p>
+        
+        <c:if test="${report.salesExist}">
+            <h2> Key Sales Statisitics & KPIs Dashboard</h2>
+            <div class="card-deck">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Revenue</h5>
+                        <p class="card-text">$ <fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${report.totalRevenue}"/></p>
+                    </div>
                 </div>
-            </div>
 
-            <%
-                if (report.getTopSellingItem().size() == 1) {
-            %>
+                <c:if test="${report.topProducts.size() == 1}">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Top Selling Item</h5>
-                                <p class="card-text">Name: ${report.topSellingItem[0].productName}</p>
-                                <p class="card-text">Product ID: ${report.topSellingItem[0].productID}</p>
-                                <p class="card-text">Quantity Sold: ${report.topSellingItem[0].unitsSold}</p>   
+                                <p class="card-text">Name: ${report.topProducts[0].name}</p>
+                                <p class="card-text">Product ID: ${report.topProducts[0].ID}</p>
+                                <p class="card-text">Quantity Sold: ${report.topProducts[0].unitsSold}</p>
+                                <p class="card-text">Revenue: $ <fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${report.topProducts[0].revenue}"/></p>
                         </div>
                     </div>
-            <%
-                }
-            %>
+                </c:if>
 
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Top Selling Category</h5>
-                    <p class="card-text">Name: ${report.topCategory} </p>
-                    <p class="card-text">Revenue: $ <% out.println(revenueFormatter.format(report.getTopCategoryRevenue())); %> </p>
-                </div>
+                <c:if test="${report.topCategories.size() == 1}">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Top Revenue Generating Category</h5>
+                            <p class="card-text">Name: ${report.topCategories[0]} </p>
+                            <p class="card-text">Revenue: $ <fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${report.topCategoryRevenues}"/></p>
+                        </p>
+                        </div>
+                    </div>
+                </c:if>
             </div>
-        </div>
 
-        <br>
-        <%
-            if (report.getTopSellingItem().size() > 1) {
-        %>
+            <br>
+            <c:if test="${report.topProducts.size() > 1}">
                 <h3> Top Products</h2>
                 <p class="font-weight-light">Note: This table is only displayed when multiple products had the highest quantity sold.</p>
-                <table class="table table-bordered table-sm">
+                <table class="table table-bordered table-sm table-dark">
                     <thead class="thead-light">
                         <th scope="col">Product ID</th>
                         <th scope="col">Product Name</th>
@@ -115,140 +116,108 @@
                         <th scope="col">Revenue</th>
                     </thead>
                     <tbody>
-                        <%
-                                ArrayList<ProductSummary> topProducts = report.getTopSellingItem();
-                                for (ProductSummary product : topProducts) {
-                        %>
-                                    <tr>
-                                        <td><% out.println(product.getProductID()); %></td>
-                                        <td><% out.println(product.getProductName()); %></td>
-                                        <td><% out.println(product.getUnitsSold()); %></td>
-                                        <td>$ <% out.println(revenueFormatter.format(product.getProductRevenue())); %> </td>
-                                    </tr>
-                        <%
-                                }
-                        %>
+                        <c:forEach items="${report.topProducts}" var="product" varStatus="loop">
+                            <tr>
+                                <td><c:out value="${product.ID}"/></td>
+                                <td><c:out value="${product.name}"/></td>
+                                <td><c:out value="${product.unitsSold}"/></td>
+                                <td>$ <fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${product.revenue}"/></td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
-        <%
-            }
-        %>
-        <br>
+            </c:if>
 
-        <h2> Sales Distribution Overview</h2>
-        <h3> Sales by State</h3>
-        <table class="table table-bordered table-sm">
-            <thead class="thead-light">
-                <th scope="col">State</th>
-                <th scope="col">Revenue</th>
-            </thead>
-            <tbody>
-                <%  
-                    Hashtable<String, Double> salesByState = report.getSalesByState();
-                    Set<String> dictionaryKeys = salesByState.keySet();
+            <br>
+            <c:if test="${report.topCategories.size() > 1}">
+                <fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${report.topCategoryRevenues}" var="topCatRevenue"/>
+                <h3>Top Revenue Generating Categories</h3>
+                <p class="font-weight-light">Note: This table is only displayed when there are multiple top revenue generating categories.</p>
+                <table id="reportingTable" class="table table-bordered table-sm table-dark">
+                    <thead class="thead-light">
+                        <th scope="col">Category Name</th>
+                        <th rowspan="2" scope="col">Revenue</th>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${report.topCategories}" var="product" varStatus="loop">
+                            <tr>
+                                <td>${product}</td>
+                                <td>$ ${topCatRevenue}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
 
-                    for (String key : dictionaryKeys) {
-                        String state = key;
-                        String revenue = revenueFormatter.format(salesByState.get(key));
-                        session.setAttribute("state", state);
-                        session.setAttribute("revenue", revenue);
-                %>
-                    <tr>
-                        <td>${state}</td>
-                        <td>$ ${revenue}</td>
-                    </tr>
-                <%     
-                    }
-                %>
-            </tbody>
-        </table>
-
-        <br>
-
-        <h3> Sales by Category</h3>
-        <p class="font-weight-light">Note: Categories where no products were sold will not appear in this report.</p>
-        <table class="table table-bordered table-sm">
-            <thead class="thead-light">
-                <th scope="col">Category</th>
-                <th scope="col">Revenue</th>
-            </thead>
-            <tbody>
-                <%
-                    Hashtable<String, Double> salesByCategory = report.getSalesByCategory();
-                    Set<String> dictionaryKeys2 = salesByCategory.keySet();
-
-                    for (String key : dictionaryKeys2) {
-                        String category = key;
-                        String revenue = revenueFormatter.format(salesByCategory.get(key));
-                        session.setAttribute("category", category);
-                        session.setAttribute("revenue", revenue);
-                %>
-                    <tr>
-                        <td>${category}</td>
-                        <td>$ ${revenue}</td>
-                    </tr>
-                <%     
-                    }
-                    
-                %>
-            </tbody>
-        </table>
-        <br>
-        <br>
-
-        <h2> Sales by Category by Product</h2>
-        <p class="font-weight-light">Note: Categories where no products were sold will not appear in this report.</p>
-        <%
-            HashMap<String, ArrayList<ProductSummary>> salesByCategorybyProduct = report.getSalesBreakdown();
-            Set<String> dictionaryKeys3 = salesByCategorybyProduct.keySet();
-
-            for (String key : dictionaryKeys3) {
-                String category = key;
-                session.setAttribute("category", category);
-        %>
-            <h4> ${category}</h4>
-            <div class="table-responsive-sm">
-            <table class="table table-bordered table-sm">
+            <h2> Sales Distribution Overview</h2>
+            <h3> Sales by State</h3>
+            <table id="reportingTable" class="table table-bordered table-sm table-dark">
                 <thead class="thead-light">
-                    <th scope="col">Product ID</th>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Units Sold</th>
-                    <th scope="col">Total Revenue</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Revenue</th>
                 </thead>
                 <tbody>
-            <%
-                ArrayList<ProductSummary> list = salesByCategorybyProduct.get(category);
-                for (ProductSummary p : list) {
-                    String productID = p.getProductID();
-                    String productName = p.getProductName();
-                    String units = Integer.toString(p.getUnitsSold());
-                    String revenue = revenueFormatter.format(p.getProductRevenue());
-
-                    session.setAttribute("productID", productID);
-                    session.setAttribute("productName", productName);
-                    session.setAttribute("units", units);
-                    session.setAttribute("revenue", revenue);
-                
-            %>
-                <tr>
-                    <td>${productID}</td>
-                    <td>${productName}</td>
-                    <td>${units}</td>
-                    <td>$ ${revenue}</td>
-                </tr>
-            <%
-                }
-            %>
-            </tbody>
+                    <c:forEach items="${report.salesByState}" var="item" varStatus="loop">
+                        <tr>
+                            <td>${item.key}</td>
+                            <td>$ <fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${item.value}"/></td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
             </table>
-            </div>
-        <%
-            }
 
-            } else {
-        %>
-                <p>No sales occured during the selected period. Please select a different time period and try again.</p>
-        <% } %>
+            <br>
+
+            <h3> Sales by Category</h3>
+            <p class="font-weight-light">Note: Categories where no products were sold will not appear in this report.</p>
+            <table id="reportingTable" class="table table-bordered table-sm table-dark">
+                <thead class="thead-light">
+                    <th scope="col">Category</th>
+                    <th scope="col">Revenue</th>
+                </thead>
+                <tbody>
+                    <c:forEach items="${report.salesByCategory}" var="item" varStatus="loop">
+                        <tr>
+                            <td>${item.key}</td>
+                            <td>$ <fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${item.value}"/></td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+
+            <br>
+            <br>
+
+            <h2> Sales by Category by Product</h2>
+            <p class="font-weight-light">Note: Categories where no products were sold will not appear in this report.</p>
+                <c:forEach items="${report.salesBreakdown}" var="entry" varStatus="loop">
+                    <h4>${entry.key}</h4>
+                    <div class="table-responsive-sm">
+                        <table id="reportingTable" class="table table-bordered table-sm table-dark">
+                            <thead class="thead-light">
+                                <th scope="col">Product ID</th>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Units Sold</th>
+                                <th scope="col">Total Revenue</th>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${entry.value}" var="item" varStatus="loop">
+                                        <tr>
+                                            <td>${item.ID}</td>
+                                            <td>${item.name}</td>
+                                            <td>${item.unitsSold}</td>
+                                            <td>$ <fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${item.revenue}"/></td>
+                                        </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>       
+                </c:forEach>
+        </c:if>
+
+        <c:if test="${not report.salesExist}">
+            <p>No sales occured during the selected period. Please select a different time period and try again.</p>
+        </c:if>
     </body>
         
     <jsp:include page="templates/footer.jsp"/>
