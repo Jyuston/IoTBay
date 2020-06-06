@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import uts.isd.model.Account;
-import uts.isd.model.dao.AccountDAO;
 import uts.isd.model.dao.UserAccessDAO;
 import uts.isd.model.dao.DAOException;
 

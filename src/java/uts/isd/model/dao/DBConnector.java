@@ -27,9 +27,4 @@ public class DBConnector {
     public static void closeConnection() throws SQLException {
         dbConnection.close();
     }
-    
-     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        openConnection();
-        System.out.println(getConnection());
-    }
 }

@@ -4,7 +4,6 @@ package uts.isd.model.dao;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
-import uts.isd.model.Account;
 import uts.isd.model.Log;
 
 public class UserAccessDAO {

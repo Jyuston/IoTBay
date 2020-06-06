@@ -6,9 +6,7 @@ import java.util.List;
 
 import uts.isd.model.Log;
 import uts.isd.model.Account;
-import uts.isd.model.dao.StaffDAO;
-import uts.isd.model.dao.AccountDAO;
-import uts.isd.model.dao.CustomerDAO;
+
 import uts.isd.model.dao.DAOException;
 import uts.isd.model.dao.UserAccessDAO;
 
@@ -20,15 +18,7 @@ import javax.servlet.http.HttpSession;
 
 
 public class LogsServlet extends HttpServlet {
-    
-    /**
-     *
-     * @param request
-     * @param response
-     * @throws SQLException
-     * @throws ServletException
-     * @throws IOException
-     */
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {

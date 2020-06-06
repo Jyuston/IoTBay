@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
             Account account = (accountType == 'C') ?
                     CustomerDAO.get(email, password) :
                     StaffDAO.get(email, password);
-                    UserAccessDAO.save(account.getID(),"login");
+            UserAccessDAO.save(account.getID(),"login");
             request.getSession().setAttribute("user", account);
         }
         catch (DAOException err) {
