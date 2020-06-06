@@ -14,7 +14,6 @@ public class Report implements Serializable {
     private final ArrayList<ProductSummary> productSummaries = new ArrayList<>();
     private final ArrayList<String> categories = new ArrayList<>();
     private final SalesAnalyser salesAnalyser = new SalesAnalyser();
-    private final ArrayList<ProductSummary> topProducts = new ArrayList<>();
 
     // Standard constructor for a sales report
     public Report(String reportName, String reportDescription, String startDate, String endDate, 
@@ -29,7 +28,6 @@ public class Report implements Serializable {
             this.saleRecords.addAll(saleRecords);
             this.productSummaries.addAll(summaries);
             this.categories.addAll(categories);
-            topProducts.addAll(salesAnalyser.getTopProduct(summaries));
         }
     }
 
@@ -79,16 +77,16 @@ public class Report implements Serializable {
         return salesAnalyser.getTotalSalesValue(saleRecords);
     }
 
-    public final String getTopCategory() {
+    public final ArrayList<String> getTopCategories() {
         return salesAnalyser.getTopCategory(saleRecords);
     }
 
-    public final Double getTopCategoryRevenue() {
-        return salesAnalyser.getTopCategoryRevenue(getTopCategory(), saleRecords);
+    public final Double getTopCategoryRevenues() {
+        return salesAnalyser.getTopCategoryRevenue(getTopCategories(), saleRecords);
     }
 
-    public final ArrayList<ProductSummary> getTopSellingItem() {
-        return topProducts;
+    public final ArrayList<ProductSummary> getTopProducts() {
+        return salesAnalyser.getTopProduct(productSummaries);
     }
 
     public final Hashtable<String, Double> getSalesByState() {
@@ -103,7 +101,7 @@ public class Report implements Serializable {
         return salesAnalyser.getSalesByCategoryByProduct(productSummaries, categories);
     }
 
-    public boolean salesExist() {
+    public boolean getSalesExist() {
         return saleRecords.size() > 0;
     }
 

@@ -23,30 +23,50 @@ public class SalesAnalyser implements Serializable {
         return total;
     }
 
-    public String getTopCategory(ArrayList<OrderLineItem> records) {
+    public ArrayList<String> getTopCategory(ArrayList<OrderLineItem> records) {
         Hashtable<String, Double> dictionary = getSalesByCategory(records);
 
-        String topCategory = "";
-        Double salesRevenue = 0.00;
+        Double topRevenue = 0.00;
+        int topOccuranceCount = 0;        
 
         Set<String> dictionaryKeys = dictionary.keySet();
+        String reference = "";
+
+        ArrayList<String> topCategory = new ArrayList<>();
             
         for (String key : dictionaryKeys) {
-            if (dictionary.get(key) > salesRevenue) {
-                topCategory = key;
-                salesRevenue = dictionary.get(key);
+            if (dictionary.get(key).compareTo(topRevenue) > 0) {
+                topRevenue = dictionary.get(key);
+                topOccuranceCount = 1;
+                reference = key;
+            }
+
+            else if (dictionary.get(key).compareTo(topRevenue) == 0) {
+                topOccuranceCount++;
             }
             
         }  
 
+        if (topOccuranceCount > 1) {
+            for (String string : dictionaryKeys) {
+                if (dictionary.get(string).compareTo(topRevenue) == 0) {
+                    topCategory.add(string);
+                }
+            }
+        }
+
+        else {
+            topCategory.add(reference);
+        }
+
         return topCategory;
     }
 
-    public Double getTopCategoryRevenue(String category, ArrayList<OrderLineItem> records) {
+    public Double getTopCategoryRevenue(ArrayList<String> categories, ArrayList<OrderLineItem> records) {
 
         Hashtable<String, Double> dictionary = getSalesByCategory(records);
 
-        return dictionary.get(category);
+        return dictionary.get(categories.get(0));
     }
 
     public ArrayList<ProductSummary> getTopProduct(ArrayList<ProductSummary> snapshots) {
@@ -129,7 +149,7 @@ public class SalesAnalyser implements Serializable {
 
         for (ProductSummary product : snapshots) {
             // The key in the dictionary
-            String key = product.getProductCategory();
+            String key = product.getCategory();
 
             // Retrieve the list at that key in the dictionary
             ArrayList<ProductSummary> list = dictionary.get(key);
@@ -184,7 +204,7 @@ public class SalesAnalyser implements Serializable {
 
         // Organise each product into the correct hashmap key
         for (ProductSummary product : products) {
-            ArrayList<ProductSummary> array = dictionary.get(product.getProductCategory());
+            ArrayList<ProductSummary> array = dictionary.get(product.getCategory());
             array.add(product);
         }
 

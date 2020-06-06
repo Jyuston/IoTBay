@@ -1,3 +1,7 @@
 h1 {
     font-weight: bold;
 }
+
+#reportingTable {
+    table-layout: fixed;
+} 
