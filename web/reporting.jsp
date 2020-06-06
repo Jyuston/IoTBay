@@ -63,7 +63,16 @@
                             <br>
                             <br>
                             <h2>New Sales Report</h2>
-                            <jsp:include page="/reportForm.jsp"/>
+                            <c:choose>
+                                <c:when test="${user.admin}">
+                                    <jsp:include page="/reportForm.jsp"/>
+                                </c:when>
+
+                                <c:otherwise>
+                                    <p class="font-weight-light">If you would like a new report to be created, please contact your system administrator with your requirements.</p>
+                                </c:otherwise>
+                            </c:choose>
+                           
                         </div>
                     </div>
                 </div>

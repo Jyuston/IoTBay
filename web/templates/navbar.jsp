@@ -17,12 +17,14 @@
             <div class="navbar-nav mr-auto">
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/index.jsp">Home</a>
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/main.jsp">Main</a>
+                <% if (user != null && user.isStaff()) { %>
+                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/ReportingServlet">Reporting</a>
+                <% } %>
                 <% if (user != null) { %>
-                <a class="nav-item nav-link" href="${pageContext.request.contextPath}/edit.jsp">Edit Profile</a>
-                <a class="nav-item nav-link" href="${pageContext.request.contextPath}/ReportingServlet">Reporting</a>
-                <a class="nav-item nav-link" href="${pageContext.request.contextPath}/LogsServlet">Logs</a>
+                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/edit.jsp">Edit Profile</a>
+                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/LogsServlet">Logs</a>
                 <% } else { %>
-                <a class="nav-item nav-link" href="${pageContext.request.contextPath}/register.jsp">Register</a>
+                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/register.jsp">Register</a>
                 <% } %>
             </div>
 
