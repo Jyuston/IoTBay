@@ -1,6 +1,7 @@
 <%@page import="uts.isd.model.Account"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="uts.isd.model.Account" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
     Account user = (Account) session.getAttribute("user");
@@ -21,6 +22,9 @@
                 <% if (user != null) { %>
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/edit.jsp">Edit Profile</a>
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/ReportingServlet">Reporting</a>
+                <c:if test="${user.staff}">
+                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/UserManagementServlet">User Management</a>
+                </c:if>
                 <% } else { %>
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/register.jsp">Register</a>
                 <% } %>

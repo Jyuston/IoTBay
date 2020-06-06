@@ -3,7 +3,7 @@
     Created on : 31/05/2020, 12:15:54 PM
     Author     : justinhyuen
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <jsp:include page="templates/header.jsp"/>
@@ -68,7 +68,7 @@
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input class="form-control ${not empty passVErr ? 'border border-danger' : ''}"
+                <input type="text" class="form-control ${not empty passVErr ? 'border border-danger' : ''}"
                        name="password" value="${account.password}">
                 <small class="form-text text-danger">
                     <c:out value="${passVErr}"/>
