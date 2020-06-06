@@ -18,7 +18,7 @@
     <%--select--%>
 
     <button type="submit" class="btn btn-primary mx-2">Submit</button>
-    <a href="CatalogueServlet" class="text-danger">Clear</a>
+    <a href="/IoTBay/product/CatalogueServlet" class="text-danger">Clear</a>
 </form>
 
 <h1>Products</h1>
@@ -53,6 +53,10 @@
                     <small class="float-right">
                         <a href="EditProductServlet?id=${product.ID}" class="text-warning">Edit Product Details</a>
                     </small>
+                    <small class="float-left">
+                        <a href="DeleteProductServlet?id=${product.ID}" class="text-warning">Delete</a>
+                    </small>
+                    
                 </c:if>
                 <small class="text-muted">${product.category}</small>
             </div>

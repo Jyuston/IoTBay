@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <head>
@@ -15,7 +16,7 @@
         To continue, please Login or Register below.
         <br/>
         <a href="login.jsp">Login</a> |
-        <a href="CatalogueServlet">Catalogue</a> |
+        <a href="/IoTBay/product/CatalogueServlet">Catalogue</a> |
         <a href="register.jsp">Register</a>
     </p>
 </div>

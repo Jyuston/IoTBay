@@ -60,6 +60,14 @@
         <servlet-name>AddProductServlet</servlet-name>
         <url-pattern>/products/AddProductServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>EditProductServlet</servlet-name>
+        <servlet-class>uts.isd.controller.product.EditProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditProductServlet</servlet-name>
+        <url-pattern>/products/EditProductServlet</url-pattern>
+    </servlet-mapping>    
     <session-config>
         <session-timeout>
             30
