@@ -27,6 +27,27 @@ public class UserAccessDAO {
        
         }
     
+    public static List<Log> getAuditLogs() throws SQLException {
+        LinkedList<Log> logs = new LinkedList<>();
+     
+        String getAuditLogs =
+            "SELECT * FROM USER_ACCESS " +
+            "INNER JOIN ACCOUNTS ON USER_ACCESS.ACCOUNT_ID = ACCOUNTS.ID " +
+            "WHERE (ACCOUNT_ID <> USER_EDITED)"
+        ;
+     
+        PreparedStatement getAuditLog = DAOUtils.prepareStatement(
+            getAuditLogs, 
+            true);
+        ResultSet logRs = getAuditLog.executeQuery();
+    
+        while (logRs.next()) {
+            logs.add(createLogsObject(logRs));
+        }
+        return logs;
+        
+        }
+    
         public static int save(int account_id, String action) throws SQLException, DAOException 
     {
      String query =
