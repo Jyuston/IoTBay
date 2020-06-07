@@ -35,15 +35,14 @@ VALUES (12, true),
        (14, false)
 ;
 
-INSERT INTO USER_ACCESS (ACCOUNT_ID, PERFORMED_ON, ACTION, USER_EDITED)
-VALUES (1, '2020-01-01 09:34:11', 'create_account', 1),
-       (1, '2020-01-01 09:34:21', 'login', 1),
-       (1, '2020-01-01 09:37:21', 'logout', 1),
-       (2, '2020-01-04 10:37:31', 'login', 2),
-       (2, '2020-01-04 11:43:50', 'logout', 2),
-       (3, '2020-01-03 01:23:34', 'login', 3),
-       (3, '2020-01-03 01:43:56', 'logout', 3),
-       (12, '2020-01-04 02:45:36', 'edit', 1)
+INSERT INTO USER_ACCESS (ACCOUNT_ID, PERFORMED_ON, ACTION)
+VALUES (1, '2020-01-01 09:34:11', 'create_account'),
+       (1, '2020-01-01 09:34:21', 'login'),
+       (1, '2020-01-01 09:37:21', 'logout'),
+       (2, '2020-01-04 10:37:31', 'login'),
+       (2, '2020-01-04 11:43:50', 'logout'),
+       (3, '2020-01-03 01:23:34', 'login'),
+       (3, '2020-01-03 01:43:56', 'logout'),
 ;
 
 INSERT INTO PAYMENT_INFORMATION (CUSTOMER_ID, CARD_NUMBER, CVV_NUMBER, EXPIRY_MONTH, EXPIRY_YEAR)

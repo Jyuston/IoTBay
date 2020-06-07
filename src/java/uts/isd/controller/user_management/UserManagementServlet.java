@@ -13,12 +13,10 @@ import uts.isd.model.Account;
 import uts.isd.model.Customer;
 import uts.isd.model.Staff;
 import uts.isd.controller.Validator;
-import uts.isd.model.Log;
 import uts.isd.model.dao.AccountDAO;
 import uts.isd.model.dao.CustomerDAO;
 import uts.isd.model.dao.DAOException;
 import uts.isd.model.dao.StaffDAO;
-import uts.isd.model.dao.UserAccessDAO;
 
 /**
  *
@@ -29,11 +27,9 @@ public class UserManagementServlet extends HttpServlet {
     private void getTables(HttpServletRequest request) throws SQLException{
             List<Customer> customerList = CustomerDAO.getAll();
             List<Staff> staffList = StaffDAO.getAll();
-            List<Log> auditLog = UserAccessDAO.getAuditLogs();
             
             request.setAttribute("customerList", customerList);
             request.setAttribute("staffList", staffList);
-                   request.setAttribute("auditLog", auditLog);
     }
             
     @Override

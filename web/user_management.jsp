@@ -234,23 +234,7 @@
     </div>
 </div>
 
-<h2>Audit Logs</h2>
-<div class="my-4 table-striped table-light">
-    <table class="table text-dark">
-        <thead>
-            <tr class="table-info">
-                <th scope="col">ID Tampered with</th>
-                <th scope="col">Action</th>
-                <th scope="col">Performed On</th>
-                <th scope="col">Email</th>
-                <th scope="col">Name</th>
-                <th scope="col">Account</th>              
-            </tr>
-        </thead>
-    </table>
-</div>
 </c:otherwise>
-
 </c:choose>
 
 <jsp:include page="templates/footer.jsp"/>

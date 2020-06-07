@@ -93,8 +93,7 @@ public class UserManagementCreateServlet extends HttpServlet {
                 newCustomer.setPaymentInfo(new PaymentInformation());
                 newCustomer.setOrders(new LinkedList<>());
                 
-                CustomerDAO.save(newCustomer); 
-                UserAccessDAO.save(newCustomer.getID(),"create_account");         
+                CustomerDAO.save(newCustomer);       
             }
 
         } catch (SQLException err) {
