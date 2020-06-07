@@ -76,13 +76,10 @@ public class UserManagementCreateServlet extends HttpServlet {
                 } else {
                     newStaff.setAdmin(false);
                 }
-                StaffDAO.save(newStaff);
-                request.setAttribute("success", true);
-                
+                StaffDAO.save(newStaff); 
             } 
             
             else {
-                
                 Customer newCustomer = new Customer();
                 newCustomer.setFirstName(firstName);
                 newCustomer.setLastName(lastName);
@@ -91,18 +88,11 @@ public class UserManagementCreateServlet extends HttpServlet {
                 newCustomer.setContactNumber(contactNumber);
                 newCustomer.setActive(true);
 
-                Address address = new Address();
-                address.setAddressLine1("");
-                address.setAddressLine2("");
-                address.setSuburb(request.getParameter(""));
-                address.setPostcode("");
-                address.setState("");
-
-                PaymentInformation paymentInfo = new PaymentInformation();
-                LinkedList<Order> orders = new LinkedList<>();
-                CustomerDAO.save(newCustomer);
-                request.setAttribute("success", true);
+                newCustomer.setAddress(new Address());
+                newCustomer.setPaymentInfo(new PaymentInformation());
+                newCustomer.setOrders(new LinkedList<>());
                 
+                CustomerDAO.save(newCustomer);          
             }
 
         } catch (SQLException err) {
@@ -112,7 +102,7 @@ public class UserManagementCreateServlet extends HttpServlet {
         } catch (DAOException err) {
             request.setAttribute("errorUserManagement", err.getMessage());
         } finally {
-            request.getRequestDispatcher("/UserManagementServlet").include(request, response);
+            response.sendRedirect("UserManagementServlet?success=true");
         }
     }
 }

@@ -39,14 +39,14 @@ public class UserManagementServlet extends HttpServlet {
             HttpSession session = request.getSession();
             Account account = (Account) session.getAttribute("user");
             
-            /*if(account.isCustomer()){
+            if(account.isCustomer()){
                 request.setAttribute("noAccess", true);
             } else {
                 Staff staffMember = (Staff) session.getAttribute("user");
                 if(!staffMember.isAdmin()){
                     request.setAttribute("noAccess", true);
                 }
-            } */
+            } 
             getTables(request);
         } 
         
@@ -88,7 +88,6 @@ public class UserManagementServlet extends HttpServlet {
             HttpSession session = request.getSession(); 
             getTables(request);
             Account resultAccount = AccountDAO.getAccount(firstName, lastName, contactNumber);
-            if(resultAccount == null){throw new Error("No Account found.");}
             request.setAttribute("resultAccount", resultAccount);
         }
         

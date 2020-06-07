@@ -37,7 +37,7 @@
                 </c:if>
             </c:if>
 
-            <c:if test="${success}">
+            <c:if test="${param.success}">
                 <div class="alert alert-success my-4" role="alert">
                     <h2> New account created. </h2>
                 </div>
