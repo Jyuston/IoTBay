@@ -19,6 +19,7 @@ import uts.isd.controller.Validator;
 import uts.isd.model.dao.CustomerDAO;
 import uts.isd.model.dao.DAOException;
 import uts.isd.model.dao.StaffDAO;
+import uts.isd.model.dao.UserAccessDAO;
 
 /**
  *
@@ -92,7 +93,8 @@ public class UserManagementCreateServlet extends HttpServlet {
                 newCustomer.setPaymentInfo(new PaymentInformation());
                 newCustomer.setOrders(new LinkedList<>());
                 
-                CustomerDAO.save(newCustomer);          
+                CustomerDAO.save(newCustomer); 
+                UserAccessDAO.save(newCustomer.getID(),"create_account");         
             }
 
         } catch (SQLException err) {

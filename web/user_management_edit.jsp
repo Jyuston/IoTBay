@@ -164,7 +164,7 @@
             </c:if>
 
             <a href="/IoTBay/UserManagementServlet" class=" mt-5 text-danger">Cancel</a>
-            <button type="submit" class="btn btn-success float-right">Edit Account</button>
+            <button type="submit" class="btn btn-success float-right">Save Changes</button>
 
         </form>
     </div>
