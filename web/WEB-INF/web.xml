@@ -42,7 +42,7 @@
         <url-pattern>/RegistrationServlet</url-pattern>
     </servlet-mapping>
 
-    <!--Reporting-->
+    <!--User Management-->
     <servlet>
         <servlet-name>UserManagementServlet</servlet-name>
         <servlet-class>uts.isd.controller.user_management.UserManagementServlet</servlet-class>
@@ -91,6 +91,8 @@
         <servlet-name>UserManagementActiveServlet</servlet-name>
         <url-pattern>/UserManagementActiveServlet</url-pattern>
     </servlet-mapping>
+
+    <!--Reporting-->
     <servlet>
         <servlet-name>ReportingServlet</servlet-name>
         <servlet-class>uts.isd.controller.reporting.ReportingServlet</servlet-class>

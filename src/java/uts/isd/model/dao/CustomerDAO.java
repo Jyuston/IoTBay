@@ -125,6 +125,7 @@ public class CustomerDAO {
         if (rowsChanged == 0)
             throw new DAOException("Failed to update Customer details. Please try again.");
     }
+
     // Helpers
     private static Customer createCustomerObject(ResultSet customerRs) throws SQLException {
         Address address = new Address();

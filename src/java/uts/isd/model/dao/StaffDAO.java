@@ -65,6 +65,11 @@ public class StaffDAO {
             throw new DAOException("Failed to create staff profile. Please try again.");
     }
 
+    /**
+     * Update a single account from the database.
+     *
+     * @param staff The instantiated account to update. Must have an ID.
+     */
     public static void update(Staff staff) throws SQLException, DAOException {
         AccountDAO.update(staff);
 

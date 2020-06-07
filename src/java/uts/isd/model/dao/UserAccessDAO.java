@@ -26,8 +26,8 @@ public class UserAccessDAO {
         return logs;
        
         }
- 
-    public static int save(int account_id, String action) throws SQLException, DAOException 
+    
+        public static int save(int account_id, String action) throws SQLException, DAOException 
     {
      String query =
                 "INSERT INTO USER_ACCESS (ACCOUNT_ID, PERFORMED_ON, ACTION)" +
