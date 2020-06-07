@@ -3,10 +3,7 @@ package uts.isd.model.reporting;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Set;
-
-import uts.isd.model.Product;
 
 public class SalesAnalyser implements Serializable {
 
@@ -24,7 +21,7 @@ public class SalesAnalyser implements Serializable {
     }
 
     public ArrayList<String> getTopCategory(ArrayList<OrderLineItem> records) {
-        Hashtable<String, Double> dictionary = getSalesByCategory(records);
+        HashMap<String, Double> dictionary = getSalesByCategory(records);
 
         Double topRevenue = 0.00;
         int topOccuranceCount = 0;        
@@ -64,7 +61,7 @@ public class SalesAnalyser implements Serializable {
 
     public Double getTopCategoryRevenue(ArrayList<String> categories, ArrayList<OrderLineItem> records) {
 
-        Hashtable<String, Double> dictionary = getSalesByCategory(records);
+        HashMap<String, Double> dictionary = getSalesByCategory(records);
 
         return dictionary.get(categories.get(0));
     }
@@ -104,11 +101,11 @@ public class SalesAnalyser implements Serializable {
         return topProducts;
     }
 
-    // Returns a hashtable object with a breakdown of sales by product category
+    // Returns a HashMap object with a breakdown of sales by product category
     // Takes an ArrayList input of TotalSalesRecord objects
-    public Hashtable<String, Double> getSalesByCategory(ArrayList<OrderLineItem> records) {
-        //Instantiate a hashtable with String keys, and Double values
-        Hashtable<String, Double> dictionary = new Hashtable<String, Double>();
+    public HashMap<String, Double> getSalesByCategory(ArrayList<OrderLineItem> records) {
+        //Instantiate a HashMap with String keys, and Double values
+        HashMap<String, Double> dictionary = new HashMap<String, Double>();
 
         // Iterate over each object in the ArrayList
         for (OrderLineItem record : records) {
@@ -161,11 +158,11 @@ public class SalesAnalyser implements Serializable {
         return dictionary;
     }
 
-    // Returns a hashtable object with a breakdown of sales by state
+    // Returns a HashMap object with a breakdown of sales by state
     // Takes an ArrayList input of TotalSalesRecord objects
-    public Hashtable<String, Double> getSalesBySate(ArrayList<OrderLineItem> records) {
-        //Instantiate a hashtable with String keys, and Double values
-        Hashtable<String, Double> dictionary = new Hashtable<String, Double>();
+    public HashMap<String, Double> getSalesBySate(ArrayList<OrderLineItem> records) {
+        //Instantiate a HashMap with String keys, and Double values
+        HashMap<String, Double> dictionary = new HashMap<String, Double>();
 
         // Iterate over each object in the ArrayList
         for (OrderLineItem record : records) {
@@ -210,5 +207,4 @@ public class SalesAnalyser implements Serializable {
 
         return dictionary;
     }
-
 }
