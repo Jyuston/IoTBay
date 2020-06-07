@@ -6,10 +6,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<jsp:include page="templates/header.jsp"/>
 <head>
     <title>Edit Account</title>
 </head>
+
+<jsp:include page="templates/header.jsp"/>
+
 <h1>Edit Account</h1>
 <h2> User Management </h2>
 

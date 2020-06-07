@@ -8,8 +8,7 @@
 <%@ page import="uts.isd.controller.reporting.*" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
@@ -81,4 +80,4 @@
     </c:choose>
 
     <jsp:include page="templates/footer.jsp"/>
-</html>
+
