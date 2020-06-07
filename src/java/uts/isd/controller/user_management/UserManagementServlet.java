@@ -7,8 +7,6 @@ package uts.isd.controller.user_management;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import uts.isd.model.Account;
@@ -38,7 +36,17 @@ public class UserManagementServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
         
         try {
-            HttpSession session = request.getSession(); 
+            HttpSession session = request.getSession();
+            Account account = (Account) session.getAttribute("user");
+            
+            /*if(account.isCustomer()){
+                request.setAttribute("noAccess", true);
+            } else {
+                Staff staffMember = (Staff) session.getAttribute("user");
+                if(!staffMember.isAdmin()){
+                    request.setAttribute("noAccess", true);
+                }
+            } */
             getTables(request);
         } 
         

@@ -17,6 +17,13 @@
 </head>
 <h1 class="mb-2">User Management</h1>
 
+<c:choose>
+<c:when test="${noAccess}">
+    <div class="alert alert-danger my-4" role="alert">
+        YOU HAVE NO MANA.
+    </div>
+</c:when>
+<c:otherwise>
 <h2 class="mb-5"> Search a User </h2>
 <div class="container-fluid">
     <div class="row"> 
@@ -242,5 +249,8 @@
         </thead>
     </table>
 </div>
+</c:otherwise>
+
+</c:choose>
 
 <jsp:include page="templates/footer.jsp"/>
