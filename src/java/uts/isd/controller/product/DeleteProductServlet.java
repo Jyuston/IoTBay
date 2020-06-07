@@ -30,11 +30,12 @@ public class DeleteProductServlet extends HttpServlet {
             List<Product> productList = ProductDAO.getAll();
             request.setAttribute("productList", productList);
         }
-        catch (SQLException err) {
-            request.setAttribute("deleteProductErr", "Error accessing database.");
-        }
         catch (DAOException err) {
             request.setAttribute("deleteProductErr", err.getMessage());
+        }
+        catch (SQLException err) {
+            request.setAttribute("deleteProductErr", "Error accessing database.");
+            err.printStackTrace();
         }
         finally {
             request.getRequestDispatcher("index.jsp").include(request, response);

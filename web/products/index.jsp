@@ -35,11 +35,11 @@
 
 <c:choose>
     <c:when test="${empty productList}">
-        <h2 class="my-5 text-center display-5 font-weight-normal">
+        <h5 class="my-5 text-center display-5 font-weight-normal">
             <strong>Oh no...</strong>
             <br>
             No products available 😔
-        </h2>
+        </h5>
     </c:when>
 
     <c:otherwise>

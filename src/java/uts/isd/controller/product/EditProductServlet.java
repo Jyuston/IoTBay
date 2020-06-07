@@ -23,10 +23,10 @@ public class EditProductServlet extends HttpServlet {
         }
         catch (DAOException err) {
             request.setAttribute("editProductErr", err.getMessage());
-            err.printStackTrace();
         }
         catch (SQLException err) {
             request.setAttribute("editProductErr", "Error accessing database.");
+            err.printStackTrace();
         }
         finally {
             request.getRequestDispatcher("edit.jsp").include(request, response);
@@ -73,10 +73,10 @@ public class EditProductServlet extends HttpServlet {
         }
         catch (DAOException err) {
             request.setAttribute("editProductErr", err.getMessage());
-            err.printStackTrace();
         }
         catch (SQLException err) {
             request.setAttribute("editProductErr", "Error accessing database.");
+            err.printStackTrace();
         }
         finally {
             request.getRequestDispatcher("edit.jsp").include(request, response);
