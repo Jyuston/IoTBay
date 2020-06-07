@@ -188,8 +188,8 @@
                     <th class="col-2">Name</th>
                     <th class="col-4">Email</th>
                     <th class="col-2">Contact Number</th>
-                    <th class="col-1">Staff-Admin</th>
-                    <th class="col-2">Action</th>
+                    <th class="col-1">Admin</th>
+                    <th class="col-2">Actions</th>
                 </tr>
 
         </table>
@@ -208,9 +208,9 @@
                     <td class="col-1">${Staff.admin}</td>
                     <td class="col-1">
                         <form action="/IoTBay/UserManagementServlet" method="POST">
-                            <input type="hidden" name="firstName"  value="${Customer.firstName}">
-                            <input type="hidden" name="lastName"  value="${Customer.lastName}">
-                            <input type="hidden" name="contactNumber" value="${Customer.contactNumber}">
+                            <input type="hidden" name="firstName"  value="${Staff.firstName}">
+                            <input type="hidden" name="lastName"  value="${Staff.lastName}">
+                            <input type="hidden" name="contactNumber" value="${Staff.contactNumber}">
                             <button type="submit" class=" btn btn-info">Search</button>
                         </form>
                     </td>

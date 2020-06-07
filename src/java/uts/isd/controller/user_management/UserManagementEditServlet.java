@@ -7,12 +7,11 @@ package uts.isd.controller.user_management;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import uts.isd.model.Account;
 import uts.isd.model.Customer;
 import uts.isd.model.Staff;
@@ -70,6 +69,8 @@ public class UserManagementEditServlet extends HttpServlet {
         
         try{
             
+            HttpSession session = request.getSession();
+            Staff staffMember = (Staff) session.getAttribute("user");
             Account account = AccountDAO.getAccount(Integer.parseInt(ID));
             request.setAttribute("account", account);
             
@@ -120,6 +121,11 @@ public class UserManagementEditServlet extends HttpServlet {
             }
             
             AccountDAO.update(account);
+            
+            if(staffMember.getID() == account.getID()){
+                session.setAttribute("user",account);
+            }
+            
             request.setAttribute("successEdit", true);
         }
         catch(DAOException err){
