@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import uts.isd.model.Customer;
+import uts.isd.model.dao.UserAccessDAO;
 
 public class EditProfileServlet extends HttpServlet {
     @Override 
@@ -98,6 +99,7 @@ public class EditProfileServlet extends HttpServlet {
                
                try{
                     CustomerDAO.update(accountC);
+                    UserAccessDAO.save(accountC.getID(),"edit");
                     session.setAttribute("user", accountC);
                } catch(DAOException err){
                     request.setAttribute("errorUserManagement", err.getMessage());
