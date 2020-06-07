@@ -24,7 +24,7 @@
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <p><strong>Wow! Awesome!</strong> Product was successfully added.</p>
                     <hr>
-                    <p class="mb-0">You can view the product <a href="ProductDetailsServlet?id=${newProductID}" class="alert-link">here</a>.</p>
+                    <p class="mb-0">You can view the product <a href="ProductDetailsServlet?ID=${newProductID}" class="alert-link">here</a>.</p>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -96,8 +96,9 @@
                     </div>
                 </div>
 
-
                 <button type="submit" class="btn btn-primary btn-block mt-4 mb-2">Add Product</button>
+
+                <a href="CatalogueServlet" class="text-center d-block text-danger">Cancel</a>
             </form>
         </div>
     </c:otherwise>

@@ -22,14 +22,25 @@
     </div>
 </c:if>
 
-<form class="form-inline mb-2" method="get" action="CatalogueServlet">
-    <label class="sr-only" for="searchQuery">Search</label>
-    <input type="text" class="form-control" id="searchQuery" name="query" placeholder="Search..." value="${prevQuery}">
-    <%--select--%>
+<div class="d-flex mb-2">
+    <form class="form-inline mb-0" method="get" action="CatalogueServlet">
+        <label class="sr-only" for="searchQuery">Search</label>
+        <div class="input-group">
+            <input type="text" class="form-control" id="searchQuery" name="query" placeholder="Search..."
+                   value="${prevQuery}">
+            <%--select--%>
 
-    <button type="submit" class="btn btn-primary mx-2">Submit</button>
-    <a href="CatalogueServlet" class="text-danger">Clear</a>
-</form>
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+        <a href="CatalogueServlet" class="text-danger ml-2">Clear</a>
+    </form>
+
+    <c:if test="${not empty user && user.staff}">
+        <a href="add.jsp" class="btn btn-success ml-auto mr-3">Add Product +</a>
+    </c:if>
+</div>
 
 <h1>Products</h1>
 
