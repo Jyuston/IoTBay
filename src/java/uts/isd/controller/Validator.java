@@ -94,7 +94,7 @@ public class Validator {
 
         if (startDate.compareTo(endDate) > 0) {
             failed = true;
-            request.setAttribute("error", "The report end date cannot be before the report start date");
+            request.setAttribute("error", "The report end date cannot be before the report start date.");
         }
 
         return this;
