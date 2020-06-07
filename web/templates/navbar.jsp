@@ -20,7 +20,7 @@
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/index.jsp">Home</a>
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/main.jsp">Main</a>
                 <% if (user != null) { %>
-                <a class="nav-item nav-link" href="${pageContext.request.contextPath}/editProfileServlet">Edit Profile</a>
+                <a class="nav-item nav-link" href="${pageContext.request.contextPath}/EditProfileServlet">Edit Profile</a>
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/ReportingServlet">Reporting</a>  
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/LogsServlet">Logs</a>
                 <c:if test="${user.staff && user.admin}">

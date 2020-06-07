@@ -38,7 +38,7 @@
                 <form class="m-5" method="POST" action="/IoTBay/UserManagementEditServlet">
             </c:when>
             <c:otherwise>
-                <form class="m-5" method="POST" action="/IoTBay/editProfileServlet">    
+                <form class="m-5" method="POST" action="/IoTBay/EditProfileServlet">    
             </c:otherwise>
         </c:choose>
 
