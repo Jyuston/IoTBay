@@ -63,6 +63,28 @@ public class AccountDAO {
         return DAOUtils.getGeneratedID(accountInsertSt);
     }
 
+    public static Account getAccount(String firstName, String lastName, String contactNumber) throws SQLException{
+        String getAccountDataQuery =
+                "SELECT ID, ACCOUNT_TYPE FROM ACCOUNTS " +
+                "WHERE F_NAME LIKE ? " +
+                "AND L_NAME LIKE ? " +
+                "AND CONTACT_NUMBER LIKE ?";
+
+        PreparedStatement st = DAOUtils.prepareStatement(getAccountDataQuery, false,
+                firstName,
+                lastName,
+                contactNumber
+        );
+
+        return getAccountHelper(st);
+    }
+
+    public static Account getAccount(int ID) throws SQLException{
+        String getAccountDataQuery = "SELECT * FROM ACCOUNTS WHERE ID = " + ID;
+        PreparedStatement st = DAOUtils.prepareStatement(getAccountDataQuery, false);
+        return getAccountHelper(st);
+    }
+
     /**
      * Update a single account from the database.
      *
@@ -93,7 +115,7 @@ public class AccountDAO {
      *
      * @param accountID ID of the account to delete.
      */
-    public static void delete(String accountID) throws SQLException, DAOException {
+    public static void delete(int accountID) throws SQLException, DAOException {
         String deleteQuery = "DELETE FROM ACCOUNTS WHERE ID = " + accountID;
 
         PreparedStatement st = DAOUtils.prepareStatement(deleteQuery, false);
@@ -101,5 +123,19 @@ public class AccountDAO {
         int rowsChanged = st.executeUpdate();
         if (rowsChanged == 0)
             throw new DAOException("Failed to delete Account. Please try again.");
+    }
+
+    // Helpers
+    private static Account getAccountHelper(PreparedStatement st) throws SQLException {
+        ResultSet accountRs = st.executeQuery();
+
+        if (!accountRs.next())
+            throw new DAOException("Account not found. Please try again.");
+
+        if (accountRs.getString("ACCOUNT_TYPE").charAt(0) == 'C') {
+            return CustomerDAO.get(accountRs.getInt("ID"));
+        } else {
+            return StaffDAO.get(accountRs.getInt("ID"));
+        }
     }
 }

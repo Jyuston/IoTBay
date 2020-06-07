@@ -42,6 +42,11 @@ public class LoginServlet extends HttpServlet {
             Account account = (accountType == 'C') ?
                     CustomerDAO.get(email, password) :
                     StaffDAO.get(email, password);
+            
+            if(account.isActive() == false){
+                request.setAttribute("loginErr", "Account disabled by Administrator.");
+                return;
+            }
             UserAccessDAO.save(account.getID(),"login");
             request.getSession().setAttribute("user", account);
         }

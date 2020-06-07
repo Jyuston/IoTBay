@@ -6,6 +6,7 @@ public class Log implements Serializable {
     public int ID;
     public String performedOn;
     public String action;
+
     
     public Log() { }
     
@@ -17,5 +18,6 @@ public class Log implements Serializable {
     
     public String getAction() { return action; }
     public void setAction(String action) { this.action = action; }
+    
 }
 
