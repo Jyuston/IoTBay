@@ -9,6 +9,7 @@
 
 <div class="max-w-md">
     <h1 class="font-weight-bold">User Actions</h1>
+    <h5>Actions for user # <c:out value="${userLogs[0].ID}"/></h5>
     <table class="table">
         <thead class="thead-light">
         <tr>
