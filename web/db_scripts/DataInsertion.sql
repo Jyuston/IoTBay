@@ -12,7 +12,8 @@ VALUES ('john.smith@gmail.com', 'John', 'Smith', '0438 278 971', 'C', 'password1
        ('egestas.Duis.ac@Morbinon.edu', 'Tyler', 'Owens', '0438 278 981', 'C', 'password123', true),
        ('nicholsonK@iotbay.com', 'Kirby', 'Nicholson', '0404 285 927', 'S', 'testpass1', true),
        ('farleyS@iotbay.com', 'Lenore', 'Farley', '0403 038 516', 'S', 'anotherpass1', true),
-       ('talleyS@iotbay.com', 'Stephanie', 'Talley', '0404 477 143', 'S', 'mypassword4321', true)
+       ('talleyS@iotbay.com', 'Stephanie', 'Talley', '0404 477 143', 'S', 'mypassword4321', true),
+       ('admin@test.com', 'Mike', 'Wozowski', '0123 456 789', 'S', 'lol123', true)
 ;
 
 INSERT INTO CUSTOMERS (ID, ADDRESS_LINE_1, ADDRESS_LINE_2, SUBURB, POSTCODE, STATE, IS_ANONYMOUS)
@@ -32,7 +33,8 @@ VALUES (1, '200 Wonder St', null, 'Maroubra', '2035', 'NSW', false),
 INSERT INTO STAFF (ID, IS_ADMIN)
 VALUES (12, true),
        (13, false),
-       (14, false)
+       (14, false),
+       (15, true)
 ;
 
 INSERT INTO USER_ACCESS (ACCOUNT_ID, PERFORMED_ON, ACTION)
