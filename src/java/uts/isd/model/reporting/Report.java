@@ -3,7 +3,6 @@ package uts.isd.model.reporting;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 
 public class Report implements Serializable {
     private String name;
@@ -89,11 +88,11 @@ public class Report implements Serializable {
         return salesAnalyser.getTopProduct(productSummaries);
     }
 
-    public final Hashtable<String, Double> getSalesByState() {
+    public final HashMap<String, Double> getSalesByState() {
         return salesAnalyser.getSalesBySate(saleRecords);
     }
 
-    public final Hashtable<String, Double> getSalesByCategory() {
+    public final HashMap<String, Double> getSalesByCategory() {
         return salesAnalyser.getSalesByCategory(saleRecords);
     }
 

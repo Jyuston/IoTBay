@@ -19,6 +19,7 @@
     <jsp:include page="templates/header.jsp"/>
 
     <c:choose>
+        <%-- Check if an error occured. If so, display the error message. --%>
         <c:when test="${not empty error}">
             <div class="alert alert-danger my-4" role="alert">
                 <h1>Oops. Something went wrong.</h1>
@@ -28,11 +29,11 @@
             <a href="ReportingServlet" class="btn btn-primary btn-lg btn-block">Return to Reports</a>
         </c:when>
     
+        <%-- No error detected - display the page as normal. --%>
         <c:otherwise>   
             <body>
                 <div class="container">     
                     <div class="row">
-                        
                         <div class="col-2">
                         </div>
                         
@@ -40,12 +41,15 @@
                             <h1>Reporting</h1>
                             <p>Select an existing report to view, or create a new report. </p>
                             <h2> View Existing Reporting</h2>
+
+                            <%-- Form for selecting a report to view. --%>
                             <form method="post" action="ReportingServlet">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Report Name</label>
                                         <select class="form-control" name="selectedReport" required">
                                             <option>Stock Report</option>
+                                            <%-- Populates the drop-down with report names. --%>
                                             <c:forEach items="${reportNames}" var="name" varStatus="loop">
                                                <option>${name}</option> 
                                             </c:forEach>
@@ -61,17 +65,19 @@
 
                             <br>
                             <br>
+
                             <h2>New Sales Report</h2>
                             <c:choose>
+                                <%-- If the logged in staff member is a super user, show the 'Create New Report' form. --%>
                                 <c:when test="${user.admin}">
                                     <jsp:include page="/reportForm.jsp"/>
                                 </c:when>
 
+                                <%-- Show info text to normal user on what to do if they require a report to be created. --%>
                                 <c:otherwise>
                                     <p class="font-weight-light">If you would like a new report to be created, please contact your system administrator with your requirements.</p>
                                 </c:otherwise>
                             </c:choose>
-                           
                         </div>
                     </div>
                 </div>

@@ -20,16 +20,13 @@
         <title>IoT Bay</title>
     </head>
     <jsp:include page="templates/header.jsp"/>
-
-    <%
-        Report report = (Report)session.getAttribute("report");
-        DecimalFormat revenueFormatter = new DecimalFormat("####0.00");
-    %>
     
     <body>
         <h1>${report.name} </h1>
         <p>${report.description} </p>
+
         <form method="POST" action="/IoTBay/ReportingServlet">
+            <%-- Form for triggering logic to exit the report view. %--%>
             <input class="form-control" type="hidden" name="reportExit" value="yes">
             <input type="submit" class="btn btn-primary" value="Exit"></a>
         </form>
@@ -38,17 +35,21 @@
         <br>
         
         <h2> Stock by Category by Product</h2>
-
+        <%-- Iterates through the hashmap to display each category. --%>
+        <%-- JSTL abstracts this process, preventing the need to explicity code in use of keys etc. --%>
         <c:forEach items="${report.stockReport}" var="entry" varStatus="loop">
                     <h4>${entry.key}</h4>
                     <div class="table-responsive-sm">
-                        <table class="table table-bordered table-sm table-dark">
+                        <table id="reportingTable" class="table table-bordered table-sm table-dark">
+
                             <thead class="thead-light">
                                 <th scope="col">Product ID</th>
                                 <th scope="col">Product Name</th>
                                 <th scope="col">Stock</th>
                             </thead>
+
                             <tbody>
+                                <%-- Iterates through the ArrayList stored inside the value of the hashmap key to display each category. --%>
                                 <c:forEach items="${entry.value}" var="item" varStatus="loop">
                                         <tr>
                                             <td>${item.ID}</td>
@@ -57,6 +58,7 @@
                                         </tr>
                                 </c:forEach>
                             </tbody>
+
                         </table>
                     </div>       
                 </c:forEach>
