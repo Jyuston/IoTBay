@@ -34,12 +34,16 @@
                      xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false">
                     <title>Placeholder</title>
                     <rect width="100%" height="100%" fill="#868e96"></rect>
-                    <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text>
+                    <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Product Image</text>
                 </svg>
             </aside>
             <main class="col-md-6">
                 <article class="px-4">
                     <h2 class="title">${product.name}</h2>
+
+                    <c:if test="${not empty user && user.staff}">
+                        <a class="text-info" href="EditProductServlet?ID=${product.ID}">Edit Product Details</a>
+                    </c:if>
 
                     <div class="rating-wrap my-3 text-warning">
                         <svg class="bi bi-star-fill" width="1em" height="1em" viewBox="0 0 16 16"
