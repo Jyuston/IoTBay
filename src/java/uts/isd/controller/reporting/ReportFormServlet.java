@@ -86,7 +86,6 @@ public class ReportFormServlet extends HttpServlet {
                         .validateReportName(params[0])
                         .validateReportDescription(params[1]);
 
-
                 // Check if validation failed
                 if (validator.failed()) {
                     request.getRequestDispatcher("reportForm.jsp").include(request, response);
@@ -96,7 +95,8 @@ public class ReportFormServlet extends HttpServlet {
                 // Update the report, then retrieve it with latest data and save it to the session
                 // Note this is neccessary for data refresh
                 session.setAttribute("report", ReportingDAO.update(originalName, params, isNameChanged(params, report))); 
-                                              
+                
+                // Clean session
                 session.removeAttribute("editReport");
                 response.sendRedirect("reportView.jsp");
             }
@@ -135,6 +135,7 @@ public class ReportFormServlet extends HttpServlet {
 
             catch (Exception e) {
                 request.setAttribute("error", e.getMessage());
+                
                 // Redirects back to the ORIGINAL page
                 request.getRequestDispatcher("reporting.jsp").include(request, response);
             }

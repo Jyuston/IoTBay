@@ -63,7 +63,7 @@ public class ReportingServlet extends HttpServlet {
             }
         }
 
-        // Implements logic for opening the view for the sales report
+        // Implements logic for opening the view for a sales report
         else if (!request.getParameter("selectedReport").equals("Stock Report")) {
             try {
                 // Retrieve the selected report name, and instantiate a new report object from data in the db
@@ -82,7 +82,7 @@ public class ReportingServlet extends HttpServlet {
             }
         }
 
-        // The stock report has been selected
+        // Implements logic for opening the view for the stock report
         else {
             try {
                 // Instantaiate the report using the specially defined constructor
