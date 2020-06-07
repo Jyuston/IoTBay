@@ -57,7 +57,15 @@
 
                 <div class="col">
                     <div class="btn-group" role="group">
-                        <a class="btn btn-primary" href="/IoTBay/ReportFormServlet">Report Settings</a>
+                        <c:choose>
+                            <c:when test="${user.admin}">
+                                <a class="btn btn-primary" href="/IoTBay/ReportFormServlet">Report Settings</a>
+                            </c:when>
+
+                            <c:otherwise>
+                                <a class="btn disabled btn-primary" href="/IoTBay/ReportFormServlet">Report Settings</a>
+                            </c:otherwise>
+                        </c:choose>
                         <form method="POST" action="/IoTBay/ReportingServlet">
                             <input class="form-control" type="hidden" name="reportExit" value="yes">
                             <input type="submit" class="btn btn-primary" value="Exit"></a>
@@ -65,6 +73,10 @@
                     </div>
                 </div>
             </div>
+
+            <c:if test="${not user.admin}">
+                <p class="font-weight-light">Note: If you would like the report settings to be modified, or to delete the report, please contact your system administrator.</p>
+            </c:if>
         </div>
         
         <br>

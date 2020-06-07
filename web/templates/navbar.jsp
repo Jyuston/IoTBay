@@ -19,6 +19,9 @@
             <div class="navbar-nav mr-auto">
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/index.jsp">Home</a>
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/main.jsp">Main</a>
+                <% if (user != null && user.isStaff()) { %>
+                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/ReportingServlet">Reporting</a>
+                <% } %>
                 <% if (user != null) { %>
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/EditProfileServlet">Edit Profile</a>
                 <a class="nav-item nav-link" href="${pageContext.request.contextPath}/ReportingServlet">Reporting</a>  
@@ -27,12 +30,12 @@
                     <a class="nav-item nav-link" href="${pageContext.request.contextPath}/UserManagementServlet">User Management</a>
                 </c:if>
                 <% } else { %>
-                <a class="nav-item nav-link" href="${pageContext.request.contextPath}/register.jsp">Register</a>
+                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/register.jsp">Register</a>
                 <% } %>
             </div>
 
             <% if (user != null) { %>
-            <form class="form-inline mb-0" action="LogoutServlet" method="post">
+            <form class="form-inline mb-0" action="${pageContext.request.contextPath}/LogoutServlet" method="post">
                 <button type="submit" class="btn btn-outline-light my-2 my-sm-0">Logout</button>
             </form>
             <% } else { %>

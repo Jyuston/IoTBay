@@ -4,4 +4,46 @@ h1 {
 
 #reportingTable {
     table-layout: fixed;
-} 
+}
+
+.products-list {
+    justify-content: start;
+}
+
+.products-list .card {
+    flex: 1 0 100%;
+    margin-bottom: 2rem;
+}
+
+.products-list .card .card-title {
+    font-weight: bold;
+    font-size: 1.35rem;
+}
+
+.products-list .card .price {
+    font-weight: bold;
+}
+
+.w {
+    width: 100% !important;
+}
+
+@media screen and (min-width: 768px) {
+    .products-list .card {
+        flex: 0 0 calc(50% - 30px);
+    }
+
+    .w {
+        width: 75% !important;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .products-list .card {
+        flex: 0 0 calc(33% - 30px);
+    }
+
+    .w {
+        width: 50% !important;
+    }
+}

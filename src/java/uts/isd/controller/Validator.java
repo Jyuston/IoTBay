@@ -22,9 +22,18 @@ public class Validator {
 
     public boolean failed() { return failed; }
 
-    public Validator checkEmpty(String email, String password) {
+    public Validator checkEmpty(String input, String errorPrefix) {
+        if (input.isEmpty()) {
+            request.setAttribute("empty" + errorPrefix + "VErr", errorPrefix + " field cannot be empty");
+            failed = true;
+        }
+
+        return this;
+    }
+
+    public Validator checkEmptyEmailPass(String email, String password) {
         if (email.isEmpty() || password.isEmpty()) {
-            request.setAttribute("emptyEmailPassVErr", "Email or Password field is empty");
+            request.setAttribute("emptyEmailPassVErr", "Email or Password field cannot be empty");
             failed = true;
         }
 
@@ -69,35 +78,55 @@ public class Validator {
         return this;
     }
 
+    // Product
+
+    public Validator checkNegativePrice(double price) {
+        if (price < 0)  {
+            request.setAttribute("negativePriceVErr", "Price cannot be negative");
+            failed = true;
+        }
+
+        return this;
+    }
+
+    public Validator checkNegativeStock(int price) {
+        if (price < 0)  {
+            request.setAttribute("negativeStockVErr", "Stock cannot be negative");
+            failed = true;
+        }
+
+        return this;
+    }
+
     public Validator validateReportDates(String d1, String d2) throws ParseException, Exception {
         Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(d1);
         Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(d2);
-    
+
         if (startDate.compareTo(endDate) > 0) {
             failed = true;
-            request.setAttribute("error", "The report end date cannot be before the report start date");
+            request.setAttribute("error", "The report end date cannot be before the report start date.");
         }
-        
+
         return this;
     }
-    
+
     public Validator validateReportDescription(String description) throws Exception {
         // Note - for reporting, any report description is valid provided it is not empty
         if (description.equals("")) {
             failed = true;
             request.setAttribute("error", "The report description cannot be empty.");
         }
-    
+
         return this;
     }
-    
+
     public Validator validateReportName(String name) throws Exception {
         // Note - for reporting, any report name is valid provided it is not empty
         if (name.equals("")) {
             failed = true;
             request.setAttribute("error", "The report name cannot be empty.");
         }
-    
+
         return this;
     }
 

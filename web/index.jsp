@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <head>
@@ -13,8 +14,9 @@
 
     <p class="mt-4 mb-1">
         To continue, please Login or Register below.
-        <br />
+        <br/>
         <a href="login.jsp">Login</a> |
+        <a href="products/CatalogueServlet">Catalogue</a> |
         <a href="register.jsp">Register</a>
     </p>
 </div>
