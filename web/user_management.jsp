@@ -6,15 +6,17 @@
 <%@page import="uts.isd.model.Customer"%>
 <%@page import="uts.isd.model.Staff"%>
 
-<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!-- Will need to wrap this in an If statement to check the session if they are a Staff0-Admin TRUE-->
+
 <jsp:include page="templates/header.jsp"/>
+
+<h1 class="mb-2">User Management</h1>
+
 <head>
     <title>User Management</title>
 </head>
-<h1 class="mb-2">User Management</h1>
 
 <c:choose>
 <c:when test="${noAccess}">
