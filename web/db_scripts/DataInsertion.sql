@@ -49,7 +49,9 @@ VALUES  (1, '2020-01-01 09:34:11', 'create_account'),
         (15,'2020-01-01 11:30:30', 'create_account'),
         (15,'2020-01-01 11:30:45', 'login'),
         (15,'2020-01-01 11:33:10', 'edit'),
-        (15,'2020-01-01 11:45:40', 'logout')
+        (15,'2020-01-01 11:45:40', 'logout'),
+        (15,'2020-01-03 15:32:20', 'login'),
+        (15,'2020-01-03 15:42:40', 'logout')
 ;
 
 INSERT INTO PAYMENT_INFORMATION (CUSTOMER_ID, CARD_NUMBER, CVV_NUMBER, EXPIRY_MONTH, EXPIRY_YEAR)
