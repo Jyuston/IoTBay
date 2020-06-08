@@ -143,6 +143,9 @@
                             <input type="text" class="form-control ${not empty postcodeVErr ? 'border border-danger' : ''}"
                                    name="postcode" id="postcode"
                                    value="${account.address.postcode}">
+                            <small class="form-text text-danger">
+                                <c:out value="${postcodeVErr}"/>
+                            </small>
                         </div>
                     </div>
                 </div>
