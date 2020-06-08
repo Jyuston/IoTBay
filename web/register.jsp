@@ -90,9 +90,11 @@
                         <small class="form-text text-danger">
                             <c:out value="${passVErr}"/>
                         </small>
-                        <small class="form-text text-primary">
-                            password must be greater than 4 characters
-                        </small>
+                        <c:if test="${empty passVErr}">
+                            <small class="form-text text-secondary">
+                                password must be greater than 4 characters
+                            </small>
+                        </c:if>
                     </div>
 
                         <%--TOS--%>

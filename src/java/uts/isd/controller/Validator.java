@@ -73,7 +73,7 @@ public class Validator {
 
     public Validator validatePassword(String password) {
         if (!validate(passwordPattern, password))  {
-            request.setAttribute("passVErr", "Password format incorrect");
+            request.setAttribute("passVErr", "Password format incorrect. Must be at least 4 characters");
             failed = true;
         }
 

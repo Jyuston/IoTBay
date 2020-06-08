@@ -64,8 +64,10 @@ public class EditProfileServlet extends HttpServlet {
                 .validateName(firstName + " " + lastName)
                 .validateContactNumber(contactNumber);
 
-        if (validator.failed())
+        if (validator.failed()) {
+            request.getRequestDispatcher("/user_management_edit.jsp").include(request, response);
             return;
+        }
 
         try {
             user.setFirstName(firstName);

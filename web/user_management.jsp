@@ -19,9 +19,7 @@
 
 <c:choose>
 <c:when test="${noAccess}">
-    <div class="alert alert-danger my-4" role="alert">
-        You have no authority to access this page.
-    </div>
+    <jsp:include page="templates/auth-error.jsp"/>
 </c:when>
 <c:otherwise>
 <h2 class="mb-5"> Search a User </h2>
