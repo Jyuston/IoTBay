@@ -47,24 +47,22 @@ public class EditProfileServlet extends HttpServlet {
         String password = request.getParameter("password");
         String ID = request.getParameter("ID");
         
-        validator.validateName(firstName + " " + lastName)
+        validator.checkEmpty(email, password)
+                .validateEmail(email)
+                .validatePassword(password)
+                .validateName(firstName + " " + lastName)
                 .validateContactNumber(contactNumber);
 
-        if (validator.failed()) {
-            try {
-                Account account = AccountDAO.getAccount(Integer.parseInt(ID));
-                request.setAttribute("account", account);
-            } catch (SQLException err) {
-                request.setAttribute("errorUserManagement", "Error accessing database.");
-                err.printStackTrace();
-            } finally {
-                request.getRequestDispatcher("/user_management_edit.jsp").include(request, response);
-                return;
-            }
-        }
+        
         try {
             HttpSession session = request.getSession();
             Account account = AccountDAO.getAccount(Integer.parseInt(ID));
+            request.setAttribute("account", account);
+            
+            if (validator.failed()) {
+                return;
+            }
+            
             account.setFirstName(firstName);
             account.setLastName(lastName);
             account.setEmail(email);
@@ -85,6 +83,19 @@ public class EditProfileServlet extends HttpServlet {
                String expiryMonth = request.getParameter("expiryMonth");
                String expiryYear = request.getParameter("expiryYear");
                String cvvNumber = request.getParameter("cvvNumber");
+               
+               validator.validateAddress(addressLine1)
+                        .validateAddress2(addressLine2)
+                        .validateSuburb(suburb)
+                        .validatePostcode(postcode)
+                        .validateCardNumber(cardNumber)
+                        .validateCvv(cvvNumber)
+                        .validateExpiryMonth(expiryMonth)
+                        .validateExpiryYear(expiryYear);
+
+               if (validator.failed()) {
+                  return;
+               }               
                
                accountC.getAddress().setAddressLine1(addressLine1);
                accountC.getAddress().setAddressLine2(addressLine2);

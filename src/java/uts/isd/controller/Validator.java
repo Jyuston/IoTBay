@@ -13,6 +13,17 @@ public class Validator {
     private final String namePattern = "([A-Z][a-z]+[\\s])+[A-Z][a-z]*";
     private final String passwordPattern = "[a-z0-9]{4,}";
     private final String contactNumberPattern = "[0-9]{4} [0-9]{3} [0-9]{3}";
+    
+    private final String addressPattern = "^\\d+\\s[A-z]+\\s[A-z]+";
+    private final String addressPattern2 = "^$|^\\d+\\s[A-z]+\\s[A-z]+";
+    private final String suburbPattern = "^[A-Z][a-z]+";
+    private final String postcodePattern = "^[0-9]{4}";
+    
+    private final String cardNumberPattern = "[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}";
+    private final String cvvPattern = "[0-9]{3}";
+    private final String expiryMonthPattern = "[0-9]{2}";
+    private final String expiryYearPattern = "[0-9]{4}";
+    
     private final HttpServletRequest request;
     private boolean failed = false;
 
@@ -71,10 +82,86 @@ public class Validator {
     
     public Validator validateContactNumber(String contactNumber) {
         if (!validate(contactNumberPattern, contactNumber)){
-            request.setAttribute("contactNumberVErr", "Contact Number format incorrect");
+            request.setAttribute("contactNumberVErr", "Contact Number format incorrect. Must be correct length & spaced");
             failed = true;
         }
     
+        return this;
+    }
+    
+    // Address
+    
+    public Validator validateAddress(String address) {
+        if (!validate(addressPattern, address)){
+            request.setAttribute("addressVErr", "Address format incorrect. Must be number followed by address");
+            failed = true;
+        }
+    
+        return this;
+    }
+    
+    public Validator validateAddress2(String address) {
+        if (!validate(addressPattern2, address)){
+            request.setAttribute("address2VErr", "Address format incorrect. Must be blank or Number followed by Address");
+            failed = true;
+        }
+    
+        return this;
+    }
+
+    public Validator validateSuburb(String suburb) {
+        if (!validate(suburbPattern, suburb)){
+            request.setAttribute("suburbVErr", "Suburb format incorrect. Must start with a capital letter");
+            failed = true;
+        }
+    
+        return this;
+    }
+
+    public Validator validatePostcode(String postcode) {
+        if (!validate(postcodePattern, postcode)){
+            request.setAttribute("postcodeVErr", "Postcode format incorrect. Must be 4 digits");
+            failed = true;
+        }
+    
+        return this;
+    }    
+    
+    //Payment Information
+
+    public Validator validateCardNumber(String cardNumber) {
+        if (!validate(cardNumberPattern, cardNumber)){
+            request.setAttribute("cardNumberVErr", "Credit Card format incorrect. Must be 4 spaced intervals of 4 digits");
+            failed = true;
+        }
+    
+        return this;
+    }
+
+    public Validator validateCvv(String cvv) {
+        if (!validate(cvvPattern, cvv)){
+            request.setAttribute("cvvVErr", "CVV format incorrect. Must be 3 digits");
+            failed = true;
+        }
+    
+        return this;
+    }
+
+    public Validator validateExpiryMonth(String expiryMonth) {
+        if (!validate(expiryMonthPattern, expiryMonth)){
+            request.setAttribute("expiryMonthVErr", "Month format incorrect. Must be 2 digits");
+            failed = true;
+        }
+    
+        return this;
+    }
+
+    public Validator validateExpiryYear(String expiryYear) {
+        if (!validate(expiryYearPattern, expiryYear)){
+            request.setAttribute("expiryYearVErr", "Year format incorrect. Must be 4 digits");
+            failed = true;
+        }
+        
         return this;
     }
 

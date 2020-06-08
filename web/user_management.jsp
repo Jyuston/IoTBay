@@ -20,7 +20,7 @@
 <c:choose>
 <c:when test="${noAccess}">
     <div class="alert alert-danger my-4" role="alert">
-        YOU HAVE NO MANA.
+        You have no authority to access this page.
     </div>
 </c:when>
 <c:otherwise>
