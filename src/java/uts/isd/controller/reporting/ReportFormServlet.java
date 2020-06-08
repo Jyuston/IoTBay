@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import uts.isd.model.dao.DAOException;
 import uts.isd.model.dao.ReportingDAO;
 import uts.isd.model.reporting.Report;
+import uts.isd.model.Account;
 import uts.isd.controller.Validator;
 
 import java.io.IOException;
@@ -22,21 +23,28 @@ public class ReportFormServlet extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
-        // Implements redirection to the edit form logic
-        try {
-            ArrayList<String> reportNames = ReportingDAO.getReportNames();
-            request.setAttribute("editReport", "true");
-        } 
-        
-        catch (SQLException e) {
-            request.setAttribute("error", e.getMessage());
-            //request.getRequestDispatcher("reporting/errorPage.jsp").include(request, response);
+        HttpSession session = request.getSession();
+
+        if (accessAllowed(request, session)) {
+            // Implements redirection to the edit form logic
+            try {
+                ArrayList<String> reportNames = ReportingDAO.getReportNames();
+                request.setAttribute("editReport", "true");
+            } 
+            
+            catch (SQLException e) {
+                request.setAttribute("error", e.getMessage());
+            }
+
+            finally {
+                request.getRequestDispatcher("reportForm.jsp").include(request, response);
+            }
         }
 
-        finally {
-            request.getRequestDispatcher("reportForm.jsp").include(request, response);
+        else {
+            request.setAttribute("error", "Unauthorised Access to Reporting!");
+            request.getRequestDispatcher("index.jsp").include(request, response);
         }
-
     }
 
     @Override
@@ -156,5 +164,21 @@ public class ReportFormServlet extends HttpServlet {
     private boolean isNameChanged(String[] params, Report r) throws ServletException {
         // Checks to see if name was changed
         return !params[0].equals(r.getName());
+    }
+
+    // Checks if the user is allowed to access the page (i.e. is a staff member)
+    private boolean accessAllowed(HttpServletRequest r, HttpSession s) throws DAOException {
+        try {
+            Account a = (Account) s.getAttribute("user");
+            if (a.isStaff()) {
+                return true;
+            }
+        }
+
+        catch (Exception e) {
+            r.setAttribute("error", e);
+        }
+
+        return false;
     }
 }

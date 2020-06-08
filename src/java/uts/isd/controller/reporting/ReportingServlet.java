@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import uts.isd.model.dao.DAOException;
 import uts.isd.model.dao.ReportingDAO;
 import uts.isd.model.reporting.Report;
+import uts.isd.model.Account;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -21,21 +22,30 @@ public class ReportingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, java.io.IOException {
         HttpSession session = request.getSession();
+  
         // Implements logic for retrieving a list of report names and displaying them in the view
-        try {
-            // Clean the session in case an exit was done inproperly
-            session.removeAttribute("report");
-            session.removeAttribute("error");
+        if (accessAllowed(request, session)) {
+            try {
+                // Clean the session in case an exit was done inproperly
+                session.removeAttribute("report");
+                session.removeAttribute("error");
+    
+                ArrayList<String> reportNames = ReportingDAO.getReportNames();
+    
+                request.setAttribute("reportNames", reportNames);
+    
+                request.getRequestDispatcher("reporting.jsp").include(request, response);
+            } 
+            
+            catch (DAOException | SQLException e) {
+                request.setAttribute("error", e.getMessage());
+                request.getRequestDispatcher("reporting.jsp").include(request, response);
+            }
+        }
 
-            ArrayList<String> reportNames = ReportingDAO.getReportNames();
-
-            request.setAttribute("reportNames", reportNames);
-            request.getRequestDispatcher("reporting.jsp").include(request, response);
-        } 
-        
-        catch (DAOException | SQLException e) {
-            request.setAttribute("error", e.getMessage());
-            request.getRequestDispatcher("reporting.jsp").include(request, response);
+        else {
+            request.setAttribute("error", "Unauthorised Access to Reporting!");
+            request.getRequestDispatcher("index.jsp").include(request, response);
         }
     }
     
@@ -100,5 +110,21 @@ public class ReportingServlet extends HttpServlet {
                 request.getRequestDispatcher("reporting.jsp").include(request, response);
             }
         }
+    }
+
+    // Checks if the user is allowed to access the page (i.e. is a staff member)
+    private boolean accessAllowed(HttpServletRequest r, HttpSession s) throws DAOException {
+        try {
+            Account a = (Account) s.getAttribute("user");
+            if (a.isStaff()) {
+                return true;
+            }
+        }
+
+        catch (Exception e) {
+            r.setAttribute("error", e);
+        }
+
+        return false;
     }
 }
