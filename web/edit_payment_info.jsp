@@ -38,26 +38,36 @@
         <h4>Shipping Address</h4>
         <div class="form-group">
             <label for="addressLine1">Address</label>
-            <input type="text" class="form-control" name="addressLine1" id="addressLine1"
-                   value="${user.address.addressLine1}" required>
-
+            <input type="text" class="form-control ${not empty addressVErr ? 'border border-danger' : ''}"
+                   name="addressLine1" id="addressLine1"
+                   value="${user.address.addressLine1}">
+            <small class="form-text text-danger">
+                <c:out value="${addressVErr}"/>
+            </small>
         </div>
         <div class="form-group">
             <label for="addressLine2">Address 2 (Optional)</label>
-            <input type="text" class="form-control" name="addressLine2" id="addressLine2"
+            <input type="text" class="form-control ${not empty address2VErr ? 'border border-danger' : ''}"
+                   name="addressLine2" id="addressLine2"
                    value="${user.address.addressLine2}">
+            <small class="form-text text-danger">
+                <c:out value="${address2VErr}"/>
+            </small>
         </div>
         <div class="form-group">
             <label for="suburb">Suburb</label>
-            <input type="text" class="form-control" name="suburb" id="suburb"
-                   value="${user.address.suburb}" required>
+            <input type="text" class="form-control ${not empty suburbVErr ? 'border border-danger' : ''}" name="suburb"
+                   id="suburb"
+                   value="${user.address.suburb}">
+            <small class="form-text text-danger">
+                <c:out value="${suburbVErr}"/>
+            </small>
         </div>
         <div class="form-group">
             <div class="row">
                 <div class="col">
                     <label for="state">State</label>
-                    <select class="form-control" name="state" id="state" value="${user.address.state}"
-                            required>
+                    <select class="form-control" name="state" id="state" value="${user.address.state}">
                         <option>NSW</option>
                         <option>QLD</option>
                         <option>ACT</option>
@@ -70,8 +80,12 @@
                 </div>
                 <div class="col-4">
                     <label for="postcode">Postcode</label>
-                    <input type="number" class="form-control" name="postcode" id="postcode"
-                           value="${user.address.postcode}" required>
+                    <input type="number" class="form-control ${not empty postcodeVErr ? 'border border-danger' : ''}"
+                           name="postcode" id="postcode"
+                           value="${user.address.postcode}">
+                    <small class="form-text text-danger">
+                        <c:out value="${postcodeVErr}"/>
+                    </small>
                 </div>
             </div>
         </div>
@@ -80,25 +94,41 @@
         <h4 class="mt-5">Billing Information</h4>
         <div class="form-group">
             <label for="cardNumber">Card Number</label>
-            <input type="text" class="form-control" name="cardNumber" id="cardNumber"
-                   value="${user.paymentInfo.cardNumber}" required>
+            <input type="text" class="form-control ${not empty cardNumberVErr ? 'border border-danger' : ''}"
+                   name="cardNumber" id="cardNumber"
+                   value="${user.paymentInfo.cardNumber}">
+            <small class="form-text text-danger">
+                <c:out value="${cardNumberVErr}"/>
+            </small>
         </div>
         <div class="form-group">
             <div class="row">
                 <div class="col">
                     <label for="expiryMonth">Expiry Month</label>
-                    <input type="text" class="form-control" name="expiryMonth" id="expiryMonth"
-                           value="${user.paymentInfo.expiryMonth}" required>
+                    <input type="text" class="form-control ${not empty expiryMonthVErr ? 'border border-danger' : ''}"
+                           name="expiryMonth" id="expiryMonth"
+                           value="${user.paymentInfo.expiryMonth}">
+                    <small class="form-text text-danger">
+                        <c:out value="${expiryMonthVErr}"/>
+                    </small>
                 </div>
                 <div class="col">
                     <label for="expiryYear">Expiry Year</label>
-                    <input type="text" class="form-control" name="expiryYear" id="expiryYear"
-                           value="${user.paymentInfo.expiryYear}" required>
+                    <input type="text" class="form-control ${not empty expiryYearVErr ? 'border border-danger' : ''}"
+                           name="expiryYear" id="expiryYear"
+                           value="${user.paymentInfo.expiryYear}">
+                    <small class="form-text text-danger">
+                        <c:out value="${expiryYearVErr}"/>
+                    </small>
                 </div>
                 <div class="col">
                     <label for="cvvNumber">CVV</label>
-                    <input type="password" class="form-control" name="cvvNumber" id="cvvNumber"
-                           value="${user.paymentInfo.cvvNumber}" required>
+                    <input type="password" class="form-control ${not empty cvvVErr ? 'border border-danger' : ''}"
+                           name="cvvNumber" id="cvvNumber"
+                           value="${user.paymentInfo.cvvNumber}">
+                    <small class="form-text text-danger">
+                        <c:out value="${cvvVErr}"/>
+                    </small>
                 </div>
             </div>
         </div>

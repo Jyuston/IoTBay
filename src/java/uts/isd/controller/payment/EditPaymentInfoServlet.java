@@ -1,5 +1,6 @@
 package uts.isd.controller.payment;
 
+import uts.isd.controller.Validator;
 import uts.isd.model.Address;
 import uts.isd.model.Customer;
 import uts.isd.model.PaymentInformation;
@@ -18,6 +19,8 @@ import java.util.LinkedList;
 public class EditPaymentInfoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        Validator validator = new Validator(request);
+
         HttpSession session = request.getSession();
         Customer user = (Customer) session.getAttribute("user");
 
@@ -43,6 +46,20 @@ public class EditPaymentInfoServlet extends HttpServlet {
         String expiryYear = request.getParameter("expiryYear");
         String cvvNumber = request.getParameter("cvvNumber");
 
+        validator.validateAddress(addressLine1)
+                .validateAddress2(addressLine2)
+                .validateSuburb(suburb)
+                .validatePostcode(postcode)
+                .validateCardNumber(cardNumber)
+                .validateCvv(cvvNumber)
+                .validateExpiryMonth(expiryMonth)
+                .validateExpiryYear(expiryYear);
+
+        if (validator.failed()) {
+            request.getRequestDispatcher("/edit_payment_info.jsp").include(request, response);
+            return;
+        }
+
         Address address = user.getAddress();
 
         address.setAddressLine1(addressLine1);
@@ -64,7 +81,6 @@ public class EditPaymentInfoServlet extends HttpServlet {
             else CustomerDAO.update(user);
 
             session.setAttribute("user", user);
-
             request.setAttribute("successEdit", true);
         }
         catch (DAOException err) {
