@@ -16,10 +16,10 @@ public class Validator {
     private final String passwordPattern = "[a-z0-9]{4,}";
     private final String contactNumberPattern = "[0-9]{4} [0-9]{3} [0-9]{3}";
     private final String logDatePattern = "[0-9]{4}[-]{1}[0-9]{2}[-]{1}[0-9]{2}"; 
-    
-    private final String addressPattern = "^\\d+\\s[A-z]+\\s[A-z]+";
-    private final String addressPattern2 = "^$|^\\d+\\s[A-z]+\\s[A-z]+";
-    private final String suburbPattern = "^[A-Z][a-z]+";
+
+    private final String addressPattern1 = "^\\d+(\\s[A-z]+)+\\S$";
+    private final String addressPattern2 = "^$|^\\d+(\\s[A-z]+)+\\S$";
+    private final String suburbPattern = "([A-z]+\\s?)+\\S$";
     private final String postcodePattern = "^[0-9]{4}";
     
     private final String cardNumberPattern = "[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}";
@@ -106,7 +106,7 @@ public class Validator {
     // Address
     
     public Validator validateAddress(String address) {
-        if (!validate(addressPattern, address)){
+        if (!validate(addressPattern1, address)){
             request.setAttribute("addressVErr", "Address format incorrect. Must be number followed by address");
             failed = true;
         }

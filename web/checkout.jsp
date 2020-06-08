@@ -71,7 +71,7 @@
         <p class="d-flex">
             <strong class="mr-auto">Payment Method:</strong>
             <c:choose>
-                <c:when test="${user.staff || user.customer && empty user.paymentInfo.cardNumber}">
+                <c:when test="${empty user || user.staff || empty user.paymentInfo.cardNumber}">
                     <span class="text-danger float-right">No Billing Information</span>
                 </c:when>
                 <c:otherwise>
@@ -82,11 +82,11 @@
         <p class="d-flex">
             <strong class="mr-auto">Shipping To:</strong>
             <c:choose>
-                <c:when test="${user.staff || empty user.address.addressLine1}">
+                <c:when test="${empty user || user.staff || empty user.address.addressLine1}">
                     <span class="text-danger float-right">No Shipping Address</span>
                 </c:when>
                 <c:otherwise>
-                    <span class="float-right">${user.address.addressLine1}</span>
+                    <span class="float-right">${user.address}</span>
                 </c:otherwise>
             </c:choose>
         </p>
@@ -124,12 +124,12 @@
                     </svg>
                 </button>
                 <p class="text-danger text-center w-75 mx-auto">
-                    <small>You need to logged in as a customer to purchase.<br>
+                    <small>Staff accounts cannot place orders.<br>
                         Please <a href="register.jsp" class="text-danger font-weight-bold">register a customer account</a>.
                     </small>
                 </p>
             </c:when>
-            <c:when test="${user.customer && (empty user.paymentInfo.cardNumber || empty user.address.addressLine1)}">
+            <c:when test="${empty user || not empty user && user.customer && (empty user.paymentInfo.cardNumber || empty user.address.addressLine1)}">
                 <!--If missing request payment info or address-->
                 <button type="submit" class="btn btn-success btn-block  btn-lg mt-4 mb-3" disabled>
                     Purchase

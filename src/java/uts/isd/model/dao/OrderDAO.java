@@ -131,7 +131,7 @@ public class OrderDAO {
                     order.getID(),
                     currentProduct.getID(),
                     lineItem.getQuantity(),
-                    lineItem.getSumPrice()
+                    currentProduct.getPrice()
             );
 
             int rowsChanges = itemLineInsertSt.executeUpdate();

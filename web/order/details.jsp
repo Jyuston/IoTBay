@@ -1,5 +1,6 @@
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <%--Request Scope EL Vars--%>
 <%--@elvariable id="order" type="uts.isd.model.Order"--%>
@@ -80,7 +81,7 @@
             </p>
             <p>
                 <strong>Shipped To:</strong>
-                <span class="float-right">${order.shippingAddress}</span>
+                <span class="float-right"> ${fn:replace(order.shippingAddress, "-", " ")} </span>
             </p>
             <p>
                 <strong>Tracking ID:</strong>

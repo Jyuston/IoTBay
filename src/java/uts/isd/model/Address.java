@@ -25,4 +25,13 @@ public class Address implements Serializable {
 
     public String getState() { return state; }
     public void setState(String state) { this.state = state; }
+
+    public String dbStringFormat() {
+        return String.format("%s-%s-%s-%s-%s", addressLine1, addressLine2, suburb, postcode, state);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s %s %s %s", addressLine1, addressLine2, suburb, postcode, state);
+    }
 }

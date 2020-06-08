@@ -104,7 +104,8 @@
         </div>
 
         <div>
-            <button type="submit" class="btn btn-info">Update</button>
+            <a href="checkout.jsp" class="text-danger float-right btn btn-link">Cancel</a>
+            <button type="submit" class="btn btn-success px-4">Update</button>
         </div>
     </form>
 </div>
