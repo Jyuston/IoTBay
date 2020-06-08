@@ -44,14 +44,31 @@ public class LogsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
+        Validator validator = new Validator(request);
+        
+        // Get form details 
         String date = request.getParameter("date");
         
+        // Run validation checks
+        validator.validateLogDate(date);
+              
+        
         try {
-        HttpSession session = request.getSession();
-        Account account = (Account) session.getAttribute("user");
-        List<Log> dateList = UserAccessDAO.getDate(account.getID(), date);
-        request.setAttribute("userLogs", dateList);
-        }
+            HttpSession session = request.getSession();
+            Account account = (Account) session.getAttribute("user");
+            List<Log> userLog = UserAccessDAO.getLogs(account.getID());
+            request.setAttribute("userLogs", userLog);
+            
+            if (validator.failed()) { 
+                return;
+            }
+            
+            
+            List<Log> dateList = UserAccessDAO.getDate(account.getID(), date);
+            request.setAttribute("userLogs", dateList);
+            }
+        
+        
 
         catch (SQLException err) {
             request.setAttribute("logErr", "Error accessing database.");

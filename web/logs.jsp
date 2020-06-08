@@ -13,9 +13,9 @@
                 <form action="/IoTBay/LogsServlet" method="POST">
                 <table>
                     <tr>
-                        <td><input class="form-control-sm mb-2 mr-2 border border-secondary ${not empty logVErr ? 'border border-danger' : ''}" name="date" placeholder="Enter Date">
+                        <td><input class="form-control-sm mb-2 mr-2 border border-secondary ${not empty logDateVErr ? 'border border-danger' : ''}" name="date" placeholder="Enter Date">
                                 <small class="form-text text-danger mb-1">
-                                    <c:out value="${logVErr}"/>
+                                    <c:out value="${logDateVErr}"/>
                                 </small>
                         </td>
                     </tr>
