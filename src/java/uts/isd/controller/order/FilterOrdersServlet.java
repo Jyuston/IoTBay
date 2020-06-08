@@ -36,6 +36,7 @@ public class FilterOrdersServlet extends HttpServlet {
             }
 
             request.setAttribute("filteredOrders", orders);
+            request.setAttribute("filtered", true);
         }
         catch (SQLException | DAOException err) {
             request.setAttribute("updateError", err.getMessage());

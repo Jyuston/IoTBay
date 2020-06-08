@@ -23,6 +23,7 @@
                         </c:if>
                         <c:if test="${user.staff}">
                             <a class="nav-item nav-link" href="${pageContext.request.contextPath}/ReportingServlet">Reporting</a>
+                            <a class="nav-item nav-link" href="${pageContext.request.contextPath}/order/FilterOrdersServlet">Orders</a>
                         </c:if>
                         <c:if test="${user.staff && user.admin}">
                             <a class="nav-item nav-link" href="${pageContext.request.contextPath}/UserManagementServlet">User Management</a>

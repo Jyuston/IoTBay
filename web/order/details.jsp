@@ -47,6 +47,7 @@
         </h1>
 
         <c:if test="${user.staff}">
+            <a href="FilterOrdersServlet?customerID=${order.customer.ID}">Back to orders</a>
             <form action="UpdateOrderStatusServlet" method="post" class="my-4">
                 <input type="hidden" name="ID" value="${order.ID}">
                 <div class="form-group">

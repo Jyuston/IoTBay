@@ -12,31 +12,60 @@
 </head>
 <jsp:include page="../templates/header.jsp"/>
 
-<c:if test="${param.successAdd}">
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <p class="mb-0"><strong>Yipee! </strong>Added to cart!</p>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+<c:if test="${not empty user && user.customer}">
+    <c:set var="orders" value="${user.orders}" />
+</c:if>
+<c:if test="${not empty filtered}">
+    <c:set var="orders" value="${filteredOrders}"/>
 </c:if>
 
-<c:if test="${param.failAdd}">
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <p class="mb-0"><strong>Can't add to cart! </strong>We don't have enough left!</p>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+
+<c:choose>
+    <c:when test="${user.staff}">
+        <h1 class="mb-4">Orders</h1>
+    </c:when>
+    <c:otherwise>
+        <h1 class="mb-4">Order History</h1>
+    </c:otherwise>
+</c:choose>
+
+<h5>Filter</h5>
+<form class="form" id="ordersTable" action="FilterOrdersServlet" method="get">
+    <div class="row">
+        <div class="col-2">Start Date</div>
+        <div class="col-2 ml-3">End Date</div>
+        <c:if test="${not empty user && user.staff}">
+            <div class="col"></div>
+            <div class="col-2 text-right">Customer ID</div>
+        </c:if>
     </div>
-</c:if>
+    <div class="row">
+        <input class="form-control col-2 mx-3" type="date" name="startDate" value="${param.startDate}">
+        <input class="form-control col-2" type="date" name="endDate" value="${param.endDate}">
+        <c:choose>
+            <c:when test="${not empty user && user.staff}">
+                <div class="col"></div>
+                <input class="form-control col-2 mx-3" type="number" min="0" name="customerID" value="${param.customerID}">
+            </c:when>
+            <c:otherwise>
+                <input type="hidden" value="${user.ID}" name="customerID">
+            </c:otherwise>
+        </c:choose>
+    </div>
 
-<h1 class="mb-4">Order History</h1>
+    <button type="submit" class="btn btn-outline-primary btn-sm px-4 mt-3">Search</button>
+    <a href="${user.staff ? 'FilterOrdersServlet' : 'history.jsp'}" class="btn btn-link text-danger btn-sm px-4 mt-3">Clear</a>
+</form>
 
+<h2>Purchases</h2>
 <div class="fix-table">
     <table class="table table-striped history-table">
         <thead class="table-info">
         <tr>
             <th scope="col bg-info">Order ID</th>
+            <c:if test="${user.staff}">
+                <th scope="col">Customer ID</th>
+            </c:if>
             <th scope="col">Ordered On</th>
             <th scope="col">Status</th>
             <th scope="col">Total</th>
@@ -45,7 +74,7 @@
         </thead>
 
         <tbody>
-        <c:forEach items="${user.orders}" var="order" varStatus="count">
+        <c:forEach items="${orders}" var="order" varStatus="count">
             <c:choose>
                 <c:when test="${order.status == 'pending'}"><c:set var="statusColour" value="info"/></c:when>
                 <c:when test="${order.status == 'cancelled'}"><c:set var="statusColour" value="danger"/></c:when>
@@ -54,6 +83,9 @@
 
             <tr>
                 <th scope="row">#${order.ID}</th>
+                <c:if test="${user.staff}">
+                    <td>#${order.customer.ID}</td>
+                </c:if>
                 <td><fmt:formatDate value="${order.orderedOn}" pattern="dd/MM/yyyy ' at ' HH:mm a"/></td>
                 <td class="text-${statusColour}">${order.status}</td>
                 <td class="font-weight-bold">$<fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${order.total}"/></td>
@@ -94,5 +126,21 @@
         table-layout: fixed;
     }
 </style>
+
+<script>
+    var myForm = document.getElementById('ordersTable');
+
+    myForm.addEventListener('submit', function () {
+        var allInputs = myForm.getElementsByTagName('input');
+
+        for (var i = 0; i < allInputs.length; i++) {
+            var input = allInputs[i];
+
+            if (input.name && !input.value) {
+                input.name = '';
+            }
+        }
+    });
+</script>
 
 <jsp:include page="../templates/footer.jsp"/>

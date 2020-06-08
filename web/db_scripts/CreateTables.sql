@@ -62,7 +62,7 @@ CREATE TABLE ORDERS
     "ORDERED_ON"       TIMESTAMP,
     "SHIPPING_ADDRESS" VARCHAR(255),
     "TOTAL"            DOUBLE,
-    "STATUS"           VARCHAR(30),
+    "STATUS"           VARCHAR(30) CONSTRAINT ACTION_CHECK CHECK (STATUS IN('pending', 'cancelled', 'approved')),
     "TRACKING_ID"      VARCHAR(30)
 );
 
