@@ -10,7 +10,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <head>
-    <title>Invoice</title>
+    <title>Invoices</title>
 </head>
 
 <jsp:include page="templates/header.jsp"/>

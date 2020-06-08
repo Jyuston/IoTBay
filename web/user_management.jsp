@@ -10,22 +10,21 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!-- Will need to wrap this in an If statement to check the session if they are a Staff0-Admin TRUE-->
 
-<jsp:include page="templates/header.jsp"/>
-
-<h1 class="mb-2">User Management</h1>
-
 <head>
     <title>User Management</title>
 </head>
+<jsp:include page="templates/header.jsp"/>
 
 <c:choose>
 <c:when test="${noAccess}">
     <jsp:include page="templates/auth-error.jsp"/>
 </c:when>
 <c:otherwise>
+<h1 class="mb-2">User Management</h1>
+
 <h2 class="mb-5"> Search a User </h2>
 <div class="container-fluid">
-    <div class="row"> 
+    <div class="row">
         <div class="form-group">
 
             <c:if test="${not empty errorUserManagement}">
@@ -47,7 +46,7 @@
                     Account has been deleted.
                 </div>
             </c:if>
-            
+
             <c:if test="${successActive}">
                 <div class="alert alert-success my-4" role="alert">
                     Account Activity has been changed.
@@ -62,7 +61,7 @@
                                     <c:out value="${nameVErr}"/>
                                 </small>
                         </td>
-                        
+
                         <td><input class="form-control-sm mb-2 border border-secondary ${not empty nameVErr ? 'border border-danger' : ''}" name="lastName" placeholder="Last Name">
                                 <small class="form-text text-danger mb-1">
                                     <c:out value="${nameVErr}"/>
@@ -74,7 +73,7 @@
                                 <small class="form-text text-danger" style="max-width: 200px">
                                     <c:out value="${contactNumberVErr}"/>
                                 </small>
-                        </td> 
+                        </td>
                     </tr>
                     <tr>
                         <td><button type="submit" class="btn btn-info btn-sm my-2">Search</button></td>
@@ -86,7 +85,7 @@
 
         <c:if test="${not empty resultAccount}">
             <div class="col-md-auto mx-auto p-4 rounded bg-primary text-light">
-                <!--This will be updated by Servlet based on the Form--> 
+                <!--This will be updated by Servlet based on the Form-->
                 <table class="my-auto">
                     <tr colspan="3" class="py-1"><th><h4>${resultAccount.firstName} ${resultAccount.lastName}</h4></th></tr>
                     <tr><td colspan="3" class="py-1">${resultAccount.class.getSimpleName()}</td></tr>
@@ -102,14 +101,14 @@
                                     <td><button class="btn btn-warning btn-sm my-2 mr-2">Deactivate</button></td>
                                     <input type="hidden" value="false" name="action">
                                     <input type="hidden" name="accountID"  value="${resultAccount.ID}">
-                                </form>                          
+                                </form>
                             </c:when>
-                            
+
                             <c:when test="${!resultAccount.active}">
                                 <form action="/IoTBay/UserManagementActiveServlet" method="POST">
                                     <td><button class="btn btn-warning btn-sm my-2 mr-2">Activate</button></td>
                                     <input type="hidden" value="true" name="action">
-                                    <input type="hidden" name="accountID"  value="${resultAccount.ID}">                            
+                                    <input type="hidden" name="accountID"  value="${resultAccount.ID}">
                                 </form>
                             </c:when>
                         </c:choose>
@@ -117,9 +116,9 @@
 
                     <form action="/IoTBay/UserManagementEditServlet" method="GET">
                         <td><button class="btn btn-info btn-sm my-2 mr-2">Edit</button></td>
-                        <input type="hidden" name="accountID"  value="${resultAccount.ID}">   
+                        <input type="hidden" name="accountID"  value="${resultAccount.ID}">
                     </form>
-                    
+
                     <c:if test="${resultAccount.ID != user.ID}">
                     <form action="/IoTBay/UserManagementDeleteServlet" method="POST">
                         <td><button class="btn btn-danger btn-sm my-2 float-right" onclick="return confirm('Are you sure you want to delete this Account?')">Delete</button></td>
@@ -129,7 +128,7 @@
                     </tr>
 
                 </table>
-            </div>  
+            </div>
         </c:if>
 
     </div>
@@ -154,20 +153,20 @@
                     <th class="col-2">Contact Number</th>
                     <th class="col-2">Actions</th>
                 </tr>
-    
+
         </table>
     </div>
 
     <div style="max-height: 400px;" class="table-responsive overflow-auto mb-4 table-striped table-light">
         <table class="table text-dark">
-            
+
             <c:forEach items="${customerList}" var="Customer" varStatus="count">
                 <tr class="d-flex">
                     <td class="col-1">${Customer.ID}</td>
                     <td class="col-3">${Customer.firstName} ${Customer.lastName}</td>
                     <td class="col-4">${Customer.email}</td>
                     <td class="col-2">${Customer.contactNumber}</td>
-                    
+
                     <td class="col-1">
                         <form action="/IoTBay/UserManagementServlet" method="POST">
                             <input type="hidden" name="firstName"  value="${Customer.firstName}">
@@ -176,8 +175,8 @@
                             <button type="submit" class=" btn btn-info">Search</button>
                         </form>
                     </td>
-                    
-                    <td class="col-1"> 
+
+                    <td class="col-1">
                         <form action="/IoTBay/UserManagementEditServlet" method="GET">
                             <input type="hidden" name="accountID"  value="${Customer.ID}">
                             <button type="submit" class="btn btn-info">Edit</button>
@@ -185,14 +184,14 @@
                     </td>
                 </tr>
             </c:forEach>
-                
+
         </table>
     </div>
 
     <h4 class="mb-3">Staff</h4>
     <div style="max-height: 400px" class="table-responsive overflow-auto table-striped table-light">
         <table class="table text-dark">
-            
+
                 <tr class="d-flex table-info">
                     <th class="col-1">#</th>
                     <th class="col-2">Name</th>
@@ -204,12 +203,12 @@
 
         </table>
     </div>
-            
+
     <div style="max-height: 400px" class="table-responsive overflow-auto mb-4 table-striped table-light">
-        <table class="table text-dark">           
-            
+        <table class="table text-dark">
+
             <c:forEach items="${staffList}" var="Staff" varStatus="count">
-                
+
                 <tr class="d-flex">
                     <td class="col-1">${Staff.ID}</td>
                     <td class="col-2">${Staff.firstName} ${Staff.lastName}</td>
@@ -228,11 +227,11 @@
                         <form action="/IoTBay/UserManagementEditServlet" method="GET">
                             <input type="hidden" name="accountID"  value="${Staff.ID}">
                             <button type="submit" class="btn btn-info">Edit</button>
-                        </form> 
+                        </form>
                     </td>
                 </tr>
             </c:forEach>
-                
+
         </table>
     </div>
 </div>

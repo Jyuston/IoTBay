@@ -8,7 +8,7 @@
 <%--@elvariable id="user" type="uts.isd.model.Customer"--%>
 
 <head>
-    <title>Product Details</title>
+    <title>Order History</title>
 </head>
 <jsp:include page="../templates/header.jsp"/>
 

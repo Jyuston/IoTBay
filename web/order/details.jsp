@@ -9,7 +9,7 @@
 <%--@elvariable id="user" type="uts.isd.model.Account"--%>
 
 <head>
-    <title>Product Details</title>
+    <title>Order Details</title>
 </head>
 <jsp:include page="../templates/header.jsp"/>
 

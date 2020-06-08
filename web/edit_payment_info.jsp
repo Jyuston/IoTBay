@@ -8,7 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <head>
-    <title>Payment Management</title>
+    <title>Edit Payment Info</title>
 </head>
 <jsp:include page="templates/header.jsp"/>
 
