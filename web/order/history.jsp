@@ -31,7 +31,7 @@
 </div>
 
 
-<form class="form mt-2" id="dateForm" action="FilterOrdersServlet" method="get">
+<form class="form mt-2 ${not empty param.orderID ? 'd-none' : ''}" id="dateForm" action="FilterOrdersServlet" method="get">
     <div class="row">
         <div class="col-2">Start Date</div>
         <div class="col-2 ml-3">End Date</div>
@@ -45,7 +45,7 @@
     <a href="history.jsp" class="btn btn-link text-danger btn-sm px-4 mt-3">Clear</a>
 </form>
 
-<form class="form d-none" id="idForm" action="FilterOrdersServlet" method="get">
+<form class="form ${empty param.orderID ? 'd-none' : ''}" id="idForm" action="FilterOrdersServlet" method="get">
     <label for="orderID">Order ID</label>
     <input type="number" class="form-control w-25" id="orderID" name="orderID" min="1" value="${param.orderID}"
            required>
