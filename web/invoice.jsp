@@ -41,11 +41,11 @@
                 </tr>
                 <tr>
                     <td>
-                        <input class="form-control-sm mb-2 mr-2 border border-secondary" name="startDate"
+                        <input type="date" class="form-control-sm mb-2 mr-2 border border-secondary" name="startDate"
                                placeholder="Enter Date">
                     </td>
                     <td>
-                        <input class="form-control-sm mb-2 mr-2 border border-secondary" name="endDate"
+                        <input type="date" class="form-control-sm mb-2 mr-2 border border-secondary" name="endDate"
                                placeholder="Enter Date">
                     </td>
                 </tr>
