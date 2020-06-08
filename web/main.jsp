@@ -8,40 +8,38 @@
 </head>
 <jsp:include page="templates/header.jsp"/>
 
-<div class="w mx-auto">
-    <h1 class="font-weight-bold">Profile Info</h1>
+<h1 class="font-weight-bold">Profile Info</h1>
 
-    <table class="table">
-        <thead class="thead-light">
-        <tr>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Email</th>
-            <c:if test="${user.customer}">
-                <th scope="col">Address</th>
-            </c:if>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>${user.firstName}</td>
-            <td>${user.lastName}</td>
-            <td>${user.email}</td>
-            <c:if test="${user.customer}">
-                <td>${user.address}</td>
-            </c:if>
-        </tr>
-        </tbody>
-    </table>
+<table class="table">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Email</th>
+        <c:if test="${user.customer}">
+            <th scope="col">Address</th>
+        </c:if>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>${user.firstName}</td>
+        <td>${user.lastName}</td>
+        <td>${user.email}</td>
+        <c:if test="${user.customer}">
+            <td>${user.address}</td>
+        </c:if>
+    </tr>
+    </tbody>
+</table>
 
-    <p class="text-center">
-        <a href="${pageContext.request.contextPath}/LogsServlet">View Access Logs</a>
-    </p>
+<p class="text-center">
+    <a href="${pageContext.request.contextPath}/LogsServlet">View Access Logs</a>
+</p>
 
-    <p class="text-center">
-        <a class="d-block text-center my-2" href="index.jsp">Home</a>
-    </p>
-</div>
+<p class="text-center">
+    <a class="d-block text-center my-2" href="index.jsp">Home</a>
+</p>
 
 
 <jsp:include page="templates/footer.jsp"/>
