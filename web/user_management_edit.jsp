@@ -14,7 +14,7 @@
 
 <div class="w mx-auto">
     <!--Anonymous User-->
-    <c:if test="${not empty user && user.anonymous}">
+    <c:if test="${not empty user && user.customer && user.anonymous}">
         <div class="alert alert-info alert-dismissible fade show" role="alert">
             <p class="mb-0"><strong>NOTE: </strong>Editing an anonymous account.</p>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
