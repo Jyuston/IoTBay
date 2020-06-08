@@ -19,6 +19,20 @@
     <%--Details--%>
     <h4>Details</h4>
     
+    <c:if test="${success}">
+                <div class="alert alert-success my-4" role="alert">
+                     New account created.
+                     <br>
+                     <a class="text-info" href="UserManagementServlet">Back to User Management</a>
+                </div>
+    </c:if>
+                
+    <c:if test="${not empty errorUserManagementCreate}">
+        <div class="alert alert-danger my-4" role="alert">
+            ${errorUserManagementCreate}
+        </div>
+    </c:if>
+    
     <div class="form-group">
         <div class="row">
             <div class="col">
