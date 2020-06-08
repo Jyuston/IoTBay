@@ -37,10 +37,9 @@ public class ReportingDAO {
 
     public static ArrayList<String> categories(String beginTimeStamp, String endTimeStamp) throws SQLException {
         String query = 
-            "SELECT distinct(CATEGORY) FROM PRODUCTS P, ORDERS O " + 
-            "WHERE (P.ID in (SELECT PRODUCT_ID FROM ORDER_LINE)) " + 
-            "AND (O.ORDERED_ON > ? " +
-            "AND O.ORDERED_ON < ?)";
+            "SELECT CATEGORY FROM PRODUCTS WHERE id IN (SELECT PRODUCT_ID FROM ORDER_LINE ol INNER JOIN ORDERS o ON ol.ORDER_ID = o.id " + 
+            "WHERE (o.ORDERED_ON > ? " +
+            "AND o.ORDERED_ON < ?))";
 
         PreparedStatement st = DAOUtils.prepareStatement(query, false, beginTimeStamp, endTimeStamp);
 
