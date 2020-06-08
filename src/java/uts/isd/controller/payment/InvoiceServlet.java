@@ -15,37 +15,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 public class InvoiceServlet extends HttpServlet {
 
-    /*
-    private void getOrders(HttpServletRequest request) throws SQLException{
-        List<Customer> customerList = CustomerDAO.getAll();
-        request.setAttribute("customerList", customerList);
-    }
-    */
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        //if they search get the items then update so it displays the credentials
-        //if they don't they don't search then display the credentials anyway
-        //Use the OrderDAO to get orderID# passing in the ID of the customer
-        //would use customer ID to look up any column with that ID returning the column
-        //OrderDAO.getOrders(customerID); return type List
-        //save what orderDAO returned into a variable
-        //Store the variable onto the request
-
-        String orderId = request.getParameter("orderId");
-
-
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
 
         try {
             HttpSession session = request.getSession();
+            Customer user = (Customer) session.getAttribute("user");
             //getOrders(request);
-            Order invoiceResult = OrderDAO.get(Integer.parseInt(orderId));
-            request.setAttribute("invoiceResult", invoiceResult);
+            LinkedList<Order> invoiceResults = OrderDAO.getInvoices(user, startDate, endDate);
+            request.setAttribute("invoiceResults", invoiceResults);
         }
 
         catch(SQLException err) {
