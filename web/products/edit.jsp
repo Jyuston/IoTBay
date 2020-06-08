@@ -98,7 +98,7 @@
                             </div>
                             <input type="number"
                                    class="form-control ${not empty negativePriceVErr ? 'border border-danger' : ''}"
-                                   id="price" name="price" value="${product.price}" required>
+                                   id="price" name="price" value="${product.price}" step="0.01" required>
                             <small class="invalid-feedback d-block">
                                 <c:out value="${negativePriceVErr}"/>
                             </small>

@@ -24,35 +24,25 @@
 
 <div class="d-flex mb-2">
     <form class="form-inline mb-0" method="get" action="CatalogueServlet">
-        <label class="sr-only" for="searchQuery">Search</label>
         <div class="input-group">
-            <input type="text" class="form-control" id="searchQuery" name="query" placeholder="Search..." value="${prevQuery}">
-            <%--select--%>
+            <input type="text" class="form-control" style="width: 300px;" name="query" placeholder="Search..." value="${prevQuery}">
+            <select class="form-control" name="category" style="max-width: 150px;">
+                <option ${productList[0].category == "Actuators" ? "selected" : ""}>Actuators</option>
+                <option ${productList[0].category == "Capacitors" ? "selected" : ""}>Capacitors</option>
+                <option ${productList[0].category == "Sensors" ? "selected" : ""}>Sensors</option>
+                <option ${productList[0].category == "Resistors" ? "selected" : ""}>Resistors</option>
+            </select>
             <div class="input-group-append">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary px-3">Submit</button>
             </div>
         </div>
-        <a href="CatalogueServlet" class="text-danger ml-2">Clear</a>
+        <a href="CatalogueServlet" class="text-danger ml-2 btn btn-link">Clear</a>
     </form>
 
     <c:if test="${not empty user && user.staff}">
         <a href="add.jsp" class="btn btn-success ml-auto mr-3">Add Product +</a>
     </c:if>
-        
 </div>
-
-<form class="form-inline mb-0" method="get" action="CatalogueServlet">
-    
-    <select class="form-control" name="category" value="${product.category}">
-        <option ${product.category == "Actuators" ? "selected" : ""}>Actuators</option>
-        <option ${product.category == "Capacitors" ? "selected" : ""}>Capacitors</option>
-        <option ${product.category == "Sensors" ? "selected" : ""}>Sensors</option>
-        <option ${product.category == "Resistors" ? "selected" : ""}>Resistors</option>
-    </select>
-
-    <button type="submit" class="btn btn-primary my-2 mx-3">Sort</button>
-    
-</form>
 
 <h1>Products</h1>
 
