@@ -13,6 +13,7 @@ public class Order implements Serializable {
     private String trackingID;
     private String status;
     private String shippingAddress;
+    private String cardUsed;
 
     public Order() { }
 
@@ -39,4 +40,7 @@ public class Order implements Serializable {
 
     public String getShippingAddress() { return shippingAddress; }
     public void setShippingAddress(String shippingAddress) { this.shippingAddress = shippingAddress; }
+
+    public String getCardUsed() { return cardUsed; }
+    public void setCardUsed(String cardUsed) { this.cardUsed = cardUsed; }
 }

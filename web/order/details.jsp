@@ -89,7 +89,7 @@
             </p>
             <p class="mb-0">
                 <strong>Payment Card Used:</strong>
-                <span class="float-right">${order.customer.paymentInfo.cardNumber}</span>
+                <span class="float-right">${order.cardUsed}</span>
             </p>
         </div>
 

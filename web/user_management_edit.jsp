@@ -80,7 +80,7 @@
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="text" class="form-control ${not empty passVErr ? 'border border-danger' : ''}"
+            <input type="password" class="form-control ${not empty passVErr ? 'border border-danger' : ''}"
                    name="password" value="${account.password}">
             <small class="form-text text-danger">
                 <c:out value="${passVErr}"/>
@@ -181,7 +181,7 @@
                     </div>
                     <div class="col">
                         <label for="cvvNumber">CVV</label>
-                        <input type="text" class="form-control ${not empty cvvVErr ? 'border border-danger' : ''}"
+                        <input type="password" class="form-control ${not empty cvvVErr ? 'border border-danger' : ''}"
                                name="cvvNumber" id="cvvNumber"
                                value="${account.paymentInfo.cvvNumber}">
                         <small class="form-text text-danger mb-5">

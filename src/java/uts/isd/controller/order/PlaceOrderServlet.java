@@ -26,6 +26,7 @@ public class PlaceOrderServlet extends HttpServlet {
         order.setOrderedProducts(cart);
         order.setTrackingID("TRACK_ORD_" + ThreadLocalRandom.current().nextInt(0, 1000));
         order.setShippingAddress(user.getAddress().dbStringFormat());
+        order.setCardUsed(user.getPaymentInfo().getCardNumber());
 
         try {
             int newOrderID = OrderDAO.save(order);

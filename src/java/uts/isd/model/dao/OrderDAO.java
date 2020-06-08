@@ -101,8 +101,8 @@ public class OrderDAO {
         order.setOrderedOn(new Timestamp(System.currentTimeMillis()));
 
         String orderInsertQuery =
-                "INSERT INTO ORDERS (CUSTOMER_ID, ORDERED_ON, SHIPPING_ADDRESS, TOTAL, STATUS, TRACKING_ID) " +
-                "VALUES (?, ?, ?, ?, ?, ?) ";
+                "INSERT INTO ORDERS (CUSTOMER_ID, ORDERED_ON, SHIPPING_ADDRESS, TOTAL, STATUS, TRACKING_ID, CARD_USED) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement orderInsertSt = DAOUtils.prepareStatement(orderInsertQuery, true,
                 order.getCustomer().getID(),
@@ -110,7 +110,8 @@ public class OrderDAO {
                 order.getShippingAddress(),
                 order.getTotal(),
                 order.getStatus(),
-                order.getTrackingID()
+                order.getTrackingID(),
+                order.getCardUsed()
         );
 
         int rowsChanged = orderInsertSt.executeUpdate();
@@ -185,6 +186,7 @@ public class OrderDAO {
         order.setTrackingID(orderRs.getString("TRACKING_ID"));
         order.setStatus(orderRs.getString("STATUS"));
         order.setShippingAddress(orderRs.getString("SHIPPING_ADDRESS"));
+        order.setCardUsed(orderRs.getString("CARD_USED"));
 
         LinkedList<OrderLineItem> orderedProducts = new LinkedList<>();
 

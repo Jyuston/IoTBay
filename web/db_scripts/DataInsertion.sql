@@ -122,27 +122,27 @@ VALUES ('0.5 Ohm Resistor', 10, 0.20, 'Resistors', 'This is a 0.5 ohn resistor',
        ('12V 100mm Linear Actuator', 3, 24.99, 'Actuators', '12V 50-100mm Linear Actuator', false)
 ;
 
-INSERT INTO ORDERS (ORDERED_ON, SHIPPING_ADDRESS, STATUS, TOTAL, CUSTOMER_ID, TRACKING_ID)
-VALUES ('2020-01-01 00:00:05', '21 Shipping Ave--Waterloo-2017-NSW', 'approved', 23.99, 2, '0'),
-       ('2020-03-04 00:01:05', '30 Shipping Ave--Waterloo-3105-QLD', 'approved', 28.00, 2, '1'),
-       ('2020-06-05 00:04:05', '21 Madison Ave--Wetherill-2164-NSW', 'approved', 24.00, 3, '2'),
-       ('2020-09-10 00:06:05', '54 Lexington St--Gregory-2570-NSW', 'approved', 23.99, 5, '3'),
-       ('2020-01-12 00:03:05', '66 Dakota Ave--Emerald-2174-NSW', 'approved', 29.00, 6, '4'),
-       ('2020-02-01 00:06:05', '78 Renwick St--Gledswood-2570-NSW', 'approved', 30.00, 9, '5'),
-       ('2020-06-01 00:07:05', '29 Belmont Ave--Edmondson-2174-NSW', 'approved', 25.99, 8, '6'),
-       ('2020-08-01 00:04:05', '28 Lincoln Ave--Willowdale-2174-NSW', 'approved', 29.99, 7, '8'),
-       ('2020-08-01 00:04:05', '23 Columbus St--Oran-2570-NSW', 'approved', 12.00, 8, '11'),
-       ('2020-09-01 00:04:05', '30 Charlton St--Harrington-2570-NSW', 'approved', 14.99, 8, '12'),
-       ('2020-10-01 00:04:05', '27 Franklin St--Catherine-2570-NSW', 'approved', 42.99, 6, '13'),
-       ('2020-12-01 00:04:05', '22 Emerson St--Ponds-2164-NSW', 'approved', 32.99, 7, '14'),
-       ('2020-04-01 00:04:05', '30 Maddox St--Field-2570-NSW', 'approved', 33.99, 7, '15'),
-       ('2020-05-01 00:04:05', '21 Renwick St--Ed-2570-NSW', 'approved', 66.99, 2, '16'),
-       ('2020-06-01 00:04:05', '33 Easton St--Gregory-2570-NSW', 'approved', 88.99, 5, '17'),
-       ('2020-07-01 00:04:05', '29 Easton St--Catherine-2570-NSW', 'approved', 77.99, 3, '18'),
-       ('2020-03-01 00:04:05', '88 Brookfield St--Willowdale-2570-NSW', 'approved', 25.99, 4, '19'),
-       ('2020-07-01 00:04:05', '55 Fairwater St--Hermitage-2570-NSW', 'approved', 35.99, 7, '20'),
-       ('2020-07-01 00:04:05', '36 Mike St--Gledswood-2570-NSW', 'approved', 67.99, 4, '21'),
-       ('2020-08-01 00:04:05', '69 Easton St--Cacl-2570-NSW', 'approved', 68.99, 3, '22')
+INSERT INTO ORDERS (ORDERED_ON, SHIPPING_ADDRESS, STATUS, TOTAL, CUSTOMER_ID, TRACKING_ID, CARD_USED)
+VALUES ('2020-01-01 00:00:05', '21 Shipping Ave--Waterloo-2017-NSW', 'approved', 23.99, 2, '0', '5244 8746 5799 2270'),
+       ('2020-03-04 00:01:05', '30 Shipping Ave--Waterloo-3105-QLD', 'approved', 28.00, 2, '1', '5244 8746 5799 2270'),
+       ('2020-06-05 00:04:05', '21 Madison Ave--Wetherill-2164-NSW', 'approved', 24.00, 3, '2', '5244 8746 5799 2272'),
+       ('2020-09-10 00:06:05', '54 Lexington St--Gregory-2570-NSW', 'approved', 23.99, 5, '3', '5244 8746 5799 2272'),
+       ('2020-01-12 00:03:05', '66 Dakota Ave--Emerald-2174-NSW', 'approved', 29.00, 6, '4', '5244 8746 5799 2272'),
+       ('2020-02-01 00:06:05', '78 Renwick St--Gledswood-2570-NSW', 'approved', 30.00, 9, '5', '5244 8746 5799 2273'),
+       ('2020-06-01 00:07:05', '29 Belmont Ave--Edmondson-2174-NSW', 'approved', 25.99, 8, '6', '5244 8746 5799 2273'),
+       ('2020-08-01 00:04:05', '28 Lincoln Ave--Willowdale-2174-NSW', 'approved', 29.99, 7, '8', '5244 8746 5799 2273'),
+       ('2020-08-01 00:04:05', '23 Columbus St--Oran-2570-NSW', 'approved', 12.00, 8, '11', '5244 8746 5799 2275'),
+       ('2020-09-01 00:04:05', '30 Charlton St--Harrington-2570-NSW', 'approved', 14.99, 8, '12', '5244 8746 5799 2275'),
+       ('2020-10-01 00:04:05', '27 Franklin St--Catherine-2570-NSW', 'approved', 42.99, 6, '13', '5244 8746 5799 2275'),
+       ('2020-12-01 00:04:05', '22 Emerson St--Ponds-2164-NSW', 'approved', 32.99, 7, '14', '5244 8746 5799 2275'),
+       ('2020-04-01 00:04:05', '30 Maddox St--Field-2570-NSW', 'approved', 33.99, 7, '15', '5244 8746 5799 2275'),
+       ('2020-05-01 00:04:05', '21 Renwick St--Ed-2570-NSW', 'approved', 66.99, 2, '16', '5244 8746 5799 2277'),
+       ('2020-06-01 00:04:05', '33 Easton St--Gregory-2570-NSW', 'approved', 88.99, 5, '17', '5244 8746 5799 2277'),
+       ('2020-07-01 00:04:05', '29 Easton St--Catherine-2570-NSW', 'approved', 77.99, 3, '18', '5244 8746 5799 2277'),
+       ('2020-03-01 00:04:05', '88 Brookfield St--Willowdale-2570-NSW', 'approved', 25.99, 4, '19', '5244 8746 5799 2277'),
+       ('2020-07-01 00:04:05', '55 Fairwater St--Hermitage-2570-NSW', 'approved', 35.99, 7, '20', '5244 8746 5799 2278'),
+       ('2020-07-01 00:04:05', '36 Mike St--Gledswood-2570-NSW', 'approved', 67.99, 4, '21', '5244 8746 5799 2278'),
+       ('2020-08-01 00:04:05', '69 Easton St--Cacl-2570-NSW', 'approved', 68.99, 3, '22', '5244 8746 5799 2278')
 ;
 
 INSERT INTO ORDER_LINE (ORDER_ID, PRODUCT_ID, QUANTITY_ORDERED, PRICE)
