@@ -2,10 +2,8 @@ package uts.isd.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
-import uts.isd.model.Account;
-import uts.isd.model.dao.StaffDAO;
+import uts.isd.model.*;
 import uts.isd.model.dao.AccountDAO;
 import uts.isd.model.dao.CustomerDAO;
 import uts.isd.model.dao.DAOException;
@@ -15,29 +13,31 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import uts.isd.model.Customer;
+
 import uts.isd.model.dao.UserAccessDAO;
 
 public class EditProfileServlet extends HttpServlet {
-    @Override 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    try {
-        HttpSession session = request.getSession();
-        Account account = (Account) session.getAttribute("user");
-        request.setAttribute("account", account);
-    }
-    catch (DAOException err) {
-        request.setAttribute("loginErr", err.getMessage());
-    }
-    finally {
-        request.getRequestDispatcher("/user_management_edit.jsp").include(request, response);
-    }
-    }
-    
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-       
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            HttpSession session = request.getSession();
+            Account account = (Account) session.getAttribute("user");
+            request.setAttribute("account", account);
+        } catch (DAOException err) {
+            request.setAttribute("loginErr", err.getMessage());
+        } finally {
+            request.getRequestDispatcher("/user_management_edit.jsp").include(request, response);
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+
         Validator validator = new Validator(request);
+
+        Account user = (Account) session.getAttribute("user");
+        request.setAttribute("account", user);
 
         //Form Details
         String firstName = request.getParameter("firstName");
@@ -45,97 +45,84 @@ public class EditProfileServlet extends HttpServlet {
         String email = request.getParameter("email");
         String contactNumber = request.getParameter("contactNumber");
         String password = request.getParameter("password");
-        String ID = request.getParameter("ID");
-        
+
+        String addressLine1 = request.getParameter("addressLine1");
+        String addressLine2 = request.getParameter("addressLine2");
+        String suburb = request.getParameter("suburb");
+        String postcode = request.getParameter("postcode");
+        String state = request.getParameter("state");
+
+        String cardNumber = request.getParameter("cardNumber");
+        String expiryMonth = request.getParameter("expiryMonth");
+        String expiryYear = request.getParameter("expiryYear");
+        String cvvNumber = request.getParameter("cvvNumber");
+
+        // Validate account info
         validator.checkEmpty(email, password)
                 .validateEmail(email)
                 .validatePassword(password)
                 .validateName(firstName + " " + lastName)
                 .validateContactNumber(contactNumber);
 
-        
+        if (validator.failed())
+            return;
+
         try {
-            HttpSession session = request.getSession();
-            Account account = AccountDAO.getAccount(Integer.parseInt(ID));
-            request.setAttribute("account", account);
-            
-            if (validator.failed()) {
-                return;
-            }
-            
-            account.setFirstName(firstName);
-            account.setLastName(lastName);
-            account.setEmail(email);
-            account.setContactNumber(contactNumber);
-            account.setPassword(password);
-            
-            if (account.isCustomer()){
-                
-               Customer accountC = (Customer) account;
-                
-               String addressLine1 = request.getParameter("addressLine1");
-               String addressLine2 = request.getParameter("addressLine2");
-               String suburb = request.getParameter("suburb");
-               String postcode = request.getParameter("postcode");
-               String state = request.getParameter("state");
-               
-               String cardNumber = request.getParameter("cardNumber");
-               String expiryMonth = request.getParameter("expiryMonth");
-               String expiryYear = request.getParameter("expiryYear");
-               String cvvNumber = request.getParameter("cvvNumber");
-               
-               validator.validateAddress(addressLine1)
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setEmail(email);
+            user.setContactNumber(contactNumber);
+            user.setPassword(password);
+
+            if (user.isCustomer()) {
+                Customer userC = (Customer) user;
+
+                // Validate address
+                validator.validateAddress(addressLine1)
                         .validateAddress2(addressLine2)
                         .validateSuburb(suburb)
-                        .validatePostcode(postcode)
-                        .validateCardNumber(cardNumber)
+                        .validatePostcode(postcode);
+
+                // Validate payment info
+                validator.validateCardNumber(cardNumber)
                         .validateCvv(cvvNumber)
                         .validateExpiryMonth(expiryMonth)
                         .validateExpiryYear(expiryYear);
 
-               if (validator.failed()) {
-                  return;
-               }               
-               
-               accountC.getAddress().setAddressLine1(addressLine1);
-               accountC.getAddress().setAddressLine2(addressLine2);
-               accountC.getAddress().setSuburb(suburb);
-               accountC.getAddress().setPostcode(postcode);
-               accountC.getAddress().setState(state);
-               
-               accountC.getPaymentInfo().setCardNumber(cardNumber);
-               accountC.getPaymentInfo().setCvvNumber(cvvNumber);
-               accountC.getPaymentInfo().setExpiryMonth(expiryMonth);
-               accountC.getPaymentInfo().setExpiryYear(expiryYear);
-               
-               try{
-                    CustomerDAO.update(accountC);
-                    UserAccessDAO.save(accountC.getID(),"edit");
-                    session.setAttribute("user", accountC);
-               } catch(DAOException err){
-                    request.setAttribute("errorUserManagement", err.getMessage());
-                    err.printStackTrace();
-               } catch(SQLException err) {
-                   request.setAttribute("errorUserManagement", "Error accessing database.");
-               }
-               
+                if (validator.failed())
+                    return;
+
+                Address address = userC.getAddress();
+
+                address.setAddressLine1(addressLine1);
+                address.setAddressLine2(addressLine2);
+                address.setSuburb(suburb);
+                address.setPostcode(postcode);
+                address.setState(state);
+
+                PaymentInformation paymentInfo = userC.getPaymentInfo();
+
+                paymentInfo.setCardNumber(cardNumber);
+                paymentInfo.setCvvNumber(cvvNumber);
+                paymentInfo.setExpiryMonth(expiryMonth);
+                paymentInfo.setExpiryYear(expiryYear);
+
+                CustomerDAO.update(userC);
+                UserAccessDAO.save(userC.getID(), "edit");
+            } else {
+                // When staff, just update account details
+                AccountDAO.update(user);
             }
-            
-            AccountDAO.update(account);
+
+            session.setAttribute("user", user);
+            request.setAttribute("account", user);
             request.setAttribute("successEdit", true);
-            request.setAttribute("account", account);
-            if (account.isStaff()){
-            session.setAttribute("user", account);
-            }
-        }
-        catch (DAOException err) {
+        } catch (DAOException err) {
             request.setAttribute("errorUserManagement", err.getMessage());
-            err.printStackTrace();           
-        }
-        catch (SQLException err) { 
+            err.printStackTrace();
+        } catch (SQLException err) {
             request.setAttribute("errorUserManagement", err.getMessage());
-            }
-        finally {
+        } finally {
             request.getRequestDispatcher("/user_management_edit.jsp").include(request, response);
         }
     }
