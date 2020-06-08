@@ -97,7 +97,7 @@
             <br>
                 <%-- If the page is being used to edit the report, the option to delete the report is presented. --%>
                 <c:if test="${editReport eq 'true'}">
-                    <form method="post" action="/IoTBay/ReportFormServlet">
+                    <form method="post" action="/IoTBay/ReportFormServlet" onsubmit="return confirm('Are you sure you want to delete this report?');">
                         <input class="form-control" type="hidden" name="deleteReport" value="yes">
                         <input type="submit" class="btn btn-danger" value="Delete Report">
                     </form>
