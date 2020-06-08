@@ -26,6 +26,8 @@ public class Validator {
     private final String cvvPattern = "[0-9]{3}";
     private final String expiryMonthPattern = "[0-9]{2}";
     private final String expiryYearPattern = "[0-9]{4}";
+
+    private final String idPattern = "[0-9]+";
     
     private final HttpServletRequest request;
     private boolean failed = false;
@@ -237,6 +239,16 @@ public class Validator {
 
         return this;
     }
+
+    public Validator validateID(String id) {
+        if (!validate(idPattern, id)){
+            request.setAttribute("kevinVErr", "Invalid ID");
+            failed = true;
+        }
+
+        return this;
+    }
+
 
     // Helpers
 

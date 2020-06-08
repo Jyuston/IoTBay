@@ -1,5 +1,6 @@
 package uts.isd.controller.payment;
 
+import uts.isd.controller.Validator;
 import uts.isd.model.Customer;
 import uts.isd.model.Order;
 import uts.isd.model.dao.DAOException;
@@ -27,6 +28,35 @@ public class InvoiceServlet extends HttpServlet {
 
             LinkedList<Order> invoiceResults = OrderDAO.getAllByCustomer(user.getID(), startDate, endDate);
             request.setAttribute("invoiceResults", invoiceResults);
+            request.setAttribute("filtered", true);
+        }
+
+        catch(SQLException err) {
+            request.setAttribute("errorUserManagement", "Error accessing database.");
+        }
+
+        catch (DAOException err) {
+            request.setAttribute("editErr", err.getMessage());
+        }
+
+        finally {
+            request.getRequestDispatcher("/invoice.jsp").include(request, response);
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String orderID = request.getParameter("orderId");
+
+        Validator kevinId = new Validator(request);
+        try {
+            HttpSession session = request.getSession();
+            kevinId.validateID(orderID);
+            if(kevinId.failed()){
+                return;
+            }
+            Order invoiceResult = OrderDAO.get(Integer.parseInt(orderID));
+            request.setAttribute("invoiceResult", invoiceResult);
         }
 
         catch(SQLException err) {

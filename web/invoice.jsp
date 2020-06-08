@@ -28,64 +28,73 @@
 <div class="container-fluid">
     <div class="row">
         <div class="form-group"></div>
-        <form action="/IoTBay/InvoiceServlet" method="GET">
-            <table>
+        <table>
+            <form action="InvoiceServlet" method="POST">
                 <tr>
-                    <!--Wrap this inside a form tag going into Leon's servlet -->
-                    <form action="IotBay/OrderDetailsServlet">
-                        <td>
-                            <input class="form-control-sm mb-2 mr-2 border border-secondary" name="orderId"
-                                   placeholder="Order Id">
-                        </td>
-                    </form>
+                    <td>
+                        <input class="form-control-sm mb-2 mr-2 border border-secondary ${not empty kevinVErr ? 'border border-danger' : ''}" name="orderId"
+                               placeholder="Order Id">
+                        <small class="form-text text-danger mb-1">
+                            <c:out value="${kevinVErr}"/>
+                        </small>
+                    </td>
                 </tr>
                 <tr>
                     <td>
-                        <input type="date" class="form-control-sm mb-2 mr-2 border border-secondary" name="startDate"
-                               placeholder="Enter Date">
+                        <button type="submit" class="btn btn-info btn-sm my-2">Search by ID</button>
+                    </td>
+                </tr>
+            </form>
+            <form action="/IoTBay/InvoiceServlet" method="GET">
+                <tr>
+                    <td>
+                        <input type="date" class="form-control-sm mb-2 mr-2 border border-secondary"
+                               name="startDate"
+                               placeholder="Enter Date" required>
                     </td>
                     <td>
                         <input type="date" class="form-control-sm mb-2 mr-2 border border-secondary" name="endDate"
-                               placeholder="Enter Date">
+                               placeholder="Enter Date" required>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <button type="submit" class="btn btn-info btn-sm my-2">Search</button>
+                        <button type="submit" class="btn btn-info btn-sm my-2">Search by Date</button>
                     </td>
                 </tr>
-            </table>
-        </form>
+            </form>
+        </table>
 
 
-        <%--        <c:if test="${not empty invoiceResult}">--%>
-        <%--            <div class="col-md-auto mx-auto pb-4 rounded text-light">--%>
+        <c:if test="${not empty invoiceResult}">
+            <div class="col-md-auto mx-auto pb-4 rounded text-light">
 
-        <%--                <table class="my-auto">--%>
-        <%--                    <tr colspan="3" class="py-1">--%>
-        <%--                        <th><h4>${user.firstName} ${user.lastName}</h4></th>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td colspan="3" class="py-1">#${invoiceResult.ID}</td>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td colspan="3" class="py-1">Date: <fmt:formatDate value="${invoiceResult.orderedOn}" pattern="MM/dd/yyyy ' at ' HH:mm a"/></td>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td colspan="3" class="py-1">Email: ${user.email}</td>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td colspan="3" class="py-1">Contact Number: ${user.contactNumber}</td>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td colspan="3" class="py-1">Address: ${user.address.addressLine1}</td>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td colspan="3" class="py-1">Payment Info: ${user.paymentInfo.cardNumber}</td>--%>
-        <%--                    </tr>--%>
-        <%--                </table>--%>
-        <%--            </div>--%>
-        <%--        </c:if>--%>
+                <table class="my-auto">
+                    <tr colspan="3" class="py-1">
+                        <th><h4>${user.firstName} ${user.lastName}</h4></th>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="py-1">#${invoiceResult.ID}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="py-1">Date: <fmt:formatDate value="${invoiceResult.orderedOn}"
+                                                                           pattern="MM/dd/yyyy ' at ' HH:mm a"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="py-1">Email: ${user.email}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="py-1">Contact Number: ${user.contactNumber}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="py-1">Address: ${user.address.addressLine1}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="py-1">Payment Info: ${user.paymentInfo.cardNumber}</td>
+                    </tr>
+                </table>
+            </div>
+        </c:if>
 
     </div>
 </div>
