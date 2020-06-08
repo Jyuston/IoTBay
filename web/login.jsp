@@ -12,14 +12,12 @@
 </head>
 <jsp:include page="templates/header.jsp"/>
 
-<div class="row">
-    <div class="col"></div>
-    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+<div class="w mx-auto">
         <c:choose>
             <c:when test="${not empty user}">
-                <div class="alert alert-success" role="alert">
-                    <h4 class="alert-heading">Login Successful!</h4>
-                    <a class="btn btn-primary btn-lg btn-block" href="main.jsp">Enter Site</a>
+                <div class="alert alert-success py-3" role="alert">
+                    <h5 class="alert-heading font-weight-bold text-center mb-3">Login Successful!</h5>
+                    <a class="btn btn-outline-success btn-block" href="main.jsp">Enter Site</a>
                 </div>
             </c:when>
 
@@ -70,8 +68,6 @@
                 </form>
             </c:otherwise>
         </c:choose>
-    </div>
-    <div class="col"></div>
 </div>
 
 <jsp:include page="templates/footer.jsp"/>

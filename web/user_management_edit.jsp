@@ -202,15 +202,9 @@
                 </div>
             </c:if>
 
-            <c:if test="${user.customer}">
-                <a href="/IoTBay/main.jsp" class=" mt-5 text-danger">Cancel</a>
-            </c:if>
 
-            <c:if test="${user.staff}">
-                <a href="/IoTBay/UserManagementServlet" class=" mt-5 text-danger">Cancel</a>
-            </c:if>
-
-            <button type="submit" class="btn btn-success float-right">Save Changes</button>
+            <a href="${user.staff ? 'UserManagementServlet' : 'main.jsp'}" class="text-danger btn btn-link float-right">Cancel</a>
+            <button type="submit" class="btn btn-success">Save Changes</button>
 
         </form>
 </div>
