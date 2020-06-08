@@ -96,6 +96,7 @@
                     <tr><td colspan="3" class="py-1">Active: ${resultAccount.active}</td></tr>
 
                     <tr>
+                        <c:if test="${resultAccount.ID != user.ID}">
                         <c:choose>
                             <c:when test="${resultAccount.active}">
                                 <form action="/IoTBay/UserManagementActiveServlet" method="POST">
@@ -113,16 +114,19 @@
                                 </form>
                             </c:when>
                         </c:choose>
+                        </c:if>
 
                     <form action="/IoTBay/UserManagementEditServlet" method="GET">
                         <td><button class="btn btn-info btn-sm my-2 mr-2">Edit</button></td>
                         <input type="hidden" name="accountID"  value="${resultAccount.ID}">   
                     </form>
-
+                    
+                    <c:if test="${resultAccount.ID != user.ID}">
                     <form action="/IoTBay/UserManagementDeleteServlet" method="POST">
                         <td><button class="btn btn-danger btn-sm my-2 float-right" onclick="return confirm('Are you sure you want to delete this Account?')">Delete</button></td>
                         <input type="hidden" name="accountID"  value="${resultAccount.ID}">
-                    </form>   
+                    </form>
+                    </c:if>
                     </tr>
 
                 </table>
