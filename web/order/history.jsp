@@ -12,28 +12,50 @@
 </head>
 <jsp:include page="../templates/header.jsp"/>
 
-<c:if test="${param.successAdd}">
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <p class="mb-0"><strong>Yipee! </strong>Added to cart!</p>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+<c:set var="orders" value="${user.orders}"/>
+<c:if test="${not empty filtered}">
+    <c:set var="orders" value="${filteredOrders}"/>
 </c:if>
 
-<c:if test="${param.failAdd}">
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <p class="mb-0"><strong>Can't add to cart! </strong>We don't have enough left!</p>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+<h1 class="mb-3">Order History</h1>
+
+<div class="dropdown">
+    <button class="btn btn-outline-dark btn-sm px-4 mb-3 dropdown-toggle" type="button" id="dropdownMenuButton"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Filter By
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" onclick="swapFilter('date')" href="#">Date Range</a>
+        <a class="dropdown-item" onclick="swapFilter('id')" href="#">Order ID</a>
     </div>
-</c:if>
+</div>
 
-<h1 class="mb-4">Order History</h1>
 
+<form class="form mt-2" id="dateForm" action="FilterOrdersServlet" method="get">
+    <div class="row">
+        <div class="col-2">Start Date</div>
+        <div class="col-2 ml-3">End Date</div>
+    </div>
+    <div class="row">
+        <input class="form-control col-2 mx-3" type="date" name="startDate" value="${param.startDate}" required>
+        <input class="form-control col-2" type="date" name="endDate" value="${param.endDate}" required>
+    </div>
+
+    <button type="submit" class="btn btn-outline-primary btn-sm px-4 mt-3">Search</button>
+    <a href="history.jsp" class="btn btn-link text-danger btn-sm px-4 mt-3">Clear</a>
+</form>
+
+<form class="form d-none" id="idForm" action="FilterOrdersServlet" method="get">
+    <label for="orderID">Order ID</label>
+    <input type="number" class="form-control w-25" id="orderID" name="orderID" min="1" value="${param.orderID}"
+           required>
+
+    <button type="submit" class="btn btn-outline-primary btn-sm px-4 mt-3">Search</button>
+    <a href="history.jsp" class="btn btn-link text-danger btn-sm px-4 mt-3">Clear</a>
+</form>
+
+<h2>Purchases</h2>
 <div class="fix-table">
-
     <table class="table table-striped history-table">
         <thead class="table-info">
         <tr>
@@ -46,7 +68,7 @@
         </thead>
 
         <tbody>
-        <c:forEach items="${user.orders}" var="order" varStatus="count">
+        <c:forEach items="${orders}" var="order" varStatus="count">
             <c:choose>
                 <c:when test="${order.status == 'pending'}"><c:set var="statusColour" value="info"/></c:when>
                 <c:when test="${order.status == 'cancelled'}"><c:set var="statusColour" value="danger"/></c:when>
@@ -57,7 +79,8 @@
                 <th scope="row">#${order.ID}</th>
                 <td><fmt:formatDate value="${order.orderedOn}" pattern="dd/MM/yyyy ' at ' HH:mm a"/></td>
                 <td class="text-${statusColour}">${order.status}</td>
-                <td class="font-weight-bold">$<fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${order.total}"/></td>
+                <td class="font-weight-bold">$<fmt:formatNumber type="number" maxFractionDigits="2"
+                                                                minFractionDigits="2" value="${order.total}"/></td>
                 <td><a href="OrderDetailsServlet?ID=${order.ID}">View</a></td>
             </tr>
         </c:forEach>
@@ -95,5 +118,18 @@
         table-layout: fixed;
     }
 </style>
+
+<script>
+    // Purely Aesthetic for swapping out forms
+    function swapFilter(type) {
+        if (type == "date") {
+            document.querySelector("#idForm").classList.add("d-none");
+            document.querySelector("#dateForm").classList.remove("d-none");
+        } else {
+            document.querySelector("#idForm").classList.remove("d-none");
+            document.querySelector("#dateForm").classList.add("d-none");
+        }
+    }
+</script>
 
 <jsp:include page="../templates/footer.jsp"/>

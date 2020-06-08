@@ -65,7 +65,7 @@ public class OrderDAO {
     public static LinkedList<Order> getAllByCustomer(int customerID, String startDate, String endDate) throws SQLException{
         LinkedList<Order> invoices = new LinkedList<>();
 
-        Timestamp firstDate = Timestamp.valueOf(startDate+ " 00:00:00");
+        Timestamp firstDate = Timestamp.valueOf(startDate + " 00:00:00");
         Timestamp secondDate = Timestamp.valueOf(endDate + " 23:59:59");
 
         String getOrdersQuery =
