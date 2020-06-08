@@ -70,12 +70,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="category">Category</label>
-                    <input type="text" class="form-control ${not empty emptyCategoryVErr ? 'border border-danger' : ''}"
-                           id="category" name="category" value="${product.category}">
-                    <small class="invalid-feedback d-block">
-                        <c:out value="${emptyCategoryVErr}"/>
-                    </small>
+                    <label for="category">Category</label>                   
+                    <select class="form-control"
+                            name="category" value="${product.category}">
+                            <option ${product.category == "Actuators" ? "selected" : ""}>Actuators</option>
+                            <option ${product.category == "Capacitors" ? "selected" : ""}>Capacitors</option>
+                            <option ${product.category == "Sensors" ? "selected" : ""}>Sensors</option>
+                            <option ${product.category == "Resistors" ? "selected" : ""}>Resistors</option>
+                    </select> 
                 </div>
 
                 <div class="form-group">
