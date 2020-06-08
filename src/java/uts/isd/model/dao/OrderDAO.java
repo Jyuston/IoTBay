@@ -70,15 +70,20 @@ public class OrderDAO {
             total += lineItem.getSumPrice();
         }
 
+        order.setTotal(total);
+        order.setStatus("pending");
+        order.setOrderedOn(new Timestamp(System.currentTimeMillis()));
+
         String orderInsertQuery =
                 "INSERT INTO ORDERS (CUSTOMER_ID, ORDERED_ON, SHIPPING_ADDRESS, TOTAL, STATUS, TRACKING_ID) " +
-                "VALUES (?, CURRENT_TIMESTAMP, ?, ?, ?, ?) ";
+                "VALUES (?, ?, ?, ?, ?, ?) ";
 
         PreparedStatement orderInsertSt = DAOUtils.prepareStatement(orderInsertQuery, true,
                 order.getCustomer().getID(),
+                order.getOrderedOn(),
                 order.getShippingAddress(),
-                total,
-                "pending",
+                order.getTotal(),
+                order.getStatus(),
                 order.getTrackingID()
         );
 
