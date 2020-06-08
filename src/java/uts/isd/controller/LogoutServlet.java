@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import uts.isd.model.Account;
+import uts.isd.model.Customer;
 import uts.isd.model.dao.UserAccessDAO;
 import uts.isd.model.dao.DAOException;
 
@@ -16,24 +17,27 @@ import javax.servlet.http.HttpSession;
 public class LogoutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        
-        // Log user out
         try {
             HttpSession session = request.getSession();
-            Account account = (Account) session.getAttribute("user");
-                UserAccessDAO.save(account.getID(),"logout");
+            Account user = (Account) session.getAttribute("user");
+            UserAccessDAO.save(user.getID(), "logout");
+
+            if (user.isCustomer()) {
+                Customer userC = (Customer) user;
+
+                if (userC.isAnonymous()) {
+                    response.sendRedirect("logout.jsp?warnAnonymous=true");
+                    return;
+                }
+            }
+
+            response.sendRedirect("logout.jsp");
         }
-        
-        catch (DAOException err) {
-            request.setAttribute("loginErr", err.getMessage());
-        }
-        
-        catch (SQLException err) {
-            request.setAttribute("logoutErr", "Error accessing database.");
+        catch (SQLException | DAOException err) {
+            request.setAttribute("logoutErr", err.getMessage());
             err.printStackTrace();
-        }
-        finally {
-            request.getRequestDispatcher("/logout.jsp").include(request, response);
+
+            request.getRequestDispatcher("logout.jsp").include(request, response);
         }
     }
 }
