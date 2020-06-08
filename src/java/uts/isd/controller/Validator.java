@@ -24,7 +24,7 @@ public class Validator {
     
     private final String cardNumberPattern = "[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}";
     private final String cvvPattern = "[0-9]{3}";
-    private final String expiryMonthPattern = "[0-9]{2}";
+    private final String expiryMonthPattern = "[0-9][0-2]|0[0-9]";
     private final String expiryYearPattern = "[0-9]{4}";
 
     private final String idPattern = "[0-9]+";
