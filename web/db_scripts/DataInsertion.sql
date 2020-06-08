@@ -17,7 +17,7 @@ VALUES ('john.smith@gmail.com', 'John', 'Smith', '0438 278 971', 'C', 'password1
        ('davisesS@iotbay.com', 'Steven', 'Davies', '0404 285 921', 'S', 'testpass1', true),
        ('tomphsonA@iotbay.com', 'Andrew', 'Tomphson', '0404 221 664', 'S', 'testpass1', true),
        ('nicholsonK@iotbay.com', 'Kirby', 'Nicholson', '0404 285 927', 'S', 'testpass1', true),
-       ('johnk@gmail.com', 'John', 'Kranski', '0438 213 552', 'C', 'password123', true),
+       ('johnk@gmail.com', 'John', 'Krasinki', '0438 213 552', 'C', 'password123', true),
        ('mike.scott@yahoo.com', 'Michael', 'Scott', '0438 213 111', 'C', 'password123', true)
 ;
 
