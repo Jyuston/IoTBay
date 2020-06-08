@@ -10,6 +10,21 @@
 <div class="max-w-md">
     <h1 class="font-weight-bold">User Actions</h1>
     <h5>Actions for user # <c:out value="${userLogs[0].ID}"/></h5>
+                <form action="/IoTBay/LogsServlet" method="POST">
+                <table>
+                    <tr>
+                        <td><input class="form-control-sm mb-2 mr-2 border border-secondary ${not empty logVErr ? 'border border-danger' : ''}" name="date" placeholder="Enter Date">
+                                <small class="form-text text-danger mb-1">
+                                    <c:out value="${logVErr}"/>
+                                </small>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><button type="submit" class="btn btn-info btn-sm my-2">Search</button></td>
+                    </tr>
+                </table>
+            </form>
     <table class="table">
         <thead class="thead-light">
         <tr>

@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 import uts.isd.model.Log;
+import java.sql.Timestamp;
 
 public class UserAccessDAO {
     
@@ -27,7 +28,7 @@ public class UserAccessDAO {
        
         }
     
-        public static int save(int account_id, String action) throws SQLException, DAOException 
+    public static int save(int account_id, String action) throws SQLException, DAOException 
     {
      String query =
                 "INSERT INTO USER_ACCESS (ACCOUNT_ID, PERFORMED_ON, ACTION)" +
@@ -47,6 +48,40 @@ public class UserAccessDAO {
      return DAOUtils.getGeneratedID(accessInsertSt);
     }
     
+    public static List<Log> getDate(int account_id, String date) throws SQLException
+    {
+        LinkedList<Log> logs = new LinkedList<>();
+        
+        Timestamp startDate = Timestamp.valueOf(date+ " 00:00:00");
+        Timestamp endDate = Timestamp.valueOf(date + " 23:59:59");
+        
+        String dateTimeQuery = 
+                "SELECT * "
+                + "FROM USER_ACCESS "
+                + "WHERE ACCOUNT_ID = ? "
+                + "AND PERFORMED_ON >= '" 
+                + startDate.toString()
+                + "' AND PERFORMED_ON < '"
+                + endDate.toString()
+                +"'"
+                ; 
+        
+        PreparedStatement getDate = DAOUtils.prepareStatement(
+                dateTimeQuery,
+                false,
+                account_id 
+        );
+        
+        ResultSet dateRs = getDate.executeQuery();
+        
+        while (dateRs.next()) {
+            logs.add(createLogsObject(dateRs));
+        }
+        
+        return logs;
+        
+    }
+    
         //Helper
     private static Log createLogsObject(ResultSet logRs) throws SQLException {
         Log logs = new Log();
@@ -56,4 +91,5 @@ public class UserAccessDAO {
         return logs;
         
     }
+
     }

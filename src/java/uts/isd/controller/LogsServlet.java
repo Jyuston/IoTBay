@@ -2,6 +2,7 @@ package uts.isd.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+
 import java.util.List;
 
 import uts.isd.model.Log;
@@ -39,6 +40,30 @@ public class LogsServlet extends HttpServlet {
             request.getRequestDispatcher("/logs.jsp").include(request, response);
         }
     }
-    }
     
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        String date = request.getParameter("date");
+        
+        try {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("user");
+        List<Log> dateList = UserAccessDAO.getDate(account.getID(), date);
+        request.setAttribute("userLogs", dateList);
+        }
+
+        catch (SQLException err) {
+            request.setAttribute("logErr", "Error accessing database.");
+            err.printStackTrace();
+        }
+
+        finally {
+            request.getRequestDispatcher("/logs.jsp").include(request, response);
+        }
+        
+    }
+}
+
+   
 
