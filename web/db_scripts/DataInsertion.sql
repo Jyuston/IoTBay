@@ -124,7 +124,19 @@ VALUES ('2020-01-01 00:00:05', '21 Shipping Ave--Waterloo-2017-NSW', 'shipped', 
        ('2020-02-01 00:06:05', '78 Renwick St--Gledswood-2570-NSW', 'shipped', 30.00, 9, '5'),
        ('2020-06-01 00:07:05', '29 Belmont Ave--Edmondson-2174-NSW', 'shipped', 25.99, 8, '6'),
        ('2020-08-01 00:04:05', '28 Lincoln Ave--Willowdale-2174-NSW', 'shipped', 29.99, 7, '8'),
-       ('2020-02-01 00:04:05', '30 Easton St--Catherine-2570-NSW', 'shipped', 33.99, 4, '9')
+       ('2020-08-01 00:04:05', '23 Columbus St--Oran-2570-NSW', 'shipped', 12.00, 8, '11'),
+       ('2020-09-01 00:04:05', '30 Charlton St--Harrington-2570-NSW', 'shipped', 14.99, 8, '12'),
+       ('2020-10-01 00:04:05', '27 Franklin St--Catherine-2570-NSW', 'shipped', 42.99, 6, '13'),
+       ('2020-12-01 00:04:05', '22 Emerson St--Ponds-2164-NSW', 'shipped', 32.99, 7, '14'),
+       ('2020-04-01 00:04:05', '30 Maddox St--Field-2570-NSW', 'shipped', 33.99, 7, '15'),
+       ('2020-05-01 00:04:05', '21 Renwick St--Ed-2570-NSW', 'shipped', 66.99, 2, '16'),
+       ('2020-06-01 00:04:05', '33 Easton St--Gregory-2570-NSW', 'shipped', 88.99, 5, '17'),
+       ('2020-07-01 00:04:05', '29 Easton St--Catherine-2570-NSW', 'shipped', 77.99, 3, '18'),
+       ('2020-03-01 00:04:05', '88 Brookfield St--Willowdale-2570-NSW', 'shipped', 25.99, 4, '19'),
+       ('2020-07-01 00:04:05', '55 Fairwater St--Hermitage-2570-NSW', 'shipped', 35.99, 7, '20'),
+       ('2020-07-01 00:04:05', '36 Mike St--Gledswood-2570-NSW', 'shipped', 67.99, 4, '21'),
+       ('2020-08-01 00:04:05', '69 Easton St--Cacl-2570-NSW', 'shipped', 68.99, 3, '22')
+       
 ;
 
 INSERT INTO ORDER_LINE (ORDER_ID, PRODUCT_ID, QUANTITY_ORDERED, PRICE)
