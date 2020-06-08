@@ -43,7 +43,7 @@
     <c:when test="${(not empty user && user.ID == order.customer.ID) || user.staff}">
         <h1 class="mr-auto">
             Order #${order.ID}
-            <small class="text-secondary" style="font-size: 0.5em"><fmt:formatDate value="${order.orderedOn}" pattern="MM/dd/yyyy ' at ' HH:mm a"/></small>
+            <small class="text-secondary" style="font-size: 0.5em"><fmt:formatDate value="${order.orderedOn}" pattern="dd/MM/yyyy ' at ' HH:mm a"/></small>
         </h1>
 
         <c:if test="${user.staff}">

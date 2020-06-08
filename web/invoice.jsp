@@ -12,6 +12,7 @@
 <head>
     <title>Invoice</title>
 </head>
+
 <jsp:include page="templates/header.jsp"/>
 <c:set var="orders" value="${user.orders}"/>
 <c:if test="${not empty invoiceResults}">
@@ -111,7 +112,7 @@
         <c:forEach items="${orders}" var="order" varStatus="count">
             <tr class="d-flex">
                 <td class="col">${order.ID}</td>
-                <td class="col"><fmt:formatDate value="${order.orderedOn}" pattern="MM/dd/yyyy ' at ' HH:mm a"/></td>
+                <td class="col"><fmt:formatDate value="${order.orderedOn}" pattern="dd/MM/yyyy ' at ' HH:mm a"/></td>
                 <td class="col">${user.email}</td>
                 <td class="col">${user.contactNumber}</td>
                 <td class="col">${user.address.addressLine1}</td>

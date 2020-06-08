@@ -55,7 +55,7 @@
 
             <tr>
                 <th scope="row">#${order.ID}</th>
-                <td><fmt:formatDate value="${order.orderedOn}" pattern="MM/dd/yyyy ' at ' HH:mm a"/></td>
+                <td><fmt:formatDate value="${order.orderedOn}" pattern="dd/MM/yyyy ' at ' HH:mm a"/></td>
                 <td class="text-${statusColour}">${order.status}</td>
                 <td class="font-weight-bold">$<fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${order.total}"/></td>
                 <td><a href="OrderDetailsServlet?ID=${order.ID}">View</a></td>

@@ -10,7 +10,7 @@ import java.util.LinkedList;
 
 public class OrderDAO {
     public static Order get(int orderID) throws SQLException, DAOException {
-        String getStaffDataQuery = "SELECT * FROM ORDERS O WHERE O.ID = " + orderID;
+        String getStaffDataQuery = "SELECT * FROM ORDERS WHERE ID = " + orderID;
         PreparedStatement st = DAOUtils.prepareStatement(getStaffDataQuery, false);
         ResultSet orderRs = st.executeQuery();
 
@@ -18,23 +18,6 @@ public class OrderDAO {
             throw new DAOException("No Order with that ID exists.");
 
         return createOrderObject(orderRs);
-    }
-
-    public static LinkedList<Order> getInvoices(Customer customer, String startDate, String endDate) throws SQLException{
-        LinkedList<Order> invoices = new LinkedList<>();
-
-        Timestamp firstDate = Timestamp.valueOf(startDate+ " 00:00:00");
-        Timestamp secondDate = Timestamp.valueOf(endDate + " 23:59:59");
-
-        String getOrdersQuery = "SELECT * FROM ORDERS WHERE CUSTOMER_ID = "+customer.getID()+" AND ORDERED_ON >= '"+ firstDate + "' AND ORDERED_ON <= '" + secondDate + "'";
-        PreparedStatement st = DAOUtils.prepareStatement(getOrdersQuery, false);
-        ResultSet ordersRs = st.executeQuery();
-
-        while (ordersRs.next()) {
-            invoices.add(createOrderObject(ordersRs));
-        }
-
-        return invoices;
     }
 
     public static LinkedList<Order> getAll() throws SQLException {
@@ -77,6 +60,32 @@ public class OrderDAO {
         }
 
         return orders;
+    }
+
+    public static LinkedList<Order> getAllByCustomer(int customerID, String startDate, String endDate) throws SQLException{
+        LinkedList<Order> invoices = new LinkedList<>();
+
+        Timestamp firstDate = Timestamp.valueOf(startDate+ " 00:00:00");
+        Timestamp secondDate = Timestamp.valueOf(endDate + " 23:59:59");
+
+        String getOrdersQuery =
+                "SELECT * FROM ORDERS " +
+                "WHERE CUSTOMER_ID = ? " +
+                "AND ORDERED_ON >= ? " +
+                "AND ORDERED_ON <= ?";
+
+        PreparedStatement st = DAOUtils.prepareStatement(getOrdersQuery, false,
+                customerID,
+                firstDate,
+                secondDate
+        );
+        ResultSet ordersRs = st.executeQuery();
+
+        while (ordersRs.next()) {
+            invoices.add(createOrderObject(ordersRs));
+        }
+
+        return invoices;
     }
 
     public static int save(Order order) throws SQLException, DAOException {

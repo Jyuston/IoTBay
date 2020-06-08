@@ -1,10 +1,7 @@
 package uts.isd.controller.payment;
 
-import uts.isd.model.Account;
 import uts.isd.model.Customer;
 import uts.isd.model.Order;
-import uts.isd.model.dao.AccountDAO;
-import uts.isd.model.dao.CustomerDAO;
 import uts.isd.model.dao.DAOException;
 import uts.isd.model.dao.OrderDAO;
 
@@ -16,21 +13,19 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.LinkedList;
-import java.util.List;
 
 public class InvoiceServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
 
         try {
             HttpSession session = request.getSession();
             Customer user = (Customer) session.getAttribute("user");
-            //getOrders(request);
-            LinkedList<Order> invoiceResults = OrderDAO.getInvoices(user, startDate, endDate);
+
+            LinkedList<Order> invoiceResults = OrderDAO.getAllByCustomer(user.getID(), startDate, endDate);
             request.setAttribute("invoiceResults", invoiceResults);
         }
 
