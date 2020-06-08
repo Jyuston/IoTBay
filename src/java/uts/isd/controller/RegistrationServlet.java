@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.LinkedList;
+import uts.isd.model.dao.AccountDAO;
 
 public class RegistrationServlet extends HttpServlet {
     @Override
@@ -55,6 +56,8 @@ public class RegistrationServlet extends HttpServlet {
 
         try {
             // Write new customer to database
+            AccountDAO.emailTaken(email);
+            AccountDAO.contactNumberTaken(contactNumber);
             CustomerDAO.save(newCustomer);
             UserAccessDAO.save(newCustomer.getID(),"create_account");
             // Log the customer in
