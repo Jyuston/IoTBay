@@ -30,7 +30,7 @@
     </c:if>
 
     <!--Anonymous User-->
-    <c:if test="${not empty user && user.anonymous}">
+    <c:if test="${not empty user && user.customer && user.anonymous}">
         <div class="alert alert-info alert-dismissible fade show" role="alert">
             <p class="mb-0"><strong>NOTE: </strong>Ordering as an anonymous user.</p>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -71,7 +71,7 @@
         <p class="d-flex">
             <strong class="mr-auto">Payment Method:</strong>
             <c:choose>
-                <c:when test="${user.staff || empty user.paymentInfo.cardNumber}">
+                <c:when test="${user.staff || user.customer && empty user.paymentInfo.cardNumber}">
                     <span class="text-danger float-right">No Billing Information</span>
                 </c:when>
                 <c:otherwise>
@@ -93,7 +93,7 @@
 
         <!--Edit or Add Details Button-->
         <c:choose>
-            <c:when test="${not empty user && user.customer && (empty user.paymentInfo.cardNumber && empty user.address.addressLine1)}">
+            <c:when test="${empty user || not empty user && user.customer && (empty user.paymentInfo.cardNumber && empty user.address.addressLine1)}">
                 <!--User is logged in but doesn't have any info-->
                 <a href="edit_payment_info.jsp" class="btn btn-outline-primary btn-block">Add Payment Info +</a>
             </c:when>
@@ -103,10 +103,6 @@
                 <form class="form-inline mt-2 mb-0" action="DeletePaymentServlet" method="post">
                     <button type="submit" class="btn btn-outline-danger btn-block">Remove Payment Info</button>
                 </form>
-            </c:when>
-            <c:when test="${empty user}">
-                <!--If user is anonymous-->
-                <a href="edit_payment_info.jsp" class="btn btn-outline-primary btn-block">Add Anonymous Payment Info +</a>
             </c:when>
         </c:choose>
     </div>
@@ -128,12 +124,12 @@
                     </svg>
                 </button>
                 <p class="text-danger text-center w-75 mx-auto">
-                    <small>You need to logged in as a customer to purchase.<br> Please register a customer account
-                        <a href="register.jsp" class="text-danger font-weight-bold">here</a>.
+                    <small>You need to logged in as a customer to purchase.<br>
+                        Please <a href="register.jsp" class="text-danger font-weight-bold">register a customer account</a>.
                     </small>
                 </p>
             </c:when>
-            <c:when test="${empty user.paymentInfo.cardNumber || empty user.address.addressLine1}">
+            <c:when test="${user.customer && (empty user.paymentInfo.cardNumber || empty user.address.addressLine1)}">
                 <!--If missing request payment info or address-->
                 <button type="submit" class="btn btn-success btn-block  btn-lg mt-4 mb-3" disabled>
                     Purchase
