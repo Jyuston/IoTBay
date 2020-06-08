@@ -109,6 +109,9 @@ public class EditProfileServlet extends HttpServlet {
                 paymentInfo.setExpiryMonth(expiryMonth);
                 paymentInfo.setExpiryYear(expiryYear);
 
+                if (userC.isAnonymous())
+                    userC.setAnonymous(false);
+
                 CustomerDAO.update(userC);
                 UserAccessDAO.save(userC.getID(), "edit");
             } else {

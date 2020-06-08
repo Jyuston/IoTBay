@@ -29,6 +29,16 @@
         </div>
     </c:if>
 
+    <!--Anonymous User-->
+    <c:if test="${not empty user && user.anonymous}">
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <p class="mb-0"><strong>NOTE: </strong>Ordering as an anonymous user.</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </c:if>
+
     <h1 class="font-weight-bold">Checkout</h1>
     <a href="cart.jsp" class="d-inline-block">
         <svg class="bi bi-arrow-left mb-1" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor"
@@ -82,44 +92,32 @@
         </p>
 
         <!--Edit or Add Details Button-->
-        <c:if test="${not empty user && user.customer}">
-            <c:choose>
-                <c:when test="${empty user.paymentInfo.cardNumber && empty user.address.addressLine1}">
-                    <a href="edit_payment_info.jsp" class="btn btn-outline-primary btn-block">Add Payment Info +</a>
-                </c:when>
-                <c:otherwise>
-                    <a href="edit_payment_info.jsp" class="btn btn-outline-primary btn-block">Edit Payment Info</a>
-                    <form class="form-inline mt-2 mb-0" action="DeletePaymentServlet" method="post">
-                        <button type="submit" class="btn btn-outline-danger btn-block">Remove Payment Info</button>
-                    </form>
-                </c:otherwise>
-            </c:choose>
-        </c:if>
+        <c:choose>
+            <c:when test="${not empty user && user.customer && (empty user.paymentInfo.cardNumber && empty user.address.addressLine1)}">
+                <!--User is logged in but doesn't have any info-->
+                <a href="edit_payment_info.jsp" class="btn btn-outline-primary btn-block">Add Payment Info +</a>
+            </c:when>
+            <c:when test="${not empty user && user.customer && (not empty user.paymentInfo.cardNumber || not empty user.address.addressLine1)}">
+                <!--If user is logged in but has SOME info-->
+                <a href="edit_payment_info.jsp" class="btn btn-outline-primary btn-block">Edit Payment Info</a>
+                <form class="form-inline mt-2 mb-0" action="DeletePaymentServlet" method="post">
+                    <button type="submit" class="btn btn-outline-danger btn-block">Remove Payment Info</button>
+                </form>
+            </c:when>
+            <c:when test="${empty user}">
+                <!--If user is anonymous-->
+                <a href="edit_payment_info.jsp" class="btn btn-outline-primary btn-block">Add Anonymous Payment Info +</a>
+            </c:when>
+        </c:choose>
     </div>
 
     <h1 class="text-right my-5">Total: $<fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${total}"/></h1>
 
     <form action="order/PlaceOrderServlet" method="post">
         <c:choose>
-            <c:when
-                test="${not empty user && user.customer && (empty user.paymentInfo.cardNumber || empty user.address.addressLine1)}">
-                <button type="submit" class="btn btn-success btn-block mt-4 mb-3" disabled>
-                    Purchase
-                    <svg class="bi bi-check2-circle ml-1 pb-1" style="font-size: 1.5em" width="1em" height="1em"
-                         viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                              d="M15.354 2.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L8 9.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
-                        <path fill-rule="evenodd"
-                              d="M8 2.5A5.5 5.5 0 1 0 13.5 8a.5.5 0 0 1 1 0 6.5 6.5 0 1 1-3.25-5.63.5.5 0 1 1-.5.865A5.472 5.472 0 0 0 8 2.5z"></path>
-                    </svg>
-                </button>
-                <p class="text-danger text-center w-75 mx-auto">
-                    <small>You need to have <strong>valid payment information</strong> & a <strong>shipping
-                        address</strong> before you can purchase</small>
-                </p>
-            </c:when>
-            <c:when test="${empty user || user.staff}">
-                <button type="submit" class="btn btn-success btn-block mt-4 mb-3" disabled>
+            <c:when test="${user.staff}">
+                <!--If user is staff-->
+                <button type="submit" class="btn btn-success btn-block btn-lg mt-4 mb-3" disabled>
                     Purchase
                     <svg class="bi bi-check2-circle ml-1 pb-1" style="font-size: 1.5em" width="1em" height="1em"
                          viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -135,8 +133,25 @@
                     </small>
                 </p>
             </c:when>
+            <c:when test="${empty user.paymentInfo.cardNumber || empty user.address.addressLine1}">
+                <!--If missing request payment info or address-->
+                <button type="submit" class="btn btn-success btn-block  btn-lg mt-4 mb-3" disabled>
+                    Purchase
+                    <svg class="bi bi-check2-circle ml-1 pb-1" style="font-size: 1.5em" width="1em" height="1em"
+                         viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M15.354 2.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L8 9.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
+                        <path fill-rule="evenodd"
+                              d="M8 2.5A5.5 5.5 0 1 0 13.5 8a.5.5 0 0 1 1 0 6.5 6.5 0 1 1-3.25-5.63.5.5 0 1 1-.5.865A5.472 5.472 0 0 0 8 2.5z"></path>
+                    </svg>
+                </button>
+                <p class="text-danger text-center w-75 mx-auto">
+                    <small>You need to have <strong>valid payment information</strong> & a <strong>shipping
+                        address</strong> before you can purchase</small>
+                </p>
+            </c:when>
             <c:otherwise>
-                <button type="submit" class="btn btn-success btn-block mt-4 mb-3">
+                <button type="submit" class="btn btn-success btn-block btn-lg mt-4 mb-3">
                     Purchase
                     <svg class="bi bi-check2-circle ml-1 pb-1" style="font-size: 1.5em" width="1em" height="1em"
                          viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -150,6 +165,5 @@
         </c:choose>
     </form>
 </div>
-
 
 <jsp:include page="templates/footer.jsp"/>

@@ -3,8 +3,8 @@
     Created on : 31/05/2020, 12:15:54 PM
     Author     : justinhyuen
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 
 <head>
     <title>Edit Account</title>
@@ -12,54 +12,59 @@
 
 <jsp:include page="templates/header.jsp"/>
 
-<h1>Edit Account</h1>
-<h2> User Management </h2>
+<div class="w mx-auto">
+    <!--Anonymous User-->
+    <c:if test="${not empty user && user.anonymous}">
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <p class="mb-0"><strong>NOTE: </strong>Editing an anonymous account.</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </c:if>
 
-<div class="row">
+    <h1>Edit Account</h1>
+    <c:if test="${successEdit}">
+        <div class="alert alert-success my-4" role="alert">
+            Account # ${account.ID} has successfully been updated.<br>
 
-    <div class="col-lg-6">
+            <c:if test="${user.staff}">
+                <a class="text-info" href="UserManagementServlet">Back to User Management</a>
+            </c:if>
 
-        <c:if test="${successEdit}">
-            <div class="alert alert-success my-4" role="alert">
-                Account # ${account.ID} has successfully been updated.<br>
+            <c:if test="${user.customer}">
+                <a class="text-info" href="main.jsp">Back to Main</a>
+            </c:if>
 
-                <c:if test="${user.staff}">
-                    <a class="text-info" href="UserManagementServlet">Back to User Management</a>
-                </c:if>
-
-                <c:if test="${user.customer}">
-                    <a class="text-info" href="main.jsp">Back to Main</a>
-                </c:if>
- 
-            </div>
-        </c:if>
+        </div>
+    </c:if>
 
 
-        <c:choose>
-            <c:when test="${user.staff}">
-                <form class="m-5" method="POST" action="/IoTBay/UserManagementEditServlet">
-            </c:when>
-            <c:otherwise>
-                <form class="m-5" method="POST" action="/IoTBay/EditProfileServlet">    
+    <c:choose>
+    <c:when test="${user.staff}">
+    <form class="m-5" method="POST" action="/IoTBay/UserManagementEditServlet">
+        </c:when>
+        <c:otherwise>
+        <form class="my-5" method="POST" action="/IoTBay/EditProfileServlet">
             </c:otherwise>
-        </c:choose>
+            </c:choose>
 
-            <h4>Account Details</h4> 
+            <h4>Account Details</h4>
             <p>ID: #${account.ID}</p>
             <div class="form-group">
                 <input type="hidden" name="ID" value="${account.ID}">
-                <div class="row">         
+                <div class="row">
                     <div class="col">
                         <label for="firstName">First Name</label>
-                        <input type="text" class="form-control ${not empty nameVErr ? 'border border-danger' : ''}" 
+                        <input type="text" class="form-control ${not empty nameVErr ? 'border border-danger' : ''}"
                                name="firstName" value="${account.firstName}">
                         <small class="form-text text-danger">
                             <c:out value="${nameVErr}"/>
-                        </small> 
+                        </small>
                     </div>
                     <div class="col">
                         <label for="lastName">Last Name</label>
-                        <input type="text" class="form-control ${not empty nameVErr ? 'border border-danger' : ''}" 
+                        <input type="text" class="form-control ${not empty nameVErr ? 'border border-danger' : ''}"
                                name="lastName" value="${account.lastName}">
                         <small class="form-text text-danger">
                             <c:out value="${nameVErr}"/>
@@ -69,15 +74,15 @@
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="text" class="form-control ${not empty emailVErr ? 'border border-danger' : ''}" 
-                       name="email" value="${account.email}" aria-describedby="emailHelp">    
+                <input type="text" class="form-control ${not empty emailVErr ? 'border border-danger' : ''}"
+                       name="email" value="${account.email}" aria-describedby="emailHelp">
                 <small class="form-text text-danger">
                     <c:out value="${emailVErr}"/>
                 </small>
             </div>
             <div class="form-group">
                 <label for="contactNumber">Contact Number</label>
-                <input type="text" class="form-control ${not empty contactNumberVErr ? 'border border-danger' : ''}" 
+                <input type="text" class="form-control ${not empty contactNumberVErr ? 'border border-danger' : ''}"
                        name="contactNumber" value="${account.contactNumber}">
                 <small class="form-text text-danger">
                     <c:out value="${contactNumberVErr}"/>
@@ -93,11 +98,11 @@
             </div>
 
             <c:if test="${account.customer}">
-                
+
                 <h4 class="mt-5">Shipping Address</h4>
                 <div class="form-group">
                     <label for="addressLine1">Address</label>
-                    <input type="text" class="form-control ${not empty addressVErr ? 'border border-danger' : ''}" 
+                    <input type="text" class="form-control ${not empty addressVErr ? 'border border-danger' : ''}"
                            name="addressLine1" id="addressLine1"
                            value="${account.address.addressLine1}"
                            placeholder="42 Wallaby Way">
@@ -107,7 +112,7 @@
                 </div>
                 <div class="form-group">
                     <label for="addressLine2">Address 2 (Optional)</label>
-                    <input type="text" class="form-control ${not empty address2VErr ? 'border border-danger' : ''}" 
+                    <input type="text" class="form-control ${not empty address2VErr ? 'border border-danger' : ''}"
                            name="addressLine2" id="addressLine2"
                            value="${account.address.addressLine2}">
                     <small class="form-text text-danger">
@@ -140,7 +145,8 @@
                         </div>
                         <div class="col-4">
                             <label for="postcode">Postcode</label>
-                            <input type="text" class="form-control ${not empty postcodeVErr ? 'border border-danger' : ''}"
+                            <input type="text"
+                                   class="form-control ${not empty postcodeVErr ? 'border border-danger' : ''}"
                                    name="postcode" id="postcode"
                                    value="${account.address.postcode}">
                             <small class="form-text text-danger">
@@ -156,7 +162,7 @@
                     <label for="cardNumber">Card Number</label>
                     <input type="text" class="form-control ${not empty cardNumberVErr ? 'border border-danger' : ''}"
                            name="cardNumber" id="cardNumber" placeholder="0000 0000 0000 0000"
-                        value="${account.paymentInfo.cardNumber}">
+                           value="${account.paymentInfo.cardNumber}">
                     <small class="form-text text-danger">
                         <c:out value="${cardNumberVErr}"/>
                     </small>
@@ -165,8 +171,9 @@
                     <div class="row">
                         <div class="col">
                             <label for="expiryMonth">Expiry Month</label>
-                            <input type="text" class="form-control ${not empty expiryMonthVErr ? 'border border-danger' : ''}"
-                                   name="expiryMonth" id="expiryMonth" 
+                            <input type="text"
+                                   class="form-control ${not empty expiryMonthVErr ? 'border border-danger' : ''}"
+                                   name="expiryMonth" id="expiryMonth"
                                    value="${account.paymentInfo.expiryMonth}">
                             <small class="form-text text-danger">
                                 <c:out value="${expiryMonthVErr}"/>
@@ -174,8 +181,9 @@
                         </div>
                         <div class="col">
                             <label for="expiryYear">Expiry Year</label>
-                            <input type="text" class="form-control ${not empty expiryYearVErr ? 'border border-danger' : ''}"
-                                   name="expiryYear" id="expiryYear" 
+                            <input type="text"
+                                   class="form-control ${not empty expiryYearVErr ? 'border border-danger' : ''}"
+                                   name="expiryYear" id="expiryYear"
                                    value="${account.paymentInfo.expiryYear}">
                             <small class="form-text text-danger">
                                 <c:out value="${expiryYearVErr}"/>
@@ -193,19 +201,18 @@
                     </div>
                 </div>
             </c:if>
-            
+
             <c:if test="${user.customer}">
                 <a href="/IoTBay/main.jsp" class=" mt-5 text-danger">Cancel</a>
             </c:if>
-                    
+
             <c:if test="${user.staff}">
                 <a href="/IoTBay/UserManagementServlet" class=" mt-5 text-danger">Cancel</a>
-            </c:if>               
-                
+            </c:if>
+
             <button type="submit" class="btn btn-success float-right">Save Changes</button>
 
         </form>
-    </div>
-
 </div>
+
 <jsp:include page="templates/footer.jsp"/>

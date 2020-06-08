@@ -1,8 +1,6 @@
 package uts.isd.controller.payment;
 
 import uts.isd.controller.Validator;
-import uts.isd.controller.product.AddProductServlet;
-import uts.isd.model.Account;
 import uts.isd.model.Address;
 import uts.isd.model.Customer;
 import uts.isd.model.PaymentInformation;
@@ -16,15 +14,25 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 public class EditPaymentInfoServlet extends HttpServlet {
-    //doPost for updating Data
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Validator validator = new Validator(request);
-
         HttpSession session = request.getSession();
         Customer user = (Customer) session.getAttribute("user");
+
+        boolean createAnonUser = false;
+        if (user == null) {
+            createAnonUser = true;
+
+            user = new Customer();
+            user.setActive(true);
+            user.setAddress(new Address());
+            user.setPaymentInfo(new PaymentInformation());
+            user.setOrders(new LinkedList<>());
+            user.setAnonymous(true);
+        }
 
         String addressLine1 = request.getParameter("addressLine1");
         String addressLine2 = request.getParameter("addressLine2");
@@ -53,7 +61,9 @@ public class EditPaymentInfoServlet extends HttpServlet {
 
 
         try {
-            CustomerDAO.update(user);
+            if (createAnonUser) CustomerDAO.save(user);
+            else CustomerDAO.update(user);
+
             session.setAttribute("user", user);
 
             request.setAttribute("successEdit", true);
