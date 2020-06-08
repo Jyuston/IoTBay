@@ -13,7 +13,12 @@ VALUES ('john.smith@gmail.com', 'John', 'Smith', '0438 278 971', 'C', 'password1
        ('nicholsonK@iotbay.com', 'Kirby', 'Nicholson', '0404 285 927', 'S', 'testpass1', true),
        ('farleyS@iotbay.com', 'Lenore', 'Farley', '0403 038 516', 'S', 'anotherpass1', true),
        ('talleyS@iotbay.com', 'Stephanie', 'Talley', '0404 477 143', 'S', 'mypassword4321', true),
-       ('admin@test.com', 'Mike', 'Wozowski', '0123 456 789', 'S', 'lol123', true)
+       ('admin@test.com', 'Mike', 'Wozowski', '0123 456 789', 'S', 'lol123', true),
+       ('davisesS@iotbay.com', 'Steven', 'Davies', '0404 285 921', 'S', 'testpass1', true),
+       ('tomphsonA@iotbay.com', 'Andrew', 'Tomphson', '0404 221 664', 'S', 'testpass1', true),
+       ('nicholsonK@iotbay.com', 'Kirby', 'Nicholson', '0404 285 927', 'S', 'testpass1', true),
+       ('johnk@gmail.com', 'John', 'Kranski', '0438 213 552', 'C', 'password123', true),
+       ('mike.scott@yahoo.com', 'Michael', 'Scott', '0438 213 111', 'C', 'password123', true)
 ;
 
 INSERT INTO CUSTOMERS (ID, ADDRESS_LINE_1, ADDRESS_LINE_2, SUBURB, POSTCODE, STATE, IS_ANONYMOUS)
@@ -27,14 +32,21 @@ VALUES (1, '200 Wonder St', null, 'Maroubra', '2035', 'NSW', false),
        (8, '2 Capital St', null, 'Canberra', '8458', 'ACT', false),
        (9, '54 Wonky St', null, 'Adelaide', '4431', 'SA', false),
        (10, '45 Wonder St', null, 'Maroubra', '2035', 'NSW', false),
-       (11, '3/46', 'Wonder St', 'Maroubra', '2035', 'NSW', false)
+       (11, '3/46', 'Wonder St', 'Maroubra', '2035', 'NSW', false),
+       (19, '54', 'Brisbane St', 'Brisbane', '3045', 'QLD', false),
+       (20, '12', 'Market St', 'Sydney', '2000', 'NSW', false)
 ;
 
 INSERT INTO STAFF (ID, IS_ADMIN)
 VALUES (12, true),
        (13, false),
        (14, false),
-       (15, true)
+       (15, true),
+       (16, false),
+       (17, false),
+       (18, true),
+       (19, false),
+       (20, false)
 ;
 
 INSERT INTO USER_ACCESS (ACCOUNT_ID, PERFORMED_ON, ACTION)
