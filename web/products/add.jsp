@@ -51,7 +51,7 @@
                     
                 <div class="form-group">
                     <label for="category">Category</label>                   
-                    <select class="form-control"
+                    <select class="form-control" id="category"
                             name="category" value="${product.category}">
                             <option ${product.category == "Actuators" ? "selected" : ""}>Actuators</option>
                             <option ${product.category == "Capacitors" ? "selected" : ""}>Capacitors</option>

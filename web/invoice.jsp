@@ -32,10 +32,10 @@
             <form action="InvoiceServlet" method="POST">
                 <tr>
                     <td>
-                        <input class="form-control-sm mb-2 mr-2 border border-secondary ${not empty kevinVErr ? 'border border-danger' : ''}" name="orderId"
+                        <input class="form-control-sm mb-2 mr-2 border border-secondary ${not empty idVErr ? 'border border-danger' : ''}" name="orderId"
                                placeholder="Order Id">
                         <small class="form-text text-danger mb-1">
-                            <c:out value="${kevinVErr}"/>
+                            <c:out value="${idVErr}"/>
                         </small>
                     </td>
                 </tr>

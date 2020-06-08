@@ -1,5 +1,6 @@
 package uts.isd.controller.order;
 
+import uts.isd.controller.Validator;
 import uts.isd.model.Customer;
 import uts.isd.model.Order;
 import uts.isd.model.dao.DAOException;
@@ -22,6 +23,8 @@ public class FilterOrdersServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Customer user = (Customer) session.getAttribute("user");
 
+        Validator validator = new Validator(request);
+
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
         String orderID = request.getParameter("orderID");
@@ -30,6 +33,10 @@ public class FilterOrdersServlet extends HttpServlet {
 
         try {
             if (orderID != null) {
+                validator.validateID(orderID);
+
+                if (validator.failed()) return;
+
                 Predicate<Order> byID = order -> order.getID() == Integer.parseInt(orderID);
                 orders = user.getOrders().stream().filter(byID).collect(Collectors.toList());
             } else {

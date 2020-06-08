@@ -47,8 +47,11 @@
 
 <form class="form ${empty param.orderID ? 'd-none' : ''}" id="idForm" action="FilterOrdersServlet" method="get">
     <label for="orderID">Order ID</label>
-    <input type="number" class="form-control w-25" id="orderID" name="orderID" min="1" value="${param.orderID}"
-           required>
+    <input type="text" class="form-control w-25 ${not empty idVErr ? 'border border-danger' : ''}"
+           id="orderID" name="orderID" value="${param.orderID}">
+    <small class="form-text text-danger">
+        <c:out value="${idVErr}"/>
+    </small>
 
     <button type="submit" class="btn btn-outline-primary btn-sm px-4 mt-3">Search</button>
     <a href="history.jsp" class="btn btn-link text-danger btn-sm px-4 mt-3">Clear</a>

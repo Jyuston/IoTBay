@@ -208,7 +208,7 @@ public class Validator {
         return this;
     }
 
-    public Validator validateReportDates(String d1, String d2) throws ParseException, Exception {
+    public Validator validateReportDates(String d1, String d2) throws Exception {
         Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(d1);
         Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(d2);
 
@@ -220,9 +220,9 @@ public class Validator {
         return this;
     }
 
-    public Validator validateReportDescription(String description) throws Exception {
+    public Validator validateReportDescription(String description) {
         // Note - for reporting, any report description is valid provided it is not empty
-        if (description.equals("")) {
+        if (description.isEmpty()) {
             failed = true;
             request.setAttribute("error", "The report description cannot be empty.");
         }
@@ -230,9 +230,9 @@ public class Validator {
         return this;
     }
 
-    public Validator validateReportName(String name) throws Exception {
+    public Validator validateReportName(String name) {
         // Note - for reporting, any report name is valid provided it is not empty
-        if (name.equals("")) {
+        if (name.isEmpty()) {
             failed = true;
             request.setAttribute("error", "The report name cannot be empty.");
         }
@@ -242,7 +242,7 @@ public class Validator {
 
     public Validator validateID(String id) {
         if (!validate(idPattern, id)){
-            request.setAttribute("kevinVErr", "Invalid ID");
+            request.setAttribute("idVErr", "Invalid ID");
             failed = true;
         }
 
