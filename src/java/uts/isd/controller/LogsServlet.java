@@ -2,13 +2,8 @@ package uts.isd.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedList;
+
 import java.util.List;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import uts.isd.model.Log;
 import uts.isd.model.Account;

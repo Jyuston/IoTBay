@@ -5,7 +5,6 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 import uts.isd.model.Log;
-import java.util.Date;
 import java.sql.Timestamp;
 
 public class UserAccessDAO {
