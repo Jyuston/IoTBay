@@ -1,6 +1,5 @@
 package uts.isd.controller.payment;
 
-import uts.isd.controller.Validator;
 import uts.isd.model.Address;
 import uts.isd.model.Customer;
 import uts.isd.model.PaymentInformation;

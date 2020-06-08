@@ -12,7 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import uts.isd.model.Address;
 import uts.isd.model.Customer;
-import uts.isd.model.Order;
 import uts.isd.model.PaymentInformation;
 import uts.isd.model.Staff;
 import uts.isd.controller.Validator;
@@ -20,7 +19,6 @@ import uts.isd.model.dao.AccountDAO;
 import uts.isd.model.dao.CustomerDAO;
 import uts.isd.model.dao.DAOException;
 import uts.isd.model.dao.StaffDAO;
-import uts.isd.model.dao.UserAccessDAO;
 
 /**
  *

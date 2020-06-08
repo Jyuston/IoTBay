@@ -7,13 +7,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import uts.isd.model.Customer;
 import uts.isd.model.Product;
-import uts.isd.model.Staff;
 
 import uts.isd.model.dao.DAOException;
 import uts.isd.model.dao.ProductDAO;
-import uts.isd.model.dao.StaffDAO;
 
 /**
  *
