@@ -43,16 +43,16 @@ public class EditProductServlet extends HttpServlet {
         String name = request.getParameter("name");
         String category = request.getParameter("category");
         String description = request.getParameter("description");
-        double price = Double.parseDouble(request.getParameter("price"));
-        int stock = Integer.parseInt(request.getParameter("stock"));
+        String price = request.getParameter("price");
+        String stock = request.getParameter("stock");
 
         // Run validation checks
         validator
                 .checkEmpty(name, "Name")
                 .checkEmpty(category, "Category")
                 .checkEmpty(description, "Description")
-                .checkNegativePrice(price)
-                .checkNegativeStock(stock);
+                .checkProductPrice(price)
+                .checkProductStock(stock);
 
         try {
             Product product = ProductDAO.get(ID);
@@ -62,8 +62,8 @@ public class EditProductServlet extends HttpServlet {
                 return;
 
             product.setName(name);
-            product.setStock(stock);
-            product.setPrice(price);
+            product.setStock(Integer.parseInt(stock));
+            product.setPrice(Double.parseDouble(price));
             product.setCategory(category);
             product.setDescription(description);
 

@@ -181,18 +181,18 @@ public class Validator {
 
     // Product
 
-    public Validator checkNegativePrice(double price) {
-        if (price < 0)  {
-            request.setAttribute("negativePriceVErr", "Price cannot be negative");
+    public Validator checkProductPrice(String price) {
+        if (price.isEmpty() || Double.parseDouble(price) < 0)  {
+            request.setAttribute("negativePriceVErr", "Price must be a positive value");
             failed = true;
         }
 
         return this;
     }
 
-    public Validator checkNegativeStock(int price) {
-        if (price < 0)  {
-            request.setAttribute("negativeStockVErr", "Stock cannot be negative");
+    public Validator checkProductStock(String stock) {
+        if (stock.isEmpty() || Integer.parseInt(stock) < 0)  {
+            request.setAttribute("negativeStockVErr", "Stock must be a positive value");
             failed = true;
         }
 

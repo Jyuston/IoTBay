@@ -96,9 +96,8 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text">$</div>
                             </div>
-                            <input type="number"
-                                   class="form-control ${not empty negativePriceVErr ? 'border border-danger' : ''}"
-                                   id="price" name="price" value="${product.price}" step="0.01" required>
+                            <input type="number" class="form-control ${not empty negativePriceVErr ? 'border border-danger' : ''}"
+                                   id="price" name="price" value="${product.price}" step="0.01">
                             <small class="invalid-feedback d-block">
                                 <c:out value="${negativePriceVErr}"/>
                             </small>
@@ -111,16 +110,14 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text">#</div>
                             </div>
-                            <input type="number"
-                                   class="form-control ${not empty negativeStockVErr ? 'border border-danger' : ''}"
-                                   id="stock" name="stock" value="${product.stock}" required>
+                            <input type="number" class="form-control ${not empty negativeStockVErr ? 'border border-danger' : ''}"
+                                   id="stock" name="stock" value="${product.stock}">
                             <small class="invalid-feedback d-block">
                                 <c:out value="${negativeStockVErr}"/>
                             </small>
                         </div>
                     </div>
                 </div>
-
 
                 <button type="submit" class="btn btn-${empty product ? 'secondary' : 'primary'} btn-block mt-4 mb-2"
                     ${empty product ? 'disabled' : ''}>

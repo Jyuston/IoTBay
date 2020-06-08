@@ -21,16 +21,15 @@ public class AddProductServlet extends HttpServlet {
         String name = request.getParameter("name");
         String category = request.getParameter("category");
         String description = request.getParameter("description");
-        double price = Double.parseDouble(request.getParameter("price"));
-        int stock = Integer.parseInt(request.getParameter("stock"));
+        String price = request.getParameter("price");
+        String stock = request.getParameter("stock");
 
         // Run validation checks
-        validator
-                .checkEmpty(name, "Name")
+        validator.checkEmpty(name, "Name")
                 .checkEmpty(category, "Category")
                 .checkEmpty(description, "Description")
-                .checkNegativePrice(price)
-                .checkNegativeStock(stock);
+                .checkProductPrice(price)
+                .checkProductStock(stock);
 
         if (validator.failed()) {
             request.getRequestDispatcher("add.jsp").include(request, response);
@@ -42,8 +41,8 @@ public class AddProductServlet extends HttpServlet {
         newProduct.setName(name);
         newProduct.setCategory(category);
         newProduct.setDescription(description);
-        newProduct.setPrice(price);
-        newProduct.setStock(stock);
+        newProduct.setPrice(Double.parseDouble(price));
+        newProduct.setStock(Integer.parseInt(stock));
         newProduct.setArchived(false);
 
         try {

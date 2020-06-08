@@ -76,8 +76,8 @@
                                 <div class="input-group-text">$</div>
                             </div>
                             <input type="number" class="form-control ${not empty negativePriceVErr ? 'border border-danger' : ''}"
-                                   id="price" name="price" required>
-                            <small class="form-text text-danger">
+                                   id="price" name="price" step="0.01">
+                            <small class="invalid-feedback d-block">
                                 <c:out value="${negativePriceVErr}"/>
                             </small>
                         </div>
@@ -90,8 +90,8 @@
                                 <div class="input-group-text">#</div>
                             </div>
                             <input type="number" class="form-control ${not empty negativeStockVErr ? 'border border-danger' : ''}"
-                                   id="stock" name="stock" required>
-                            <small class="form-text text-danger">
+                                   id="stock" name="stock">
+                            <small class="invalid-feedback d-block">
                                 <c:out value="${negativeStockVErr}"/>
                             </small>
                         </div>
