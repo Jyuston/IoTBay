@@ -38,7 +38,21 @@
     <c:if test="${not empty user && user.staff}">
         <a href="add.jsp" class="btn btn-success ml-auto mr-3">Add Product +</a>
     </c:if>
+        
 </div>
+
+<form class="form-inline mb-0" method="get" action="CatalogueServlet">
+    
+    <select class="form-control" name="category" value="${product.category}">
+        <option ${product.category == "Actuators" ? "selected" : ""}>Actuators</option>
+        <option ${product.category == "Capacitors" ? "selected" : ""}>Capacitors</option>
+        <option ${product.category == "Sensors" ? "selected" : ""}>Sensors</option>
+        <option ${product.category == "Resistors" ? "selected" : ""}>Resistors</option>
+    </select>
+
+    <button type="submit" class="btn btn-primary my-2 mx-3">Sort</button>
+    
+</form>
 
 <h1>Products</h1>
 
