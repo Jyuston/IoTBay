@@ -26,7 +26,7 @@ Steps:
 2. Using terminal / command prompt / PowerShell run the asadmin file along side start-domain - 'asadmin start-domain'
 3. Then deploy the war file by using {asdmin deploy <directoryPath>\IoTBay.war}
 4. The application will then be deployed on your local host on port 8080 by default.
-5. To open the application, open a browser to 'http://localhost:8080/13571649-ISD-A1-R0/'
+5. To open the application, open a browser to 'http://localhost:8080/IoTBay/'
 6. To stop running the server in terminal write the command 'asadmin stop-domain' while in the bin directory holding the asadmin file.
 7. Press 'Ctrl-C' to stop the command execution.
  
