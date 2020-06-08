@@ -235,6 +235,14 @@
         <servlet-name>UpdateOrderStatusServlet</servlet-name>
         <url-pattern>/order/UpdateOrderStatusServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>FilterOrdersServlet</servlet-name>
+        <servlet-class>uts.isd.controller.order.FilterOrdersServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FilterOrdersServlet</servlet-name>
+        <url-pattern>/order/FilterOrdersServlet</url-pattern>
+    </servlet-mapping>
 
     <session-config>
         <session-timeout>

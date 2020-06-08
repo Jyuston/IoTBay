@@ -34,6 +34,30 @@ public class OrderDAO {
         return orders;
     }
 
+    public static LinkedList<Order> getAll(String startDate, String endDate) throws SQLException{
+        LinkedList<Order> invoices = new LinkedList<>();
+
+        Timestamp firstDate = Timestamp.valueOf(startDate+ " 00:00:00");
+        Timestamp secondDate = Timestamp.valueOf(endDate + " 23:59:59");
+
+        String getOrdersQuery =
+                "SELECT * FROM ORDERS " +
+                "WHERE ORDERED_ON >= ? " +
+                "AND ORDERED_ON <= ?";
+
+        PreparedStatement st = DAOUtils.prepareStatement(getOrdersQuery, false,
+                firstDate,
+                secondDate
+        );
+        ResultSet ordersRs = st.executeQuery();
+
+        while (ordersRs.next()) {
+            invoices.add(createOrderObject(ordersRs));
+        }
+
+        return invoices;
+    }
+
     public static LinkedList<Order> getAllByCustomer(int customerID) throws SQLException {
         LinkedList<Order> orders = new LinkedList<>();
 

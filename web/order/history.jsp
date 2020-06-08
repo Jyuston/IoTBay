@@ -33,7 +33,6 @@
 <h1 class="mb-4">Order History</h1>
 
 <div class="fix-table">
-
     <table class="table table-striped history-table">
         <thead class="table-info">
         <tr>
