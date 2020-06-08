@@ -29,11 +29,11 @@
             Account # ${account.ID} has successfully been updated.<br>
 
             <c:if test="${user.staff}">
-                <a class="text-info" href="UserManagementServlet">Back to User Management</a>
+                <a class="alert-link" href="UserManagementServlet">Back to User Management</a>
             </c:if>
 
             <c:if test="${user.customer}">
-                <a class="text-info" href="main.jsp">Back to Main</a>
+                <a class="alert-link" href="main.jsp">Back to Main</a>
             </c:if>
 
         </div>

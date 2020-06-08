@@ -39,11 +39,11 @@ public class UserAccessDAO {
              true,
              account_id,
              action             
-             );
+     );
      
      int rowsChanged = accessInsertSt.executeUpdate();
      if (rowsChanged == 0)
-         throw new DAOException("User acces creation failed. Please try again.");
+         throw new DAOException("User access creation failed. Please try again.");
      
      return DAOUtils.getGeneratedID(accessInsertSt);
     }

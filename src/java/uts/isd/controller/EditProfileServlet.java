@@ -122,11 +122,9 @@ public class EditProfileServlet extends HttpServlet {
             session.setAttribute("user", user);
             request.setAttribute("account", user);
             request.setAttribute("successEdit", true);
-        } catch (DAOException err) {
+        } catch (SQLException | DAOException err) {
             request.setAttribute("errorUserManagement", err.getMessage());
             err.printStackTrace();
-        } catch (SQLException err) {
-            request.setAttribute("errorUserManagement", err.getMessage());
         } finally {
             request.getRequestDispatcher("/user_management_edit.jsp").include(request, response);
         }

@@ -3,7 +3,6 @@
     Created on : 26/05/2020, 10:14:16 AM
     Author     : justinhyuen
 --%>
-<%@page import="uts.isd.model.Account"%>
 <%@page import="uts.isd.model.Customer"%>
 <%@page import="uts.isd.model.Staff"%>
 
@@ -37,19 +36,19 @@
 
             <c:if test="${param.success}">
                 <div class="alert alert-success my-4" role="alert">
-                    <h2> New account created. </h2>
+                    New account created.
                 </div>
             </c:if>
 
             <c:if test="${successDelete}">
                 <div class="alert alert-success my-4" role="alert">
-                    <h2> Account has been deleted. </h2>
+                    Account has been deleted.
                 </div>
             </c:if>
             
             <c:if test="${successActive}">
                 <div class="alert alert-success my-4" role="alert">
-                    <h2> Account Activity has been changed. </h2>
+                    Account Activity has been changed.
                 </div>
             </c:if>
 
@@ -70,7 +69,7 @@
                     </tr>
                     <tr>
                         <td><input class="form-control-sm border border-secondary ${not empty contactNumberVErr ? 'border border-danger' : ''}" name="contactNumber" placeholder="Contact Number">
-                                <small class="form-text text-danger">
+                                <small class="form-text text-danger" style="max-width: 200px">
                                     <c:out value="${contactNumberVErr}"/>
                                 </small>
                         </td> 
