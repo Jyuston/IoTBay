@@ -86,7 +86,7 @@ public class UserManagementEditServlet extends HttpServlet {
             account.setPassword(password);
             
             if (account.isCustomer()){
-                
+               
                Customer accountC = (Customer) account;
                 
                String addressLine1 = request.getParameter("addressLine1");
@@ -94,10 +94,24 @@ public class UserManagementEditServlet extends HttpServlet {
                String suburb = request.getParameter("suburb");
                String postcode = request.getParameter("postcode");
                String state = request.getParameter("state");
+               
                String cardNumber = request.getParameter("cardNumber");
                String expiryMonth = request.getParameter("expiryMonth");
                String expiryYear = request.getParameter("expiryYear");
                String cvvNumber = request.getParameter("cvvNumber");
+               
+               validator.validateAddress(addressLine1)
+                        .validateAddress2(addressLine2)
+                        .validateSuburb(suburb)
+                        .validatePostcode(postcode)
+                        .validateCardNumber(cardNumber)
+                        .validateCvv(cvvNumber)
+                        .validateExpiryMonth(expiryMonth)
+                        .validateExpiryYear(expiryYear);
+
+               if (validator.failed()) {
+                    return;
+               }
                
                accountC.getAddress().setAddressLine1(addressLine1);
                accountC.getAddress().setAddressLine2(addressLine2);

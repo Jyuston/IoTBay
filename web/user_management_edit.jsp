@@ -97,22 +97,31 @@
                 <h4 class="mt-5">Shipping Address</h4>
                 <div class="form-group">
                     <label for="addressLine1">Address</label>
-                    <input type="text" class="form-control" name="addressLine1" id="addressLine1"
+                    <input type="text" class="form-control ${not empty addressVErr ? 'border border-danger' : ''}" 
+                           name="addressLine1" id="addressLine1"
                            value="${account.address.addressLine1}"
-                           placeholder="Sherman 42 Wallaby Way, Sydney"
-                           >
+                           placeholder="42 Wallaby Way">
+                    <small class="form-text text-danger">
+                        <c:out value="${addressVErr}"/>
+                    </small>
                 </div>
                 <div class="form-group">
                     <label for="addressLine2">Address 2 (Optional)</label>
-                    <input type="text" class="form-control" name="addressLine2" id="addressLine2"
-                           value="${account.address.addressLine2}"
-                           >
+                    <input type="text" class="form-control ${not empty address2VErr ? 'border border-danger' : ''}" 
+                           name="addressLine2" id="addressLine2"
+                           value="${account.address.addressLine2}">
+                    <small class="form-text text-danger">
+                        <c:out value="${address2VErr}"/>
+                    </small>
                 </div>
                 <div class="form-group">
                     <label for="suburb">Suburb</label>
-                    <input type="text" class="form-control" name="suburb" id="suburb"
-                           value="${account.address.suburb}"
-                           >
+                    <input type="text" class="form-control ${not empty suburbVErr ? 'border border-danger' : ''}"
+                           name="suburb" id="suburb"
+                           value="${account.address.suburb}">
+                    <small class="form-text text-danger">
+                        <c:out value="${suburbVErr}"/>
+                    </small>
                 </div>
                 <div class="form-group">
                     <div class="row">
@@ -131,8 +140,12 @@
                         </div>
                         <div class="col-4">
                             <label for="postcode">Postcode</label>
-                            <input type="text" class="form-control" name="postcode" id="postcode"
+                            <input type="text" class="form-control ${not empty postcodeVErr ? 'border border-danger' : ''}"
+                                   name="postcode" id="postcode"
                                    value="${account.address.postcode}">
+                            <small class="form-text text-danger">
+                                <c:out value="${postcodeVErr}"/>
+                            </small>
                         </div>
                     </div>
                 </div>
@@ -141,31 +154,54 @@
                 <h4 class="mt-5">Billing Information</h4>
                 <div class="form-group">
                     <label for="cardNumber">Card Number</label>
-                    <input type="text" class="form-control" name="cardNumber" id="cardNumber" 
+                    <input type="text" class="form-control ${not empty cardNumberVErr ? 'border border-danger' : ''}"
+                           name="cardNumber" id="cardNumber" placeholder="0000 0000 0000 0000"
                         value="${account.paymentInfo.cardNumber}">
+                    <small class="form-text text-danger">
+                        <c:out value="${cardNumberVErr}"/>
+                    </small>
                 </div>
                 <div class="form-group">
                     <div class="row">
                         <div class="col">
                             <label for="expiryMonth">Expiry Month</label>
-                            <input type="text" class="form-control" name="expiryMonth" id="expiryMonth" 
+                            <input type="text" class="form-control ${not empty expiryMonthVErr ? 'border border-danger' : ''}"
+                                   name="expiryMonth" id="expiryMonth" 
                                    value="${account.paymentInfo.expiryMonth}">
+                            <small class="form-text text-danger">
+                                <c:out value="${expiryMonthVErr}"/>
+                            </small>
                         </div>
                         <div class="col">
                             <label for="expiryYear">Expiry Year</label>
-                            <input type="text" class="form-control" name="expiryYear" id="expiryYear" 
+                            <input type="text" class="form-control ${not empty expiryYearVErr ? 'border border-danger' : ''}"
+                                   name="expiryYear" id="expiryYear" 
                                    value="${account.paymentInfo.expiryYear}">
+                            <small class="form-text text-danger">
+                                <c:out value="${expiryYearVErr}"/>
+                            </small>
                         </div>
                         <div class="col">
                             <label for="cvvNumber">CVV</label>
-                            <input type="text" class="form-control mb-5" name="cvvNumber" id="cvvNumber"
+                            <input type="text" class="form-control ${not empty cvvVErr ? 'border border-danger' : ''}"
+                                   name="cvvNumber" id="cvvNumber"
                                    value="${account.paymentInfo.cvvNumber}">
+                            <small class="form-text text-danger mb-5">
+                                <c:out value="${cvvVErr}"/>
+                            </small>
                         </div>
                     </div>
                 </div>
             </c:if>
-
-            <a href="/IoTBay/UserManagementServlet" class=" mt-5 text-danger">Cancel</a>
+            
+            <c:if test="${user.customer}">
+                <a href="/IoTBay/main.jsp" class=" mt-5 text-danger">Cancel</a>
+            </c:if>
+                    
+            <c:if test="${user.staff}">
+                <a href="/IoTBay/UserManagementServlet" class=" mt-5 text-danger">Cancel</a>
+            </c:if>               
+                
             <button type="submit" class="btn btn-success float-right">Save Changes</button>
 
         </form>

@@ -30,25 +30,15 @@ public class RegistrationServlet extends HttpServlet {
         validator.checkEmptyEmailPass(email, password)
                 .validateEmail(email)
                 .validatePassword(password)
-                .validateName(firstName + " " + lastName);
+                .validateName(firstName + " " + lastName)
+                .validateContactNumber(contactNumber);
 
         if (validator.failed()) {
             request.getRequestDispatcher("/register.jsp").include(request, response);
             return;
         }
 
-        Address address = new Address();
-        address.setAddressLine1(request.getParameter("addressLine1"));
-        address.setAddressLine2(request.getParameter("addressLine1"));
-        address.setSuburb(request.getParameter("suburb"));
-        address.setPostcode(request.getParameter("postcode"));
-        address.setState(request.getParameter("state"));
-
         // Payment Info is set on purchase page.
-        PaymentInformation paymentInfo = new PaymentInformation();
-
-        LinkedList<Order> orders = new LinkedList<>();
-
         // Create new Customer Object.
         // The Account ID starts null and will be auto-generated and set in CustomerDAO.save()
         Customer newCustomer = new Customer();
@@ -58,9 +48,9 @@ public class RegistrationServlet extends HttpServlet {
         newCustomer.setPassword(password);
         newCustomer.setContactNumber(contactNumber);
         newCustomer.setActive(true);
-        newCustomer.setAddress(address);
-        newCustomer.setPaymentInfo(paymentInfo);
-        newCustomer.setOrders(orders);
+        newCustomer.setAddress(new Address());
+        newCustomer.setPaymentInfo(new PaymentInformation());
+        newCustomer.setOrders(new LinkedList<>());
         newCustomer.setAnonymous(false);
 
         try {
