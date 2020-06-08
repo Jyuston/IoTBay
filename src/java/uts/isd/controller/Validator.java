@@ -1,5 +1,7 @@
 package uts.isd.controller;
 
+import uts.isd.model.Product;
+
 import javax.servlet.http.HttpServletRequest;
 
 import java.text.ParseException;
@@ -180,6 +182,15 @@ public class Validator {
         if (price < 0)  {
             request.setAttribute("negativeStockVErr", "Stock cannot be negative");
             failed = true;
+        }
+
+        return this;
+    }
+
+    public Validator validateCartUpdate(Product product, int quantity) {
+        if (quantity > product.getStock()) {
+            failed = true;
+            request.setAttribute("availableStockVErr", "Can't add to cart. Not enough stock left.");
         }
 
         return this;

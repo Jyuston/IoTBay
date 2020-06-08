@@ -1,6 +1,8 @@
 package uts.isd.model;
 
-public class Address {
+import java.io.Serializable;
+
+public class Address implements Serializable {
     private String addressLine1;
     private String addressLine2;
     private String suburb;

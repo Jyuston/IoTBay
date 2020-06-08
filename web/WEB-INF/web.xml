@@ -110,6 +110,32 @@
         <url-pattern>/ReportFormServlet</url-pattern>
     </servlet-mapping>
 
+    <!--Payment-->
+    <servlet>
+        <servlet-name>EditPaymentInfoServlet</servlet-name>
+        <servlet-class>uts.isd.controller.payment.EditPaymentInfoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditPaymentInfoServlet</servlet-name>
+        <url-pattern>/EditPaymentInfoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>DeletePaymentServlet</servlet-name>
+        <servlet-class>uts.isd.controller.payment.DeletePaymentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeletePaymentServlet</servlet-name>
+        <url-pattern>/DeletePaymentServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>InvoiceServlet</servlet-name>
+        <servlet-class>uts.isd.controller.payment.InvoiceServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InvoiceServlet</servlet-name>
+        <url-pattern>/InvoiceServlet</url-pattern>
+    </servlet-mapping>
+
     <!--Product-->
     <servlet>
         <servlet-name>CatalogueServlet</servlet-name>
@@ -150,6 +176,64 @@
     <servlet-mapping>
         <servlet-name>DeleteProductServlet</servlet-name>
         <url-pattern>/products/DeleteProductServlet</url-pattern>
+    </servlet-mapping>
+
+    <!--Order-->
+    <servlet>
+        <servlet-name>AddToCartServlet</servlet-name>
+        <servlet-class>uts.isd.controller.order.AddToCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddToCartServlet</servlet-name>
+        <url-pattern>/order/AddToCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ClearCartServlet</servlet-name>
+        <servlet-class>uts.isd.controller.order.ClearCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ClearCartServlet</servlet-name>
+        <url-pattern>/order/ClearCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>RemoveFromCartServlet</servlet-name>
+        <servlet-class>uts.isd.controller.order.RemoveFromCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RemoveFromCartServlet</servlet-name>
+        <url-pattern>/order/RemoveFromCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UpdateCartItemServlet</servlet-name>
+        <servlet-class>uts.isd.controller.order.UpdateCartItemServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateCartItemServlet</servlet-name>
+        <url-pattern>/order/UpdateCartItemServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>PlaceOrderServlet</servlet-name>
+        <servlet-class>uts.isd.controller.order.PlaceOrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PlaceOrderServlet</servlet-name>
+        <url-pattern>/order/PlaceOrderServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>OrderDetailsServlet</servlet-name>
+        <servlet-class>uts.isd.controller.order.OrderDetailsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderDetailsServlet</servlet-name>
+        <url-pattern>/order/OrderDetailsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UpdateOrderStatusServlet</servlet-name>
+        <servlet-class>uts.isd.controller.order.UpdateOrderStatusServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateOrderStatusServlet</servlet-name>
+        <url-pattern>/order/UpdateOrderStatusServlet</url-pattern>
     </servlet-mapping>
 
     <session-config>

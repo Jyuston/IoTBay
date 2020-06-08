@@ -1,15 +1,15 @@
 package uts.isd.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.LinkedList;
 
 public class Order implements Serializable {
     private int ID;
     private Customer customer;
-    private LinkedList<ProductSnapshot> orderedProducts;
-    private Date orderedOn;
-    private int total;
+    private LinkedList<OrderLineItem> orderedProducts;
+    private Timestamp orderedOn;
+    private double total;
     private String trackingID;
     private String status;
     private String shippingAddress;
@@ -22,14 +22,14 @@ public class Order implements Serializable {
     public Customer getCustomer() { return customer; }
     public void setCustomer(Customer customer) { this.customer = customer; }
 
-    public LinkedList<ProductSnapshot> getOrderedProducts() { return orderedProducts; }
-    public void setOrderedProducts(LinkedList<ProductSnapshot> orderedProducts) { this.orderedProducts = orderedProducts; }
+    public LinkedList<OrderLineItem> getOrderedProducts() { return orderedProducts; }
+    public void setOrderedProducts(LinkedList<OrderLineItem> orderedProducts) { this.orderedProducts = orderedProducts; }
 
-    public Date getOrderedOn() { return orderedOn; }
-    public void setOrderedOn(Date orderedOn) { this.orderedOn = orderedOn; }
+    public Timestamp getOrderedOn() { return orderedOn; }
+    public void setOrderedOn(Timestamp orderedOn) { this.orderedOn = orderedOn; }
 
-    public int getTotal() { return total; }
-    public void setTotal(int total) { this.total = total; }
+    public double getTotal() { return total; }
+    public void setTotal(double total) { this.total = total; }
 
     public String getTrackingID() { return trackingID; }
     public void setTrackingID(String trackingID) { this.trackingID = trackingID; }

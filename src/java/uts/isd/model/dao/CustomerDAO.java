@@ -124,26 +124,27 @@ public class CustomerDAO {
         int rowsChanged = updateSt.executeUpdate();
         if (rowsChanged == 0)
             throw new DAOException("Failed to update Customer details. Please try again.");
+
+        PaymentInformation paymentInfo = customer.getPaymentInfo();
+
+        String paymentInfoInsertQuery =
+                "UPDATE PAYMENT_INFORMATION SET CARD_NUMBER = ?, CVV_NUMBER = ?, EXPIRY_MONTH = ?, EXPIRY_YEAR = ? " +
+                "WHERE CUSTOMER_ID = " + customer.getID();
+
+        PreparedStatement updatePaymentInfoSt = DAOUtils.prepareStatement(paymentInfoInsertQuery, false,
+                paymentInfo.getCardNumber(),
+                paymentInfo.getCvvNumber(),
+                paymentInfo.getExpiryMonth(),
+                paymentInfo.getExpiryYear()
+        );
+
+        rowsChanged = updatePaymentInfoSt.executeUpdate();
+        if (rowsChanged == 0)
+            throw new DAOException("Failed to update Customer payment info. Please try again.");
     }
 
     // Helpers
     private static Customer createCustomerObject(ResultSet customerRs) throws SQLException {
-        Address address = new Address();
-        address.setAddressLine1(customerRs.getString("ADDRESS_LINE_1"));
-        address.setAddressLine2(customerRs.getString("ADDRESS_LINE_2"));
-        address.setSuburb(customerRs.getString("SUBURB"));
-        address.setPostcode(customerRs.getString("POSTCODE"));
-        address.setState(customerRs.getString("STATE"));
-
-        PaymentInformation paymentInfo = new PaymentInformation();
-        paymentInfo.setCardNumber(customerRs.getString("CARD_NUMBER"));
-        paymentInfo.setCvvNumber(customerRs.getString("CVV_NUMBER"));
-        paymentInfo.setExpiryMonth(customerRs.getString("EXPIRY_MONTH"));
-        paymentInfo.setExpiryYear(customerRs.getString("EXPIRY_YEAR"));
-
-        // THIS SHOULD GET THE CUSTOMERS ORDERS FROM RESULT SET, NOT MAKE A EMPTY LIST
-        LinkedList<Order> customerOrders = new LinkedList<>();
-
         Customer customer = new Customer();
         customer.setID(customerRs.getInt("ID"));
         customer.setFirstName(customerRs.getString("F_NAME"));
@@ -152,10 +153,28 @@ public class CustomerDAO {
         customer.setPassword(customerRs.getString("PASSWORD"));
         customer.setContactNumber(customerRs.getString("CONTACT_NUMBER"));
         customer.setActive(customerRs.getBoolean("IS_ACTIVE"));
-        customer.setAddress(address);
-        customer.setPaymentInfo(paymentInfo);
-        customer.setOrders(customerOrders);
         customer.setAnonymous(customerRs.getBoolean("IS_ANONYMOUS"));
+
+        Address address = new Address();
+        address.setAddressLine1(customerRs.getString("ADDRESS_LINE_1"));
+        address.setAddressLine2(customerRs.getString("ADDRESS_LINE_2"));
+        address.setSuburb(customerRs.getString("SUBURB"));
+        address.setPostcode(customerRs.getString("POSTCODE"));
+        address.setState(customerRs.getString("STATE"));
+
+        customer.setAddress(address);
+
+        PaymentInformation paymentInfo = new PaymentInformation();
+        paymentInfo.setCardNumber(customerRs.getString("CARD_NUMBER"));
+        paymentInfo.setCvvNumber(customerRs.getString("CVV_NUMBER"));
+        paymentInfo.setExpiryMonth(customerRs.getString("EXPIRY_MONTH"));
+        paymentInfo.setExpiryYear(customerRs.getString("EXPIRY_YEAR"));
+
+        customer.setPaymentInfo(paymentInfo);
+
+        LinkedList<Order> customerOrders = OrderDAO.getAllByCustomer(customer);
+
+        customer.setOrders(customerOrders);
 
         return customer;
     }

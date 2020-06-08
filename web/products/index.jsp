@@ -26,10 +26,8 @@
     <form class="form-inline mb-0" method="get" action="CatalogueServlet">
         <label class="sr-only" for="searchQuery">Search</label>
         <div class="input-group">
-            <input type="text" class="form-control" id="searchQuery" name="query" placeholder="Search..."
-                   value="${prevQuery}">
+            <input type="text" class="form-control" id="searchQuery" name="query" placeholder="Search..." value="${prevQuery}">
             <%--select--%>
-
             <div class="input-group-append">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>

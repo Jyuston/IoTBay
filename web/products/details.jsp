@@ -1,4 +1,5 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <%--Request Scope EL Vars--%>
 <%--@elvariable id="product" type="uts.isd.model.Product"--%>
@@ -10,6 +11,24 @@
     <title>Product Details</title>
 </head>
 <jsp:include page="../templates/header.jsp"/>
+
+<c:if test="${param.successAdd}">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <p class="mb-0"><strong>Yipee! </strong>Added to cart!</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</c:if>
+
+<c:if test="${param.failAdd}">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <p class="mb-0"><strong>Can't add to cart! </strong>We don't have enough left!</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</c:if>
 
 <a href="CatalogueServlet" class="d-inline-block mb-2">
     <svg class="bi bi-arrow-left mb-1" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -71,7 +90,9 @@
                     </div>
 
                     <div class="mb-3">
-                        <span class="price h4">$${product.price}</span>
+                        <span class="price h4">
+                            $<fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${product.price}"/>
+                        </span>
                         <span class="text-muted">/ unit</span>
                     </div>
 
@@ -104,7 +125,9 @@
                     <hr>
 
                     <!--TODO Ordering-->
-                    <form class="form mb-0" method="post">
+                    <form class="form mb-0" method="post" action="../order/AddToCartServlet">
+                        <input type="hidden" value="${product.ID}" name="ID">
+
                         <div class="form-group" style="width: 30%">
                             <label>Quantity</label>
                             <div class="input-group mb-4">
@@ -113,7 +136,7 @@
                                             onclick="document.getElementById('quantity').stepUp(-1)">-
                                     </button>
                                 </div>
-                                <input type="number" id="quantity" value="1" min="0" required name="quantity"
+                                <input type="number" id="quantity" value="1" min="1" required name="quantity"
                                        class="form-control border-dark text-center pl-4">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-dark" type="button"
@@ -123,8 +146,8 @@
                             </div>
                         </div>
 
-                        <button class="btn btn-success mr-2">Buy now</button>
-                        <button type="submit" class="btn btn-outline-primary"><span class="text">Add to cart</span>
+                        <button type="submit" class="btn btn-outline-success">
+                            Add to cart
                             <svg class="bi bi-cart-plus pb-1 ml-1" width="1.5rem" height="1.5rem" viewBox="0 0 16 16"
                                  fill="currentColor"
                                  xmlns="http://www.w3.org/2000/svg">

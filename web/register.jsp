@@ -42,7 +42,6 @@
                     </c:if>
 
                         <%--Details--%>
-                    <h4>Details</h4>
                     <div class="form-group">
                         <div class="row">
                             <div class="col">
@@ -98,7 +97,7 @@
                     </div>
 
                         <%--TOS--%>
-                    <div class="form-group form-check mt-5 mb-4">
+                    <div class="form-group form-check mt-3 mb-4">
                         <input type="checkbox" class="form-check-input" id="tos" name="tos" required>
                         <label class="form-check-label" for="tos">I Agree to the Terms of Service</label>
                     </div>
