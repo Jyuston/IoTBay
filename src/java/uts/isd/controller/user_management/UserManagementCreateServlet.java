@@ -16,6 +16,7 @@ import uts.isd.model.Order;
 import uts.isd.model.PaymentInformation;
 import uts.isd.model.Staff;
 import uts.isd.controller.Validator;
+import uts.isd.model.dao.AccountDAO;
 import uts.isd.model.dao.CustomerDAO;
 import uts.isd.model.dao.DAOException;
 import uts.isd.model.dao.StaffDAO;
@@ -77,7 +78,10 @@ public class UserManagementCreateServlet extends HttpServlet {
                 } else {
                     newStaff.setAdmin(false);
                 }
+                AccountDAO.emailTaken(email);
+                AccountDAO.contactNumberTaken(contactNumber);
                 StaffDAO.save(newStaff); 
+                request.setAttribute("success", true);
             } 
             
             else {
@@ -93,17 +97,20 @@ public class UserManagementCreateServlet extends HttpServlet {
                 newCustomer.setPaymentInfo(new PaymentInformation());
                 newCustomer.setOrders(new LinkedList<>());
                 
-                CustomerDAO.save(newCustomer);       
+                AccountDAO.emailTaken(email);
+                AccountDAO.contactNumberTaken(contactNumber);
+                CustomerDAO.save(newCustomer);
+                request.setAttribute("success", true);
             }
 
         } catch (SQLException err) {
-            request.setAttribute("errorUserManagement", "Error accessing database.");
+            request.setAttribute("errorUserManagementCreate", "Error accessing database.");
             err.printStackTrace();
             
         } catch (DAOException err) {
-            request.setAttribute("errorUserManagement", err.getMessage());
+            request.setAttribute("errorUserManagementCreate", err.getMessage());
         } finally {
-            response.sendRedirect("UserManagementServlet?success=true");
+            request.getRequestDispatcher("/user_management_create.jsp").include(request, response);
         }
     }
 }

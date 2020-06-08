@@ -124,6 +124,28 @@ public class AccountDAO {
         if (rowsChanged == 0)
             throw new DAOException("Failed to delete Account. Please try again.");
     }
+    
+    public static void emailTaken(String email) throws SQLException, DAOException {
+        String emailQuery = "SELECT ID FROM ACCOUNTS WHERE EMAIL LIKE '" + email + "'";
+        
+        PreparedStatement st = DAOUtils.prepareStatement(emailQuery, false);
+        ResultSet emailTakenRs = st.executeQuery();
+        
+        if(emailTakenRs.next()){
+            throw new DAOException("Email is already registered. Please use another.");
+        } 
+    }
+    
+    public static void contactNumberTaken(String contactNumber) throws SQLException, DAOException {
+        String contactNumberQuery = "SELECT ID FROM ACCOUNTS WHERE CONTACT_NUMBER LIKE '" + contactNumber + "'";
+        
+        PreparedStatement st = DAOUtils.prepareStatement(contactNumberQuery, false);
+        ResultSet contactNumberQueryRs = st.executeQuery();
+        
+        if(contactNumberQueryRs.next()){
+            throw new DAOException("Contact Number is already registered. Please use another.");
+        } 
+    }
 
     // Helpers
     private static Account getAccountHelper(PreparedStatement st) throws SQLException {
